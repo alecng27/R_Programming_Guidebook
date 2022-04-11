@@ -1,0 +1,168 @@
+# Data Manipulation with dplyr
+
+<https://learn.datacamp.com/courses/data-manipulation-with-dplyr>
+```{r include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(forcats)
+library(stringr)
+library(scales)
+```
+
+##  Transforming Data with dplyr
+
+**select(), mutate(), filter(), and arrange()**
+
+For more details, go to the [Data Wrangling](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/intro-to-the-tidyverse.html#data-wrangling) section of *Intro to the Tidyverse*.
+
+## Aggregating Data
+
+**count()**
+
+A simple way to aggregate data is to count to find out the number of observations. Use `count()`:
+
+```{r}
+mtcars %>%
+count(cyl, wt = hp, sort = TRUE)
+
+```
+
+Here, `count()` sorted out the distinct observations from the `cyl` variable, the `wt` (weight) would count the total number of `hp` (horse power) for each distinct `cyl` instead of counting the total number of of observations that belongs to each distinct `vyl`.
+
+The `wt` argument basically plug in another column to count instea.
+
+**group_by() And summarize()**
+
+For more details, go to the [Grouping and summarizing](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/intro-to-the-tidyverse.html#grouping-and-summarizing) section of *Intro to the Tidyverse*.
+
+**top_n()**
+
+This function select the most extreme observations. The number `1` here select the highest `hp` in each distinct `cyl` observations:
+
+```{r}
+mtcars %>%
+  select(cyl, hp)  %>%
+  mutate(cyl = as.factor(cyl)) %>%
+  group_by(cyl) %>%
+    top_n(1, hp)
+  
+```
+
+For more details, go to the [Introduction to Factor Variables](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/categorical-data-in-the-tidyverse.html#introduction-to-factor-variables) section of *Categorical Data in the Tidyverse*.
+
+## Selecting and Transforming Data
+
+**select() And rename()***
+
+For more details, go to the [Tame your data](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#tame-your-data) section of *Working with Data in the Tidyverse*.
+
+**Transmute()**
+
+The function `transmute()` is like a combination of `select` and `mutate`. It only outputs the selected variables, and allow changing, creating new variables inside the same bracket: 
+
+```{r}
+mtcars[1:5,] %>%
+  transmute(weight_lbs = wt, weight_kg = weight_lbs / 2.205)
+
+```
+
+## Case Study: The babynames Dataset
+
+```{r}
+babynames <- readRDS(gzcon(url("https://assets.datacamp.com/production/repositories/4984/datasets/a924ac5d86adba2e934d489cb9db446236f62b2c/babynames.rds")))
+
+babynames
+```
+
+**Filtering and arranging for one year**
+
+Filter for only the year 1990 and sort the table in descending order of the number of babies born:
+
+```{r}
+babynames %>%
+  # Filter for the year 1990
+  filter(year == 1990) %>%
+  # Sort the number column in descending order 
+  arrange(desc(number))
+```
+
+**Using top_n with babynames**
+
+`filter()` and `arrange()` were used to find the most common names in *one* year. However, `group_by()` and `top_n()` can be used to find the most common name in *every* year:
+
+```{r}
+babynames %>%
+  group_by(year) %>%
+  top_n(1, number)
+```
+
+**Visualizing names with ggplot2**
+
+Filter for only the names Steven, Thomas, and Matthew, and assign it to an object called `selected_names`.
+
+The `%in%` operator can be used within `filter()` by including `c()` and a vector of values.
+
+```{r}
+selected_names <- babynames %>%
+  filter(name %in% c("Steven", "Thomas", "Matthew"))
+```
+
+Visualize the three names as a line plot over time, with each name represented by a different color:
+
+```{r}
+# Filter for the names Steven, Thomas, and Matthew 
+selected_names <- babynames %>%
+  filter(name %in% c("Steven", "Thomas", "Matthew"))
+
+# Plot the names using a different color for each name
+ggplot(selected_names, aes(x = year, y = number, color = name)) +
+  geom_line()
+```
+
+**Finding the year each name is most common**
+
+Calculate the total number of people born in that year as `year_total`. Next, use `year_total` to calculate the `fraction` of people born in each year that have each name.
+
+Then, use the `fraction` column, in combination with `top_n()`, to identify the year each name is most common:
+
+
+
+```{r}
+babynames_fraction <- babynames %>%
+  group_by(year) %>%
+  mutate(year_total = sum(number)) %>%
+  ungroup() %>%
+  mutate(fraction = number / year_total) 
+
+# Find the year each name is most common
+babynames_fraction %>% 
+  group_by(name) %>%
+    top_n(1, fraction)
+
+```
+
+**lag() Function**
+
+The `lag()` function can be used to find the differences between two vectors by shifting the vectors to the right:
+
+```{r}
+v <- c(1, 3, 6, 14)
+v
+
+lag(v)
+
+```
+
+**Changes in popularity of a name**
+
+To find the changes in popularity of the name `"Matthew"` over the years, we will minus the `fraction` by the `lag` of the `fraction` to calculate the `difference` between each year. The `difference` represents the up or down of the `fraction`, which means the popularity increasing or decreasing:
+
+```{r}
+babynames_fraction %>%
+  filter(name == "Matthew") %>%
+  arrange(year) %>%
+  mutate(difference = fraction - lag(fraction)) %>%
+  arrange(desc(difference))
+```

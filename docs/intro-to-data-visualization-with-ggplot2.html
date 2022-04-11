@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Intro to Data Visualization with ggplot2 | R_Programming_Guidebook Project</title>
+  <meta name="description" content="4 Intro to Data Visualization with ggplot2 | R_Programming_Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Intro to Data Visualization with ggplot2 | R_Programming_Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Intro to Data Visualization with ggplot2 | R_Programming_Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro-to-the-tidyverse.html"/>
+<link rel="next" href="working-with-data-in-the-tidyverse.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>General Notes</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R_Programming_Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro-to-data-visualization-with-ggplot2" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Intro to Data Visualization with ggplot2</h1>
+<p><a href="https://learn.datacamp.com/courses/introduction-to-data-visualization-with-ggplot2" class="uri">https://learn.datacamp.com/courses/introduction-to-data-visualization-with-ggplot2</a></p>
+<div id="introduction" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<p><strong>Changing One Geom Or Every Geom</strong></p>
+<p>If you have multiple geoms, then mapping an aesthetic to data variable inside the call to <code>ggplot()</code> will change all the geoms. It is also possible to make changes to individual geoms by passing arguments to the <code>geom_*()</code> functions.</p>
+<p><code>geom_point()</code> has an alpha argument that controls the opacity of the points. A value of <code>1</code> (the default) means that the points are totally opaque; a value of <code>0</code> means the points are totally transparent (and therefore invisible). Values in between specify transparency.</p>
+<p><code>geom_smooth()</code> adds a smooth trend curve.</p>
+<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price, <span class="at">color =</span> clarity)) <span class="sc">+</span></span>
+<span id="cb218-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb218-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb218-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb218-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><strong>Saving Plots As Variables</strong></p>
+<p>Plots can be saved as variables, which can be added two later on using the + operator. This is really useful to make multiple related plots from a common base.</p>
+<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the previous plot to a variable to make a base:</span></span>
+<span id="cb220-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-2" aria-hidden="true" tabindex="-1"></a>plt_price_vs_carat <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price))</span>
+<span id="cb220-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the base plot to make a new plot:</span></span>
+<span id="cb220-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-5" aria-hidden="true" tabindex="-1"></a>plt_price_vs_carat_by_clarity <span class="ot">&lt;-</span> plt_price_vs_carat <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> clarity))</span>
+<span id="cb220-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb220-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-7" aria-hidden="true" tabindex="-1"></a><span class="co"># See the plot</span></span>
+<span id="cb220-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-8" aria-hidden="true" tabindex="-1"></a>plt_price_vs_carat_by_clarity</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="aesthetics" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Aesthetics</h2>
+<p><strong>Typical Visible Aesthetics</strong></p>
+<pre><code>##   Aesthetic                                  Description
+## 1         x                              X-axis position
+## 2         y                              Y-axis position
+## 3      fill                                   Fill color
+## 4     color     Color of points, outlines of other geoms
+## 5      size Area or radius of points, thickness of lines
+## 6     alpha                                 Transparency
+## 7  linetype                            Line dash pattern
+## 8    labels                       Text on a plot or axes
+## 9     shape                                        Shape</code></pre>
+<p><strong>All About Aesthetics: Color, Shape And Size</strong></p>
+<p>These are the aesthetics to can consider within <code>aes()</code>: <code>x</code>, <code>y</code>, <code>color</code>, <code>fill</code>, <code>size</code>, <code>alpha</code>, <code>labels</code> and <code>shape.</code></p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb222-1" aria-hidden="true" tabindex="-1"></a>diamonds</span></code></pre></div>
+<pre><code>## # A tibble: 53,940 × 10
+##    carat cut       color clarity depth table price     x     y     z
+##    &lt;dbl&gt; &lt;ord&gt;     &lt;ord&gt; &lt;ord&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  0.23 Ideal     E     SI2      61.5    55   326  3.95  3.98  2.43
+##  2  0.21 Premium   E     SI1      59.8    61   326  3.89  3.84  2.31
+##  3  0.23 Good      E     VS1      56.9    65   327  4.05  4.07  2.31
+##  4  0.29 Premium   I     VS2      62.4    58   334  4.2   4.23  2.63
+##  5  0.31 Good      J     SI2      63.3    58   335  4.34  4.35  2.75
+##  6  0.24 Very Good J     VVS2     62.8    57   336  3.94  3.96  2.48
+##  7  0.24 Very Good I     VVS1     62.3    57   336  3.95  3.98  2.47
+##  8  0.26 Very Good H     SI1      61.9    55   337  4.07  4.11  2.53
+##  9  0.22 Fair      E     VS2      65.1    61   337  3.87  3.78  2.49
+## 10  0.23 Very Good H     VS1      59.4    61   338  4     4.05  2.39
+## # … with 53,930 more rows</code></pre>
+<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price, <span class="at">color =</span> color)) <span class="sc">+</span></span>
+<span id="cb224-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb224-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the shape and size of the points</span></span>
+<span id="cb224-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb224-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="fl">1.5</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><strong>All About Aesthetics: Color VS. Fill</strong></p>
+<p>Typically, the <code>color</code> aesthetic changes the circumference line of a geom and the <code>fill</code> aesthetic changes the inside. <code>geom_point()</code> is an exception: you use <code>color</code> (not <code>fill</code>) for the point color.</p>
+<p>The default <code>geom_point()</code> uses <code>shape = 19</code>: a solid circle. An alternative is <code>shape = 21</code>: a circle that allow you to use both <code>fill</code> for the inside and <code>color</code> for the outline. This is lets you to map two aesthetics to each point:</p>
+<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price, <span class="at">fill =</span> clarity, <span class="at">color =</span> color)) <span class="sc">+</span></span>
+<span id="cb225-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb225-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><strong>All About Aesthetics: Alpha, Shape And Label</strong></p>
+<center>
+<strong>Be careful</strong>: the attributes can overwrite the aesthetics of a plot!
+</center>
+<center>
+<strong>Alpha</strong>
+</center>
+<div class="sourceCode" id="cb226"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb226-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base layer</span></span>
+<span id="cb226-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-2" aria-hidden="true" tabindex="-1"></a>diamonds_E <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb226-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(color <span class="sc">==</span> <span class="st">&quot;E&quot;</span>)</span>
+<span id="cb226-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-5" aria-hidden="true" tabindex="-1"></a>plt_diam_E <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diamonds_E, <span class="fu">aes</span>(carat, price))</span>
+<span id="cb226-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb226-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Map clarity to alpha:</span></span>
+<span id="cb226-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-8" aria-hidden="true" tabindex="-1"></a>plt_diam_E <span class="sc">+</span></span>
+<span id="cb226-9"><a href="intro-to-data-visualization-with-ggplot2.html#cb226-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">alpha =</span> clarity))</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<center>
+<strong>Shape</strong>
+</center>
+<p>Use <code>shape()</code> function to substitute the observation symbols displayed in the plot into another variable:</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Base layer</span></span>
+<span id="cb227-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-2" aria-hidden="true" tabindex="-1"></a>diamonds_E <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb227-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(color <span class="sc">==</span> <span class="st">&quot;E&quot;</span>)</span>
+<span id="cb227-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb227-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-5" aria-hidden="true" tabindex="-1"></a>plt_diam_E <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diamonds_E, <span class="fu">aes</span>(carat, price))</span>
+<span id="cb227-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb227-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Map cut to alpha:</span></span>
+<span id="cb227-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-8" aria-hidden="true" tabindex="-1"></a>plt_diam_E <span class="sc">+</span></span>
+<span id="cb227-9"><a href="intro-to-data-visualization-with-ggplot2.html#cb227-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">shape =</span> cut))</span></code></pre></div>
+<pre><code>## Warning: Using shapes for an ordinal variable is not advised</code></pre>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<center>
+<strong>Label</strong>
+</center>
+<p>Use <code>label()</code> function to change the observation symbols displayed in the plot:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-1" aria-hidden="true" tabindex="-1"></a>diamonds_Fair <span class="ot">&lt;-</span> diamonds <span class="sc">%&gt;%</span></span>
+<span id="cb229-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(cut <span class="sc">==</span> <span class="st">&quot;Fair&quot;</span>)</span>
+<span id="cb229-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-4" aria-hidden="true" tabindex="-1"></a>plt_diam_Fair <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diamonds_Fair, <span class="fu">aes</span>(carat, price))</span>
+<span id="cb229-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb229-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Use text layer and map color to label</span></span>
+<span id="cb229-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-7" aria-hidden="true" tabindex="-1"></a>plt_diam_Fair <span class="sc">+</span></span>
+<span id="cb229-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb229-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> color))</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><strong>All About Attributes: Color, Shape, And Size</strong></p>
+<p>Use <code>color()</code>, <code>shape()</code>, and <code>size()</code> functions as attributes (means to not use inside <code>ggplot()</code>):</p>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="co"># A hexadecimal color</span></span>
+<span id="cb230-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-2" aria-hidden="true" tabindex="-1"></a>my_blue <span class="ot">&lt;-</span> <span class="st">&quot;#4ABEFF&quot;</span></span>
+<span id="cb230-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb230-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Change the color mapping to a fill mapping</span></span>
+<span id="cb230-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds_Fair, <span class="fu">aes</span>(carat, price, <span class="at">fill =</span> <span class="st">&quot;E&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb230-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set point size and shape</span></span>
+<span id="cb230-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb230-7" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">color =</span> my_blue, <span class="at">size =</span> <span class="dv">7</span>, <span class="at">shape =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><strong>Aesthetic Label Functions</strong></p>
+<p>Make use some of these functions for improving the appearance of the plot:</p>
+<p><code>labs()</code> to set the x- and y-axis labels. It takes strings for each argument.</p>
+<p><code>scale_color_manual()</code> defines properties of the color scale (i.e. axis). The first argument sets the legend title. values is a named vector of colors to use.</p>
+<div class="sourceCode" id="cb231"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb231-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb231-1" aria-hidden="true" tabindex="-1"></a>palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">E =</span> <span class="st">&quot;#377EB8&quot;</span>)</span>
+<span id="cb231-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb231-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb231-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb231-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds_Fair, <span class="fu">aes</span>(carat, price, <span class="at">fill =</span> <span class="st">&quot;E&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb231-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb231-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> my_blue, <span class="at">size =</span> <span class="dv">7</span>, <span class="at">shape =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span>  </span>
+<span id="cb231-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb231-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;This is a new x-axis name&quot;</span>, <span class="at">y =</span> <span class="st">&quot;New for Y&quot;</span>) <span class="sc">+</span></span>
+<span id="cb231-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb231-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">scale_fill_manual</span>(<span class="st">&quot;Color of the Diamonds&quot;</span>, <span class="at">values =</span> palette)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><strong>Setting Axis Limits</strong></p>
+<p>Specify the limits as separate arguments, or as a single numeric vector. That is, <code>ylim(lo, hi)</code> or <code>ylim(c(lo, hi))</code>.</p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(mpg, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb232-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb232-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>() <span class="sc">+</span></span>
+<span id="cb232-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb232-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the y-axis limits</span></span>
+<span id="cb232-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb232-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+To spread out clustered variables use <code>geom_jitter()</code> or <code>geom_point(position = "jitter")</code>.</p>
+</div>
+<div id="geometries" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Geometries</h2>
+<p>Scatter plots (using geom_point()) are intuitive, easily understood, and very common, but we must always consider overplotting, particularly in the following four situations:</p>
+<pre><code>1. Large datasets
+2. Aligned values on a single axis
+3. Low-precision data
+4. Integer data</code></pre>
+<p><strong>How to Deal with Overplotting In Scatter Plots</strong></p>
+<p>Adjust the numeric value in <code>shape()</code> function into <code>"."</code>to deal with overflowed data:</p>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot price vs. carat, colored by clarity</span></span>
+<span id="cb234-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb234-2" aria-hidden="true" tabindex="-1"></a>plt_price_vs_carat_by_clarity <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(carat, price, <span class="at">color =</span> clarity))</span>
+<span id="cb234-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb234-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb234-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb234-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a point layer with tiny points</span></span>
+<span id="cb234-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb234-5" aria-hidden="true" tabindex="-1"></a>plt_price_vs_carat_by_clarity <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">shape =</span> <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><strong>How to Deal with “Aligned Values” And “Low-precision Data” In Scatter Plots</strong></p>
+<p>Aligning values on a single axis occurs when one axis is continuous and the other is categorical, which can be overcome with some form of jittering:</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb235-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb235-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(Sepal.Length, Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb235-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb235-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the position to jitter</span></span>
+<span id="cb235-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb235-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="st">&quot;jitter&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>Another way to jitter which gives the same result is:</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb236-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(Sepal.Length, Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb236-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb236-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Use a jitter position function with width 0.1</span></span>
+<span id="cb236-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb236-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>), <span class="at">alpha =</span> <span class="fl">0.5</span>) </span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><strong>Positions In Histograms</strong></p>
+<p>Histograms are specialized versions of bar plots.
+There’re various ways of applying positions to histograms. <code>geom_histogram()</code>, a special case of <code>geom_bar()</code>, has a <code>position</code> argument that can take on the following values:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>stack</code> (the default): Bars for different groups are stacked on top of each other.</p></li>
+<li><p><code>dodge</code>: Bars for different groups are placed side by side.</p>
+<p>geom_histogram(binwidth = 1, position = “dodge”)</p></li>
+<li><p><code>fill</code>: Bars for different groups are shown as proportions.</p>
+<p>geom_histogram(binwidth = 1, position = “fill”)</p></li>
+<li><p><code>identity</code>: Plot the values as they appear in the dataset.</p>
+<p>geom_histogram(binwidth = 1, position = “identity,” alpha = 0.4)</p></li>
+</ol>
+<p><strong>Bar Plots</strong></p>
+<p><code>geom_bar()</code> counts the number of cases at each x position.</p>
+<p><code>geom_col()</code> plot actual values.</p>
+<p><strong>NOTE:</strong>the function geom_col() is just geom_bar() where both the position and stat arguments are set to “identity.” It is used when we want the heights of the bars to represent the exact values in the data.</p>
+<p><code>geom_bar()</code> have three position options:</p>
+<ol style="list-style-type: decimal">
+<li><p>stack: The default</p></li>
+<li><p><code>dodge</code>: Preferred</p>
+<p>geom_bar(position = “dodge”)</p></li>
+<li><p><code>fill</code>: To show proportions</p>
+<p>geom_bar(position = “fill”)</p></li>
+</ol>
+<p><strong>Overlapping Bar Plots</strong></p>
+<p>Instead of using <code>position = "dodge"</code>, use <code>position_dodge()</code>, the same with <code>position_jitter()</code> to specify how much dodging (or jittering) wanted.</p>
+<pre><code>geom_bar(position = position_dodge(width = 0.2))</code></pre>
+</div>
+<div id="themes" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Themes</h2>
+<p>The themes layer is the visual elements that aren’t part of the data. There’re 3 types:</p>
+<pre><code>##       types modified_using
+## 1      text element_text()
+## 2      line element_line()
+## 3 rectangle element_rect()</code></pre>
+<p>To change stylistic elements of a plot, call theme() and set plot properties to a new value.</p>
+<p><strong>Moving The Legend</strong></p>
+<p>The <code>legend</code> is that little box on the right side of the plot that shows up when functions like <code>color</code> or <code>shape</code> is plotted:</p>
+<pre><code>p + theme(legend.position = new_value)</code></pre>
+<p>The new value can be:</p>
+<pre><code>&quot;top&quot;, &quot;bottom&quot;, &quot;left&quot;, or &quot;right&#39;&quot;: place it at that side of the plot.
+&quot;none&quot;: don&#39;t draw it.</code></pre>
+<p>” c(x, y)“:”c(0, 0)” means the bottom-left and “c(1, 1)” means the top-right.</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(Sepal.Length, Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb241-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb241-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb241-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb241-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb241-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;left&quot;</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><strong>Modifying Theme Elements</strong></p>
+<p>Many plot elements have multiple properties that can be set.</p>
+<p>Line elements in the plot such as axes and gridlines have a color, a thickness (<code>size</code>), and a line type (<code>solid</code> line, <code>dashed</code>, or <code>dotted</code>). To set the style of a line, you use <code>element_line()</code>. For example, to make the axis lines into <code>red</code>, <code>dashed</code> lines:</p>
+<pre><code>p + theme(axis.line = element_line(color = &quot;red&quot;, linetype = &quot;dashed&quot;))</code></pre>
+<p>Similarly, <code>element_rect()</code> changes <code>rectangles</code> and <code>element_text()</code> changes <code>text.</code> To remove a plot element, use <code>element_blank()</code>.</p>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(Sepal.Length, Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb243-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb243-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;left&quot;</span>,</span>
+<span id="cb243-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">rect =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;grey92&quot;</span>),</span>
+<span id="cb243-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.key =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb243-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-6" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Turn off axis ticks</span></span>
+<span id="cb243-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb243-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-8" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Turn off the panel grid</span></span>
+<span id="cb243-9"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">panel.grid =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb243-10"><a href="intro-to-data-visualization-with-ggplot2.html#cb243-10" aria-hidden="true" tabindex="-1"></a>          )</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><strong>Modifying Whitespace</strong></p>
+<p><em>Whitespace</em> means all the non-visible margins and spacing in the plot.</p>
+<p>To set a single <em>whitespace</em> value, use <code>unit(x, unit)</code>, where <code>x</code> is the amount and <code>unit</code> is the unit of measure.</p>
+<p>Borders have 4 positions, use <code>margin(top, right, bottom, left, unit)</code>. The margin order is in a clock-wise position starting from 12 o’clock.</p>
+<p>The default unit is <code>"pt"</code> (points), which scales well with text. Other options include <code>"cm"</code>, <code>"in"</code> (inches) and <code>"lines"</code> (of text).</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(Sepal.Length, Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb244-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb244-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb244-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb244-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb244-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb244-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">70</span>, <span class="dv">10</span>, <span class="st">&quot;mm&quot;</span>))</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><strong>Built-in Themes</strong></p>
+<p>In addition to making your own themes, there are several out-of-the-box solutions that may save you lots of time.</p>
+<pre><code>&quot;theme_gray()&quot; is the default.
+&quot;theme_bw()&quot; is useful when you use transparency.
+&quot;theme_classic()&quot; is more traditional.
+&quot;theme_void()&quot; removes everything but the data.</code></pre>
+<p><strong>Setting Themes</strong></p>
+<p>Install the package <code>ggthemes</code>, which is a another source of built-in themes just like <code>ggplot2</code>.</p>
+<p>Reusing a theme across many plots helps to provide a consistent style. You have several options for this.</p>
+<pre><code>1. Assign the theme to a variable, and add it to each plot.
+2. Set the theme as the default using &quot;theme_set()&quot;.</code></pre>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb247-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-3" aria-hidden="true" tabindex="-1"></a>new_theme <span class="ot">&lt;-</span> <span class="fu">theme</span>(</span>
+<span id="cb247-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rect =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">&quot;grey92&quot;</span>),</span>
+<span id="cb247-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.key =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb247-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb247-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb247-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">0.5</span>, <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>),</span>
+<span id="cb247-9"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">&quot;grey25&quot;</span>),</span>
+<span id="cb247-10"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">&quot;italic&quot;</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb247-11"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.1</span>)</span>
+<span id="cb247-12"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-12" aria-hidden="true" tabindex="-1"></a>   )</span>
+<span id="cb247-13"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-14"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the WSJ theme with new_theme</span></span>
+<span id="cb247-15"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-15" aria-hidden="true" tabindex="-1"></a>new_theme_wsj <span class="ot">&lt;-</span> <span class="fu">theme_wsj</span>() <span class="sc">+</span> new_theme</span>
+<span id="cb247-16"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb247-17"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the combined theme to the plot</span></span>
+<span id="cb247-18"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-18" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, <span class="fu">aes</span>(Sepal.Length, Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb247-19"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.1</span>), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb247-20"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb247-21"><a href="intro-to-data-visualization-with-ggplot2.html#cb247-21" aria-hidden="true" tabindex="-1"></a>  new_theme_wsj</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p><strong>NOTE:</strong> add another theme after an already existing theme to overide the settings of the previous theme.</p>
+<p><strong>Using Geoms For Explanatory Plots</strong></p>
+<p>This type of plot will be in an info-viz style, meaning that it would be similar to something you’d see in a magazine or website for a mostly lay audience.</p>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a geom_segment() layer (Key component to create the plot structure below)</span></span>
+<span id="cb248-2"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gm2007, <span class="fu">aes</span>(<span class="at">x =</span> lifeExp, <span class="at">y =</span> country, <span class="at">color =</span> lifeExp)) <span class="sc">+</span></span>
+<span id="cb248-3"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb248-4"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">xend =</span> <span class="dv">30</span>, <span class="at">yend =</span> country), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb248-5"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb248-6"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a geom_text() layer</span></span>
+<span id="cb248-7"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">round</span>(lifeExp,<span class="dv">1</span>)), <span class="at">color =</span> <span class="st">&quot;white&quot;</span>, <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb248-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb248-9"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Modify the scales</span></span>
+<span id="cb248-10"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">&quot;&quot;</span>, <span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">30</span>,<span class="dv">90</span>), <span class="at">position =</span> <span class="st">&quot;top&quot;</span>) <span class="sc">+</span></span>
+<span id="cb248-11"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb248-12"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title and caption</span></span>
+<span id="cb248-13"><a href="intro-to-data-visualization-with-ggplot2.html#cb248-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Highest and lowest life expectancies, 2007&quot;</span>, <span class="at">caption =</span> <span class="st">&quot;Source: gapminder&quot;</span>)</span></code></pre></div>
+<p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro-to-the-tidyverse.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="working-with-data-in-the-tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/04-Intro_Data_Vis_ggplot2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/04-Intro_Data_Vis_ggplot2.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/04-Intro_Data_Vis_ggplot2.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

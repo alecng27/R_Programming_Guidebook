@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>12 Web Scraping in R | R_Programming_Guidebook Project</title>
+  <meta name="description" content="12 Web Scraping in R | R_Programming_Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="12 Web Scraping in R | R_Programming_Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="12 Web Scraping in R | R_Programming_Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="joining-data-in-sql.html"/>
+<link rel="next" href="ch-2---slr.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>General Notes</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R_Programming_Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="web-scraping-in-r" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> Web Scraping in R</h1>
+<p><a href="https://learn.datacamp.com/courses/web-scraping-in-r" class="uri">https://learn.datacamp.com/courses/web-scraping-in-r</a></p>
+<div id="introduction-to-html-and-web-scraping" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Introduction to HTML and Web Scraping</h2>
+<p><strong>Read in HTML</strong></p>
+<p>A necessary package to read HTML is <code>rvest</code>:</p>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="web-scraping-in-r.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb591-2"><a href="web-scraping-in-r.html#cb591-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb591-3"><a href="web-scraping-in-r.html#cb591-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr)</span>
+<span id="cb591-4"><a href="web-scraping-in-r.html#cb591-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(xml2)</span></code></pre></div>
+<p>Take the <code>html_excerpt_raw</code> variable and turn it into an HTML document that R understands using a function from the <code>rvest</code> package:</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="web-scraping-in-r.html#cb592-1" aria-hidden="true" tabindex="-1"></a>html_excerpt_raw <span class="ot">&lt;-</span> <span class="st">&#39;</span></span>
+<span id="cb592-2"><a href="web-scraping-in-r.html#cb592-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html&gt; </span></span>
+<span id="cb592-3"><a href="web-scraping-in-r.html#cb592-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt; </span></span>
+<span id="cb592-4"><a href="web-scraping-in-r.html#cb592-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;h1&gt;Web scraping is cool&lt;/h1&gt;</span></span>
+<span id="cb592-5"><a href="web-scraping-in-r.html#cb592-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p&gt;It involves writing code – be it R or Python.&lt;/p&gt;</span></span>
+<span id="cb592-6"><a href="web-scraping-in-r.html#cb592-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p&gt;&lt;a href=&quot;https://datacamp.com&quot;&gt;DataCamp&lt;/a&gt; </span></span>
+<span id="cb592-7"><a href="web-scraping-in-r.html#cb592-7" aria-hidden="true" tabindex="-1"></a><span class="st">        has courses on it.&lt;/p&gt;</span></span>
+<span id="cb592-8"><a href="web-scraping-in-r.html#cb592-8" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt; </span></span>
+<span id="cb592-9"><a href="web-scraping-in-r.html#cb592-9" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&#39;</span></span>
+<span id="cb592-10"><a href="web-scraping-in-r.html#cb592-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb592-11"><a href="web-scraping-in-r.html#cb592-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn the raw excerpt into an HTML document R understands</span></span>
+<span id="cb592-12"><a href="web-scraping-in-r.html#cb592-12" aria-hidden="true" tabindex="-1"></a>html_excerpt <span class="ot">&lt;-</span> <span class="fu">read_html</span>(html_excerpt_raw)</span>
+<span id="cb592-13"><a href="web-scraping-in-r.html#cb592-13" aria-hidden="true" tabindex="-1"></a>html_excerpt</span></code></pre></div>
+<pre><code>## {html_document}
+## &lt;html&gt;
+## [1] &lt;body&gt; \n    &lt;h1&gt;Web scraping is cool&lt;/h1&gt;\n    &lt;p&gt;It involves writing co ...</code></pre>
+<p>Use the <code>xml_structure()</code> function to get a better overview of the tag hierarchy of the HTML excerpt:</p>
+<div class="sourceCode" id="cb594"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb594-1"><a href="web-scraping-in-r.html#cb594-1" aria-hidden="true" tabindex="-1"></a><span class="fu">xml_structure</span>(html_excerpt)</span></code></pre></div>
+<pre><code>## &lt;html&gt;
+##   &lt;body&gt;
+##     {text}
+##     &lt;h1&gt;
+##       {text}
+##     {text}
+##     &lt;p&gt;
+##       {text}
+##     {text}
+##     &lt;p&gt;
+##       &lt;a [href]&gt;
+##         {text}
+##       {text}
+##     {text}</code></pre>
+<p><code>read_html(url)</code> : scrape HTML content from a given URL</p>
+<p><code>html_nodes()</code>: identifies HTML wrappers.</p>
+<p><code>html_nodes(“.class”)</code>: calls node based on CSS class</p>
+<code>html_nodes(“#id”)</code>: calls node based on
+<div>
+<p>id</p>
+<p><code>html_nodes(xpath=”xpath”)</code>: calls node based on xpath (we’ll cover this later)</p>
+<p><code>html_table()</code>: turns HTML tables into data frames</p>
+<p><code>html_text()</code>: strips the HTML tags and extracts only the text</p>
+</div>
+<div id="navigation-and-selection-with-css" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Navigation and Selection with CSS</h2>
+<p><strong>Select multiple HTML types</strong></p>
+<p>CSS can be used to style a web page. In the most basic form, this happens via type selectors, where styles are defined for and applied to all HTML elements of a certain type. In turn, you can also use type selectors to scrape pages for specific HTML elements.</p>
+<p>CSS can also combine multiple type selectors via a comma, i.e. with <code>html_nodes("type1, type2")</code>. This selects all elements that have <code>type1</code> or <code>type2</code>.</p>
+<div class="sourceCode" id="cb596"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb596-1"><a href="web-scraping-in-r.html#cb596-1" aria-hidden="true" tabindex="-1"></a>languages_raw_html <span class="ot">&lt;-</span> <span class="st">&#39;&lt;html&gt; </span></span>
+<span id="cb596-2"><a href="web-scraping-in-r.html#cb596-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt; </span></span>
+<span id="cb596-3"><a href="web-scraping-in-r.html#cb596-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div&gt;Python is perfect for programming.&lt;/div&gt;</span></span>
+<span id="cb596-4"><a href="web-scraping-in-r.html#cb596-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p&gt;Still, R might be better suited for data analysis.&lt;/p&gt;</span></span>
+<span id="cb596-5"><a href="web-scraping-in-r.html#cb596-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;small&gt;(And has prettier charts, too.)&lt;/small&gt;</span></span>
+<span id="cb596-6"><a href="web-scraping-in-r.html#cb596-6" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt; </span></span>
+<span id="cb596-7"><a href="web-scraping-in-r.html#cb596-7" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&#39;</span></span>
+<span id="cb596-8"><a href="web-scraping-in-r.html#cb596-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb596-9"><a href="web-scraping-in-r.html#cb596-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Read in the HTML</span></span>
+<span id="cb596-10"><a href="web-scraping-in-r.html#cb596-10" aria-hidden="true" tabindex="-1"></a>languages_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(languages_raw_html)</span>
+<span id="cb596-11"><a href="web-scraping-in-r.html#cb596-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the div and p tags and print their text</span></span>
+<span id="cb596-12"><a href="web-scraping-in-r.html#cb596-12" aria-hidden="true" tabindex="-1"></a>languages_html <span class="sc">%&gt;%</span></span>
+<span id="cb596-13"><a href="web-scraping-in-r.html#cb596-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;div, p&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb596-14"><a href="web-scraping-in-r.html#cb596-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;Python is perfect for programming.&quot;                
+## [2] &quot;Still, R might be better suited for data analysis.&quot;</code></pre>
+<p><strong>CSS classes and IDs</strong></p>
+<p>IDs should be unique across a web page. If you can make sure this is the case, it can reduce the complexity of your scraping selectors drastically.</p>
+<p>Here’s the structure of an HTML page you might encounter in the wild:</p>
+<div class="sourceCode" id="cb598"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb598-1"><a href="web-scraping-in-r.html#cb598-1" aria-hidden="true" tabindex="-1"></a>structured_html <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt;</span></span>
+<span id="cb598-2"><a href="web-scraping-in-r.html#cb598-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt;</span></span>
+<span id="cb598-3"><a href="web-scraping-in-r.html#cb598-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;first&#39;&gt;</span></span>
+<span id="cb598-4"><a href="web-scraping-in-r.html#cb598-4" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;h1 class = &#39;big&#39;&gt;Joe Biden&lt;/h1&gt;</span></span>
+<span id="cb598-5"><a href="web-scraping-in-r.html#cb598-5" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;first blue&#39;&gt;Democrat&lt;/p&gt;</span></span>
+<span id="cb598-6"><a href="web-scraping-in-r.html#cb598-6" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;second blue&#39;&gt;Male&lt;/p&gt;</span></span>
+<span id="cb598-7"><a href="web-scraping-in-r.html#cb598-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb598-8"><a href="web-scraping-in-r.html#cb598-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;third&#39;&gt;</span></span>
+<span id="cb598-9"><a href="web-scraping-in-r.html#cb598-9" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;h1 class = &#39;big&#39;&gt;Donald Trump&lt;/h1&gt;</span></span>
+<span id="cb598-10"><a href="web-scraping-in-r.html#cb598-10" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;first red&#39;&gt;Republican&lt;/p&gt;</span></span>
+<span id="cb598-11"><a href="web-scraping-in-r.html#cb598-11" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;second red&#39;&gt;Male&lt;/p&gt;</span></span>
+<span id="cb598-12"><a href="web-scraping-in-r.html#cb598-12" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb598-13"><a href="web-scraping-in-r.html#cb598-13" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
+<span id="cb598-14"><a href="web-scraping-in-r.html#cb598-14" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;</span></span>
+<span id="cb598-15"><a href="web-scraping-in-r.html#cb598-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb598-16"><a href="web-scraping-in-r.html#cb598-16" aria-hidden="true" tabindex="-1"></a>structured_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(structured_html)</span></code></pre></div>
+<p>Using <code>html_nodes()</code>, find the shortest possible selector to select the first <code>div</code> in <code>structured_html</code>:</p>
+<div class="sourceCode" id="cb599"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb599-1"><a href="web-scraping-in-r.html#cb599-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the first div</span></span>
+<span id="cb599-2"><a href="web-scraping-in-r.html#cb599-2" aria-hidden="true" tabindex="-1"></a>structured_html <span class="sc">%&gt;%</span></span>
+<span id="cb599-3"><a href="web-scraping-in-r.html#cb599-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">&#39;#first&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;div id=&quot;first&quot;&gt;\n      &lt;h1 class=&quot;big&quot;&gt;Joe Biden&lt;/h1&gt;\n      &lt;p class=&quot;f ...</code></pre>
+<p><strong>Select the last child with a pseudo-class</strong></p>
+<p>In the following HTML showing the author of a text in the last paragraph, there are two groups of <code>p</code> nodes:</p>
+<div class="sourceCode" id="cb601"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb601-1"><a href="web-scraping-in-r.html#cb601-1" aria-hidden="true" tabindex="-1"></a>nested_html <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt;</span></span>
+<span id="cb601-2"><a href="web-scraping-in-r.html#cb601-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt;</span></span>
+<span id="cb601-3"><a href="web-scraping-in-r.html#cb601-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div&gt;</span></span>
+<span id="cb601-4"><a href="web-scraping-in-r.html#cb601-4" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;text&#39;&gt;A sophisticated text [...]&lt;/p&gt;</span></span>
+<span id="cb601-5"><a href="web-scraping-in-r.html#cb601-5" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;text&#39;&gt;Another paragraph following [...]&lt;/p&gt;</span></span>
+<span id="cb601-6"><a href="web-scraping-in-r.html#cb601-6" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;text&#39;&gt;Author: T.G.&lt;/p&gt;</span></span>
+<span id="cb601-7"><a href="web-scraping-in-r.html#cb601-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb601-8"><a href="web-scraping-in-r.html#cb601-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;p&gt;Copyright: DC&lt;/p&gt;</span></span>
+<span id="cb601-9"><a href="web-scraping-in-r.html#cb601-9" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
+<span id="cb601-10"><a href="web-scraping-in-r.html#cb601-10" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;</span></span>
+<span id="cb601-11"><a href="web-scraping-in-r.html#cb601-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb601-12"><a href="web-scraping-in-r.html#cb601-12" aria-hidden="true" tabindex="-1"></a>nested_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(nested_html)</span></code></pre></div>
+<p>use the pseudo-class that selects the last child to scrape the last <code>p</code> in each group.</p>
+<div class="sourceCode" id="cb602"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb602-1"><a href="web-scraping-in-r.html#cb602-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the last child of each p group</span></span>
+<span id="cb602-2"><a href="web-scraping-in-r.html#cb602-2" aria-hidden="true" tabindex="-1"></a>nested_html <span class="sc">%&gt;%</span></span>
+<span id="cb602-3"><a href="web-scraping-in-r.html#cb602-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;p:last-child&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (2)}
+## [1] &lt;p class=&quot;text&quot;&gt;Author: T.G.&lt;/p&gt;
+## [2] &lt;p&gt;Copyright: DC&lt;/p&gt;</code></pre>
+<p>As this selected the last <code>p</code> node from both groups, make use of the <code>text</code> class to get only the authorship information.</p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="web-scraping-in-r.html#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This time for real: Select only the last node of the p&#39;s wrapped by the div</span></span>
+<span id="cb604-2"><a href="web-scraping-in-r.html#cb604-2" aria-hidden="true" tabindex="-1"></a>nested_html  <span class="sc">%&gt;%</span> </span>
+<span id="cb604-3"><a href="web-scraping-in-r.html#cb604-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;p.text:last-child&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;p class=&quot;text&quot;&gt;Author: T.G.&lt;/p&gt;</code></pre>
+<p><strong>Select direct descendants with the child combinator</strong></p>
+<p>There are cases where selectors like <code>type</code>, <code>class</code>, or <code>ID</code> won’t work, for example, if you only want to extract direct descendants of the top <code>ul</code> element. For that, you will use the child combinator (<code>&gt;</code>).</p>
+<p>Here, your goal is to scrape a list of all mentioned computer languages, but without the accompanying information in the sub-bullets:</p>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="web-scraping-in-r.html#cb606-1" aria-hidden="true" tabindex="-1"></a>languages_html_2 <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt;</span></span>
+<span id="cb606-2"><a href="web-scraping-in-r.html#cb606-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;ul id = &#39;languages&#39;&gt;</span></span>
+<span id="cb606-3"><a href="web-scraping-in-r.html#cb606-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;SQL&lt;/li&gt;</span></span>
+<span id="cb606-4"><a href="web-scraping-in-r.html#cb606-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;ul&gt;    </span></span>
+<span id="cb606-5"><a href="web-scraping-in-r.html#cb606-5" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;li&gt;Databases&lt;/li&gt;</span></span>
+<span id="cb606-6"><a href="web-scraping-in-r.html#cb606-6" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;li&gt;Query Language&lt;/li&gt;</span></span>
+<span id="cb606-7"><a href="web-scraping-in-r.html#cb606-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/ul&gt;</span></span>
+<span id="cb606-8"><a href="web-scraping-in-r.html#cb606-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;R&lt;/li&gt;</span></span>
+<span id="cb606-9"><a href="web-scraping-in-r.html#cb606-9" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;ul&gt;</span></span>
+<span id="cb606-10"><a href="web-scraping-in-r.html#cb606-10" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;li&gt;Collection&lt;/li&gt;</span></span>
+<span id="cb606-11"><a href="web-scraping-in-r.html#cb606-11" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;li&gt;Analysis&lt;/li&gt;</span></span>
+<span id="cb606-12"><a href="web-scraping-in-r.html#cb606-12" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;li&gt;Visualization&lt;/li&gt;</span></span>
+<span id="cb606-13"><a href="web-scraping-in-r.html#cb606-13" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/ul&gt;</span></span>
+<span id="cb606-14"><a href="web-scraping-in-r.html#cb606-14" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;li&gt;Python&lt;/li&gt;</span></span>
+<span id="cb606-15"><a href="web-scraping-in-r.html#cb606-15" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/ul&gt;</span></span>
+<span id="cb606-16"><a href="web-scraping-in-r.html#cb606-16" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/html&gt;&quot;</span></span>
+<span id="cb606-17"><a href="web-scraping-in-r.html#cb606-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb606-18"><a href="web-scraping-in-r.html#cb606-18" aria-hidden="true" tabindex="-1"></a>languages_html_2 <span class="ot">&lt;-</span> <span class="fu">read_html</span>(languages_html_2)</span></code></pre></div>
+<p>First, gather all the <code>li</code> elements in the nested list shown above and print their text:</p>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="web-scraping-in-r.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the text of all list elements</span></span>
+<span id="cb607-2"><a href="web-scraping-in-r.html#cb607-2" aria-hidden="true" tabindex="-1"></a>languages_html_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb607-3"><a href="web-scraping-in-r.html#cb607-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;li&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb607-4"><a href="web-scraping-in-r.html#cb607-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;SQL&quot;            &quot;Databases&quot;      &quot;Query Language&quot; &quot;R&quot;             
+## [5] &quot;Collection&quot;     &quot;Analysis&quot;       &quot;Visualization&quot;  &quot;Python&quot;</code></pre>
+<p>Extract only direct descendants of the top-level <code>ul</code> element, using the child combinator:</p>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="web-scraping-in-r.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract only the text of the computer languages (without the sub lists)</span></span>
+<span id="cb609-2"><a href="web-scraping-in-r.html#cb609-2" aria-hidden="true" tabindex="-1"></a>languages_html_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb609-3"><a href="web-scraping-in-r.html#cb609-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;ul#languages &gt; li&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb609-4"><a href="web-scraping-in-r.html#cb609-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;SQL&quot;    &quot;R&quot;      &quot;Python&quot;</code></pre>
+<p><strong>Not every sibling is the same</strong></p>
+<p>The following HTML code contains two headings followed by some <code>code</code> and <code>span</code> tags:</p>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="web-scraping-in-r.html#cb611-1" aria-hidden="true" tabindex="-1"></a>code_html <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt; </span></span>
+<span id="cb611-2"><a href="web-scraping-in-r.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt; </span></span>
+<span id="cb611-3"><a href="web-scraping-in-r.html#cb611-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;h2 class = &#39;first&#39;&gt;First example:&lt;/h2&gt;</span></span>
+<span id="cb611-4"><a href="web-scraping-in-r.html#cb611-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;code&gt;some = code(2)&lt;/code&gt;</span></span>
+<span id="cb611-5"><a href="web-scraping-in-r.html#cb611-5" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;span&gt;will compile to...&lt;/span&gt;</span></span>
+<span id="cb611-6"><a href="web-scraping-in-r.html#cb611-6" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;code&gt;some = more_code()&lt;/code&gt;</span></span>
+<span id="cb611-7"><a href="web-scraping-in-r.html#cb611-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;h2 class = &#39;second&#39;&gt;Second example:&lt;/h2&gt;</span></span>
+<span id="cb611-8"><a href="web-scraping-in-r.html#cb611-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;code&gt;another = code(3)&lt;/code&gt;</span></span>
+<span id="cb611-9"><a href="web-scraping-in-r.html#cb611-9" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;span&gt;will compile to...&lt;/span&gt;</span></span>
+<span id="cb611-10"><a href="web-scraping-in-r.html#cb611-10" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;code&gt;another = more_code()&lt;/code&gt;</span></span>
+<span id="cb611-11"><a href="web-scraping-in-r.html#cb611-11" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt; </span></span>
+<span id="cb611-12"><a href="web-scraping-in-r.html#cb611-12" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/html&gt;&quot;</span></span>
+<span id="cb611-13"><a href="web-scraping-in-r.html#cb611-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb611-14"><a href="web-scraping-in-r.html#cb611-14" aria-hidden="true" tabindex="-1"></a>code_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(code_html)</span></code></pre></div>
+<p>Select the first <code>code</code> element in the second example using <code>html_nodes()</code> with the correct sibling combinator.</p>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="web-scraping-in-r.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only the first code element in the second example</span></span>
+<span id="cb612-2"><a href="web-scraping-in-r.html#cb612-2" aria-hidden="true" tabindex="-1"></a>code_html <span class="sc">%&gt;%</span> </span>
+<span id="cb612-3"><a href="web-scraping-in-r.html#cb612-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;h2.second + code&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;code&gt;another = code(3)&lt;/code&gt;</code></pre>
+<p>Now select all <code>code</code> elements that are in the second example using another type of sibling combinator.</p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="web-scraping-in-r.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all code elements in the second example</span></span>
+<span id="cb614-2"><a href="web-scraping-in-r.html#cb614-2" aria-hidden="true" tabindex="-1"></a>code_html <span class="sc">%&gt;%</span> </span>
+<span id="cb614-3"><a href="web-scraping-in-r.html#cb614-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&#39;h2.second ~ code&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (2)}
+## [1] &lt;code&gt;another = code(3)&lt;/code&gt;
+## [2] &lt;code&gt;another = more_code()&lt;/code&gt;</code></pre>
+</div>
+<div id="advanced-selection-with-xpath" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Advanced Selection with XPATH</h2>
+<p><strong>Select by class and ID with XPATH</strong></p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="web-scraping-in-r.html#cb616-1" aria-hidden="true" tabindex="-1"></a>weather_html <span class="ot">&lt;-</span> <span class="st">&quot;</span></span>
+<span id="cb616-2"><a href="web-scraping-in-r.html#cb616-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;html&gt;</span></span>
+<span id="cb616-3"><a href="web-scraping-in-r.html#cb616-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt;</span></span>
+<span id="cb616-4"><a href="web-scraping-in-r.html#cb616-4" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;first&#39;&gt;</span></span>
+<span id="cb616-5"><a href="web-scraping-in-r.html#cb616-5" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;h1 class = &#39;big&#39;&gt;Berlin Weather Station&lt;/h1&gt;</span></span>
+<span id="cb616-6"><a href="web-scraping-in-r.html#cb616-6" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;first&#39;&gt;Temperature: 20°C&lt;/p&gt;</span></span>
+<span id="cb616-7"><a href="web-scraping-in-r.html#cb616-7" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;second&#39;&gt;Humidity: 45%&lt;/p&gt;</span></span>
+<span id="cb616-8"><a href="web-scraping-in-r.html#cb616-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb616-9"><a href="web-scraping-in-r.html#cb616-9" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;second&#39;&gt;...&lt;/div&gt;</span></span>
+<span id="cb616-10"><a href="web-scraping-in-r.html#cb616-10" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;third&#39;&gt;</span></span>
+<span id="cb616-11"><a href="web-scraping-in-r.html#cb616-11" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;first&#39;&gt;Sunshine: 5hrs&lt;/p&gt;</span></span>
+<span id="cb616-12"><a href="web-scraping-in-r.html#cb616-12" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;second&#39;&gt;Precipitation: 0mm&lt;/p&gt;</span></span>
+<span id="cb616-13"><a href="web-scraping-in-r.html#cb616-13" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb616-14"><a href="web-scraping-in-r.html#cb616-14" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
+<span id="cb616-15"><a href="web-scraping-in-r.html#cb616-15" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;</span></span>
+<span id="cb616-16"><a href="web-scraping-in-r.html#cb616-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-17"><a href="web-scraping-in-r.html#cb616-17" aria-hidden="true" tabindex="-1"></a>weather_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(weather_html)</span></code></pre></div>
+<p>Start by selecting all <code>p</code> tags in the above HTML using <code>XPATH</code>.</p>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="web-scraping-in-r.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all p elements</span></span>
+<span id="cb617-2"><a href="web-scraping-in-r.html#cb617-2" aria-hidden="true" tabindex="-1"></a>weather_html <span class="sc">%&gt;%</span></span>
+<span id="cb617-3"><a href="web-scraping-in-r.html#cb617-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//p&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (4)}
+## [1] &lt;p class=&quot;first&quot;&gt;Temperature: 20°C&lt;/p&gt;
+## [2] &lt;p class=&quot;second&quot;&gt;Humidity: 45%&lt;/p&gt;
+## [3] &lt;p class=&quot;first&quot;&gt;Sunshine: 5hrs&lt;/p&gt;
+## [4] &lt;p class=&quot;second&quot;&gt;Precipitation: 0mm&lt;/p&gt;</code></pre>
+<p>Now select only the <code>p</code> elements with class <code>second</code>.</p>
+<p>The corresponding CSS selector would be <code>.second</code>, so here you need to use a <code>[@class = ...]</code> predicate applied to all <code>p</code> tags.</p>
+<div class="sourceCode" id="cb619"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb619-1"><a href="web-scraping-in-r.html#cb619-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select p elements with the second class</span></span>
+<span id="cb619-2"><a href="web-scraping-in-r.html#cb619-2" aria-hidden="true" tabindex="-1"></a>weather_html <span class="sc">%&gt;%</span></span>
+<span id="cb619-3"><a href="web-scraping-in-r.html#cb619-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//p[@class = &quot;second&quot;]&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (2)}
+## [1] &lt;p class=&quot;second&quot;&gt;Humidity: 45%&lt;/p&gt;
+## [2] &lt;p class=&quot;second&quot;&gt;Precipitation: 0mm&lt;/p&gt;</code></pre>
+<p>Now select all <code>p</code> elements that are children of the element with ID <code>third</code>.</p>
+<p>The corresponding CSS selector would be <code>#third &gt; p</code> – don’t forget the universal selector (<code>*</code>) before the <code>@id = ...</code> predicate and remember that children are selected with a <code>/</code>, not a <code>//</code>.</p>
+<div class="sourceCode" id="cb621"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb621-1"><a href="web-scraping-in-r.html#cb621-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select p elements that are children of &quot;#third&quot;</span></span>
+<span id="cb621-2"><a href="web-scraping-in-r.html#cb621-2" aria-hidden="true" tabindex="-1"></a>weather_html <span class="sc">%&gt;%</span></span>
+<span id="cb621-3"><a href="web-scraping-in-r.html#cb621-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//*[@id = &quot;third&quot;]/p&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (2)}
+## [1] &lt;p class=&quot;first&quot;&gt;Sunshine: 5hrs&lt;/p&gt;
+## [2] &lt;p class=&quot;second&quot;&gt;Precipitation: 0mm&lt;/p&gt;</code></pre>
+<p>Now select only the <code>p</code> element with class <code>second</code> that is a direct child of #<code>third</code>, again using XPATH.</p>
+<p>Here, you need to append to the XPATH from the previous step the <code>@class</code> predicate you used in the second step.</p>
+<div class="sourceCode" id="cb623"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb623-1"><a href="web-scraping-in-r.html#cb623-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select p elements with class &quot;second&quot; that are children of &quot;#third&quot;</span></span>
+<span id="cb623-2"><a href="web-scraping-in-r.html#cb623-2" aria-hidden="true" tabindex="-1"></a>weather_html <span class="sc">%&gt;%</span></span>
+<span id="cb623-3"><a href="web-scraping-in-r.html#cb623-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//*[@id = &quot;third&quot;]/p[@class = &quot;second&quot;]&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;p class=&quot;second&quot;&gt;Precipitation: 0mm&lt;/p&gt;</code></pre>
+<p><strong>Use predicates to select nodes based on their children</strong></p>
+<p>Here’s almost the same HTML as before. In addition, the third <code>div</code> has a <code>p</code> child with a <code>third</code> class.</p>
+<div class="sourceCode" id="cb625"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb625-1"><a href="web-scraping-in-r.html#cb625-1" aria-hidden="true" tabindex="-1"></a>weather_html_2 <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt;</span></span>
+<span id="cb625-2"><a href="web-scraping-in-r.html#cb625-2" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;body&gt;</span></span>
+<span id="cb625-3"><a href="web-scraping-in-r.html#cb625-3" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;first&#39;&gt;</span></span>
+<span id="cb625-4"><a href="web-scraping-in-r.html#cb625-4" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;h1 class = &#39;big&#39;&gt;Berlin Weather Station&lt;/h1&gt;</span></span>
+<span id="cb625-5"><a href="web-scraping-in-r.html#cb625-5" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;first&#39;&gt;Temperature: 20°C&lt;/p&gt;</span></span>
+<span id="cb625-6"><a href="web-scraping-in-r.html#cb625-6" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;second&#39;&gt;Humidity: 45%&lt;/p&gt;</span></span>
+<span id="cb625-7"><a href="web-scraping-in-r.html#cb625-7" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb625-8"><a href="web-scraping-in-r.html#cb625-8" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;second&#39;&gt;...&lt;/div&gt;</span></span>
+<span id="cb625-9"><a href="web-scraping-in-r.html#cb625-9" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;div id = &#39;third&#39;&gt;</span></span>
+<span id="cb625-10"><a href="web-scraping-in-r.html#cb625-10" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;first&#39;&gt;Sunshine: 5hrs&lt;/p&gt;</span></span>
+<span id="cb625-11"><a href="web-scraping-in-r.html#cb625-11" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;second&#39;&gt;Precipitation: 0mm&lt;/p&gt;</span></span>
+<span id="cb625-12"><a href="web-scraping-in-r.html#cb625-12" aria-hidden="true" tabindex="-1"></a><span class="st">      &lt;p class = &#39;third&#39;&gt;Snowfall: 0mm&lt;/p&gt;</span></span>
+<span id="cb625-13"><a href="web-scraping-in-r.html#cb625-13" aria-hidden="true" tabindex="-1"></a><span class="st">    &lt;/div&gt;</span></span>
+<span id="cb625-14"><a href="web-scraping-in-r.html#cb625-14" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;/body&gt;</span></span>
+<span id="cb625-15"><a href="web-scraping-in-r.html#cb625-15" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;</span></span>
+<span id="cb625-16"><a href="web-scraping-in-r.html#cb625-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb625-17"><a href="web-scraping-in-r.html#cb625-17" aria-hidden="true" tabindex="-1"></a>weather_html_2 <span class="ot">&lt;-</span> <span class="fu">read_html</span>(weather_html_2)</span></code></pre></div>
+<p>With XPATH, something that’s not possible with CSS can be done: selecting elements based on the properties of their descendants. For this, predicates may be used.</p>
+<p>Using XPATH, select all the <code>div</code> elements.</p>
+<div class="sourceCode" id="cb626"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb626-1"><a href="web-scraping-in-r.html#cb626-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all divs</span></span>
+<span id="cb626-2"><a href="web-scraping-in-r.html#cb626-2" aria-hidden="true" tabindex="-1"></a>weather_html_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb626-3"><a href="web-scraping-in-r.html#cb626-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (3)}
+## [1] &lt;div id=&quot;first&quot;&gt;\n      &lt;h1 class=&quot;big&quot;&gt;Berlin Weather Station&lt;/h1&gt;\n     ...
+## [2] &lt;div id=&quot;second&quot;&gt;...&lt;/div&gt;
+## [3] &lt;div id=&quot;third&quot;&gt;\n      &lt;p class=&quot;first&quot;&gt;Sunshine: 5hrs&lt;/p&gt;\n      &lt;p cla ...</code></pre>
+<p>Now select all <code>div</code>s with <code>p</code> descendants using the predicate notation.</p>
+<div class="sourceCode" id="cb628"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb628-1"><a href="web-scraping-in-r.html#cb628-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all divs with p descendants</span></span>
+<span id="cb628-2"><a href="web-scraping-in-r.html#cb628-2" aria-hidden="true" tabindex="-1"></a>weather_html_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb628-3"><a href="web-scraping-in-r.html#cb628-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div[p]&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (2)}
+## [1] &lt;div id=&quot;first&quot;&gt;\n      &lt;h1 class=&quot;big&quot;&gt;Berlin Weather Station&lt;/h1&gt;\n     ...
+## [2] &lt;div id=&quot;third&quot;&gt;\n      &lt;p class=&quot;first&quot;&gt;Sunshine: 5hrs&lt;/p&gt;\n      &lt;p cla ...</code></pre>
+<p>Now select <code>div</code>s with <code>p</code> descendants which have the <code>third</code> class.</p>
+<div class="sourceCode" id="cb630"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb630-1"><a href="web-scraping-in-r.html#cb630-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select all divs with p descendants having the &quot;third&quot; class</span></span>
+<span id="cb630-2"><a href="web-scraping-in-r.html#cb630-2" aria-hidden="true" tabindex="-1"></a>weather_html_2 <span class="sc">%&gt;%</span> </span>
+<span id="cb630-3"><a href="web-scraping-in-r.html#cb630-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div[p[@class = &quot;third&quot;]]&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;div id=&quot;third&quot;&gt;\n      &lt;p class=&quot;first&quot;&gt;Sunshine: 5hrs&lt;/p&gt;\n      &lt;p cla ...</code></pre>
+<p><strong>Get to know the position() function</strong></p>
+<p><code>position()</code> function is very powerful when used within a predicate. Together with operators, you can basically select any node from those that match a certain path.</p>
+<p>You’ll try this out with the following HTML excerpt that is available to you via <code>rules_html</code>. Let’s assume this is a continuously updated website that displays certain Coronavirus rules for a given day and the day after.</p>
+<div class="sourceCode" id="cb632"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb632-1"><a href="web-scraping-in-r.html#cb632-1" aria-hidden="true" tabindex="-1"></a>rules_html <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt;</span></span>
+<span id="cb632-2"><a href="web-scraping-in-r.html#cb632-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;div&gt;</span></span>
+<span id="cb632-3"><a href="web-scraping-in-r.html#cb632-3" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;h2&gt;Today&#39;s rules&lt;/h2&gt;</span></span>
+<span id="cb632-4"><a href="web-scraping-in-r.html#cb632-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;Wear a mask&lt;/p&gt;</span></span>
+<span id="cb632-5"><a href="web-scraping-in-r.html#cb632-5" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;Wash your hands&lt;/p&gt;</span></span>
+<span id="cb632-6"><a href="web-scraping-in-r.html#cb632-6" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/div&gt;</span></span>
+<span id="cb632-7"><a href="web-scraping-in-r.html#cb632-7" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;div&gt;</span></span>
+<span id="cb632-8"><a href="web-scraping-in-r.html#cb632-8" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;h2&gt;Tomorrow&#39;s rules&lt;/h2&gt;</span></span>
+<span id="cb632-9"><a href="web-scraping-in-r.html#cb632-9" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;Wear a mask&lt;/p&gt;</span></span>
+<span id="cb632-10"><a href="web-scraping-in-r.html#cb632-10" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;p&gt;Wash your hands&lt;/p&gt;</span></span>
+<span id="cb632-11"><a href="web-scraping-in-r.html#cb632-11" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;small&gt;Bring hand sanitizer with you&lt;/small&gt;</span></span>
+<span id="cb632-12"><a href="web-scraping-in-r.html#cb632-12" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/div&gt;</span></span>
+<span id="cb632-13"><a href="web-scraping-in-r.html#cb632-13" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;</span></span>
+<span id="cb632-14"><a href="web-scraping-in-r.html#cb632-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb632-15"><a href="web-scraping-in-r.html#cb632-15" aria-hidden="true" tabindex="-1"></a>rules_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(rules_html)</span></code></pre></div>
+<p>Extract the text of the second <code>p</code> in every <code>div</code> using XPATH.</p>
+<div class="sourceCode" id="cb633"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb633-1"><a href="web-scraping-in-r.html#cb633-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the text of the second p in every div</span></span>
+<span id="cb633-2"><a href="web-scraping-in-r.html#cb633-2" aria-hidden="true" tabindex="-1"></a>rules_html <span class="sc">%&gt;%</span> </span>
+<span id="cb633-3"><a href="web-scraping-in-r.html#cb633-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div/p[position() = 2]&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb633-4"><a href="web-scraping-in-r.html#cb633-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;Wash your hands&quot; &quot;Wash your hands&quot;</code></pre>
+<p>Now extract the text of every <code>p</code> (except the <code>second</code>) in every <code>div</code>.</p>
+<div class="sourceCode" id="cb635"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb635-1"><a href="web-scraping-in-r.html#cb635-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select every p except the second from every div</span></span>
+<span id="cb635-2"><a href="web-scraping-in-r.html#cb635-2" aria-hidden="true" tabindex="-1"></a>rules_html <span class="sc">%&gt;%</span> </span>
+<span id="cb635-3"><a href="web-scraping-in-r.html#cb635-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div/p[position() != 2]&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb635-4"><a href="web-scraping-in-r.html#cb635-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;Wear a mask&quot; &quot;Wear a mask&quot;</code></pre>
+<p>Extract the text of the last three children of the second <code>div</code>.</p>
+<p>Only use the <code>&gt;=</code> operator for selecting these nodes.</p>
+<div class="sourceCode" id="cb637"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb637-1"><a href="web-scraping-in-r.html#cb637-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the text of the last three nodes of the second div</span></span>
+<span id="cb637-2"><a href="web-scraping-in-r.html#cb637-2" aria-hidden="true" tabindex="-1"></a>rules_html <span class="sc">%&gt;%</span> </span>
+<span id="cb637-3"><a href="web-scraping-in-r.html#cb637-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div[position() = 2]/*[position() &gt;= 2]&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb637-4"><a href="web-scraping-in-r.html#cb637-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;Wear a mask&quot;                   &quot;Wash your hands&quot;              
+## [3] &quot;Bring hand sanitizer with you&quot;</code></pre>
+<p><strong>Extract nodes based on the number of their children</strong></p>
+<p>XPATH <code>count()</code> function can be used within a predicate to narrow down a selection to these nodes that match a certain children count. This is especially helpful if your scraper depends on some nodes having a minimum amount of children.</p>
+<p>You’re only interested in <code>div</code>s that have exactly one <code>h2</code> header and at least two paragraphs.</p>
+<p>Select the desired <code>div</code>s with the appropriate XPATH selector, making use of the <code>count()</code> function.</p>
+<div class="sourceCode" id="cb639"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb639-1"><a href="web-scraping-in-r.html#cb639-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only divs with one header and at least two paragraphs</span></span>
+<span id="cb639-2"><a href="web-scraping-in-r.html#cb639-2" aria-hidden="true" tabindex="-1"></a>rules_html <span class="sc">%&gt;%</span></span>
+<span id="cb639-3"><a href="web-scraping-in-r.html#cb639-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//div[count(h2) = 1 and count(p) &gt; 1]&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (2)}
+## [1] &lt;div&gt;\n  &lt;h2&gt;Today&#39;s rules&lt;/h2&gt;\n  &lt;p&gt;Wear a mask&lt;/p&gt;\n  &lt;p&gt;Wash your han ...
+## [2] &lt;div&gt;\n  &lt;h2&gt;Tomorrow&#39;s rules&lt;/h2&gt;\n  &lt;p&gt;Wear a mask&lt;/p&gt;\n  &lt;p&gt;Wash your  ...</code></pre>
+<p><strong>Select directly from a parent element with XPATH’s text()</strong></p>
+<p>extract the <code>function</code> information in parentheses into their own column, so you are required to extract a data frame with not two, but three columns: <code>actors</code>, <code>roles</code>, and <code>functions</code>.</p>
+<div class="sourceCode" id="cb641"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb641-1"><a href="web-scraping-in-r.html#cb641-1" aria-hidden="true" tabindex="-1"></a>roles_html <span class="ot">&lt;-</span> <span class="st">&quot;&lt;html&gt;</span></span>
+<span id="cb641-2"><a href="web-scraping-in-r.html#cb641-2" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;table&gt;</span></span>
+<span id="cb641-3"><a href="web-scraping-in-r.html#cb641-3" aria-hidden="true" tabindex="-1"></a><span class="st"> &lt;tr&gt;</span></span>
+<span id="cb641-4"><a href="web-scraping-in-r.html#cb641-4" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;th&gt;Actor&lt;/th&gt;</span></span>
+<span id="cb641-5"><a href="web-scraping-in-r.html#cb641-5" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;th&gt;Role&lt;/th&gt;</span></span>
+<span id="cb641-6"><a href="web-scraping-in-r.html#cb641-6" aria-hidden="true" tabindex="-1"></a><span class="st"> &lt;/tr&gt;</span></span>
+<span id="cb641-7"><a href="web-scraping-in-r.html#cb641-7" aria-hidden="true" tabindex="-1"></a><span class="st"> &lt;tr&gt;</span></span>
+<span id="cb641-8"><a href="web-scraping-in-r.html#cb641-8" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;td class = &#39;actor&#39;&gt;Jayden Carpenter&lt;/td&gt;</span></span>
+<span id="cb641-9"><a href="web-scraping-in-r.html#cb641-9" aria-hidden="true" tabindex="-1"></a><span class="st">  &lt;td class = &#39;role&#39;&gt;&lt;em&gt;Mickey Mouse&lt;/em&gt; (Voice)&lt;/td&gt;</span></span>
+<span id="cb641-10"><a href="web-scraping-in-r.html#cb641-10" aria-hidden="true" tabindex="-1"></a><span class="st"> &lt;/tr&gt;</span></span>
+<span id="cb641-11"><a href="web-scraping-in-r.html#cb641-11" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/table&gt;</span></span>
+<span id="cb641-12"><a href="web-scraping-in-r.html#cb641-12" aria-hidden="true" tabindex="-1"></a><span class="st">&lt;/html&gt;&quot;</span></span>
+<span id="cb641-13"><a href="web-scraping-in-r.html#cb641-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb641-14"><a href="web-scraping-in-r.html#cb641-14" aria-hidden="true" tabindex="-1"></a>roles_html <span class="ot">&lt;-</span> <span class="fu">read_html</span>(roles_html)</span></code></pre></div>
+<p>Extract the <code>actors</code> and <code>roles</code> from the table using XPATH.</p>
+<div class="sourceCode" id="cb642"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb642-1"><a href="web-scraping-in-r.html#cb642-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the actors in the cells having class &quot;actor&quot;</span></span>
+<span id="cb642-2"><a href="web-scraping-in-r.html#cb642-2" aria-hidden="true" tabindex="-1"></a>actors <span class="ot">&lt;-</span> roles_html <span class="sc">%&gt;%</span> </span>
+<span id="cb642-3"><a href="web-scraping-in-r.html#cb642-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//table//td[@class = &quot;actor&quot;]&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb642-4"><a href="web-scraping-in-r.html#cb642-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
+<span id="cb642-5"><a href="web-scraping-in-r.html#cb642-5" aria-hidden="true" tabindex="-1"></a>actors</span></code></pre></div>
+<pre><code>## [1] &quot;Jayden Carpenter&quot;</code></pre>
+<div class="sourceCode" id="cb644"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb644-1"><a href="web-scraping-in-r.html#cb644-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the roles in the cells having class &quot;role&quot;</span></span>
+<span id="cb644-2"><a href="web-scraping-in-r.html#cb644-2" aria-hidden="true" tabindex="-1"></a>roles <span class="ot">&lt;-</span> roles_html <span class="sc">%&gt;%</span> </span>
+<span id="cb644-3"><a href="web-scraping-in-r.html#cb644-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//table//td[@class = &quot;role&quot;]/em&#39;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb644-4"><a href="web-scraping-in-r.html#cb644-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>()</span>
+<span id="cb644-5"><a href="web-scraping-in-r.html#cb644-5" aria-hidden="true" tabindex="-1"></a>roles</span></code></pre></div>
+<pre><code>## [1] &quot;Mickey Mouse&quot;</code></pre>
+<p>Then, extract the <code>function</code> using the XPATH <code>text()</code> function.</p>
+<p>Extract only the text with the parentheses, which is contained within the same cell as the corresponding role, and trim leading spaces.</p>
+<div class="sourceCode" id="cb646"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb646-1"><a href="web-scraping-in-r.html#cb646-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the functions using the appropriate XPATH function</span></span>
+<span id="cb646-2"><a href="web-scraping-in-r.html#cb646-2" aria-hidden="true" tabindex="-1"></a>functions <span class="ot">&lt;-</span> roles_html <span class="sc">%&gt;%</span> </span>
+<span id="cb646-3"><a href="web-scraping-in-r.html#cb646-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="at">xpath =</span> <span class="st">&#39;//table//td[@class = &quot;role&quot;]/text()&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb646-4"><a href="web-scraping-in-r.html#cb646-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb646-5"><a href="web-scraping-in-r.html#cb646-5" aria-hidden="true" tabindex="-1"></a>functions</span></code></pre></div>
+<pre><code>## [1] &quot;(Voice)&quot;</code></pre>
+<p><strong>Combine extracted data into a data frame</strong></p>
+<p>Combine the three vectors <code>actors</code>, <code>roles</code>, and <code>functions</code> into a data frame called <code>cast</code> (with columns <code>Actor</code>, <code>Role</code> and <code>Function</code>, respectively).</p>
+<div class="sourceCode" id="cb648"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb648-1"><a href="web-scraping-in-r.html#cb648-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new data frame from the extracted vectors</span></span>
+<span id="cb648-2"><a href="web-scraping-in-r.html#cb648-2" aria-hidden="true" tabindex="-1"></a>cast <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb648-3"><a href="web-scraping-in-r.html#cb648-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Actor =</span> actors, </span>
+<span id="cb648-4"><a href="web-scraping-in-r.html#cb648-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Role =</span> roles, </span>
+<span id="cb648-5"><a href="web-scraping-in-r.html#cb648-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Function =</span> functions)</span>
+<span id="cb648-6"><a href="web-scraping-in-r.html#cb648-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb648-7"><a href="web-scraping-in-r.html#cb648-7" aria-hidden="true" tabindex="-1"></a>cast</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   Actor            Role         Function
+##   &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;   
+## 1 Jayden Carpenter Mickey Mouse (Voice)</code></pre>
+</div>
+<div id="scraping-best-practices" class="section level2" number="12.4">
+<h2><span class="header-section-number">12.4</span> Scraping Best Practices</h2>
+<p>*httr**</p>
+<p><code>read_html()</code> actually issues an <strong>HTTP GET</strong> request if provided with a URL.</p>
+<p>The goal of this exercise is to replicate the same query without <code>read_html()</code>, but with httr methods instead.</p>
+<p>Use only httr functions to replicate the behavior of <code>read_html()</code>, including getting the response from Wikipedia and parsing the response object into an HTML document.</p>
+<p>Check the resulting HTTP status code with the appropriate httr function.</p>
+<div class="sourceCode" id="cb650"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb650-1"><a href="web-scraping-in-r.html#cb650-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the HTML document from Wikipedia using httr</span></span>
+<span id="cb650-2"><a href="web-scraping-in-r.html#cb650-2" aria-hidden="true" tabindex="-1"></a>wikipedia_response <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="st">&#39;https://en.wikipedia.org/wiki/Varigotti&#39;</span>)</span>
+<span id="cb650-3"><a href="web-scraping-in-r.html#cb650-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse the response into an HTML doc</span></span>
+<span id="cb650-4"><a href="web-scraping-in-r.html#cb650-4" aria-hidden="true" tabindex="-1"></a>wikipedia_page <span class="ot">&lt;-</span> <span class="fu">content</span>(wikipedia_response)</span>
+<span id="cb650-5"><a href="web-scraping-in-r.html#cb650-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the status code of the response</span></span>
+<span id="cb650-6"><a href="web-scraping-in-r.html#cb650-6" aria-hidden="true" tabindex="-1"></a><span class="fu">status_code</span>(wikipedia_response)</span></code></pre></div>
+<pre><code>## [1] 200</code></pre>
+<p>a fundamental part of the HTTP system are status codes: They tell you if everything is okay (200) or if there is a problem (404) with your request.</p>
+<p>It is good practice to always check the status code of a response before you start working with the downloaded page. For this, you can use the <code>status_code()</code> function from the httr() package.</p>
+<p><strong>Add a custom user agent</strong></p>
+<p>There are two ways of customizing your user agent when using httr for fetching web resources:</p>
+<p>Locally, i.e. as an argument to the current request method.</p>
+<p>Globally via <code>set_config()</code>.</p>
+<p>Send a GET request to <code>https://httpbin.org/user-agent</code> with a custom user agent that says <code>"A request from a DataCamp course on scraping"</code> and print the response.</p>
+<p>In this step, set the user agent locally.</p>
+<div class="sourceCode" id="cb652"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb652-1"><a href="web-scraping-in-r.html#cb652-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass a custom user agent to a GET query to the mentioned URL</span></span>
+<span id="cb652-2"><a href="web-scraping-in-r.html#cb652-2" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="st">&#39;https://httpbin.org/user-agent&#39;</span>, <span class="fu">user_agent</span>(<span class="st">&quot;A request from a DataCamp course on scraping&quot;</span>))</span>
+<span id="cb652-3"><a href="web-scraping-in-r.html#cb652-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response content</span></span>
+<span id="cb652-4"><a href="web-scraping-in-r.html#cb652-4" aria-hidden="true" tabindex="-1"></a><span class="fu">content</span>(response)</span></code></pre></div>
+<pre><code>## $`user-agent`
+## [1] &quot;A request from a DataCamp course on scraping&quot;</code></pre>
+<p>Now, make that custom user agent (<code>"A request from a Alec at LU"</code>) globally available across all future requests with <code>set_config()</code>.</p>
+<div class="sourceCode" id="cb654"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb654-1"><a href="web-scraping-in-r.html#cb654-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Globally set the user agent to &quot;A request from a DataCamp course on scraping&quot;</span></span>
+<span id="cb654-2"><a href="web-scraping-in-r.html#cb654-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set_config</span>(<span class="fu">add_headers</span>(<span class="st">`</span><span class="at">User-Agent</span><span class="st">`</span> <span class="ot">=</span> <span class="st">&quot;A request from a Alec at LU&quot;</span>))</span>
+<span id="cb654-3"><a href="web-scraping-in-r.html#cb654-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Pass a custom user agent to a GET query to the mentioned URL</span></span>
+<span id="cb654-4"><a href="web-scraping-in-r.html#cb654-4" aria-hidden="true" tabindex="-1"></a>response <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="st">&#39;https://httpbin.org/user-agent&#39;</span>)</span>
+<span id="cb654-5"><a href="web-scraping-in-r.html#cb654-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the response content</span></span>
+<span id="cb654-6"><a href="web-scraping-in-r.html#cb654-6" aria-hidden="true" tabindex="-1"></a><span class="fu">content</span>(response)</span></code></pre></div>
+<pre><code>## $`user-agent`
+## [1] &quot;A request from a Alec at LU&quot;</code></pre>
+<p><strong>Apply throttling to a multi-page crawler</strong></p>
+<p>You’ll find the name of the peak within an element with the ID <code>"firstHeading"</code>, while the coordinates are inside an element with class <code>"geo-dms"</code>, which is a descendant of an element with ID <code>"coordinates"</code>.</p>
+<p>Construct a <code>read_html()</code> function that executes with a delay of a half second when executed in a loop.</p>
+<div class="sourceCode" id="cb656"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb656-1"><a href="web-scraping-in-r.html#cb656-1" aria-hidden="true" tabindex="-1"></a>mountain_wiki_pages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;https://en.wikipedia.org/w/index.php?title=Mount_Everest&amp;oldid=958643874&quot;</span>, <span class="st">&quot;https://en.wikipedia.org/w/index.php?title=K2&amp;oldid=956671989&quot;</span>, <span class="st">&quot;https://en.wikipedia.org/w/index.php?title=Kangchenjunga&amp;oldid=957008408&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb657"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb657-1"><a href="web-scraping-in-r.html#cb657-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a throttled read_html() function with a delay of 0.5s</span></span>
+<span id="cb657-2"><a href="web-scraping-in-r.html#cb657-2" aria-hidden="true" tabindex="-1"></a>read_html_delayed <span class="ot">&lt;-</span> <span class="fu">slowly</span>(read_html, </span>
+<span id="cb657-3"><a href="web-scraping-in-r.html#cb657-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">rate =</span> <span class="fu">rate_delay</span>(<span class="fl">0.5</span>))</span></code></pre></div>
+<p>Now write a <code>for</code> loop that goes over every page URL in the prepared variable <code>mountain_wiki_pages</code> and stores the HTML available at the corresponding Wikipedia URL into the <code>html</code> variable</p>
+<div class="sourceCode" id="cb658"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb658-1"><a href="web-scraping-in-r.html#cb658-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct a loop that goes over all page urls</span></span>
+<span id="cb658-2"><a href="web-scraping-in-r.html#cb658-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(page_url <span class="cf">in</span> mountain_wiki_pages){</span>
+<span id="cb658-3"><a href="web-scraping-in-r.html#cb658-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read in the html of each URL with a delay of 0.5s</span></span>
+<span id="cb658-4"><a href="web-scraping-in-r.html#cb658-4" aria-hidden="true" tabindex="-1"></a>  html <span class="ot">&lt;-</span> <span class="fu">read_html_delayed</span>(page_url)</span>
+<span id="cb658-5"><a href="web-scraping-in-r.html#cb658-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Finally, extract the name of the peak as well as its coordinates using the correct CSS selectors given above and store it in <code>peak</code> and <code>coords</code>.</p>
+<div class="sourceCode" id="cb659"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb659-1"><a href="web-scraping-in-r.html#cb659-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract the name of the peak and its coordinates</span></span>
+<span id="cb659-2"><a href="web-scraping-in-r.html#cb659-2" aria-hidden="true" tabindex="-1"></a>  peak <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb659-3"><a href="web-scraping-in-r.html#cb659-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_node</span>(<span class="st">&quot;#firstHeading&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb659-4"><a href="web-scraping-in-r.html#cb659-4" aria-hidden="true" tabindex="-1"></a>  coords <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb659-5"><a href="web-scraping-in-r.html#cb659-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_node</span>(<span class="st">&quot;#coordinates .geo-dms&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb659-6"><a href="web-scraping-in-r.html#cb659-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(peak, coords, <span class="at">sep =</span> <span class="st">&quot;: &quot;</span>))</span>
+<span id="cb659-7"><a href="web-scraping-in-r.html#cb659-7" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<p>Merge all the code chunks above to make it functional:</p>
+<div class="sourceCode" id="cb660"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb660-1"><a href="web-scraping-in-r.html#cb660-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a throttled read_html() function with a delay of 0.5s</span></span>
+<span id="cb660-2"><a href="web-scraping-in-r.html#cb660-2" aria-hidden="true" tabindex="-1"></a>read_html_delayed <span class="ot">&lt;-</span> <span class="fu">slowly</span>(read_html, </span>
+<span id="cb660-3"><a href="web-scraping-in-r.html#cb660-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">rate =</span> <span class="fu">rate_delay</span>(<span class="fl">0.5</span>))</span>
+<span id="cb660-4"><a href="web-scraping-in-r.html#cb660-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct a loop that goes over all page urls</span></span>
+<span id="cb660-5"><a href="web-scraping-in-r.html#cb660-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(page_url <span class="cf">in</span> mountain_wiki_pages){</span>
+<span id="cb660-6"><a href="web-scraping-in-r.html#cb660-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Read in the html of each URL with a delay of 0.5s</span></span>
+<span id="cb660-7"><a href="web-scraping-in-r.html#cb660-7" aria-hidden="true" tabindex="-1"></a>  html <span class="ot">&lt;-</span> <span class="fu">read_html_delayed</span>(page_url)</span>
+<span id="cb660-8"><a href="web-scraping-in-r.html#cb660-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract the name of the peak and its coordinates</span></span>
+<span id="cb660-9"><a href="web-scraping-in-r.html#cb660-9" aria-hidden="true" tabindex="-1"></a>  peak <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb660-10"><a href="web-scraping-in-r.html#cb660-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_node</span>(<span class="st">&quot;#firstHeading&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb660-11"><a href="web-scraping-in-r.html#cb660-11" aria-hidden="true" tabindex="-1"></a>  coords <span class="ot">&lt;-</span> html <span class="sc">%&gt;%</span> </span>
+<span id="cb660-12"><a href="web-scraping-in-r.html#cb660-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_node</span>(<span class="st">&quot;#coordinates .geo-dms&quot;</span>) <span class="sc">%&gt;%</span> <span class="fu">html_text</span>()</span>
+<span id="cb660-13"><a href="web-scraping-in-r.html#cb660-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste</span>(peak, coords, <span class="at">sep =</span> <span class="st">&quot;: &quot;</span>))</span>
+<span id="cb660-14"><a href="web-scraping-in-r.html#cb660-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>## [1] &quot;Mount Everest: 27°59′17″N 86°55′31″E&quot;
+## [1] &quot;K2: 35°52′57″N 76°30′48″E&quot;
+## [1] &quot;Kangchenjunga: 27°42′09″N 88°08′48″E&quot;</code></pre>
+
+</div>
+</div>
+
+
+
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="joining-data-in-sql.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ch-2---slr.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/12-Web_Scraping_in_R.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/12-Web_Scraping_in_R.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/12-Web_Scraping_in_R.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,1968 @@
+# Cleaning Data in R
+
+<https://learn.datacamp.com/courses/cleaning-data-in-r>
+```{r include=FALSE}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(forcats)
+library(stringr)
+library(scales)
+library(lubridate)
+library(assertive)
+library(visdat)
+library(stringdist)
+library(fuzzyjoin)
+library(reclin)
+
+bike_share_rides <- readRDS(gzcon(url("https://assets.datacamp.com/production/repositories/5698/datasets/5d0ed31a0b5c3a63a75cfca7d12c7f7fec1c7521/bike_share_rides_ch1_1.rds")))
+
+sfo_survey <- readRDS(gzcon(url("https://assets.datacamp.com/production/repositories/5698/datasets/d3e478e1482be254e824a801e18996ca482a6878/sfo_survey_ch2_1.rds")))
+
+accounts <- readRDS(gzcon(url("https://assets.datacamp.com/production/repositories/5698/datasets/d8129bcda468694f0aa0ae7d63328c970fb86788/ch3_1_accounts.rds")))
+
+```
+
+## Common Data Problems
+
+**Converting data types**
+
+Before beginning to analyze any dataset, it's important to take a look at the different types of columns from the. do that by using `glimpse()`:
+
+```{r}
+# Glimpse at bike_share_rides
+glimpse(bike_share_rides)
+
+# Summary of user_birth_year
+summary(bike_share_rides$user_birth_year)
+
+```
+
+The summary statistics of `user_birth_year` don't seem to offer much useful information about the different birth years because the `user_birth_year` column is a `numeric` type and should be converted to a `factor`.
+
+Use `dplyr` and `assertive` packages to convert a column into a factor and assert/confirm whether a column is the type wanted or not.
+
+Use `as.___()` functions to convert objects to a new data type.
+
+Use `assert_is____()` functions to confirm an object's data type.
+
+```{r}
+# Convert user_birth_year to factor: user_birth_year_fct
+bike_share_rides <- bike_share_rides %>%
+  mutate(user_birth_year_fct = as.factor(user_birth_year))
+```
+
+If the `assert` is `TRUE`, nothing will be outputted: 
+
+```{r}
+# Assert user_birth_year_fct is a factor
+assert_is_factor(bike_share_rides$user_birth_year_fct)
+
+```
+
+```{r}
+# Summary of user_birth_year_fct
+summary(bike_share_rides$user_birth_year_fct)
+
+```
+
+**Trimming strings**
+
+Another common dirty data problem is having extra bits like percent signs or periods in numbers, causing them to be read in as `character`.
+
+Use `str_remove()` to remove `"minutes"` from the `duration` column of `bike_share_rides.` Add this as a new column called `duration_trimmed`.
+
+Convert the `duration_trimmed` column to a numeric type and add this as a new column called `duration_mins`.
+
+`Glimpse` at `bike_share_rides` and `assert` that the `duration_mins` column is `numeric`.
+
+```{r}
+bike_share_rides <- bike_share_rides %>%
+  # Remove 'minutes' from duration: duration_trimmed
+  mutate(duration_trimmed = str_remove(duration, "minutes"),
+         # Convert duration_trimmed to numeric: duration_mins
+         duration_mins = as.numeric(duration_trimmed))
+
+```
+
+```{r}
+# Glimpse at bike_share_rides
+glimpse(bike_share_rides)
+
+```
+
+```{r}
+# Assert duration_mins is numeric
+assert_is_numeric(bike_share_rides$duration_mins)
+
+```
+
+For more details, go to the *String Wrangling* section at the bottom of [Transform your data](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#transform-your-data) chapter of *Working with Data in the Tidyverse*.
+
+**Range constraints**
+
+<center>**Time range**</center>
+
+Values that are out of range can throw off an analysis, so it's important to catch them early on.
+
+examine the `duration_min` column: Bikes are not allowed to be kept out more than 24 hours/1440 minutes at a time, but issues with some of the bikes caused inaccurate recording of the time they were returned.
+
+Create a three-bin histogram of the `duration_min` column of `bike_share_rides` using `ggplot2` to identify if there is out-of-range data.
+
+Replace the values of `duration_min` that are greater than `1440` minutes (24 hours) with `1440.` Add this to `bike_share_rides` as a new column called `duration_min_const`.
+
+Assert that all values of `duration_min_const` are between `0` and `1440`:
+
+```{r}
+# Create breaks
+breaks <- c(min(bike_share_rides$duration_mins), 0, 1440, max(bike_share_rides$duration_mins))
+
+# Create a histogram of duration_min
+ggplot(bike_share_rides, aes(duration_mins)) +
+  geom_histogram(breaks = breaks)
+
+# duration_min_const: replace vals of duration_min > 1440 with 1440
+bike_share_rides <- bike_share_rides %>%
+  mutate(duration_min_const = replace(duration_mins, duration_mins > 1440, 1440))
+
+# Make sure all values of duration_min_const are between 0 and 1440
+assert_all_are_in_closed_range(bike_share_rides$duration_min_const, lower = 0, upper = 1440)
+
+```
+
+<center>**Date range**</center>
+
+Something has gone wrong and there are data with dates from the future, which is way outside of the date range to be working with. To fix this, remove any rides from the dataset that have a date in the future.
+
+Convert the `date` column of `bike_share_rides` from `character` to the `Date` data type.
+
+`Assert` that all values in the `date` column happened sometime in the past and not in the future.
+
+```{r}
+# Convert date to Date type
+bike_share_rides <- bike_share_rides %>%
+  mutate(date = as.Date(date))
+
+# Make sure all dates are in the past
+assert_all_are_in_past(bike_share_rides$date)
+
+```
+
+Filter `bike_share_rides` to get only the rides from the past or today, and save this as `bike_share_rides_past.`
+
+`Assert` that the dates in `bike_share_rides_past` occurred only in the past.
+
+```{r}
+
+
+# Filter for rides that occurred before or on today's date
+bike_share_rides_past <- bike_share_rides %>%
+  filter(date <= today())
+
+# Make sure all dates from bike_share_rides_past are in the past
+assert_all_are_in_past(bike_share_rides_past$date)
+
+```
+
+**Uniqueness constraints**
+
+<center>**Full duplicates**</center>
+
+When multiple rows of a data frame share the same values for all columns, they're full duplicates of each other. Removing duplicates like this is important, since having the same value repeated multiple times can alter summary statistics like the `mean` and `median.`
+
+Get the total number of full duplicates in `bike_share_rides`.
+
+Remove all full duplicates from `bike_share_rides` and save the new data frame as `bike_share_rides_unique`.
+
+Get the total number of full duplicates in the new `bike_share_rides_unique` data frame.
+
+```{r}
+# Count the number of full duplicates
+sum(duplicated(bike_share_rides))
+
+# Remove duplicates
+bike_share_rides_unique <- distinct(bike_share_rides)
+
+# Count the full duplicates in bike_share_rides_unique
+sum(duplicated(bike_share_rides_unique))
+
+```
+
+<center>**Partial duplicates**</center>
+
+Identify any partial duplicates and then practice the most common technique to deal with them, which involves dropping all partial duplicates, keeping only the first.
+
+Remove full and partial duplicates from `bike_share_rides` based on `ride_id` only, keeping all columns. Store this as `bike_share_rides_unique`.
+
+```{r}
+# Remove full and partial duplicates
+bike_share_rides_unique <- bike_share_rides %>%
+  # Only based on ride_id instead of all cols
+  distinct(ride_id, .keep_all = TRUE)
+
+# Find duplicated ride_ids in bike_share_rides_unique
+bike_share_rides_unique %>%
+  # Count the number of occurrences of each ride_id
+  count(ride_id) %>%
+  # Filter for rows with a count > 1
+  filter(n > 1)
+
+```
+
+**Aggregating partial duplicates**
+
+Another way of handling partial duplicates is to compute a summary statistic of the values that differ between partial duplicates, such as `mean`, `median`, `maximum`, or `minimum.` This can come in handy when you're not sure how your data was collected and want an average, or if based on domain knowledge, you'd rather have too high of an estimate than too low of an estimate (or vice versa).
+
+```{r}
+bike_share_rides %>%
+  # Group by ride_id and date
+  group_by(ride_id, date) %>%
+  # Add duration_min_avg column
+  mutate(duration_min_avg = mean(duration_mins)) %>%
+  # Remove duplicates based on ride_id and date, keep all cols
+  distinct(ride_id, date, .keep_all = TRUE) %>%
+  # Remove duration_min column
+  select(-duration_mins)
+
+```
+
+## Categorical and Text Data
+
+**Membership data range**
+
+A categorical data column would sometime have a limited range of observations that can be classified into membership list. Observations that doesn't belong to this membership are outliers, and wouldn't make sense.
+
+`Count` the number of occurrences of each `dest_size` in `sfo_survey`.
+
+`"huge"`, `" Small "`, `"Large "`, and `" Hub"` appear to violate membership constraints.
+
+```{r}
+# Count the number of occurrences of dest_size
+sfo_survey %>%
+  count(dest_size)
+
+```
+
+Use the correct filtering join on `sfo_survey` and `dest_sizes` to get the rows of `sfo_survey` that have a valid `dest_size`:
+
+```{r}
+dest_sizes <- structure(list(dest_size = c("Small", "Medium", "Large", "Hub"
+), passengers_per_day = structure(c(1L, 3L, 4L, 2L), .Label = c("0-20K", 
+"100K+", "20K-70K", "70K-100K"), class = "factor")), .Names = c("dest_size", 
+"passengers_per_day"), row.names = c(NA, -4L), class = "data.frame")
+
+```
+
+```{r}
+# Remove bad dest_size rows
+sfo_survey %>% 
+  # Join with dest_sizes
+  semi_join(dest_sizes, by = "dest_size")%>%
+  # Count the number of each dest_size
+  count(dest_size)
+
+```
+
+**Identifying inconsistency**
+
+Sometimes, there are different kinds of inconsistencies that can occur within categories, making it look like a variable has more categories than it should.
+
+Examine the `dest_size` column again as well as the `cleanliness` column and determine what kind of issues, if any, these two categorical variables face. 
+
+Count the number of occurrences of each category of the `dest_size` variable of `sfo_survey`. The categories in `dest_size` have **inconsistent white space**:
+
+```{r}
+# Count dest_size
+sfo_survey %>%
+  count(dest_size)
+
+```
+
+Count the number of occurrences of each category of the `cleanliness` variable of `sfo_survey`. The categories in `cleanliness` have **inconsistent capitalization**.
+
+```{r}
+# Count cleanliness
+sfo_survey %>%
+  count(cleanliness)
+
+```
+
+**Correcting inconsistency**
+
+`dest_size` has whitespace inconsistencies and cleanliness has capitalization inconsistencies, use the new tools to fix the inconsistent values in `sfo_survey` instead of removing the data points entirely.
+
+Add a column to `sfo_survey` called `dest_size_trimmed` that contains the values in the `dest_size` column with all leading and trailing whitespace removed.
+
+Add another column called `cleanliness_lower` that contains the values in the `cleanliness` column converted to all lowercase.
+
+```{r}
+# Add new columns to sfo_survey
+sfo_survey <- sfo_survey %>%
+  # dest_size_trimmed: dest_size without whitespace
+  mutate(dest_size_trimmed = str_trim(dest_size),
+         # cleanliness_lower: cleanliness converted to lowercase
+         cleanliness_lower = str_to_lower(cleanliness))
+
+# Count values of dest_size_trimmed
+sfo_survey %>%
+  count(dest_size_trimmed)
+
+# Count values of cleanliness_lower
+sfo_survey %>%
+  count(cleanliness_lower)
+
+```
+
+**Collapsing categories**
+
+Sometimes, there are observations that have input error that make it slightly different from the group it should belong to. Collapse(merge, or cover the error over with an umbrella group) to simply, fix the variable: 
+
+```{r}
+# Count categories of dest_region
+sfo_survey %>%
+  count(dest_region)
+
+```
+
+`"EU"`, `"eur"`, and `"Europ"` need to be collapsed to `"Europe"`.
+
+Create a vector called `europe_categories` containing the three values of `dest_region` that need to be collapsed.
+
+Add a new column to `sfo_survey` called `dest_region_collapsed` that contains the values from the `dest_region` column, except the categories stored in `europe_categories` should be collapsed to Europe.
+
+```{r}
+# Count categories of dest_region
+sfo_survey %>%
+  count(dest_region)
+
+# Categories to map to Europe
+europe_categories <- c("Europ", "eur", "EU")
+
+# Add a new col dest_region_collapsed
+sfo_survey %>%
+  # Map all categories in europe_categories to Europe
+  mutate(dest_region_collapsed = fct_collapse(dest_region, 
+                                     Europe = europe_categories)) %>%
+  # Count categories of dest_region_collapsed
+  count(dest_region_collapsed)
+
+```
+
+For more details, go to the *(How To Collapse/Merge Levels)* section of [Manipulating Factor Variables](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/categorical-data-in-the-tidyverse.html#manipulating-factor-variables) chapter of *Categorical Data in the Tidyverse*.
+
+**Detecting inconsistent text data**
+
+Sometimes, in a column, there are inconsistent observations in different formats. 
+
+Filter for rows with phone numbers that contain `"("`, or `")"`. Remember to use `fixed()` when searching for parentheses.
+
+```{r}
+sfo_survey[1:10,] %>%
+  filter(str_detect(safety, "safe") | str_detect(safety, "danger"))
+
+```
+
+For more details, go to the *String Wrangling* section at the bottom of [Transform your data](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#transform-your-data) chapter of *Working with Data in the Tidyverse*.
+
+**Replacing and removing**
+
+The `str_remove_all()` function will remove all instances of the string passed to it.
+
+```{r}
+sfo_survey[1:10,] %>%
+  mutate(safe_or_not = str_remove_all(safety, "Somewhat")) %>%
+  select(airline, safe_or_not)
+```
+
+Again, go to the *String Wrangling* section at the bottom of [Transform your data](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#transform-your-data)
+
+**Filter/select observations with certain length**
+
+The `str_length()` function takes in a character vector, returns a number for each element that indicates the length of each element.
+
+```{r}
+clean_only <- sfo_survey %>%
+  filter(str_length(cleanliness_lower) == 5)
+
+clean_only[1:10,] %>%
+  select(airline, cleanliness_lower)
+
+```
+
+## Advanced Data Problems
+
+**Date uniformity**
+
+Make sure that the `accounts` dataset doesn't contain any uniformity problems. In this exercise, investigate the `date_opened` column and clean it up so that all the dates are in the same format.
+
+By default, `as.Date()` can't convert `"Month DD, YYYY"` formats: 
+
+```{r}
+as.Date(accounts$date_opened)
+```
+
+For more details, go to the *Date Formats* section of [Utilities](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/intermediate-r.html#utilities) chapter of *Intermediate R*.
+
+Convert the dates in the `date_opened` column to the same format using the `formats` vector and store this as a new column called `date_opened_clean`:
+
+```{r}
+# Define the date formats
+formats <- c("%Y-%m-%d", "%B %d, %Y")
+
+# Convert dates to the same format
+accounts[1:10,] %>%
+  mutate(date_opened_clean = parse_date_time(date_opened, formats))
+
+```
+
+**Currency uniformity**
+
+```{r include=FALSE}
+account_offices <- structure(list(id = structure(c(67L, 76L, 13L, 64L, 96L, 84L, 
+39L, 26L, 35L, 16L, 44L, 85L, 14L, 86L, 28L, 25L, 24L, 7L, 77L, 
+99L, 1L, 75L, 52L, 2L, 31L, 60L, 18L, 30L, 5L, 45L, 82L, 37L, 
+81L, 59L, 61L, 88L, 43L, 27L, 50L, 10L, 32L, 56L, 89L, 8L, 66L, 
+78L, 98L, 17L, 65L, 87L, 83L, 69L, 19L, 100L, 51L, 74L, 40L, 
+94L, 9L, 20L, 57L, 12L, 70L, 58L, 54L, 49L, 80L, 6L, 38L, 11L, 
+93L, 29L, 95L, 92L, 72L, 53L, 97L, 55L, 62L, 42L, 47L, 91L, 4L, 
+22L, 68L, 3L, 34L, 63L, 23L, 33L, 36L, 41L, 15L, 46L, 48L, 73L, 
+71L, 21L), .Label = c("0128D2D0", "02E63545", "0682E9DE", "0C121914", 
+"0E3903BA", "0E5B69F5", "11C3C3C0", "1240D39C", "14A2DDB7", "168E071B", 
+"17217048", "19DD73C6", "19F9E113", "1EB593F7", "2038185B", "2322DFB4", 
+"236A1D51", "247222A6", "290319FD", "305EEAA8", "33A7F03E", "3627E08A", 
+"3690CCED", "387F8E4D", "39132EEA", "3E97F253", "402839E2", "40E4A2F4", 
+"41BBB7B4", "420985EE", "4399C98B", "466CCDAA", "48F5E6D8", "49931170", 
+"4AE79EA1", "515FAD84", "51C21705", "5275B518", "53AE87EF", "58066E39", 
+"59794264", "5C98E8F5", "5CD605B3", "645335B2", "64EF994F", "65EAC615", 
+"6BB53C2A", "6C7509C9", "77E85C14", "78286CE7", "7B0F3685", "7C6E2ECC", 
+"84A4302F", "86ACAF81", "8BADDF6A", "8DE1ECB9", "8F25E54C", "91BFCC40", 
+"92C237C6", "98F4CF0F", "9ECEADB2", "9FB57E68", "A154F63B", "A2FE52A3", 
+"A6DDDC4C", "A7BFAA72", "A880C79F", "A94493B3", "AC50B796", "ACB8E6AF", 
+"B0CDCE3D", "BACA7378", "BD969A9D", "BE411172", "BE6E4B3F", "BE8222DF", 
+"C2FC91E1", "C3D24436", "C470A574", "C5C6B79D", "C868C6AD", "CCF84EDB", 
+"D13375E9", "D2E55799", "D5EB0F00", "DDBA03D9", "DDFD0B3D", "DF0AFE50", 
+"E19FE6B5", "E22CE6AF", "E23F2505", "E699DF01", "E7496A7F", "EA7FF83A", 
+"F6C7ABA1", "F6DC2C08", "F8A78C27", "FAD92F0F", "FB8F01C1", "FC71925A"
+), class = "factor"), office = c("New York", "New York", "Tokyo", 
+"Tokyo", "New York", "Tokyo", "Tokyo", "Tokyo", "Tokyo", "New York", 
+"New York", "New York", "New York", "Tokyo", "New York", "Tokyo", 
+"Tokyo", "New York", "New York", "Tokyo", "Tokyo", "Tokyo", "New York", 
+"New York", "New York", "Tokyo", "New York", "New York", "New York", 
+"New York", "New York", "Tokyo", "Tokyo", "Tokyo", "New York", 
+"Tokyo", "New York", "New York", "Tokyo", "New York", "Tokyo", 
+"New York", "New York", "Tokyo", "New York", "New York", "Tokyo", 
+"Tokyo", "New York", "Tokyo", "Tokyo", "Tokyo", "New York", "New York", 
+"New York", "Tokyo", "Tokyo", "Tokyo", "Tokyo", "Tokyo", "New York", 
+"Tokyo", "New York", "New York", "Tokyo", "Tokyo", "New York", 
+"Tokyo", "New York", "Tokyo", "New York", "New York", "New York", 
+"New York", "New York", "Tokyo", "New York", "New York", "New York", 
+"New York", "New York", "New York", "New York", "New York", "New York", 
+"New York", "Tokyo", "New York", "New York", "New York", "New York", 
+"New York", "New York", "New York", "New York", "New York", "New York", 
+"New York")), row.names = c(NA, -98L), class = "data.frame", .Names = c("id", 
+"office"))
+```
+
+Now that dates are in order, correct any unit differences. First, plot the data, there's a group of very high values, and a group of relatively lower values. The bank has two different offices - one in New York, and one in Tokyo, so the accounts managed by the Tokyo office are in Japanese yen instead of U.S.
+
+Create a scatter plot with `date_opened` on the x-axis and `total` on the y-axis:
+```{r}
+# Scatter plot of opening date and total amount
+accounts %>%
+  ggplot(aes(x = date_opened, y = total)) +
+  geom_point()
+
+```
+
+Left join `accounts` and `account_offices` by their `id` columns.
+
+Convert the `totals` from the Tokyo office from yen to dollars, and keep the `total` from the New York office in dollars. Store this as a new column called `total_usd`:
+```{r}
+# Left join accounts to account_offices by id
+accounts[1:10,] %>%
+  left_join(account_offices, by = "id") %>%
+  
+  # Convert totals from the Tokyo office to USD
+  mutate(total_usd = ifelse(office == "Tokyo", total / 104, total))
+
+```
+
+**Cross field validation**
+
+Cross field validation basically means cross-checking/comparing with other columns to make sure the compared column values make sense.
+```{r include=FALSE}
+accounts_funds <- structure(list(id = structure(c(67L, 76L, 13L, 64L, 96L, 84L, 
+39L, 26L, 35L, 16L, 44L, 85L, 14L, 86L, 28L, 25L, 24L, 7L, 77L, 
+99L, 1L, 75L, 52L, 2L, 31L, 60L, 18L, 30L, 5L, 45L, 82L, 37L, 
+81L, 59L, 61L, 88L, 43L, 27L, 50L, 10L, 32L, 56L, 89L, 8L, 66L, 
+78L, 98L, 17L, 65L, 87L, 83L, 69L, 19L, 100L, 51L, 74L, 40L, 
+94L, 9L, 20L, 57L, 12L, 70L, 58L, 54L, 49L, 80L, 6L, 38L, 11L, 
+93L, 29L, 95L, 92L, 72L, 53L, 97L, 55L, 62L, 42L, 47L, 91L, 4L, 
+22L, 68L, 3L, 34L, 63L, 23L, 33L, 36L, 41L, 15L, 46L, 48L, 73L, 
+71L, 21L), .Label = c("0128D2D0", "02E63545", "0682E9DE", "0C121914", 
+"0E3903BA", "0E5B69F5", "11C3C3C0", "1240D39C", "14A2DDB7", "168E071B", 
+"17217048", "19DD73C6", "19F9E113", "1EB593F7", "2038185B", "2322DFB4", 
+"236A1D51", "247222A6", "290319FD", "305EEAA8", "33A7F03E", "3627E08A", 
+"3690CCED", "387F8E4D", "39132EEA", "3E97F253", "402839E2", "40E4A2F4", 
+"41BBB7B4", "420985EE", "4399C98B", "466CCDAA", "48F5E6D8", "49931170", 
+"4AE79EA1", "515FAD84", "51C21705", "5275B518", "53AE87EF", "58066E39", 
+"59794264", "5C98E8F5", "5CD605B3", "645335B2", "64EF994F", "65EAC615", 
+"6BB53C2A", "6C7509C9", "77E85C14", "78286CE7", "7B0F3685", "7C6E2ECC", 
+"84A4302F", "86ACAF81", "8BADDF6A", "8DE1ECB9", "8F25E54C", "91BFCC40", 
+"92C237C6", "98F4CF0F", "9ECEADB2", "9FB57E68", "A154F63B", "A2FE52A3", 
+"A6DDDC4C", "A7BFAA72", "A880C79F", "A94493B3", "AC50B796", "ACB8E6AF", 
+"B0CDCE3D", "BACA7378", "BD969A9D", "BE411172", "BE6E4B3F", "BE8222DF", 
+"C2FC91E1", "C3D24436", "C470A574", "C5C6B79D", "C868C6AD", "CCF84EDB", 
+"D13375E9", "D2E55799", "D5EB0F00", "DDBA03D9", "DDFD0B3D", "DF0AFE50", 
+"E19FE6B5", "E22CE6AF", "E23F2505", "E699DF01", "E7496A7F", "EA7FF83A", 
+"F6C7ABA1", "F6DC2C08", "F8A78C27", "FAD92F0F", "FB8F01C1", "FC71925A"
+), class = "factor"), date_opened = structure(c(1066521600, 1538697600, 
+1217289600, 1118275200, 1333152000, 1182297600, 1512086400, 1559520000, 
+1304726400, 1523059200, 1542326400, 987379200, 1114041600, 1150156800, 
+1231286400, 1341619200, 1294012800, 1514073600, 1085097600, 999734400, 
+1113004800, 1255996800, 1053043200, 1445731200, 990230400, 1401148800, 
+1432598400, 1230336000, 1447200000, 1235606400, 1230249600, 1461283200, 
+949276800, 1134432000, 1526515200, 1102032000, 1476835200, 1568419200, 
+1254700800, 1373500800, 1016928000, 1445040000, 1244246400, 1315353600, 
+1573516800, 1022198400, 1189641600, 1569888000, 966470400, 986947200, 
+1130803200, 1467244800, 1117152000, 1162425600, 1369267200, 1487894400, 
+1442361600, 1099353600, 1551830400, 1535760000, 1227484800, 1041292800, 
+1374883200, 1389312000, 1323820800, 1258675200, 1204329600, 1525651200, 
+1511395200, 990748800, 1222473600, 1109030400, 1199664000, 1203206400, 
+1115769600, 1060646400, 1144195200, 1293753600, 1504224000, 1416873600, 
+1480723200, 1508025600, 1498003200, 1207008000, 1249084800, 1033430400, 
+1301011200, 963273600, 1413676800, 1581811200, 1371686400, 1200441600, 
+1466726400, 1077235200, 969062400, 1177804800, 1401235200, 1192320000
+), class = c("POSIXct", "POSIXt"), tzone = "UTC"), total = c(169305, 
+107460, 147088, 143243, 124568, 131113, 147846, 139575, 224409, 
+189524, 154001, 130920, 191989, 92473, 180547, 150115, 90410, 
+180003, 105722, 217068, 184421, 150769, 169814, 125117, 130421, 
+143211, 150372, 123125, 182668, 161141, 136128, 155684, 112818, 
+85362, 146153, 146635, 87921, 163416, 144704, 87826, 144051, 
+217975, 101936, 151556, 133790, 101584, 164241, 177759, 67962, 
+151696, 134083, 154916, 170178, 186281, 179102, 170096, 163708, 
+111526, 123163, 138632, 189126, 141275, 71359, 132859, 235901, 
+133348, 188424, 134488, 71665, 193377, 142669, 144229, 183440, 
+199603, 204271, 186737, 41164, 158203, 216352, 103200, 146394, 
+121614, 227729, 238104, 85975, 72832, 139614, 133800, 226595, 
+135435, 98190, 157964, 194662, 140191, 212089, 167238, 145240, 
+191839), fund_A = c(85018L, 64784L, 64029L, 63466L, 21156L, 79241L, 
+38450L, 11045L, 68394L, 66964L, 68691L, 69487L, 75388L, 32931L, 
+82564L, 26358L, 7520L, 84295L, 25398L, 69738L, 82221L, 49607L, 
+82093L, 50287L, 58177L, 84645L, 69104L, 59390L, 47236L, 89269L, 
+33405L, 53542L, 17876L, 72556L, 40675L, 67373L, 8474L, 59213L, 
+72495L, 21642L, 19756L, 67105L, 39942L, 18835L, 56001L, 58434L, 
+70211L, 20886L, 5970L, 30596L, 28545L, 54451L, 54341L, 89127L, 
+81321L, 86735L, 59004L, 86856L, 49666L, 20307L, 72037L, 72872L, 
+10203L, 67405L, 79599L, 20954L, 61972L, 88475L, 16114L, 45365L, 
+8615L, 26449L, 82468L, 84788L, 87254L, 86632L, 7560L, 25477L, 
+86665L, 28990L, 29561L, 59013L, 86625L, 60475L, 48482L, 15809L, 
+83035L, 42648L, 70260L, 29123L, 6452L, 68869L, 20591L, 20108L, 
+58861L, 10234L, 62549L, 80542L), fund_B = c(75580L, 35194L, 15300L, 
+54053L, 47935L, 26800L, 29185L, 65907L, 80418L, 52238L, 56400L, 
+48681L, 84199L, 22162L, 68210L, 74286L, 67142L, 31591L, 24075L, 
+86768L, 60149L, 55417L, 62756L, 23342L, 43912L, 7088L, 63369L, 
+27890L, 87437L, 25939L, 89016L, 38234L, 15057L, 21739L, 46482L, 
+63443L, 50284L, 23460L, 38450L, 42937L, 80182L, 72907L, 38580L, 
+46135L, 54885L, 21069L, 73984L, 80883L, 20088L, 84390L, 37537L, 
+35906L, 32764L, 43356L, 18106L, 56580L, 16987L, 19406L, 25407L, 
+35028L, 62513L, 51219L, 51163L, 7399L, 79291L, 33018L, 69266L, 
+44383L, 35691L, 58558L, 72841L, 83938L, 73281L, 47808L, 57043L, 
+33506L, 21040L, 43902L, 77117L, 24986L, 29023L, 39086L, 79950L, 
+89011L, 7054L, 15617L, 22239L, 16464L, 84337L, 23204L, 60014L, 
+32999L, 89990L, 46764L, 76975L, 83183L, 48606L, 87909L), fund_C = c(8707L, 
+7482L, 67759L, 25724L, 55477L, 25072L, 80211L, 62623L, 75597L, 
+70322L, 28910L, 56408L, 32402L, 37380L, 29773L, 49471L, 15748L, 
+64117L, 56249L, 60562L, 42051L, 45745L, 24965L, 51488L, 28332L, 
+51478L, 17899L, 35845L, 47995L, 45933L, 13707L, 63908L, 79885L, 
+19537L, 58996L, 15819L, 29163L, 80743L, 33759L, 23247L, 44113L, 
+77963L, 23414L, 86586L, 22904L, 22081L, 20046L, 75990L, 41904L, 
+36710L, 68001L, 64559L, 83073L, 53798L, 79675L, 26781L, 87717L, 
+5264L, 48090L, 83297L, 54576L, 17184L, 9993L, 58055L, 77011L, 
+79376L, 57186L, 46475L, 19860L, 89454L, 61213L, 33842L, 27691L, 
+67007L, 59974L, 66599L, 12564L, 88824L, 52570L, 49224L, 87810L, 
+23515L, 61154L, 88618L, 30439L, 41406L, 34340L, 74688L, 71998L, 
+83108L, 31724L, 56096L, 84081L, 73319L, 76253L, 73821L, 34085L, 
+23388L), acct_age = c(17, 2, 12, 15, 8, 13, 3, 1, 9, 2, 2, 19, 
+15, 14, 12, 8, 10, 2, 16, 19, 15, 11, 17, 5, 19, 6, 5, 12, 5, 
+11, 12, 4, 21, 15, 2, 16, 4, 1, 11, 7, 18, 5, 11, 9, 1, 18, 13, 
+1, 20, 19, 15, 4, 15, 14, 7, 3, 5, 15, 1, 2, 12, 18, 7, 7, 9, 
+11, 12, 2, 3, 19, 12, 15, 13, 12, 15, 17, 14, 10, 3, 6, 4, 3, 
+3, 11, 11, 18, 9, 20, 6, 0, 7, 13, 4, 16, 20, 13, 6, 13)), row.names = c(NA, 
+-98L), .Names = c("id", "date_opened", "total", "fund_A", "fund_B", 
+"fund_C", "acct_age"), class = "data.frame")
+```
+
+<center>**Validating totals**</center>
+
+There are three different funds that account holders can store their money in. In this exercise, validate whether the total amount in each account is equal to the sum of the amount in `fund_A`, `fund_B`, and `fund_C`.
+
+Create a new column called `theoretical_total` that contains the sum of the amounts in each fund.
+
+Find the accounts where the `total` doesn't match the `theoretical_total`.
+
+```{r}
+# Find invalid totals
+accounts_funds %>%
+  # theoretical_total: sum of the three funds
+  mutate(theoretical_total = fund_A + fund_B + fund_C) %>%
+  # Find accounts where total doesn't match theoretical_total
+  filter(theoretical_total != total)
+
+```
+
+**Validating age**
+
+Now that some inconsistencies in the `total` amounts been found, there may also be inconsistencies in the `acct_age` column, maybe these inconsistencies are related. Validate the age of each account and see if rows with inconsistent `acct_age`s are the same ones that had inconsistent `total`s.
+
+Create a new column called `theoretical_age` that contains the age of each account based on the `date_opened.`
+
+Find the accounts where the `acct_age` doesn't match the `theoretical_age.`
+
+```{r}
+# Find invalid acct_age
+accounts_funds %>%
+  # theoretical_age: age of acct based on date_opened
+  mutate(theoretical_age = floor(as.numeric(date_opened %--% today(), "years"))) %>%
+  # Filter for rows where acct_age is different from theoretical_age
+  filter(acct_age != theoretical_age)
+
+```
+
+**Visualizing missing data**
+```{r include=FALSE}
+accounts_inv <- structure(list(cust_id = structure(c(45L, 76L, 57L, 50L, 77L, 
+11L, 22L, 52L, 43L, 9L, 5L, 13L, 86L, NA, NA, 72L, 24L, 74L, 
+88L, 58L, 54L, 66L, 38L, 64L, NA, NA, 82L, 20L, 87L, 62L, 15L, 
+NA, 27L, 69L, 61L, 47L, 59L, 51L, 67L, 2L, 49L, 34L, 83L, 18L, 
+41L, 78L, 19L, 42L, 10L, 16L, 23L, 39L, 79L, 56L, 33L, 70L, 63L, 
+7L, 29L, 28L, 25L, 30L, 37L, NA, 44L, 89L, 68L, 31L, 36L, 8L, 
+81L, 65L, NA, 32L, 35L, 21L, 14L, 75L, NA, 80L, 53L, 55L, 4L, 
+40L, 46L, 71L, 12L, 85L, 17L, 84L, 3L, 6L, 73L, 26L, 60L, 48L, 
+NA), .Label = c("", "0109137B", "014E0511", "078C654F", "0A9BA907", 
+"0B44C3F8", "0F0884F6", "13770971", "166B05B0", "1903EB99", "25E68E1B", 
+"296A9395", "2AB6539A", "2C5901B4", "2EC1B555", "2F4F99C1", "33CA2B76", 
+"38B8CD9C", "3B240FEF", "3C5CBBD7", "3E51A395", "3FA9296D", "46351200", 
+"472341F2", "4A13E345", "4C7F8638", "5321D380", "56D310A8", "58F8CC80", 
+"5AEA5AB8", "5F6A2443", "625167AC", "6B094617", "72DD1471", "777A7F2C", 
+"7A2879AF", "7A4EED75", "7A73F334", "7D8EBAF6", "807465A4", "80C0DAB3", 
+"82E87321", "870A9281", "87FDF627", "8C35540A", "8D08495A", "904A19DD", 
+"93A17007", "93E78DA3", "93F2F951", "96525DA6", "984403B9", "987DC93E", 
+"9B550FD5", "A07D5C92", "A1815565", "A631984D", "A69FA1B8", "A731C34E", 
+"A81D31B3", "AC2AEAC4", "ACE5C956", "B25B3B8D", "B40E8497", "B5D367B5", 
+"B99CD662", "BD7CF5D7", "BFC13E88", "C55C54A8", "C580AE41", "C9FB0E86", 
+"CA507BA1", "CEC1CAE5", "D3287768", "D4C7E817", "D5536652", "DE0A0882", 
+"DEC6DBE4", "E2EFF324", "E52D4C7F", "EC10469C", "EC189A55", "EC7C25A8", 
+"EEBD980F", "F2158F66", "F389832C", "F7FC8F78", "FA01676F", "FBAD3C91"
+), class = "factor"), age = c(54L, 36L, 49L, 56L, 21L, 47L, 53L, 
+29L, 58L, 53L, 44L, 59L, 48L, 34L, 22L, 50L, 35L, 20L, 21L, 41L, 
+42L, 28L, 35L, 33L, 30L, 50L, 53L, 45L, 26L, 39L, 34L, 43L, 58L, 
+45L, 57L, 20L, 46L, 33L, 29L, 44L, 22L, 27L, 30L, 55L, 27L, 46L, 
+25L, 50L, 37L, 53L, 56L, 52L, 29L, 32L, 21L, 47L, 57L, 56L, 42L, 
+21L, 45L, 56L, 33L, 49L, 56L, 35L, 58L, 57L, 54L, 26L, 28L, 39L, 
+53L, 28L, 30L, 46L, 40L, 56L, 41L, 36L, 51L, 45L, 21L, 48L, 59L, 
+46L, 48L, 41L, 23L, 59L, 27L, 32L, 32L, 23L, 24L, 36L, 57L), 
+    acct_amount = c(44244.71, 86506.85, 77799.33, 93875.24, 99998.35, 
+    109737.62, 79744.23, 17939.88, 63523.31, 38175.46, 90469.53, 
+    53796.13, 95380.06, 83653.09, 86028.48, 12209.84, 83127.65, 
+    89961.77, 66947.3, 75207.99, 32891.31, 92838.44, 120512, 
+    99771.9, 71782.2, 95038.14, 83343.18, 59678.01, 88049.82, 
+    90413.25, 55976.78, 92007.12, 59700.08, 79630.02, 88440.54, 
+    31981.36, 95352.02, 82511.24, 82084.76, 31730.19, 41942.23, 
+    100683.48, 86503.33, 28834.71, 73951.45, 32220.83, 97856.46, 
+    97833.54, 24267.02, 82058.48, 97595.3, 109943.03, 67297.46, 
+    82996.04, 89855.98, 96673.37, 99193.98, 84505.81, 87146.19, 
+    88660.4, 84107.71, 100266.99, 98923.14, 63182.57, 95275.46, 
+    99141.9, 59863.77, 98047.16, 83345.15, 92750.87, 73618.75, 
+    44226.86, 99490.61, 95315.71, 52684.17, 21757.14, 250046.76, 
+    26585.87, 64944.62, 61795.89, 35924.41, 99577.36, 87312.64, 
+    28827.59, 89138.52, 88682.34, 34679.6, 84132.1, 75508.61, 
+    57838.49, 70272.97, 33984.87, 92169.14, 21942.37, 74010.15, 
+    40651.36, 27907.16), inv_amount = c(35500.5, 81921.86, 46412.27, 
+    76563.35, NA, 93552.69, 70357.7, 14429.59, 51297.32, 15052.7, 
+    70173.49, 12401.32, 58388.14, 44656.36, NA, 7516.33, 67961.74, 
+    NA, NA, 31620.86, 11993.35, 49090.83, 93233, 86992.74, 35476.83, 
+    66797.81, 7282.91, 35939.08, 84432.03, 21574.21, 51478.91, 
+    22053.26, 8145.24, 25250.82, 63332.9, NA, 84066.66, 33929.23, 
+    44340.56, 21959.28, NA, 87882.91, 49180.36, 27532.35, 61650.12, 
+    3216.72, NA, 61481.86, 22963.63, 35760.69, 82251.59, 81490.13, 
+    57252.76, 30898.16, NA, 68468.28, 83364.21, 47826.51, 25759.85, 
+    NA, 4217.92, 89342.43, 20932.3, 62692.03, 55888.87, 13468.4, 
+    24569.47, 76216.88, 45162.06, 27963.45, 48979.16, 36572.69, 
+    32150.64, 66914.63, 20970.35, 10582.94, 90442.57, 20441.92, 
+    31803.34, 49387.29, 14881.89, 60408.99, NA, 14585.75, 60798.23, 
+    26166.11, 28459.96, 23714.06, NA, 50814.83, 65969.8, 31395, 
+    77896.86, NA, NA, 9387.87, 10967.69), account_opened = structure(c(10L, 
+    57L, 69L, 59L, 16L, 73L, 58L, 20L, 5L, 79L, 40L, 6L, 7L, 
+    41L, 14L, 71L, 39L, 11L, 33L, 62L, 2L, 13L, 37L, 43L, 84L, 
+    9L, 12L, 6L, 78L, 87L, 17L, 86L, 31L, 89L, 34L, 77L, 35L, 
+    64L, 50L, 56L, 30L, 60L, 23L, 48L, 8L, 29L, 63L, 52L, 47L, 
+    90L, 51L, 4L, 74L, 21L, 18L, 82L, 80L, 22L, 52L, 67L, 48L, 
+    28L, 83L, 27L, 70L, 85L, 68L, 42L, 88L, 44L, 76L, 45L, 1L, 
+    23L, 75L, 14L, 15L, 19L, 54L, 61L, 90L, 49L, 36L, 55L, 24L, 
+    53L, 66L, 21L, 46L, 25L, 26L, 32L, 72L, 38L, 3L, 81L, 65L
+    ), .Label = c("01-08-17", "02-05-18", "02-06-18", "02-07-17", 
+    "02-09-18", "03-01-19", "03-02-18", "03-04-17", "03-04-18", 
+    "03-05-18", "03-09-18", "04-02-19", "04-05-17", "04-06-17", 
+    "05-02-18", "05-06-17", "05-12-17", "06-02-18", "06-05-18", 
+    "07-10-17", "07-11-17", "08-03-18", "08-06-17", "08-08-18", 
+    "08-12-18", "09-02-19", "09-05-18", "09-06-18", "09-08-18", 
+    "09-10-17", "09-10-18", "10-04-18", "10-08-18", "12-03-18", 
+    "13-11-17", "14-04-17", "14-05-18", "14-07-18", "14-12-18", 
+    "15-06-18", "15-08-18", "15-12-18", "16-05-17", "16-08-17", 
+    "16-09-17", "16-11-17", "17-03-17", "17-09-18", "17-11-17", 
+    "18-07-17", "18-08-18", "18-10-18", "19-05-18", "20-03-18", 
+    "20-04-17", "20-04-18", "21-01-18", "21-06-18", "21-08-17", 
+    "22-01-18", "22-05-17", "23-02-19", "23-05-18", "23-07-18", 
+    "23-10-17", "24-12-17", "25-02-18", "25-04-18", "26-01-18", 
+    "26-02-19", "26-05-18", "26-11-17", "26-12-17", "27-04-18", 
+    "27-10-18", "27-12-18", "28-01-19", "28-02-18", "28-02-19", 
+    "28-04-18", "28-05-17", "28-09-18", "28-11-17", "29-01-19", 
+    "29-05-18", "29-07-18", "29-12-18", "30-08-18", "30-10-18", 
+    "30-12-18"), class = "factor"), last_transaction = structure(c(88L, 
+    44L, 19L, 34L, 46L, 41L, 74L, 55L, 64L, 90L, 83L, 52L, 72L, 
+    54L, 21L, 37L, 66L, 58L, 71L, 29L, 82L, 39L, 57L, 14L, 69L, 
+    79L, 91L, 5L, 86L, 87L, 62L, 32L, 11L, 56L, 2L, 70L, 43L, 
+    21L, 81L, 24L, 47L, 50L, 4L, 16L, 61L, 53L, 38L, 60L, 63L, 
+    36L, 59L, 65L, 33L, 88L, 45L, 51L, 12L, 75L, 31L, 85L, 28L, 
+    9L, 1L, 80L, 78L, 6L, 4L, 42L, 30L, 73L, 23L, 8L, 13L, 9L, 
+    77L, 68L, 35L, 27L, 48L, 76L, 20L, 49L, 17L, 89L, 15L, 18L, 
+    56L, 26L, 7L, 10L, 67L, 84L, 25L, 3L, 40L, 22L, 35L), .Label = c("01-05-19", 
+    "01-08-19", "02-02-19", "02-04-18", "02-10-18", "02-11-19", 
+    "03-03-19", "03-04-19", "03-07-19", "04-01-20", "04-02-19", 
+    "04-07-19", "04-08-19", "05-01-20", "05-02-19", "05-02-20", 
+    "05-08-18", "06-08-19", "06-10-19", "06-12-18", "07-08-18", 
+    "08-03-19", "08-06-18", "08-07-19", "08-10-18", "08-11-18", 
+    "08-12-18", "09-02-19", "09-09-19", "09-11-19", "10-01-19", 
+    "10-02-20", "10-07-18", "10-07-19", "11-07-19", "11-08-18", 
+    "11-09-19", "11-10-18", "12-03-19", "12-09-18", "12-11-18", 
+    "12-11-19", "13-01-19", "14-01-19", "14-02-19", "15-01-19", 
+    "15-04-18", "15-11-19", "16-01-20", "17-05-18", "17-09-18", 
+    "17-11-18", "17-11-19", "18-01-19", "18-05-18", "19-02-19", 
+    "19-07-18", "19-10-18", "20-02-20", "21-07-18", "21-09-19", 
+    "21-10-19", "21-11-18", "22-02-19", "22-02-20", "22-04-18", 
+    "22-05-19", "22-09-18", "22-11-19", "23-06-19", "23-07-19", 
+    "23-09-18", "24-04-19", "24-08-18", "24-08-19", "24-10-19", 
+    "25-05-19", "25-06-18", "25-09-18", "26-01-20", "26-02-20", 
+    "27-06-19", "28-08-18", "28-09-19", "29-07-18", "30-04-18", 
+    "30-04-19", "30-09-19", "31-07-18", "31-10-18", "31-12-18"
+    ), class = "factor")), .Names = c("cust_id", "age", "acct_amount", 
+"inv_amount", "account_opened", "last_transaction"), class = "data.frame", row.names = c(NA, 
+-97L))
+```
+
+Dealing with missing data is one of the most common tasks in data science. There are a variety of types of missingness, as well as a variety of types of solutions to missing data.
+
+A new version of the accounts data frame containing data on the `amount held` and `amount invested` for new and existing customers. However, there are rows with missing `inv_amount` values.
+
+Visualize the missing values in `accounts` by column using `vis_miss()` from the `visdat` package.
+
+```{r}
+# Visualize the missing values by column
+vis_miss(accounts_inv)
+
+```
+
+Most customers below 25 do not have investment accounts yet, and suspect it could be driving the missingness. 
+
+```{r}
+accounts_inv %>%
+  # missing_inv: Is inv_amount missing?
+  mutate(missing_inv = is.na(inv_amount)) %>%
+  # Group by missing_inv
+  group_by(missing_inv) %>%
+  # Calculate mean age for each missing_inv group
+  summarize(avg_age = mean(age))
+
+```
+
+Since the average age for `TRUE` `missing_inv` is `22` and the average age for `FALSE` `missing_inv` is `44`, it is likely that the `inv_amount` variable is missing mostly in young customers.
+
+```{r}
+# Sort by age and visualize missing vals
+accounts_inv %>%
+  arrange(age) %>%
+  vis_miss()
+```
+
+## Record Linkage
+
+`Damerau-Levenshtein` `distance` is used to identify how similar two strings are. As a reminder, `Damerau-Levenshtein` `distance` is the minimum number of steps needed to get from String A to String B, using these operations:
+
+*Insertion* of a new character.
+
+*Deletion* of an existing character.
+
+*Substitution* of an existing character.
+
+*Transposition* of two existing consecutive characters.
+
+Use the `stringdist` package to compute string distances using various methods.
+
+```{r}
+# Calculate Damerau-Levenshtein distance
+stringdist("las angelos", "los angeles", method = "dl")
+
+```
+
+LCS (Longest Common Subsequence) only considers *Insertion* and *Deletion*.
+```{r}
+# Calculate LCS distance
+stringdist("las angelos", "los angeles", method = "lcs")
+
+```
+
+```{r}
+# Calculate Jaccard distance
+stringdist("las angelos", "los angeles", method = "jaccard")
+
+```
+
+**Fixing typos with string distance**
+```{r include=FALSE}
+cities <- structure(list(city_actual = structure(c(4L, 3L, 1L, 5L, 2L), .Label = c("atlanta", 
+"las vegas", "los angeles", "new york", "san francisco"), class = "factor")), .Names = "city_actual", row.names = c(NA, 
+-5L), class = "data.frame")
+
+zagat <- structure(list(id = c(0L, 1L, 2L, 3L, 4L, 5L, 6L, 8L, 9L, 11L, 
+12L, 13L, 15L, 16L, 17L, 18L, 19L, 20L, 22L, 23L, 24L, 25L, 26L, 
+27L, 30L, 31L, 32L, 33L, 35L, 37L, 38L, 40L, 43L, 44L, 45L, 46L, 
+47L, 49L, 50L, 51L, 52L, 54L, 55L, 56L, 57L, 59L, 60L, 61L, 62L, 
+64L, 66L, 68L, 69L, 70L, 71L, 72L, 73L, 74L, 75L, 76L, 77L, 78L, 
+79L, 80L, 81L, 82L, 83L, 84L, 85L, 86L, 87L, 88L, 89L, 90L, 91L, 
+92L, 93L, 94L, 95L, 96L, 97L, 98L, 99L, 100L, 101L, 102L, 103L, 
+104L, 105L, 106L, 107L, 108L, 109L, 110L, 111L, 112L, 113L, 114L, 
+115L, 116L, 117L, 118L, 119L, 120L, 121L, 122L, 123L, 124L, 125L, 
+126L, 127L, 128L, 129L, 130L, 131L, 132L, 133L, 134L, 135L, 136L, 
+137L, 138L, 139L, 140L, 141L, 142L, 143L, 144L, 145L, 146L, 147L, 
+148L, 149L, 150L, 151L, 152L, 153L, 154L, 155L, 156L, 157L, 158L, 
+159L, 160L, 161L, 163L, 164L, 165L, 166L, 167L, 168L, 169L, 170L, 
+171L, 172L, 173L, 174L, 175L, 176L, 177L, 178L, 179L, 180L, 181L, 
+182L, 183L, 184L, 186L, 187L, 188L, 189L, 190L, 191L, 192L, 193L, 
+194L, 195L, 196L, 197L, 198L, 199L, 200L, 201L, 202L, 203L, 204L, 
+205L, 206L, 207L, 208L, 209L, 210L, 211L, 212L, 213L, 214L, 215L, 
+216L, 217L, 218L, 219L, 220L, 222L, 223L, 224L, 225L, 226L, 227L, 
+229L, 230L, 231L, 232L, 233L, 234L, 235L, 236L, 237L, 238L, 239L, 
+240L, 241L, 242L, 243L, 244L, 245L, 246L, 247L, 248L, 249L, 250L, 
+251L, 252L, 253L, 254L, 255L, 256L, 257L, 258L, 259L, 260L, 261L, 
+262L, 263L, 264L, 265L, 266L, 267L, 268L, 269L, 270L, 271L, 272L, 
+273L, 274L, 275L, 276L, 277L, 278L, 279L, 280L, 281L, 282L, 283L, 
+284L, 285L, 286L, 287L, 288L, 289L, 290L, 291L, 292L, 293L, 294L, 
+295L, 296L, 297L, 298L, 299L, 300L, 301L, 302L, 303L, 304L, 305L, 
+306L, 307L, 308L, 309L, 310L, 311L, 312L, 313L, 314L, 315L, 316L, 
+317L, 318L, 319L, 320L, 321L, 322L, 323L, 324L, 325L, 326L, 327L, 
+328L, 329L, 330L), name = c("apple pan the", "asahi ramen", "baja fresh", 
+"belvedere the", "benita's frites", "bernard's", "bistro 45", 
+"brighton coffee shop", "bristol farms market cafe", "cafe'50s", 
+"cafe blanc", "cassell's", "diaghilev", "don antonio's", "duke's", 
+"falafel king", "feast from the east", "gumbo pot the", "indo cafe", 
+"jan's family restaurant", "jiraffe", "jody maroni's sausage kingdom", 
+"joe's", "john o  ` groats", "johnny rockets ( la )", "killer shrimp", 
+"kokomo cafe", "koo koo roo", "la salsa ( la )", "langer's", 
+"local nochol", "mani's bakery & espresso bar", "michael's ( los angeles )", 
+"mishima", "mo better meatty meat", "mulberry st.", "ocean park cafe", 
+"original pantry bakery", "parkway grill", "pho hoa", "pink's famous chili dogs", 
+"r-23", "rae's", "rubin's red hots", "ruby's ( la )", "ruth's chris steak house ( los angeles )", 
+"shiro", "sushi nozawa", "sweet lady jane", "tommy's", "water grill", 
+"afghan kebab house", "arcadia", "benny's burritos", "cafe con leche", 
+"corner bistro", "cucina della fontana", "cucina di pesce", "darbar", 
+"ej's luncheonette", "edison cafe", "elias corner", "good enough to eat", 
+"gray's papaya", "il mulino", "jackson diner", "joe's shanghai", 
+"john's pizzeria", "kelley & ping", "kiev", "kuruma zushi", "la caridad", 
+"la grenouille", "lemongrass grill", "lombardi's", "marnie's noodle shop", 
+"menchanko-tei", "mitali east-west", "monsoon ( ny )", "moustache", 
+"nobu", "one if by land tibs", "oyster bar", "palm", "palm too", 
+"patsy's pizza", "peter luger steak house", "rose of india", 
+"sam's noodle shop", "sarabeth's", "sparks steak house", "stick to your ribs", 
+"sushisay", "sylvia's", "szechuan hunan cottage", "szechuan kitchen", 
+"teresa's", "thai house cafe", "thailand restaurant", "veselka", 
+"westside cottage", "windows on the world", "wollensky's grill", 
+"yama", "zarela", "andre's french restaurant", "buccaneer bay club", 
+"buzio's in the rio", "'em eril's new orleans fish house", "fiore rotisserie & grille", 
+"hugo's cellar", "madame ching's", "mayflower cuisinier", "michael's ( las vegas )", 
+"monte carlo", "moongate", "morton's of chicago ( las vegas )", 
+"nicky blair's", "piero's restaurant", "spago ( las vegas )", 
+"steakhouse the", "stefano's", "sterling brunch", "tre visi", 
+"' 103 west", "alon's at the terrace", "baker's cajun cafe", 
+"barbecue kitchen", "bistro the", "bobby & june's kountry kitchen", 
+"bradshaw's restaurant", "brookhaven cafe", "cafe sunflower", 
+"canoe", "carey's", "carey's corner", "chops", "chopstix", "deacon burton's soulfood restaurant", 
+"eats", "flying biscuit the", "frijoleros", "greenwood's", "harold's barbecue", 
+"havana sandwich shop", "indian delights", "java jive", "johnny rockets ( at )", 
+"kalo's coffee house", "la fonda latina", "lettuce souprise you ( at )", 
+"majestic", "morton's of chicago ( atlanta )", "my thai", "nava", 
+"nuevo laredo cantina", "original pancake house ( at )", "palm the ( atlanta )", 
+"rainbow restaurant", "riviera", "silver skillet the", "soto", 
+"thelma's kitchen", "tortillas", "van gogh's restaurant & bar", 
+"veggieland", "white house restaurant", "bill's place", "cafe flore", 
+"caffe greco", "campo santo", "cha cha cha's", "doidge's", "dottie's true blue cafe", 
+"dusit thai", "ebisu", "'em erald garden restaurant", "eric's chinese restaurant", 
+"hamburger mary's", "kelly's on trinity", "la cumbre", "la mediterranee", 
+"la taqueria", "mario's bohemian cigar store cafe", "marnee thai", 
+"mel's drive-in", "mo's burgers", "phnom penh cambodian restaurant", 
+"roosevelt tamale parlor", "sally's cafe & bakery", "san francisco bbq", 
+"slanted door", "swan oyster depot", "thep phanom", "ti couz", 
+"trio cafe", "tu lan", "vicolo pizzeria", "wa-ha-ka oaxaca mexican grill", 
+"arnie morton's of chicago", "art's deli", "bel-air hotel", "campanile", 
+"chinois on main", "citrus", "fenix at the argyle", "granita", 
+"grill the", "l  ` orangerie", "le chardonnay ( los angeles )", 
+"locanda veneta", "matsuhisa", "palm the ( los angeles )", "patina", 
+"philippe the original", "pinot bistro", "rex il ristorante", 
+"spago ( los angeles )", "valentino", "yujean kang's", "'21 club", 
+"aquavit", "aureole", "cafe lalo", "cafe des artistes", "carmine's", 
+"carnegie deli", "chanterelle", "daniel", "dawat", "felidia", 
+"four seasons", "gotham bar & grill", "gramercy tavern", "island spice", 
+"jo jo", "la caravelle", "la cote basque", "le bernardin", "les celebrites", 
+"lespinasse ( new york city )", "lutece", "manhattan ocean club", 
+"march", "mesa grill", "mi cocina", "montrachet", "oceana", "park avenue cafe ( new york city )", 
+"petrossian", "picholine", "pisces", "rainbow room", "river cafe", 
+"san domenico", "second avenue deli", "seryna", "shun lee palace", 
+"sign of the dove", "smith & wollensky", "tavern on the green", 
+"uncle nick's", "union square cafe", "virgil's real bbq", "chin's", 
+"coyote cafe ( las vegas )", "le montrachet bistro", "palace court", 
+"second street grill", "steak house the", "'till erman the", 
+"abruzzi", "bacchanalia", "bone's restaurant", "brasserie le coze", 
+"buckhead diner", "ciboulette restaurant", "delectables", "georgia grille", 
+"hedgerose heights inn the", "heera of india", "indigo coastal grill", 
+"la grotta", "mary mac's tea room", "nikolai's roof", "pano's & paul  's", 
+"ritz-carlton cafe ( buckhead )", "ritz-carlton dining room ( buckhead )", 
+"ritz-carlton restaurant", "toulouse", "veni vidi vici", "alain rondelli", 
+"aqua", "boulevard", "cafe claude", "campton place", "chez michel", 
+"fleur de lys", "fringale", "hawthorne lane", "khan toke thai house", 
+"la folie", "lulu restaurant-bis-cafe", "masa's", "mifune", "plumpjack cafe", 
+"postrio", "ritz-carlton dining room ( san francisco )", "rose pistola", 
+"ritz-carlton cafe ( atlanta )"), addr = c("10801 w. pico blvd.", 
+"2027 sawtelle blvd.", "3345 kimber dr.", "9882 little santa monica blvd.", 
+"1433 third st. promenade", "515 s. olive st.", "45 s. mentor ave.", 
+"9600 brighton way", "1570 rosecrans ave. s.", "838 lincoln blvd.", 
+"9777 little santa monica blvd.", "3266 w. sixth st.", "1020 n. san vicente blvd.", 
+"1136 westwood blvd.", "8909 sunset blvd.", "1059 broxton ave.", 
+"1949 westwood blvd.", "6333 w. third st.", "10428 1/2 national blvd.", 
+"8424 beverly blvd.", "502 santa monica blvd", "2011 ocean front walk", 
+"1023 abbot kinney blvd.", "10516 w. pico blvd.", "7507 melrose ave.", 
+"4000 colfax ave.", "6333 w. third st.", "8393 w. beverly blvd.", 
+"22800 pch", "704 s. alvarado st.", "30869 thousand oaks blvd.", 
+"519 s. fairfax ave.", "1147 third st.", "8474 w. third st.", 
+"7261 melrose ave.", "17040 ventura blvd.", "3117 ocean park blvd.", 
+"875 s. figueroa st. downtown", "510 s. arroyo pkwy .", "642 broadway", 
+"709 n. la brea ave.", "923 e. third st.", "2901 pico blvd.", 
+"15322 ventura blvd.", "45 s. fair oaks ave.", "224 s. beverly dr.", 
+"1505 mission st. s.", "11288 ventura blvd.", "8360 melrose ave.", 
+"2575 beverly blvd.", "544 s. grand ave.", "764 ninth ave.", 
+"21 e. 62nd st.", "93 ave. a", "424 amsterdam ave.", "331 w. fourth st.", 
+"368 bleecker st.", "87 e. fourth st.", "44 w. 56th st.", "432 sixth ave.", 
+"228 w. 47th st.", "24-02 31st st.", "483 amsterdam ave.", "2090 broadway", 
+"86 w. third st.", "37-03 74th st.", "9 pell st.", "48 w. 65th st.", 
+"127 greene st.", "117 second ave.", "2nd fl .", "2199 broadway", 
+"3 e. 52nd st.", "61a seventh ave.", "32 spring st.", "466 hudson st.", 
+"39 w. 55th st.", "296 bleecker st.", "435 amsterdam ave.", "405 atlantic ave.", 
+"105 hudson st.", "17 barrow st.", "` lower level", "837 second ave.", 
+"840 second ave.", "19 old fulton st.", "178 broadway", "308 e. sixth st.", 
+"411 third ave.", "1295 madison ave.", "210 e. 46th st.", "5-16 51st ave.", 
+"38 e. 51st st.", "328 lenox ave.", "1588 york ave.", "1460 first ave.", 
+"80 montague st.", "151 hudson st.", "106 bayard st.", "144 second ave.", 
+"689 ninth ave.", "107th fl .", "205 e. 49th st.", "122 e. 17th st.", 
+"953 second ave.", "401 s. 6th st.", "3300 las vegas blvd. s.", 
+"3700 w. flamingo rd.", "3799 las vegas blvd. s.", "3700 w. flamingo rd.", 
+"202 e. fremont st.", "3300 las vegas blvd. s.", "4750 w. sahara ave.", 
+"3595 las vegas blvd. s.", "3145 las vegas blvd. s.", "3400 las vegas blvd. s.", 
+"3200 las vegas blvd. s.", "3925 paradise rd.", "355 convention center dr.", 
+"3500 las vegas blvd. s.", "128 e. fremont st.", "129 fremont st.", 
+"3645 las vegas blvd. s.", "3799 las vegas blvd. s.", "103 w. paces ferry rd.", 
+"659 peachtree st.", "1134 euclid ave.", "1437 virginia ave.", 
+"56 e. andrews dr. nw", "375 14th st.", "2911 s. pharr court", 
+"4274 peachtree rd.", "5975 roswell rd.", "4199 paces ferry rd.", 
+"1021 cobb pkwy . se", "1215 powers ferry rd.", "70 w. paces ferry rd.", 
+"4279 roswell rd.", "1029 edgewood ave. se", "600 ponce de leon ave.", 
+"1655 mclendon ave.", "1031 peachtree st. ne", "1087 green st.", 
+"171 mcdonough blvd.", "2905 buford hwy .", "3675 satellite blvd.", 
+"790 ponce de leon ave.", "2970 cobb pkwy .", "1248 clairmont rd.", 
+"4427 roswell rd.", "3525 mall blvd.", "1031 ponce de leon ave.", 
+"303 peachtree st. ne", "1248 clairmont rd.", "3060 peachtree rd.", 
+"1495 chattahoochee ave. nw", "4330 peachtree rd.", "3391 peachtree rd. ne", 
+"2118 n. decatur rd.", "519 e. paces ferry rd.", "200 14th st. nw", 
+"3330 piedmont rd.", "764 marietta st. nw", "774 ponce de leon ave. ne", 
+"70 w. crossville rd.", "220 sandy springs circle", "3172 peachtree rd. ne", 
+"2315 clement st.", "2298 market st.", "423 columbus ave.", "240 columbus ave.", 
+"1805 haight st.", "2217 union st.", "522 jones st.", "3221 mission st.", 
+"1283 ninth ave.", "1550 california st.", "1500 church st.", 
+"1582 folsom st.", "333 bush st.", "515 valencia st.", "288 noe st.", 
+"2889 mission st.", "2209 polk st.", "2225 irving st.", "3355 geary st.", 
+"1322 grant st.", "631 larkin st.", "2817 24th st.", "300 de haro st.", 
+"1328 18th st.", "584 valencia st.", "1517 polk st.", "400 waller st.", 
+"3108 16th st.", "1870 fillmore st.", "8 sixth st.", "201 ivy st.", 
+"2141 polk st.", "435 s. la cienega blvd.", "12224 ventura blvd.", 
+"701 stone canyon rd.", "624 s. la brea ave.", "2709 main st.", 
+"6703 melrose ave.", "8358 sunset blvd.", "23725 w. malibu rd.", 
+"9560 dayton way", "903 n. la cienega blvd.", "8284 melrose ave.", 
+"8638 w. third st.", "129 n. la cienega blvd.", "9001 santa monica blvd.", 
+"5955 melrose ave.", "1001 n. alameda st.", "12969 ventura blvd.", 
+"617 s. olive st.", "8795 sunset blvd.", "3115 pico blvd.", "67 n. raymond ave.", 
+"21 w. 52nd st.", "13 w. 54th st.", "34 e. 61st st.", "201 w. 83rd st.", 
+"1 w. 67th st.", "2450 broadway", "854 seventh ave.", "2 harrison st.", 
+"20 e. 76th st.", "210 e. 58th st.", "243 e. 58th st.", "99 e. 52nd st.", 
+"12 e. 12th st.", "42 e. 20th st.", "402 w. 44th st.", "160 e. 64th st.", 
+"33 w. 55th st.", "60 w. 55th st.", "155 w. 51st st.", "155 w. 58th st.", 
+"2 e. 55th st.", "249 e. 50th st.", "57 w. 58th st.", "405 e. 58th st.", 
+"102 fifth ave.", "57 jane st.", "239 w. broadway", "55 e. 54th st.", 
+"100 e. 63rd st.", "182 w. 58th st.", "35 w. 64th st.", "95 ave. a", 
+"30 rockefeller plaza", "1 water st.", "240 central park s.", 
+"156 second ave.", "11 e. 53rd st.", "155 e. 55th st.", "1110 third ave.", 
+"797 third ave.", "` central park west", "747 ninth ave.", "21 e. 16th st.", 
+"152 w. 44th st.", "3200 las vegas blvd. s.", "3799 las vegas blvd. s.", 
+"3000 paradise rd.", "3570 las vegas blvd. s.", "200 e. fremont st.", 
+"2880 las vegas blvd. s.", "2245 e. flamingo rd.", "2355 peachtree rd. ne", 
+"3125 piedmont rd.", "3130 piedmont rd. ne", "3393 peachtree rd.", 
+"3073 piedmont rd.", "1529 piedmont ave.", "1 margaret mitchell sq.", 
+"2290 peachtree rd.", "490 e. paces ferry rd. ne", "595 piedmont ave.", 
+"1397 n. highland ave.", "2637 peachtree rd. ne", "224 ponce de leon ave.", 
+"255 courtland st.", "1232 w. paces ferry rd.", "3434 peachtree rd. ne", 
+"3434 peachtree rd. ne", "181 peachtree st.", "293-b peachtree rd.", 
+"41 14th st.", "126 clement st.", "252 california st.", "1 mission st.", 
+"7 claude ln .", "340 stockton st.", "804 north point st.", "777 sutter st.", 
+"570 fourth st.", "22 hawthorne st.", "5937 geary blvd.", "2316 polk st.", 
+"816 folsom st.", "648 bush st.", "1737 post st.", "3127 fillmore st.", 
+"545 post st.", "600 stockton st.", "532 columbus ave.", "181 peachtree st."
+), city = c("llos angeles", "los angeles", "los angeles", "los angeles", 
+"lo angeles", "los angeles", "lo angeles", "los angeles", "los anegeles", 
+"los angeles", "los angeles", "los aneles", "losangeles", "lous angeles", 
+"los ageles", "llos angeles", "los angeles", "los angeles", "los angeles", 
+"los angeles", "los angeles", "los angeles", "loss angeles", 
+"los angeles", "los angeles", "llos angeles", "los angeles", 
+"los angeles", "los angeles", "los angeles", "los angeles", "los angeales", 
+"los angeles", "los angeles", "los angeles", "lo angeles", "los angeles", 
+"los angeles", "los angeles", "los angeles", "los ngeles", "los angeles", 
+"los angles", "los angeles", "los angeles", "los angeles", "los angeles", 
+"los angeles", "los angeles", "llos angeles", "los angeles", 
+"new yyork", "new yorkk", "new ryork", "nw york", "new york", 
+"new yyork", "neew york", "new york", "new ork", "new york", 
+"new  york", "neew york", "new york", "new york", "nnew york", 
+"new york", "new york", "neew york", "new york", "new york", 
+"new york", "new york", "new york", "new york", "neew york", 
+"new york", "new yornk", "new york", "new york", "neww york", 
+"nw york", "new york", "new york", "new york", "new york", "new york", 
+"new york", "new york", "ne york", "ew york", "new york", "new yorkw", 
+"new york", "ew york", "newyork", "new york", "new yok", "new york", 
+"new york", "nnew york", "new york", "new york", "new york", 
+"new york", "las vegas", "las vegas", "las vvegas", "las vegas", 
+"las vegas", "la vegas", "las vegas", "las vegas", "las vegas", 
+"las vegas", "lass vegas", "las vegas", "las vegas", "lass vegas", 
+"las vegas", "las vegas", "las vegas", "las vegas", "las veas", 
+"atlanta", "atlanta", "atlanta", "atlanta", "atlata", "atlanta", 
+"aatlanta", "atlanta", "atlanta", "atlanta", "aotlanta", "atlanta", 
+"atlanta", "atlanta", "tlanta", "atlanta", "atlanta", "atanta", 
+"atlanta", "atlanta", "atlanta", "atlanta", "atlanta", "atlanta", 
+"atlanta", "atlannta", "atlanta", "atlanta", "atlanta", "atlanta", 
+"atlanta", "atlanta", "atlanta", "atlanta", "atlanta", "atlanta", 
+"atalanta", "atlanta", "atlanta", "aatlanta", "atlanta", "atlanta", 
+"tlanta", "san francisco", "san francisco", "san francisco", 
+"sn francisco", "sann francisco", "san francisco", "sa francisco", 
+"saan francisco", "san francisco", "san francisco", "san francisco", 
+"san francisco", "san francisco", "san francisco", "saan francisco", 
+"san francisco", "san francisco", "san fancisco", "san francisco", 
+"san francisco", "san francisco", "san francisco", "ssan francisco", 
+"san rancisco", "sn francisco", "san francisco", "san francisco", 
+"san francisco", "san francisco", "san francisco", "san francisco", 
+"san  francisco", "los aangeles", "los angeles", "los aneles", 
+"los angeles", "los angeles", "los aneles", "los angeles", "los ngeles", 
+"los angeles", "los angeles", "los angeles", "losg angeles", 
+"los angeles", "los angeles", "los ngeles", "los angeles", "losl angeles", 
+"los ngeles", "los angeles", "los angeles", "los angeles", "new york", 
+"new york", "new yoork", "new yorkk", "new york", "new york", 
+"new yorkn", "new york", "new york", "new york", "new yorwk", 
+"new york", "new york", "new york", "new york", "new ork", "new york", 
+"new york", "new york", "new york", "new york", "new yyork", 
+"new york", "new york", "new york", "new york", "new yor", "new  york", 
+"new york", "new york", "new york", "new york", "new york", "new york", 
+"new york", "new york", "new york", "new york", "new york", "new york", 
+"new yrk", "new ork", "new york", "new york", "las vegas", "las vegas", 
+"las vegas", "las vegas", "las vegas", "las vegas", "la vegas", 
+"aotlanta", "atlanta", "atlanta", "atlanta", "atlanta", "atlanta", 
+"atlanta", "atlanta", "atlanta", "atlata", "atlanta", "atlannta", 
+"aatlanta", "atlanta", "atlanta", "atlanta", "atlanta", "tlanta", 
+"atlanta", "tlanta", "san francisco", "san francisco", "san francisco", 
+"san francisco", "san franisco", "san frcancisco", "sn francisco", 
+"san francisco", "san francisco", "san francisco", "san frrancisco", 
+"san francisco", "san francisco", "san francisco", "san francisco", 
+"san francisco", "san franc isco", "an francisco", "tlanta"), 
+    phone = structure(c(143L, 145L, 312L, 155L, 139L, 96L, 323L, 
+    125L, 150L, 132L, 161L, 94L, 159L, 121L, 151L, 120L, 142L, 
+    113L, 156L, 101L, 162L, 126L, 133L, 118L, 102L, 315L, 114L, 
+    105L, 138L, 95L, 319L, 117L, 135L, 108L, 115L, 328L, 136L, 
+    99L, 322L, 97L, 112L, 107L, 157L, 327L, 324L, 160L, 325L, 
+    316L, 103L, 91L, 111L, 23L, 5L, 18L, 50L, 11L, 10L, 20L, 
+    35L, 36L, 79L, 302L, 42L, 77L, 56L, 299L, 298L, 63L, 8L, 
+    57L, 25L, 82L, 66L, 295L, 85L, 65L, 16L, 88L, 47L, 300L, 
+    3L, 7L, 41L, 59L, 62L, 301L, 294L, 45L, 2L, 34L, 60L, 303L, 
+    72L, 89L, 46L, 17L, 296L, 27L, 29L, 9L, 13L, 44L, 68L, 37L, 
+    55L, 274L, 293L, 268L, 290L, 269L, 273L, 292L, 287L, 283L, 
+    280L, 285L, 291L, 286L, 270L, 271L, 272L, 276L, 284L, 288L, 
+    170L, 202L, 164L, 203L, 167L, 212L, 180L, 168L, 178L, 306L, 
+    305L, 307L, 182L, 177L, 192L, 215L, 200L, 217L, 310L, 194L, 
+    196L, 1L, 214L, 308L, 187L, 186L, 304L, 208L, 193L, 197L, 
+    176L, 190L, 174L, 205L, 195L, 184L, 206L, 169L, 201L, 216L, 
+    311L, 166L, 175L, 218L, 241L, 228L, 233L, 224L, 263L, 262L, 
+    258L, 240L, 248L, 220L, 243L, 223L, 261L, 231L, 221L, 255L, 
+    245L, 226L, 257L, 251L, 237L, 244L, 232L, 259L, 247L, 230L, 
+    219L, 238L, 242L, 260L, 250L, 122L, 320L, 141L, 116L, 129L, 
+    110L, 109L, 137L, 124L, 153L, 104L, 123L, 154L, 148L, 92L, 
+    100L, 329L, 98L, 152L, 158L, 318L, 48L, 24L, 26L, 43L, 83L, 
+    31L, 73L, 86L, 22L, 30L, 74L, 71L, 51L, 38L, 76L, 6L, 49L, 
+    61L, 40L, 39L, 28L, 67L, 32L, 70L, 78L, 52L, 4L, 75L, 54L, 
+    14L, 64L, 19L, 53L, 297L, 21L, 58L, 87L, 33L, 80L, 69L, 81L, 
+    15L, 12L, 84L, 281L, 289L, 279L, 278L, 275L, 282L, 277L, 
+    181L, 191L, 172L, 185L, 183L, 207L, 199L, 189L, 171L, 213L, 
+    210L, 165L, 211L, 163L, 179L, 173L, 173L, 198L, 188L, 209L, 
+    225L, 266L, 236L, 227L, 265L, 252L, 249L, 235L, 256L, 246L, 
+    253L, 234L, 267L, 264L, 239L, 254L, 222L, 229L, 198L), .Label = c("100-813-8212", 
+    "212-213-2288", "212-219-0500", "212-219-2777", "212-223-2900", 
+    "212-223-5656", "212-228-0822", "212-228-1212", "212-228-9682", 
+    "212-242-0636", "212-242-9502", "212-243-4020", "212-245-0800", 
+    "212-245-2214", "212-245-7992", "212-247-1585", "212-249-4615", 
+    "212-254-2054", "212-260-6660", "212-260-6800", "212-265-5959", 
+    "212-288-0033", "212-307-1612", "212-307-7311", "212-317-2802", 
+    "212-319-1660", "212-334-1085", "212-339-6719", "212-349-3132", 
+    "212-355-7555", "212-362-2200", "212-371-7777", "212-371-8844", 
+    "212-410-7335", "212-432-7227", "212-473-5555", "212-475-0969", 
+    "212-477-0777", "212-484-5113", "212-489-1515", "212-490-6650", 
+    "212-496-0163", "212-496-6031", "212-524-7000", "212-533-5011", 
+    "212-535-5223", "212-580-8686", "212-582-7200", "212-586-4252", 
+    "212-595-7000", "212-620-4020", "212-627-8273", "212-632-5000", 
+    "212-644-1900", "212-644-6740", "212-673-3783", "212-674-4040", 
+    "212-677-0606", "212-687-2953", "212-687-4855", "212-688-6525", 
+    "212-697-5198", "212-721-7001", "212-724-8585", "212-741-3214", 
+    "212-752-1495", "212-752-2225", "212-753-0444", "212-753-1530", 
+    "212-754-6272", "212-754-9494", "212-755-1780", "212-757-2245", 
+    "212-758-1479", "212-759-5941", "212-765-1737", "212-799-0243", 
+    "212-807-7400", "212-840-5000", "212-861-8080", "212-873-3200", 
+    "212-874-2780", "212-877-3500", "212-921-9494", "212-941-7994", 
+    "212-966-6960", "212-980-9393", "212-989-1367", "212-996-0660", 
+    "213-265-2887", "213-389-9060", "213-467-1108", "213-467-7678", 
+    "213-480-8668", "213-483-8050", "213-612-1580", "213-626-5530", 
+    "213-627-2300", "213-627-6879", "213-628-3781", "213-651-2866", 
+    "213-651-3361", "213-653-7145", "213-655-8880", "213-655-9045", 
+    "213-665-1891", "213-687-7178", "213-782-0181", "213-848-6677", 
+    "213-857-0034", "213-891-0900", "213-931-4223", "213-933-0358", 
+    "213-933-0773", "213-935-5280", "213-938-1447", "213-938-8800", 
+    "310-204-0692", "310-207-7782", "310-208-4444", "310-209-1422", 
+    "310-246-1501", "310-274-1893", "310-276-0615", "310-276-7732", 
+    "310-306-1995", "310-306-7829", "310-376-7786", "310-392-9025", 
+    "310-397-5703", "310-397-6654", "310-399-1955", "310-399-5811", 
+    "310-423-7327", "310-451-0843", "310-452-5728", "310-456-0488", 
+    "310-456-6299", "310-458-2889", "310-470-4992", "310-472-1211", 
+    "310-475-0400", "310-475-3585", "310-475-7564", "310-479-2231", 
+    "310-540-1222", "310-545-5177", "310-550-8811", "310-596-9556", 
+    "310-643-5229", "310-652-3100", "310-652-4025", "310-652-9770", 
+    "310-659-9639", "310-788-2306", "310-815-1290", "310-828-7937", 
+    "310-829-4313", "310-854-1111", "310-859-8744", "310-888-0108", 
+    "310-917-6671", "404-221-6362", "404-223-5039", "404-231-1368", 
+    "404-231-3111", "404-231-5733", "404-231-5907", "404-233-2005", 
+    "404-233-5993", "404-233-7673", "404-237-2663", "404-237-2700", 
+    "404-237-4116", "404-237-7601", "404-240-1984", "404-255-4868", 
+    "404-256-1675", "404-261-3662", "404-261-7015", "404-261-8186", 
+    "404-262-2675", "404-262-3336", "404-262-7112", "404-266-1440", 
+    "404-303-8201", "404-325-3733", "404-351-9533", "404-352-3517", 
+    "404-352-9009", "404-365-0410", "404-523-1929", "404-577-4366", 
+    "404-627-9268", "404-633-3538", "404-636-4094", "404-636-4280", 
+    "404-659-0400", "404-681-2909", "404-687-8888", "404-688-5855", 
+    "404-724-0444", "404-766-9906", "404-768-2705", "404-814-1955", 
+    "404-874-1388", "404-874-7600", "404-875-0276", "404-875-8424", 
+    "404-876-0676", "404-876-1800", "404-876-3872", "404-876-4408", 
+    "404-876-6161", "404-888-9149", "404-892-0193", "404-892-8226", 
+    "415-221-5262", "415-252-7373", "415-282-0919", "415-285-7117", 
+    "415-296-7465", "415-362-4454", "415-386-5758", "415-387-0408", 
+    "415-387-2244", "415-392-3505", "415-397-6261", "415-399-0499", 
+    "415-431-2526", "415-431-7210", "415-431-8956", "415-433-9623", 
+    "415-495-5775", "415-543-0573", "415-543-6084", "415-550-9213", 
+    "415-563-2248", "415-563-4755", "415-566-1770", "415-621-8579", 
+    "415-626-0927", "415-626-1985", "415-626-6006", "415-665-9500", 
+    "415-668-6654", "415-673-1101", "415-673-1155", "415-673-7779", 
+    "415-775-1055", "415-775-5979", "415-775-7036", "415-776-5577", 
+    "415-776-7825", "415-776-8226", "415-777-9779", "415-788-3779", 
+    "415-826-4639", "415-861-8032", "415-863-2382", "415-863-8205", 
+    "415-885-2767", "415-921-2149", "415-922-0337", "415-955-5555", 
+    "415-956-9662", "415-989-7154", "702-252-7697", "702-252-7702", 
+    "702-369-2305", "702-369-6300", "702-382-1600", "702-385-4011", 
+    "702-385-5016", "702-385-6277", "702-385-7111", "702-731-4036", 
+    "702-731-7110", "702-732-5651", "702-733-4524", "702-733-8899", 
+    "702-734-0410", "702-737-7111", "702-739-4651", "702-791-7352", 
+    "702-792-9900", "702-870-8432", "702-891-7331", "702-891-7349", 
+    "702-891-7374", "702-893-0703", "702-894-7111", "702-894-7350", 
+    "718-387-7400", "718-399-7100", "718-520-2910", "718-522-5200", 
+    "718-539-3838", "718-672-1232", "718-852-5555", "718-858-4300", 
+    "718-932-1510", "718-937-3030", "770-418-9969", "770-422-8042", 
+    "770-432-2663", "770-933-0909", "770-955-6068", "770-955-9444", 
+    "770-992-5383", "770-993-1156", "805-498-4049", "818-244-1937", 
+    "818-308-2128", "818-508-1570", "818-508-7017", "818-563-2252", 
+    "818-585-0855", "818-706-7706", "818-762-1221", "818-788-3536", 
+    "818-795-1001", "818-795-2478", "818-796-7829", "818-799-4774", 
+    "818-886-5679", "818-905-6515", "818-906-8881", "818-990-0500"
+    ), class = "factor"), type = c("american", "noodle shops", 
+    "mexican", "pacific new wave", "fast food", "continental", 
+    "californian", "coffee shops", "californian", "american", 
+    "pacific new wave", "hamburgers", "russian", "italian", "coffee shops", 
+    "middle eastern", "chinese", "cajun/creole", "indonesian", 
+    "coffee shops", "californian", "hot dogs", "american ( new )", 
+    "coffee shops", "american", "seafood", "american", "chicken", 
+    "mexican", "delis", "health food", "desserts", "californian", 
+    "noodle shops", "hamburgers", "pizza", "american", "diners", 
+    "californian", "vietnamese", "hot dogs", "japanese", "diners", 
+    "hot dogs", "diners", "steakhouses", "pacific new wave", 
+    "japanese", "desserts", "hamburgers", "seafood", "afghan", 
+    "american ( new )", "mexican", "cuban", "hamburgers", "italian", 
+    "seafood", "indian", "diners", "diners", "greek", "american", 
+    "hot dogs", "italian", "indian", "chinese", "pizza", "pan-asian", 
+    "ukrainian", "japanese", "cuban", "french ( classic )", "thai", 
+    "pizza", "asian", "japanese", "indian", "thai", "middle eastern", 
+    "japanese", "continental", "seafood", "steakhouses", "steakhouses", 
+    "pizza", "steakhouses", "indian", "chinese", "american", 
+    "steakhouses", "bbq", "japanese", "southern/soul", "chinese", 
+    "chinese", "polish", "thai", "thai", "ukrainian", "chinese", 
+    "eclectic", "steakhouses", "japanese", "mexican", "french ( classic )", 
+    "continental", "seafood", "seafood", "italian", "continental", 
+    "asian", "chinese", "continental", "french ( new )", "chinese", 
+    "steakhouses", "italian", "italian", "californian", "steakhouses", 
+    "italian", "eclectic", "italian", "continental", "sandwiches", 
+    "cajun/creole", "bbq", "french bistro", "southern/soul", 
+    "southern/soul", "vegetarian", "health food", "american ( new )", 
+    "hamburgers", "hamburgers", "steakhouses", "chinese", "southern/soul", 
+    "italian", "eclectic", "tex-mex", "southern/soul", "bbq", 
+    "cuban", "indian", "coffee shops", "american", "coffeehouses", 
+    "spanish", "cafeterias", "diners", "steakhouses", "thai", 
+    "southwestern", "mexican", "american", "steakhouses", "vegetarian", 
+    "mediterranean", "coffee shops", "japanese", "cafeterias", 
+    "tex-mex", "american ( new )", "vegetarian", "diners", "hamburgers", 
+    "californian", "continental", "mexican", "caribbean", "american", 
+    "diners", "thai", "japanese", "vietnamese", "chinese", "hamburgers", 
+    "californian", "mexican", "mediterranean", "mexican", "italian", 
+    "thai", "hamburgers", "hamburgers", "cambodian", "mexican", 
+    "american", "thai", "vietnamese", "seafood", "thai", "french", 
+    "american", "vietnamese", "pizza", "mexican", "steakhouses", 
+    "delis", "californian", "californian", "pacific new wave", 
+    "californian", "french ( new )", "californian", "american ( traditional )", 
+    "french ( classic )", "french bistro", "italian", "seafood", 
+    "steakhouses", "californian", "cafeterias", "french bistro", 
+    "nuova cucina italian", "californian", "italian", "chinese", 
+    "american ( new )", "scandinavian", "american ( new )", "coffeehouses", 
+    "french ( classic )", "italian", "delis", "french ( new )", 
+    "french ( new )", "indian", "italian", "american ( new )", 
+    "american ( new )", "american ( new )", "caribbean", "french bistro", 
+    "french ( classic )", "french ( classic )", "seafood", "french ( classic )", 
+    "asian", "french ( classic )", "seafood", "american ( new )", 
+    "southwestern", "mexican", "french bistro", "seafood", "american ( new )", 
+    "russian", "mediterranean", "seafood", "american ( new )", 
+    "american ( new )", "italian", "delis", "japanese", "chinese", 
+    "american ( new )", "steakhouses", "american ( new )", "greek", 
+    "american ( new )", "bbq", "chinese", "southwestern", "french bistro", 
+    "french ( new )", "pacific rim", "steakhouses", "steakhouses", 
+    "italian", "californian", "steakhouses", "french bistro", 
+    "american ( new )", "french ( new )", "cafeterias", "southwestern", 
+    "continental", "indian", "eclectic", "italian", "southern/soul", 
+    "continental", "american ( new )", "american ( new )", "american ( new )", 
+    "french ( classic )", "french ( new )", "italian", "french ( new )", 
+    "american ( new )", "american ( new )", "french bistro", 
+    "american ( new )", "californian", "french ( new )", "french bistro", 
+    "californian", "thai", "french ( new )", "mediterranean", 
+    "french ( new )", "japanese", "american ( new )", "californian", 
+    "french ( new )", "italian", "american ( new )")), .Names = c("id", 
+"name", "addr", "city", "phone", "type"), row.names = c(NA, -310L
+), class = "data.frame")
+```
+
+`zagat`, is a set of restaurants in New York, Los Angeles, Atlanta, San Francisco, and Las Vegas. The data is from Zagat, a company that collects restaurant reviews, and includes the restaurant names, addresses, phone numbers, as well as other restaurant information.
+
+The `city` column contains the name of the city that the restaurant is located in. However, there are a number of typos throughout the column. Map each `city` to one of the five correctly-spelled cities contained in the `cities` data frame.
+
+Left join `zagat` and `cities` based on string distance using the `city` and `city_actual` columns.
+
+`stringdist_left_join` function from the `fuzzyjoin` package that allows you to do a `stringdist` left join.
+
+```{r}
+# Count the number of each city variation
+zagat[1:10,] %>%
+  count(city)
+```
+
+```{r}
+# Join and look at results
+zagat[1:10,] %>%
+  # Left join based on stringdist using city and city_actual cols
+  stringdist_left_join(cities, by = c("city" = "city_actual")) %>%
+  # Select the name, city, and city_actual cols
+  select(name, city, city_actual)
+```
+
+**Record linkage**
+
+record linkage is the act of linking data from different sources regarding the same entity. But unlike joins, record linkage does not require exact matches between different pairs of data, and instead can find close matches using string similarity. This is why record linkage is effective when there are no common unique keys between the data sources you can rely upon when linking data sources such as a unique identifier.
+
+**Pair blocking**
+```{r include=FALSE}
+fodors <- structure(list(id = 0:532, name = c("arnie morton's of chicago", 
+"art's delicatessen", "hotel bel-air", "cafe bizou", "campanile", 
+"chinois on main", "citrus", "fenix", "granita", "grill on the alley", 
+"restaurant katsu", "l  ` orangerie", "le chardonnay", "locanda veneta", 
+"matsuhisa", "the palm", "patina", "philippe's the original", 
+"pinot bistro", "rex il ristorante", "spago", "valentino", "yujean kang's gourmet chinese cuisine", 
+"'21 club", "aquavit", "aureole", "cafe lalo", "cafe des artistes", 
+"carmine's", "carnegie deli", "chanterelle", "daniel", "dawat", 
+"felidia", "four seasons grill room", "gotham bar & grill", "gramercy tavern", 
+"island spice", "jo jo", "la caravelle", "la cote basque", "le bernardin", 
+"les celebrites", "lespinasse", "lutece", "manhattan ocean club", 
+"march", "mesa grill", "mi cocina", "montrachet", "oceana", "park avenue cafe", 
+"petrossian", "picholine", "pisces", "rainbow room", "river cafe", 
+"san domenico", "second avenue deli", "seryna", "shun lee west", 
+"sign of the dove", "smith & wollensky", "tavern on the green", 
+"uncle nick's", "union square cafe", "virgil's", "chin's", "coyote cafe", 
+"le montrachet", "palace court", "second street grille", "steak house", 
+"tillerman", "abruzzi", "bacchanalia", "bone's", "brasserie le coze", 
+"buckhead diner", "ciboulette", "delectables", "georgia grille", 
+"hedgerose heights inn", "heera of india", "indigo coastal grill", 
+"la grotta", "mary mac's tea room", "nikolai's roof", "pano's and paul  's", 
+"cafe ritz-carlton buckhead", "dining room ritz-carlton buckhead", 
+"restaurant ritz-carlton atlanta", "toulouse", "veni vidi vici", 
+"alain rondelli", "aqua", "boulevard", "cafe claude", "campton place", 
+"chez michel", "fleur de lys", "fringale", "hawthorne lane", 
+"khan toke thai house", "la folie", "lulu", "masa's", "mifune japan center kintetsu building", 
+"plumpjack cafe", "postrio", "ritz-carlton restaurant and dining room", 
+"rose pistola", "bolo", "il nido", "remi", "adriano's ristorante", 
+"barney greengrass", "beaurivage", "bistro garden", "border grill", 
+"broadway deli", "ca  ` brea", "ca  ` del sol", "cafe pinot", 
+"california pizza kitchen", "canter's", "cava", "cha cha cha", 
+"chan dara", "clearwater cafe", "dining room", "dive !", "drago", 
+"drai's", "dynasty room", "eclipse", "ed debevic's", "el cholo", 
+"gilliland's", "gladstone's", "hard rock cafe", "harry's bar & american grill", 
+"il fornaio cucina italiana", "jack sprat's grill", "jackson's farm", 
+"jimmy's", "joss", "le colonial", "le dome", "louise's trattoria", 
+"mon kee seafood restaurant", "morton's", "nate  ` n' al  's", 
+"nicola", "ocean avenue", "orleans", "pacific dining car", "paty's", 
+"pinot hollywood", "posto", "prego", "rj's the rib joint", "remi", 
+"restaurant horikawa", "roscoe's house of chicken  ` n  ' waffles", 
+"schatzi on main", "sofi", "swingers", "tavola calda", "the mandarin", 
+"tommy tang's", "tra di noi", "trader vic's", "vida", "west beach cafe", 
+"'20 mott", "' 9 jones street", "adrienne", "agrotikon", "aja", 
+"alamo", "alley's end", "ambassador grill", "american place", 
+"anche vivolo", "arizona", "arturo's", "au mandarin", "bar anise", 
+"barbetta", "ben benson's", "big cup", "billy's", "boca chica", 
+"boonthai", "bouterin", "brothers bar-b-q", "bruno", "bryant park grill roof restaurant and bp cafe", 
+"c3", "ct", "cafe bianco", "cafe botanica", "cafe la fortuna", 
+"cafe luxembourg", "cafe pierre", "cafe centro", "cafe fes", 
+"caffe dante", "caffe dell  ` artista", "caffe lure", "caffe reggio", 
+"caffe roma", "caffe vivaldi", "caffe bondi ristorante", "capsouto freres", 
+"captain's table", "casa la femme", "cendrillon asian grill & marimba bar", 
+"chez jacqueline", "chiam", "china grill", "cite", "coco pazzo", 
+"columbus bakery", "corrado cafe", "cupcake cafe", "da nico", 
+"dean & deluca", "diva", "dix et sept", "docks", "duane park cafe", 
+"el teddy's", "'em ily's", "'em pire korea", "ernie's", "evergreen cafe", 
+"f. ille ponte ristorante", "felix", "ferrier", "fifty seven fifty seven", 
+"film center cafe", "fiorello's roman cafe", "firehouse", "first", 
+"fishin eddie", "fleur de jour", "flowers", "follonico", "fraunces tavern", 
+"french roast", "french roast cafe", "frico bar", "fujiyama mama", 
+"gabriela's", "gallagher's", "gianni's", "girafe", "global", 
+"golden unicorn", "grand ticino", "halcyon", "hard rock cafe", 
+"hi-life restaurant and lounge", "home", "hudson river club", 
+"' i trulli", "il cortile", "inca grill", "indochine", "internet cafe", 
+"ipanema", "jean lafitte", "jewel of india", "jimmy sung's", 
+"joe allen", "judson grill", "l  ` absinthe", "l  ` auberge", 
+"l  ` auberge du midi", "l  ` udo", "la reserve", "lanza restaurant", 
+"lattanzi ristorante", "layla", "le chantilly", "le colonial", 
+"le gamin", "le jardin", "le madri", "le marais", "le perigord", 
+"le select", "les halles", "lincoln tavern", "lola", "lucky strike", 
+"mad fish", "main street", "mangia e bevi", "manhattan cafe", 
+"manila garden", "marichu", "marquet patisserie", "match", "matthew's", 
+"mavalli palace", "milan cafe and coffee bar", "monkey bar", 
+"montien", "morton's", "motown cafe", "new york kom tang soot bul house", 
+"new york noodletown", "newsbar", "odeon", "orso", "osteria al droge", 
+"otabe", "pacifica", "palio", "pamir", "parioli romanissimo", 
+"patria", "peacock alley", "pen & pencil", "penang soho", "persepolis", 
+"planet hollywood", "pomaire", "popover cafe", "post house", 
+"rain", "red tulip", "republic", "roettelle a. g", "rosa mexicano", 
+"ruth's chris", "s.p.q.r", "sal anthony's", "sammy's roumanian steak house", 
+"san pietro", "sant ambroeus", "sarabeth's kitchen", "sea grill", 
+"serendipity", "seventh regiment mess and bar", "sfuzzi", "shaan", 
+"sofia fabulous pizza", "spring street natural restaurant & bar", 
+"stage deli", "stingray", "sweet  ` n  ` tart cafe", "' t salon", 
+"tang pavillion", "tapika", "teresa's", "terrace", "the coffee pot", 
+"the savannah club", "trattoria dell  ` arte", "triangolo", "tribeca grill", 
+"trois jean", "tse yang", "turkish kitchen", "two two two", "veniero's pasticceria", 
+"verbena", "victor's cafe", "vince & eddie's", "vong", "water club", 
+"west", "xunta", "zen palate", "zoe", "abbey", "aleck's barbecue heaven", 
+"annie's thai castle", "anthonys", "atlanta fish market", "beesley's of buckhead", 
+"bertolini's", "bistango", "cafe renaissance", "camille's", "cassis", 
+"city grill", "coco loco", "colonnade restaurant", "dante's down the hatch buckhead", 
+"dante's down the hatch", "fat matt's rib shack", "french quarter food shop", 
+"holt bros. bar-b-q", "horseradish grill", "hsu's gourmet", "imperial fez", 
+"kamogawa", "la grotta at ravinia dunwoody rd.", "little szechuan", 
+"lowcountry barbecue", "luna si", "mambo restaurante cubano", 
+"mckinnon's louisiane", "mi spia dunwoody rd.", "nickiemoto's : a sushi bar", 
+"palisades", "pleasant peasant", "pricci", "r.j.'s uptown kitchen & wine bar", 
+"rib ranch", "sa tsu ki", "sato sushi and thai", "south city kitchen", 
+"south of france", "stringer's fish camp and oyster bar", "sundown cafe", 
+"taste of new orleans", "tomtom", "antonio's", "bally's big kitchen", 
+"bamboo garden", "battista's hole in the wall", "bertolini's", 
+"binion's coffee shop", "bistro", "broiler", "bugsy's diner", 
+"cafe michelle", "cafe roma", "capozzoli's", "carnival world", 
+"center stage plaza hotel", "circus circus", "'em press court", 
+"feast", "golden nugget hotel", "golden steer", "lillie langtry's", 
+"mandarin court", "margarita's mexican cantina", "mary's diner", 
+"mikado", "pamplemousse", "ralph's diner", "the bacchanal", "venetian", 
+"viva mercado's", "yolie's", "2223", "acquarello", "bardelli's", 
+"betelnut", "bistro roti", "bix", "bizou", "buca giovanni", "cafe adriano", 
+"cafe marimba", "california culinary academy", "capp's corner", 
+"carta", "chevys", "cypress club", "des alpes", "faz", "fog city diner", 
+"garden court", "gaylord's", "grand cafe hotel monaco", "greens", 
+"harbor village", "harris'", "harry denton's", "hayes street grill", 
+"helmand", "hong kong flower lounge", "hong kong villa", "hyde street bistro", 
+"il fornaio levi's plaza", "izzy's steak & chop house", "jack's", 
+"kabuto sushi", "katia's", "kuleto's", "kyo-ya . sheraton palace hotel", 
+"l  ` osteria del forno", "le central", "le soleil", "macarthur park", 
+"manora", "maykadeh", "mccormick & kuleto's", "millennium", "moose's", 
+"north india", "one market", "oritalia", "pacific pan pacific hotel", 
+"palio d  ` asti", "pane e vino", "pastis", "perry's", "r & g lounge", 
+"rubicon", "rumpus", "sanppo", "scala's bistro", "south park cafe", 
+"splendido embarcadero", "stars", "stars cafe", "stoyanof's cafe", 
+"straits cafe", "suppenkuche", "tadich grill", "the heights", 
+"thepin", "ton kiang", "vertigo", "vivande porta via", "vivande ristorante", 
+"world wrapps", "wu kong", "yank sing", "yaya cuisine", "yoyo tsumami bistro", 
+"zarzuela", "zuni cafe & grill"), addr = c("435 s. la cienega blv .", 
+"12224 ventura blvd.", "701 stone canyon rd.", "14016 ventura blvd.", 
+"624 s. la brea ave.", "2709 main st.", "6703 melrose ave.", 
+"8358 sunset blvd. west", "23725 w. malibu rd.", "9560 dayton way", 
+"1972 n. hillhurst ave.", "903 n. la cienega blvd.", "8284 melrose ave.", 
+"3rd st.", "129 n. la cienega blvd.", "9001 santa monica blvd.", 
+"5955 melrose ave.", "1001 n. alameda st.", "12969 ventura blvd.", 
+"617 s. olive st.", "1114 horn ave.", "3115 pico blvd.", "67 n. raymond ave.", 
+"21 w. 52nd st.", "13 w. 54th st.", "34 e. 61st st.", "201 w. 83rd st.", 
+"1 w. 67th st.", "2450 broadway between 90th and 91st sts .", 
+"854 7th ave. between 54th and 55th sts .", "2 harrison st. near hudson st.", 
+"20 e. 76th st.", "210 e. 58th st.", "243 e. 58th st.", "99 e. 52nd st.", 
+"12 e. 12th st.", "42 e. 20th st. between park ave. s and broadway", 
+"402 w. 44th st.", "160 e. 64th st.", "33 w. 55th st.", "60 w. 55th st. between 5th and 6th ave.", 
+"155 w. 51st st.", "160 central park s", "2 e. 55th st.", "249 e. 50th st.", 
+"57 w. 58th st.", "405 e. 58th st.", "102 5th ave. between 15th and 16th sts .", 
+"57 jane st. off hudson st.", "239 w. broadway between walker and white sts .", 
+"55 e. 54th st.", "100 e. 63rd st.", "182 w. 58th st.", "35 w. 64th st.", 
+"95 ave. a at 6th st.", "30 rockefeller plaza", "1 water st. at the east river", 
+"240 central park s", "156 2nd ave. at 10th st.", "11 e. 53rd st.", 
+"43 w. 65th st.", "1110 3rd ave. at 65th st.", "201 e. 49th st.", 
+"` in central park at 67th st.", "747 9th ave. between 50th and 51st sts .", 
+"21 e. 16th st.", "152 w. 44th st.", "3200 las vegas blvd. s", 
+"3799 las vegas blvd. s", "3000 w. paradise rd.", "3570 las vegas blvd. s", 
+"200 e. fremont st.", "2880 las vegas blvd. s", "2245 e. flamingo rd.", 
+"2355 peachtree rd. . peachtree battle shopping center", "3125 piedmont rd. . near peachtree rd.", 
+"3130 piedmont road", "3393 peachtree rd. . lenox square mall near neiman marcus", 
+"3073 piedmont road", "1529 piedmont ave.", "1 margaret mitchell sq.", 
+"2290 peachtree rd. . peachtree square shopping center", "490 e. paces ferry rd.", 
+"595 piedmont ave. rio shopping mall", "1397 n. highland ave.", 
+"2637 peachtree rd. . peachtree house condominium", "224 ponce de leon ave.", 
+"255 courtland st. at harris st.", "1232 w. paces ferry rd.", 
+"3434 peachtree rd.", "3434 peachtree rd.", "181 peachtree st.", 
+"b peachtree rd.", "41 14th st.", "126 clement st.", "252 california st.", 
+"1 mission st.", "7 claude la .", "340 stockton st.", "804 northpoint", 
+"777 sutter st.", "570 4th st.", "22 hawthorne st.", "5937 geary blvd.", 
+"2316 polk st.", "816 folsom st.", "648 bush st.", "1737 post st.", 
+"3201 fillmore st.", "545 post st.", "600 stockton st.", "532 columbus ave.", 
+"23 e. 22nd st.", "251 e. 53rd st.", "145 w. 53rd st.", "2930 beverly glen circle", 
+"9570 wilshire blvd.", "26025 pacific coast hwy .", "176 n. canon dr.", 
+"4th st.", "3rd st. promenade", "346 s. la brea ave.", "4100 cahuenga blvd.", 
+"700 w. fifth st.", "207 s. beverly dr.", "419 n. fairfax ave.", 
+"3rd st.", "656 n. virgil ave.", "310 n. larchmont blvd.", "168 w. colorado blvd.", 
+"9500 wilshire blvd.", "10250 santa monica blvd.", "2628 wilshire blvd.", 
+"730 n. la cienega blvd.", "930 hilgard ave.", "8800 melrose ave.", 
+"134 n. la cienega", "1121 s. western ave.", "2424 main st.", 
+"4 fish 17300 pacific coast hwy . at sunset blvd.", "8600 beverly blvd.", 
+"2020 ave. of the stars", "301 n. beverly dr.", "10668 w. pico blvd.", 
+"439 n. beverly drive", "201 moreno dr.", "9255 sunset blvd.", 
+"8783 beverly blvd.", "8720 sunset blvd.", "4500 los feliz blvd.", 
+"679 n. spring st.", "8764 melrose ave.", "414 n. beverly dr.", 
+"601 s. figueroa st.", "1401 ocean ave.", "11705 national blvd.", 
+"6th st.", "10001 riverside dr.", "1448 n. gower st.", "14928 ventura blvd.", 
+"362 n. camden dr.", "252 n. beverly dr.", "3rd st. promenade", 
+"111 s. san pedro st.", "1514 n. gower st.", "3110 main st.", 
+"3rd st.", "8020 beverly blvd.", "7371 melrose ave.", "430 n. camden dr.", 
+"7313 melrose ave.", "3835 cross creek rd.", "9876 wilshire blvd.", 
+"1930 north hillhurst ave.", "60 n. venice blvd.", "20 mott st. between bowery and pell st.", 
+"9 jones st.", "700 5th ave. at 55th st.", "322 e. 14 st. between 1st and 2nd aves .", 
+"937 broadway at 22nd st.", "304 e. 48th st.", "311 w. 17th st.", 
+"1 united nations plaza at 44th st.", "2 park ave. at 32nd st.", 
+"222 e. 58th st. between 2nd and 3rd aves .", "206 206 e. 60th st.", 
+"106 w. houston st. off thompson st.", "200-250 vesey st. world financial center", 
+"1022 3rd ave. between 60th and 61st sts .", "321 w. 46th st.", 
+"123 w. 52nd st.", "228 8th ave. between 21st and 22nd sts .", 
+"948 1st ave. between 52nd and 53rd sts .", "13 1st ave. near 1st st.", 
+"1393a 2nd ave. between 72nd and 73rd sts .", "420 e. 59th st. off 1st ave.", 
+"225 varick st. at clarkston st.", "240 e. 58th st.", "25 w. 40th st. between 5th and 6th aves .", 
+"103 waverly pl . near washington sq.", "111 e. 22nd st. between park ave. s and lexington ave.", 
+"1486 2nd ave. between 77th and 78th sts .", "160 central park s", 
+"69 w. 71st st.", "200 w. 70th st.", "2 e. 61st st.", "200 park ave. between 45th st. and vanderbilt ave.", 
+"246 w. 4th st. at charles st.", "81 macdougal st. between houston and bleeker sts .", 
+"46 greenwich ave.", "169 sullivan st. between houston and bleecker sts .", 
+"119 macdougal st. between 3rd and bleecker sts .", "385 broome st. at mulberry", 
+"32 jones st. at bleecker st.", "7 w. 20th st.", "451 washington st. near watts st.", 
+"860 2nd ave. at 46th st.", "150 wooster st. between houston and prince sts .", 
+"45 mercer st. between broome and grand sts .", "72 macdougal st. between w. houston and bleecker sts .", 
+"160 e. 48th st.", "60 w. 53rd st.", "120 w. 51st st.", "23 e. 74th st.", 
+"53rd sts .", "1013 3rd ave. between 60th and 61st sts .", "522 9th ave. at 39th st.", 
+"164 mulberry st. between grand and broome sts .", "121 prince st.", 
+"341 w. broadway near grand st.", "181 w. 10th st.", "633 3rd ave. at 40th st.", 
+"157 duane st. between w. broadway and hudson st.", "219 w. broadway between franklin and white sts .", 
+"1325 5th ave. at 111th st.", "6 e. 32nd st.", "2150 broadway between 75th and 76th sts .", 
+"1288 1st ave. at 69th st.", "39 desbrosses st. near west st.", 
+"340 w. broadway at grand st.", "29 e. 65th st.", "57 e. 57th st.", 
+"635 9th ave. between 44th and 45th sts .", "1900 broadway between 63rd and 64th sts .", 
+"522 columbus ave. between 85th and 86th sts .", "87 1st ave. between 5th and 6th sts .", 
+"73 w. 71st st.", "348 e. 62nd st.", "21 west 17th st. between 5th and 6th aves .", 
+"6 w. 24th st.", "54 pearl st. at broad st.", "458 6th ave. at 11th st.", 
+"2340 broadway at 85th st.", "402 w. 43rd st. off 9th ave.", 
+"467 columbus ave. between 82nd and 83rd sts .", "685 amsterdam ave. at 93rd st.", 
+"228 w. 52nd st.", "15 fulton st.", "208 e. 58th st. between 2nd and 3rd aves .", 
+"33 93 2nd ave. between 5th and 6th sts .", "18 e. broadway at catherine st.", 
+"228 thompson st. between w. 3rd and bleecker sts .", "151 w. 54th st. in the rihga royal hotel", 
+"221 w. 57th st.", "1340 1st ave. at 72nd st.", "20 cornelia st. between bleecker and w. 4th st.", 
+"4 world financial center", "122 e. 27th st. between lexington and park aves .", 
+"125 mulberry st. between canal and hester sts .", "492 broome st. near w. broadway", 
+"430 lafayette st. between 4th st. and astor pl .", "82 e. 3rd st. between 1st and 2nd aves .", 
+"13 w. 46th st.", "68 w. 58th st.", "15 w. 44th st.", "219 e. 44th st. between 2nd and 3rd aves .", 
+"326 w. 46th st.", "152 w. 52nd st.", "227 e. 67th st.", "1191 1st ave. between 64th and 65th sts .", 
+"310 w. 4th st. between w. 12th and bank sts .", "432 lafayette st. near astor pl .", 
+"4 w. 49th st.", "168 1st ave. between 10th and 11th sts .", 
+"361 w. 46th st.", "211 w. broadway at franklin st.", "106 e. 57th st.", 
+"149 e. 57th st.", "50 macdougal st. between houston and prince sts .", 
+"25 cleveland pl . near spring st.", "168 w. 18th st.", "150 w. 46th st.", 
+"405 e. 52nd st.", "507 columbus ave. between 84th and 85th sts .", 
+"411 park ave. s between 28th and 29th sts .", "51 w. 64th st.", 
+"30 west 22nd st. between 5th and 6th ave.", "59 grand st. between wooster st. and w. broadway", 
+"2182 broadway between 77th and 78th sts .", "446 columbus ave. between 81st and 82nd sts .", 
+"800 9th ave. at 53rd st.", "1161 1st ave. between 63rd and 64th sts .", 
+"325 e. 14th st. between 1st and 2nd aves .", "342 e. 46th st. between 1st and 2nd aves .", 
+"15 e. 12th st. between 5th ave. and university pl .", "160 mercer st. between houston and prince sts .", 
+"1030 3rd ave. at 61st st.", "46 e. 29th st.", "120 w. 23rd st.", 
+"60 e. 54th st.", "1134 1st ave. between 62nd and 63rd sts .", 
+"551 5th ave. at 45th st.", "104 w. 57th st. near 6th ave.", 
+"32 w. 32nd st.", "28 1/2 bowery at bayard st.", "2 w. 19th st.", 
+"145 w. broadway at thomas st.", "322 w. 46th st.", "142 w. 44th st.", 
+"68 e. 56th st.", "138 lafayette st. between canal and howard sts .", 
+"151 w. 51st . st.", "1065 1st ave. at 58th st.", "24 e. 81st st.", 
+"250 park ave. s at 20th st.", "301 park ave. between 49th and 50th sts .", 
+"205 e. 45th st.", "109 spring st. between greene and mercer sts .", 
+"1423 2nd ave. between 74th and 75th sts .", "140 w. 57th st.", 
+"371 w. 46th st. off 9th ave.", "551 amsterdam ave. between 86th and 87th sts .", 
+"28 e. 63rd st.", "100 w. 82nd st.", "439 e. 75th st.", "37a union sq. w between 16th and 17th sts .", 
+"126 e. 7th st. between 1st ave. and ave. a", "1063 1st ave. at 58th st.", 
+"148 w. 51st st.", "133 mulberry st. between hester and grand sts .", 
+"55 irving pl .", "157 chrystie st. at delancey st.", "18 e. 54th st.", 
+"1000 madison ave. between 77th and 78th sts .", "423 amsterdam ave. between 80th and 81st sts .", 
+"19 w. 49th st.", "3 225 e. 60th st.", "643 park ave. at 66th st.", 
+"58 w. 65th st.", "57 w. 48th st.", "1022 madison ave. near 79th st.", 
+"62 spring st. at lafayette st.", "834 7th ave. between 53rd and 54th sts .", 
+"428 amsterdam ave. between 80th and 81st sts .", "76 mott st. at canal st.", 
+"143 mercer st. at prince st.", "65 w. 55th st.", "950 8th ave. at 56th st.", 
+"103 1st ave. between 6th and 7th sts .", "400 w. 119th st. between amsterdam and morningside aves .", 
+"350 9th ave. at 49th st.", "2420 broadway at 89th st.", "900 7th ave. between 56th and 57th sts .", 
+"345 e. 83rd st.", "375 greenwich st. near franklin st.", "154 e. 79th st. between lexington and 3rd aves .", 
+"34 e. 51st st.", "386 3rd ave. between 27th and 28th sts .", 
+"222 w. 79th st.", "342 e. 11th st. near 1st ave.", "54 irving pl . at 17th st.", 
+"52 236 w. 52nd st.", "70 w. 68th st.", "200 e. 54th st.", "500 e. 30th st.", 
+"63rd street steakhouse 44 w. 63rd st.", "174 1st ave. between 10th and 11th sts .", 
+"34 union sq. e at 16th st.", "90 prince st. between broadway and mercer st.", 
+"163 ponce de leon ave.", "783 martin luther king jr. dr.", "3195 roswell rd.", 
+"3109 piedmont rd. . just south of peachtree rd.", "265 pharr rd.", 
+"260 e. paces ferry road", "3500 peachtree rd. . phipps plaza", 
+"1100 peachtree st.", "7050 jimmy carter blvd. . norcross", "1186 n. highland ave.", 
+"3300 peachtree rd. . grand hyatt", "50 hurt plaza", "40 buckhead crossing mall on the sidney marcus blvd.", 
+"1879 cheshire bridge rd.", "3380 peachtree rd.", "` underground underground mall underground atlanta", 
+"1811 piedmont ave. near cheshire bridge rd.", "923 peachtree st. at 8th st.", 
+"6359 jimmy carter blvd. . at buford hwy . norcross", "4320 powers ferry rd.", 
+"192 peachtree center ave. at international blvd.", "2285 peachtree rd. . peachtree battle condominium", 
+"3300 peachtree rd. . grand hyatt", "` holiday inn/crowne plaza at ravinia dunwoody", 
+"c buford hwy . northwoods plaza doraville", "6301 roswell rd. . sandy springs plaza sandy springs", 
+"1931 peachtree rd.", "1402 n. highland ave.", "3209 maple dr.", 
+"` park place across from perimeter mall dunwoody", "247 buckhead ave. east village sq.", 
+"1829 peachtree rd.", "555 peachtree st. at linden ave.", "500 pharr rd.", 
+"870 n. highland ave.", "25 irby ave.", "3043 buford hwy .", 
+"6050 peachtree pkwy . norcross", "1144 crescent ave.", "2345 cheshire bridge rd.", 
+"3384 shallowford rd. . chamblee", "2165 cheshire bridge rd.", 
+"889 w. peachtree st.", "3393 peachtree rd.", "3700 w. flamingo", 
+"3645 las vegas blvd. s", "4850 flamingo rd.", "4041 audrie st. at flamingo rd.", 
+"3570 las vegas blvd. s", "128 fremont st.", "3400 las vegas blvd. s", 
+"4111 boulder hwy .", "3555 las vegas blvd. s", "1350 e. flamingo rd.", 
+"3570 las vegas blvd. s", "3333 s. maryland pkwy .", "3700 w. flamingo rd.", 
+"1 main st.", "2880 las vegas blvd. s", "3570 las vegas blvd. s", 
+"2411 w. sahara ave.", "129 e. fremont st.", "308 w. sahara ave.", 
+"129 e. fremont st.", "1510 e. flamingo rd.", "3120 las vegas blvd. s", 
+"5111 w. boulder hwy .", "3400 las vegas blvd. s", "400 e. sahara ave.", 
+"3000 las vegas blvd. s", "3570 las vegas blvd. s", "3713 w. sahara ave.", 
+"6182 w. flamingo rd.", "3900 paradise rd.", "2223 market st.", 
+"1722 sacramento st.", "243 o \\ ` farrell st.", "2030 union st.", 
+"155 steuart st.", "56 gold st.", "598 fourth st.", "800 greenwich st.", 
+"3347 fillmore st.", "2317 chestnut st.", "625 polk st.", "1600 powell st.", 
+"1772 market st.", "4th and howard sts .", "500 jackson st.", 
+"732 broadway", "161 sutter st.", "1300 battery st.", "` market and new montgomery sts .", 
+"` ghirardelli sq.", "501 geary st.", "` bldg. a fort mason", 
+"4 embarcadero center", "2100 van ness ave.", "161 steuart st.", 
+"320 hayes st.", "430 broadway", "5322 geary blvd.", "2332 clement st.", 
+"1521 hyde st.", "1265 battery st.", "3345 steiner st.", "615 sacramento st.", 
+"5116 geary blvd.", "600 5th ave.", "221 powell st.", "2 new montgomery st. at market st.", 
+"519 columbus ave.", "453 bush st.", "133 clement st.", "607 front st.", 
+"3226 mission st.", "470 green st.", "` ghirardelli sq.", "246 mcallister st.", 
+"1652 stockton st.", "3131 webster st.", "1 market st.", "1915 fillmore st.", 
+"500 post st.", "640 sacramento st.", "3011 steiner st.", "1015 battery st.", 
+"1944 union st.", "631 b kearny st.", "558 sacramento st.", "1 tillman pl .", 
+"1702 post st.", "432 powell st.", "108 south park", "4", "150 redwood alley", 
+"500 van ness ave.", "1240 9th ave.", "3300 geary blvd.", "601 hayes st.", 
+"240 california st.", "3235 sacramento st.", "298 gough st.", 
+"3148 geary blvd.", "600 montgomery st.", "2125 fillmore st.", 
+"670 golden gate ave.", "2257 chestnut st.", "101 spear st.", 
+"427 battery st.", "1220 9th ave.", "1611 post st.", "2000 hyde st.", 
+"1658 market st."), city = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 
+4L, 4L, 4L, 4L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 
+5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 3L, 3L, 3L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
+2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 
+3L, 3L, 3L, 3L, 3L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 
+4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 5L, 
+5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 
+5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 
+5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 
+5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 
+5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L), .Label = c("atlanta", 
+"los angeles", "new york", "las vegas", "san francisco"), class = "factor"), 
+    phone = c("310-246-1501", "818-762-1221", "310-472-1211", 
+    "818-788-3536", "213-938-1447", "310-392-9025", "213-857-0034", 
+    "213-848-6677", "310-456-0488", "310-276-0615", "213-665-1891", 
+    "310-652-9770", "213-655-8880", "310-274-1893", "310-659-9639", 
+    "310-550-8811", "213-467-1108", "213-628-3781", "818-990-0500", 
+    "213-627-2300", "310-652-4025", "310-829-4313", "818-585-0855", 
+    "212-582-7200", "212-307-7311", "' 212- 319-1660 '", "212-496-6031", 
+    "212-877-3500", "212-362-2200", "212-757-2245", "212-966-6960", 
+    "212-288-0033", "212-355-7555", "212-758-1479", "212-754-9494", 
+    "212-620-4020", "212-477-0777", "212-765-1737", "212-223-5656", 
+    "212-586-4252", "212-688-6525", "212-489-1515", "212-484-5113", 
+    "212-339-6719", "212-752-2225", "' 212- 371-7777 '", "212-754-6272", 
+    "212-807-7400", "212-627-8273", "' 212- 219-2777 '", "212-759-5941", 
+    "212-644-1900", "212-245-2214", "212-724-8585", "212-260-6660", 
+    "212-632-5000", "718-522-5200", "212-265-5959", "212-677-0606", 
+    "212-980-9393", "212-371-8844", "212-861-8080", "212-753-1530", 
+    "212-873-3200", "212-315-1726", "212-243-4020", "' 212- 921-9494 '", 
+    "702-733-8899", "702-891-7349", "702-732-5111", "702-731-7547", 
+    "702-385-3232", "702-734-0410", "702-731-4036", "404-261-8186", 
+    "404-365-0410", "404-237-2663", "404-266-1440", "404-262-3336", 
+    "404-874-7600", "404-681-2909", "404-352-3517", "404-233-7673", 
+    "404-876-4408", "404-876-0676", "404-231-1368", "404-876-1800", 
+    "404-221-6362", "404-261-3662", "404-237-2700", "404-237-2700", 
+    "404-659-0400", "404-351-9533", "404-875-8424", "415-387-0408", 
+    "415-956-9662", "415-543-6084", "415-392-3505", "415-955-5555", 
+    "415-775-7036", "415-673-7779", "415-543-0573", "415-777-9779", 
+    "415-668-6654", "415-776-5577", "415-495-5775", "415-989-7154", 
+    "415-922-0337", "415-563-4755", "415-776-7825", "415-296-7465", 
+    "415-399-0499", "212-228-2200", "212-753-8450", "212-581-4242", 
+    "310-475-9807", "310-777-5877", "310-456-5733", "310-550-3900", 
+    "310-451-1655", "310-451-0616", "213-938-2863", "818-985-4669", 
+    "213-239-6500", "310-275-1101", "213-651-2030 .", "213-658-8898", 
+    "213-664-7723", "213-467-1052", "818-356-0959", "310-275-5200", 
+    "310-788-", "310-828-1585", "310-358-8585", "310-208-8765", 
+    "310-724-5959", "310-659-1952", "213-734-2773", "310-392-3901", 
+    "310-454-3474", "310-276-7605", "310-277-2333", "310-550-8330", 
+    "310-837-6662", "310-273-5578", "310-552-2394", "310-276-1886", 
+    "310-289-0660", "310-659-6919", "213-667-0777", "213-628-6717", 
+    "310-276-5205", "310-274-0101", "213-485-0927", "310-394-5669", 
+    "310-479-4187", "213-483-6000", "818-761-9126", "213-461-8800", 
+    "818-784-4400", "310-277-7346", "310-274-7427", "310-393-6545", 
+    "213-680-9355", "213-466-9329", "310-399-4800", "213-651-0346", 
+    "213-653-5858", "213-658-6340", "310-859-0926", "213-937-5733", 
+    "310-456-0169", "310-276-6345", "213-660-4446", "310-823-5396", 
+    "212-964-0380", "212-989-1220", "212-903-3918", "212-473-2602", 
+    "212-473-8388", "' 212- 759-0590 '", "212-627-8899", "212-702-5014", 
+    "212-684-2122", "212-308-0112", "212-838-0440", "212-677-3820", 
+    "212-385-0313", "212-355-1112", "212-246-9171", "212-581-8888", 
+    "212-206-0059", "212-753-1870", "212-473-0108", "212-249-8484", 
+    "212-758-0323", "212-727-2775", "212-688-4190", "212-840-6500", 
+    "212-254-1200", "212-995-8500", "212-988-2655", "212-484-5120", 
+    "212-724-5846", "212-873-7411", "212-940-8185", "212-818-1222", 
+    "212-924-7653", "212-982-5275", "212-645-4431", "212-473-2642", 
+    "212-475-9557", "212-226-8413", "212-691-7538", "212-691-8136", 
+    "212-966-4900", "212-697-9538", "212-505-0005", "212-343-9012", 
+    "212-505-0727", "212-371-2323", "212-333-7788", "212-956-7100", 
+    "212-794-0205", "212-421-0334", "212-753-5100", "212-465-1530", 
+    "212-343-1212", "212-254-8776", "212-941-9024", "212-645-8023", 
+    "' 212- 986-8080 '", "212-732-5555", "212-941-7070", "212-996-1212", 
+    "212-725-1333", "212-496-1588", "212-744-3266", "212-226-4621", 
+    "212-431-0021", "212-772-9000", "212-758-5757", "' 212- 262-2525 '", 
+    "212-595-5330", "212-595-3139", "212-674-3823", "212-874-3474", 
+    "212-355-2020", "212-691-8888", "212-691-6359", "212-269-0144", 
+    "212-533-2233", "212-799-1533", "212-564-7272", "212-769-1144", 
+    "212-961-0574", "212-245-5336", "212-608-7300", "212-752-3054", 
+    "212-477-8427", "' 212- 941-0911 '", "212-777-5922", "212-468-8888", 
+    "212-489-6565", "212-249-3600", "212-243-9579", "212-786-1500", 
+    "212-481-7372", "212-226-6060", "212-966-3371", "212-505-5111", 
+    "' 212- 614-0747 '", "212-730-5848", "212-751-2323", "212-869-5544", 
+    "212-682-5678", "212-581-6464", "212-582-5252", "212-794-4950", 
+    "212-288-8791", "212-242-4705", "212-388-0978", "212-247-2993", 
+    "212-674-7014", "212-315-0980", "212-431-0700", "212-751-2931", 
+    "' 212- 752-0808 '", "212-254-4678", "212-343-9599", "212-727-8022", 
+    "212-869-0900", "212-755-6244", "212-875-1993", "212-679-4111", 
+    "212-721-8271", "212-675-6700", "212-941-0479", "212-787-0202", 
+    "212-873-5025", "212-956-3976", "212-888-6556", "212-777-6314", 
+    "212-370-1866", "212-229-9313", "212-906-9173", "212-838-4343", 
+    "212-679-5535", "212-807-1801", "212-838-2600", "212-421-4433", 
+    "212-972-3315", "212-581-8030", "' 212- 947-8482 '", "212-349-0923", 
+    "212-255-3996", "212-233-0507", "212-489-7212", "212-944-3643", 
+    "212-223-7575", "212-941-4168", "212-245-4850", "212-644-9258", 
+    "212-288-2391", "212-777-6211", "212-872-4895", "212-682-8660", 
+    "212-274-8883", "212-535-1100", "212-333-7827", "' 212- 956-3055 '", 
+    "212-595-8555", "212-935-2888", "212-501-0776", "212-734-4893", 
+    "212-627-7172", "212-674-4140", "212-753-7407", "212-245-9600", 
+    "212-925-3120", "212-982-9030", "212-673-0330", "212-753-9015", 
+    "212-570-2211", "212-496-6280", "212-332-7610", "212-838-3531", 
+    "212-744-4107", "212-873-3700", "' 212- 977-8400 '", "212-734-2676", 
+    "212-966-0290", "212-245-7850", "212-501-7515", "212-334-8088", 
+    "212-925-3700", "212-956-6888", "' 212- 397-3737 '", "212-228-0604", 
+    "212-666-9490", "212-265-3566", "212-496-1066", "212-245-9800", 
+    "212-472-4488", "212-941-3900", "212-988-4858", "212-688-5447", 
+    "212-679-1810", "212-799-0400", "212-674-7264", "212-260-5454", 
+    "212-586-7714", "212-721-0068", "212-486-9592", "212-683-3333", 
+    "212-246-6363", "212-614-0620", "212-614-9291", "212-966-6722", 
+    "404-876-8532", "404-525-2062", "404-264-9546", "404-262-7379", 
+    "404-262-3165", "404-264-1334", "404-233-2333", "404-724-0901", 
+    "770-441-- 0291", "404-872-7203", "404-365-8100", "404-524-2489", 
+    "404-364-0212", "404-874-5642", "404-266-1600", "404-577-1800", 
+    "404-607-1622", "404-875-2489", "770-242-3984", "404-255-7277", 
+    "404-659-2788", "404-351-0870", "404-841-0314", "770-395-9925", 
+    "770-451-0192", "404-255-5160", "404-355-5993", "404-874-2626", 
+    "404-237-1313", "770-393-1333", "404-842-0334", "404-350-6755", 
+    "404-874-3223", "404-237-2941", "404-875-7775", "404-233-7644", 
+    "404-325-5285", "770-449-0033", "404-873-7358", "404-325-6963", 
+    "770-458-7145", "404-321-1118", "404-874-5535", "404-264-1163", 
+    "702-252-7737", "702-739-4111", "702-871-3262", "702-732-1424", 
+    "702-735-4663", "702-382-1600", "702-791-7111", "702-432-7777", 
+    "702-733-3111", "702-735-8686", "702-731-7547", "702-731-5311", 
+    "702-252-7777", "702-386-2512", "702-734-0410", "702-731-7888", 
+    "702-367-2411", "702-385-7111", "702-384-4470", "702-385-7111", 
+    "702-737-1234", "702-794-8200", "702-454-8073", "702-791-7111", 
+    "702-733-2066", "702-732-6330", "702-731-7525", "702-876-4190", 
+    "702-871-8826", "702-794-0700", "415-431-0692", "415-567-5432", 
+    "415-982-0243", "415-929-8855", "415-495-6500", "415-433-6300", 
+    "415-543-2222", "415-776-7766", "415-474-4180", "415-776-1506", 
+    "415-771-3500", "415-989-2589", "415-863-3516", "415-543-8060", 
+    "415-296-8555", "415-788-9900", "415-362-0404", "415-982-2000", 
+    "415-546-5011", "415-771-8822", "415-292-0101", "415-771-6222", 
+    "415-781-8833", "415-673-1888", "415-882-1333", "415-863-5545", 
+    "415-362-0641", "415-668-8998", "415-752-8833", "415-441-7778", 
+    "415-986-0100", "415-563-0487", "415-986-9854", "415-752-5652", 
+    "415-668-9292", "415-397-7720", "415-546-5000", "415-982-1124", 
+    "415-391-2233", "415-668-4848", "415-398-5700", "415-861-6224", 
+    "415-362-8286", "415-929-1730", "415-487-9800", "415-989-7800", 
+    "415-931-1556", "415-777-5577", "415-346-1333", "415-929-2087", 
+    "415-395-9800", "415-346-2111", "415-391-2555", "415-922-9022", 
+    "415-982-7877", "415-434-4100", "415-421-2300", "415-346-3486", 
+    "415-395-8555", "415-495-7275", "415-986-3222", "415-861-7827", 
+    "415-861-4344", "415-664-3664", "415-668-1783", "415-252-9289", 
+    "415-391-2373", "415-474-8890", "415-863-9335", "415-752-4440", 
+    "415-433-7250", "415-346-4430", "415-673-9245", "415-563-9727", 
+    "415-957-9300", "415-541-4949", "415-566-6966", "415-922-7788", 
+    "415-346-0800", "415-552-2522"), type = c("american", "american", 
+    "californian", "french", "american", "french", "californian", 
+    "american", "californian", "american", "asian", "french", 
+    "french", "italian", "asian", "american", "californian", 
+    "american", "french", "italian", "californian", "italian", 
+    "asian", "american", "continental", "american", "coffee bar", 
+    "continental", "italian", "delicatessen", "american", "french", 
+    "asian", "italian", "american", "american", "american", "tel caribbean", 
+    "american", "french", "french", "french", "french", "american", 
+    "french", "seafood", "american", "american", "mexican", "french", 
+    "seafood", "american", "french", "mediterranean", "seafood", 
+    "american", "american", "italian", "delicatessen", "asian", 
+    "asian", "american", "american", "american", "mediterranean", 
+    "american", "american", "asian", "southwestern", "continental", 
+    "continental", "seafood", "steak houses", "seafood", "italian", 
+    "international", "american", "french", "american", "french", 
+    "american", "american", "international", "asian", "caribbean", 
+    "italian", "southern", "continental", "international", "international", 
+    "international", "continental", "french", "italian", "french", 
+    "seafood", "american", "french", "american", "french", "french", 
+    "french", "american", "asian", "french", "mediterranean", 
+    "french", "asian", "mediterranean", "american", "american", 
+    "italian", "mediterranean", "italian", "italian", "italian", 
+    "american", "french", "californian", "mexican", "american", 
+    "italian", "italian", "californian", "californian", "american", 
+    "mediterranean", "caribbean", "asian", "health food", "californian", 
+    "dive american", "italian", "french", "continental", "californian", 
+    "american", "mexican", "american", "american", "american", 
+    "italian", "italian", "health food", "californian", "continental", 
+    "asian", "asian", "french", "italian", "asian", "american", 
+    "american", "american", "american", "cajun", "american", 
+    "american", "californian", "italian", "italian", "american", 
+    "italian", "asian", "american", "continental", "mediterranean", 
+    "american", "italian", "asian", "asian", "italian", "asian", 
+    "american", "american", "asian", "american", "french", "mediterranean", 
+    "american", "mexican", "american", "american", "american", 
+    "italian", "american", "italian", "asian", "mediterranean", 
+    "italian", "american", "coffee bar", "american", "latin american", 
+    "asian", "french", "american", "italian", "american", "american", 
+    "french", "coffee bar", "french", "coffee bar", "french", 
+    "french", "french", "mediterranean", "coffee bar", "coffee bar", 
+    "french", "coffee bar", "coffee bar", "coffee bar", "italian", 
+    "french", "seafood", "middle eastern", "asian", "french", 
+    "asian", "american", "french", "italian", "coffee bar", "coffee bar", 
+    "coffee bar", "italian", "coffee bar", "italian", "french", 
+    "seafood", "american", "mexican", "american", "asian", "american", 
+    "asian", "italian", "french", "french", "american", "american", 
+    "italian", "american", "american", "seafood", "coffee bar", 
+    "american", "italian", "american", "french", "coffee bar", 
+    "italian", "asian", "mexican", "american", "seafood", "italian", 
+    "american", "asian", "italian", "american", "american", "american", 
+    "american", "american", "italian", "italian", "latin american", 
+    "asian", "coffee bar", "latin american", "french", "asian", 
+    "asian", "american", "american", "french", "middle eastern", 
+    "french", "french", "french", "italian", "italian", "middle eastern", 
+    "french", "asian", "coffee bar", "french", "italian", "american", 
+    "french", "american", "french", "american", "american", "american", 
+    "seafood", "american", "italian", "american", "asian", "french", 
+    "coffee bar", "american", "american", "asian", "coffee bar", 
+    "american", "asian", "american", "american", "asian", "asian", 
+    "coffee bar", "american", "italian", "italian", "asian", 
+    "asian", "italian", "middle eastern", "italian", "latin american", 
+    "french", "american", "asian", "middle eastern", "american", 
+    "latin american", "american", "american", "asian", "eastern european", 
+    "asian", "continental", "mexican", "american", "italian", 
+    "italian", "east european", "italian", "coffee bar", "american", 
+    "seafood", "american", "american", "american", "asian", "italian", 
+    "american", "delicatessen", "seafood", "asian", "coffee bar", 
+    "asian", "american", "east european", "continental", "coffee bar", 
+    "american", "italian", "italian", "american", "coffee bar", 
+    "asian", "middle eastern", "american", "coffee bar", "american", 
+    "latin american", "american", "american", "american", "american", 
+    "mediterranean", "asian", "american", "international", "barbecue", 
+    "asian", "american", "american", "continental", "italian", 
+    "mediterranean", "american", "italian", "mediterranean", 
+    "international", "caribbean", "southern", "continental", 
+    "continental", "barbecue", "southern", "barbecue", "southern", 
+    "asian", "mediterranean", "asian", "italian", "asian", "barbecue", 
+    "continental", "caribbean", "southern", "italian", "fusion", 
+    "continental", "american", "italian", "american", "barbecue", 
+    "asian", "asian", "southern", "french", "southern", "american", 
+    "southern", "continental", "italian", "buffets", "asian", 
+    "italian", "italian", "coffee shops/diners", "continental", 
+    "american", "coffee shops/diners", "american", "coffee shops/diners", 
+    "italian", "buffets", "american", "buffets", "asian", "buffets", 
+    "buffets", "steak houses", "asian", "asian", "mexican", "coffee shops/diners", 
+    "asian", "continental", "coffee shops/diners", "only in las vegas", 
+    "italian", "mexican", "steak houses", "american", "italian", 
+    "old san francisco", "asian", "french", "american", "french", 
+    "italian", "italian", "mexican/latin american/spanish", "french", 
+    "italian", "american", "mexican/latin american/spanish", 
+    "american", "french", "greek and middle eastern", "american", 
+    "old san francisco", "asian", "american", "vegetarian", "asian", 
+    "steak houses", "american", "seafood", "greek and middle eastern", 
+    "asian", "asian", "italian", "italian", "steak houses", "old san francisco", 
+    "asian", "'", "italian", "asian", "italian", "french", "asian", 
+    "american", "asian", "greek and middle eastern", "seafood", 
+    "vegetarian", "mediterranean", "asian", "american", "italian", 
+    "french", "italian", "italian", "french", "american", "asian", 
+    "american", "american", "asian", "italian", "french", "mediterranean", 
+    "american", "american", "greek and middle eastern", "asian", 
+    "russian/german", "seafood", "french", "asian", "asian", 
+    "mediterranean", "italian", "italian", "american", "asian", 
+    "asian", "greek and middle eastern", "french", "mexican/latin american/spanish", 
+    "mediterranean"), class = c(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 
+    8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L, 16L, 17L, 18L, 19L, 
+    20L, 21L, 22L, 23L, 24L, 25L, 26L, 27L, 28L, 29L, 30L, 31L, 
+    32L, 33L, 34L, 35L, 36L, 37L, 38L, 39L, 40L, 41L, 42L, 43L, 
+    44L, 45L, 46L, 47L, 48L, 49L, 50L, 51L, 52L, 53L, 54L, 55L, 
+    56L, 57L, 58L, 59L, 60L, 61L, 62L, 63L, 64L, 65L, 66L, 67L, 
+    68L, 69L, 70L, 71L, 72L, 73L, 74L, 75L, 76L, 77L, 78L, 79L, 
+    80L, 81L, 82L, 83L, 84L, 85L, 86L, 87L, 88L, 89L, 90L, 91L, 
+    92L, 93L, 94L, 95L, 96L, 97L, 98L, 99L, 100L, 101L, 102L, 
+    103L, 104L, 105L, 106L, 107L, 108L, 109L, 110L, 111L, 191L, 
+    267L, 334L, 112L, 113L, 114L, 115L, 116L, 117L, 118L, 119L, 
+    120L, 121L, 122L, 123L, 124L, 125L, 126L, 127L, 128L, 129L, 
+    130L, 131L, 132L, 133L, 134L, 135L, 136L, 137L, 138L, 139L, 
+    140L, 141L, 142L, 143L, 144L, 145L, 146L, 147L, 148L, 149L, 
+    150L, 151L, 152L, 153L, 154L, 155L, 156L, 157L, 158L, 159L, 
+    160L, 161L, 162L, 163L, 164L, 165L, 166L, 167L, 168L, 169L, 
+    170L, 171L, 172L, 173L, 174L, 175L, 176L, 177L, 178L, 179L, 
+    180L, 181L, 182L, 183L, 184L, 185L, 186L, 187L, 188L, 189L, 
+    190L, 192L, 193L, 194L, 195L, 196L, 197L, 198L, 199L, 200L, 
+    201L, 202L, 203L, 204L, 205L, 206L, 207L, 208L, 209L, 210L, 
+    211L, 212L, 213L, 214L, 215L, 216L, 217L, 218L, 219L, 220L, 
+    221L, 222L, 223L, 224L, 225L, 226L, 227L, 228L, 229L, 230L, 
+    231L, 232L, 233L, 234L, 235L, 236L, 237L, 238L, 239L, 240L, 
+    241L, 242L, 243L, 244L, 245L, 246L, 247L, 248L, 249L, 250L, 
+    251L, 252L, 253L, 254L, 255L, 256L, 257L, 258L, 259L, 260L, 
+    261L, 262L, 263L, 264L, 265L, 266L, 268L, 269L, 270L, 271L, 
+    272L, 273L, 274L, 275L, 276L, 277L, 278L, 279L, 280L, 281L, 
+    282L, 283L, 284L, 285L, 286L, 287L, 288L, 289L, 290L, 291L, 
+    292L, 293L, 294L, 295L, 296L, 297L, 298L, 299L, 300L, 301L, 
+    302L, 303L, 304L, 305L, 306L, 307L, 308L, 309L, 310L, 311L, 
+    312L, 313L, 314L, 315L, 316L, 317L, 318L, 319L, 320L, 321L, 
+    322L, 323L, 324L, 325L, 326L, 327L, 328L, 329L, 330L, 331L, 
+    332L, 333L, 335L, 336L, 337L, 338L, 339L, 340L, 341L, 342L, 
+    343L, 344L, 345L, 346L, 347L, 348L, 349L, 350L, 351L, 352L, 
+    353L, 354L, 355L, 356L, 357L, 358L, 359L, 360L, 361L, 362L, 
+    363L, 364L, 365L, 366L, 367L, 368L, 369L, 370L, 371L, 372L, 
+    373L, 374L, 375L, 376L, 377L, 378L, 379L, 380L, 381L, 382L, 
+    383L, 384L, 385L, 386L, 387L, 388L, 389L, 390L, 391L, 392L, 
+    393L, 394L, 395L, 396L, 397L, 398L, 399L, 400L, 401L, 402L, 
+    403L, 404L, 405L, 406L, 407L, 408L, 409L, 410L, 411L, 412L, 
+    413L, 414L, 415L, 416L, 417L, 418L, 419L, 420L, 421L, 422L, 
+    423L, 424L, 425L, 426L, 427L, 428L, 429L, 430L, 431L, 432L, 
+    433L, 434L, 435L, 436L, 437L, 438L, 439L, 440L, 441L, 442L, 
+    443L, 444L, 445L, 446L, 447L, 448L, 449L, 450L, 451L, 452L, 
+    453L, 454L, 455L, 456L, 457L, 458L, 459L, 460L, 461L, 462L, 
+    463L, 464L, 465L, 466L, 467L, 468L, 469L, 470L, 471L, 472L, 
+    473L, 474L, 475L, 476L, 477L, 478L, 479L, 480L, 481L, 482L, 
+    483L, 484L, 485L, 486L, 487L, 488L, 489L, 490L, 491L, 492L, 
+    493L, 494L, 495L, 496L, 497L, 498L, 499L, 500L, 501L, 502L, 
+    503L, 504L, 505L, 506L, 507L, 508L, 509L, 510L, 511L, 512L, 
+    513L, 514L, 515L, 516L, 517L, 518L, 519L, 520L, 521L, 522L, 
+    523L, 524L, 525L, 526L, 527L, 528L, 529L, 530L, 531L, 532L
+    )), .Names = c("id", "name", "addr", "city", "phone", "type", 
+"class"), class = "data.frame", row.names = c(NA, -533L))
+```
+
+Generate all possible pairs, and then use newly-cleaned `city` column as a blocking variable. A blocking variable is helpful when the dataset is too big and you don't want to compare/match all the possible pairs with each every one of the observations. 
+
+```{r}
+# Generate pairs with same city
+pair_blocking(zagat, fodors, blocking_var = "city")
+```
+
+**Comparing pairs**
+
+Compare pairs by `name`, `phone`, and `addr` using `jaro_winkler()`.
+
+`compare_pairs()` can take in a `character` vector of column names as the `by` argument.
+
+```{r}
+# Generate pairs
+pair_blocking(zagat, fodors, blocking_var = "city") %>%
+  # Compare pairs by name, phone, addr
+  compare_pairs(by = c("name", "phone", "addr"),
+                default_comparator = jaro_winkler())
+
+```
+
+

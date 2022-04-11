@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Working with Data in the Tidyverse | R_Programming_Guidebook Project</title>
+  <meta name="description" content="5 Working with Data in the Tidyverse | R_Programming_Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Working with Data in the Tidyverse | R_Programming_Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Working with Data in the Tidyverse | R_Programming_Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intro-to-data-visualization-with-ggplot2.html"/>
+<link rel="next" href="categorical-data-in-the-tidyverse.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>General Notes</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R_Programming_Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="working-with-data-in-the-tidyverse" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Working with Data in the Tidyverse</h1>
+<p><a href="https://learn.datacamp.com/courses/working-with-data-in-the-tidyverse" class="uri">https://learn.datacamp.com/courses/working-with-data-in-the-tidyverse</a></p>
+<div id="explore-your-data" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Explore your data</h2>
+<p>Load the <code>readr</code> package for every session so things work properly:</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="working-with-data-in-the-tidyverse.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="working-with-data-in-the-tidyverse.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb253-2"><a href="working-with-data-in-the-tidyverse.html#cb253-2" aria-hidden="true" tabindex="-1"></a>election <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;http://faculty.baruch.cuny.edu/geoportal/data/county_election/elpo12p010g.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Rows: 3153 Columns: 14</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): FIPS, STATE_FIPS, STATE, COUNTY, WINNER
+## dbl (9): OBAMA, ROMNEY, OTHERS, TTL_VT, PCT_OBM, PCT_ROM, PCT_OTHR, PCT_WNR,...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="working-with-data-in-the-tidyverse.html#cb256-1" aria-hidden="true" tabindex="-1"></a>election</span></code></pre></div>
+<pre><code>## # A tibble: 3,153 × 14
+##    FIPS  STATE_FIPS STATE COUNTY   OBAMA ROMNEY OTHERS TTL_VT PCT_OBM PCT_ROM
+##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 01001 01         AL    Autauga   6363  17379    231  23973    26.5    72.5
+##  2 01003 01         AL    Baldwin  18329  65772    887  84988    21.6    77.4
+##  3 01005 01         AL    Barbour   5912   5550     55  11517    51.3    48.2
+##  4 01007 01         AL    Bibb      2202   6132     86   8420    26.2    72.8
+##  5 01009 01         AL    Blount    2970  20757    333  24060    12.3    86.3
+##  6 01011 01         AL    Bullock   4061   1251     10   5322    76.3    23.5
+##  7 01013 01         AL    Butler    4374   5087     41   9502    46.0    53.5
+##  8 01015 01         AL    Calhoun  15500  30272    468  46240    33.5    65.5
+##  9 01017 01         AL    Chambers  6871   7626    132  14629    47.0    52.1
+## 10 01019 01         AL    Cherokee  2132   7506    154   9792    21.8    76.7
+## # … with 3,143 more rows, and 4 more variables: PCT_OTHR &lt;dbl&gt;, WINNER &lt;chr&gt;,
+## #   PCT_WNR &lt;dbl&gt;, group &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="working-with-data-in-the-tidyverse.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="co">#To skip lines from the top, start from the 2nd line for example, use &quot;skip = 1&quot; after comma in read_csv(...,)</span></span></code></pre></div>
+<p><code>readr</code> is for rectangular data with extensions like: <code>.csv</code>, .tsv, <code>.fwf</code>, and <code>.log</code></p>
+<p><code>read_csv()</code> function to read a csv file.</p>
+<p><code>readxl()</code> to read Microsoft Excel files.</p>
+<p><strong>Assign Missing Values</strong></p>
+<p>The <code>read_csv()</code> function also has an <code>na</code> argument, which allows you to specify value(s) that represent missing values in your data.
+The default values for the na argument are <code>c("", "NA")</code>, so both are recorded as missing (<code>NA</code>) in R. When you read in data, you can add additional values like the string <code>"UNKNOWN"</code> to a vector of missing values using the <code>c()</code> function to combine multiple values into a single vector.</p>
+<p>The <code>is.na()</code> function is also helpful for identifying rows with missing values for a variable.</p>
+<pre><code>read_csv(&quot;electiomn.csv&quot;, skip = 1, na = c(&quot;&quot;, &quot;NA&quot;, &quot;A new unspecified variable&quot;))
+
+election %&gt;% filter(is.na(variable you want to filter to find na))</code></pre>
+<p>The election data didn’t have any observations classified as a <code>na</code> so the example above is for when assuming there’s a missing value you want to filter/find.</p>
+<p><strong>How to list out all the variables of a dataset</strong></p>
+<p>Use <code>glimpse()</code> to list out the hidden variables in the dataset:</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="working-with-data-in-the-tidyverse.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(election)</span></code></pre></div>
+<pre><code>## Rows: 3,153
+## Columns: 14
+## $ FIPS       &lt;chr&gt; &quot;01001&quot;, &quot;01003&quot;, &quot;01005&quot;, &quot;01007&quot;, &quot;01009&quot;, &quot;01011&quot;, &quot;0101…
+## $ STATE_FIPS &lt;chr&gt; &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;,…
+## $ STATE      &lt;chr&gt; &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;, &quot;AL&quot;,…
+## $ COUNTY     &lt;chr&gt; &quot;Autauga&quot;, &quot;Baldwin&quot;, &quot;Barbour&quot;, &quot;Bibb&quot;, &quot;Blount&quot;, &quot;Bullock…
+## $ OBAMA      &lt;dbl&gt; 6363, 18329, 5912, 2202, 2970, 4061, 4374, 15500, 6871, 213…
+## $ ROMNEY     &lt;dbl&gt; 17379, 65772, 5550, 6132, 20757, 1251, 5087, 30272, 7626, 7…
+## $ OTHERS     &lt;dbl&gt; 231, 887, 55, 86, 333, 10, 41, 468, 132, 154, 156, 38, 56, …
+## $ TTL_VT     &lt;dbl&gt; 23973, 84988, 11517, 8420, 24060, 5322, 9502, 46240, 14629,…
+## $ PCT_OBM    &lt;dbl&gt; 26.54236, 21.56657, 51.33281, 26.15202, 12.34414, 76.30590,…
+## $ PCT_ROM    &lt;dbl&gt; 72.49406, 77.38975, 48.18963, 72.82660, 86.27182, 23.50620,…
+## $ PCT_OTHR   &lt;dbl&gt; 0.963584, 1.043677, 0.477555, 1.021378, 1.384040, 0.187899,…
+## $ WINNER     &lt;chr&gt; &quot;Romney&quot;, &quot;Romney&quot;, &quot;Obama&quot;, &quot;Romney&quot;, &quot;Romney&quot;, &quot;Obama&quot;, &quot;…
+## $ PCT_WNR    &lt;dbl&gt; 72.49406, 77.38975, 51.33281, 72.82660, 86.27182, 76.30590,…
+## $ group      &lt;dbl&gt; 24, 24, 12, 24, 25, 14, 22, 23, 22, 24, 24, 22, 22, 24, 25,…</code></pre>
+<p>Combine <code>glimpse()</code> with other functions in a sequence using the pipe (<code>%&gt;%</code>) operator. For example, function like <code>arrange</code>:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="working-with-data-in-the-tidyverse.html#cb262-1" aria-hidden="true" tabindex="-1"></a>election <span class="sc">%&gt;%</span> </span>
+<span id="cb262-2"><a href="working-with-data-in-the-tidyverse.html#cb262-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(OBAMA) <span class="sc">%&gt;%</span> </span>
+<span id="cb262-3"><a href="working-with-data-in-the-tidyverse.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>() <span class="co"># no argument needed here</span></span></code></pre></div>
+<pre><code>## Rows: 3,153
+## Columns: 14
+## $ FIPS       &lt;chr&gt; &quot;48269&quot;, &quot;48301&quot;, &quot;31009&quot;, &quot;31005&quot;, &quot;31075&quot;, &quot;48431&quot;, &quot;4803…
+## $ STATE_FIPS &lt;chr&gt; &quot;48&quot;, &quot;48&quot;, &quot;31&quot;, &quot;31&quot;, &quot;31&quot;, &quot;48&quot;, &quot;48&quot;, &quot;48&quot;, &quot;51&quot;, &quot;31&quot;,…
+## $ STATE      &lt;chr&gt; &quot;TX&quot;, &quot;TX&quot;, &quot;NE&quot;, &quot;NE&quot;, &quot;NE&quot;, &quot;TX&quot;, &quot;TX&quot;, &quot;TX&quot;, &quot;VA&quot;, &quot;NE&quot;,…
+## $ COUNTY     &lt;chr&gt; &quot;King&quot;, &quot;Loving&quot;, &quot;Blaine&quot;, &quot;Arthur&quot;, &quot;Grant&quot;, &quot;Sterling&quot;, …
+## $ OBAMA      &lt;dbl&gt; 5, 9, 29, 30, 30, 31, 32, 33, 37, 41, 42, 44, 49, 51, 55, 5…
+## $ ROMNEY     &lt;dbl&gt; 139, 54, 268, 227, 322, 459, 324, 468, 6463, 237, 360, 526,…
+## $ OTHERS     &lt;dbl&gt; 1, 1, 6, 5, 11, 4, 7, 7, 222, 13, 6, 8, 9, 12, 10, 7, 6, 6,…
+## $ TTL_VT     &lt;dbl&gt; 145, 64, 303, 262, 363, 494, 363, 508, 6722, 291, 408, 578,…
+## $ PCT_OBM    &lt;dbl&gt; 3.448276, 14.062500, 9.570957, 11.450382, 8.264463, 6.27530…
+## $ PCT_ROM    &lt;dbl&gt; 95.86207, 84.37500, 88.44885, 86.64122, 88.70523, 92.91498,…
+## $ PCT_OTHR   &lt;dbl&gt; 0.689655, 1.562500, 1.980198, 1.908397, 3.030303, 0.809717,…
+## $ WINNER     &lt;chr&gt; &quot;Romney&quot;, &quot;Romney&quot;, &quot;Romney&quot;, &quot;Romney&quot;, &quot;Romney&quot;, &quot;Romney&quot;,…
+## $ PCT_WNR    &lt;dbl&gt; 95.86207, 84.37500, 88.44885, 86.64122, 88.70523, 92.91498,…
+## $ group      &lt;dbl&gt; 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25, 25,…</code></pre>
+<p>Compare to the two code chunks, this arraged data shows the ascending order of <code>OBAMA</code>.</p>
+<p><strong>How to get a list of summarized statistics of all the variables of a dataset</strong></p>
+<p>Use <code>skim()</code> to list the standard statistics of the variables:</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="working-with-data-in-the-tidyverse.html#cb264-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb264-2"><a href="working-with-data-in-the-tidyverse.html#cb264-2" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb264-3"><a href="working-with-data-in-the-tidyverse.html#cb264-3" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(election)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 5.1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">election</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">3153</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">14</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">9</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">FIPS</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">3153</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">STATE_FIPS</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">51</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">STATE</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">51</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">COUNTY</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">1862</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">WINNER</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">OBAMA</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">20897.02</td>
+<td align="right">73657.67</td>
+<td align="right">5.00</td>
+<td align="right">1572.00</td>
+<td align="right">3959.00</td>
+<td align="right">11259.00</td>
+<td align="right">2216903.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">ROMNEY</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">19321.72</td>
+<td align="right">44465.73</td>
+<td align="right">54.00</td>
+<td align="right">2926.00</td>
+<td align="right">6294.00</td>
+<td align="right">16032.00</td>
+<td align="right">885333.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">OTHERS</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">683.27</td>
+<td align="right">2262.16</td>
+<td align="right">0.00</td>
+<td align="right">72.00</td>
+<td align="right">178.00</td>
+<td align="right">485.00</td>
+<td align="right">78831.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">TTL_VT</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">40902.02</td>
+<td align="right">116118.03</td>
+<td align="right">64.00</td>
+<td align="right">4862.00</td>
+<td align="right">10565.00</td>
+<td align="right">28049.00</td>
+<td align="right">3181067.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">PCT_OBM</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">38.54</td>
+<td align="right">14.79</td>
+<td align="right">0.55</td>
+<td align="right">27.77</td>
+<td align="right">37.28</td>
+<td align="right">47.56</td>
+<td align="right">93.39</td>
+<td align="left">▂▇▇▂▁</td>
+</tr>
+<tr class="even">
+<td align="left">PCT_ROM</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">59.63</td>
+<td align="right">14.78</td>
+<td align="right">5.98</td>
+<td align="right">50.47</td>
+<td align="right">60.72</td>
+<td align="right">70.25</td>
+<td align="right">96.15</td>
+<td align="left">▁▂▇▇▂</td>
+</tr>
+<tr class="odd">
+<td align="left">PCT_OTHR</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1.83</td>
+<td align="right">1.00</td>
+<td align="right">0.00</td>
+<td align="right">1.17</td>
+<td align="right">1.69</td>
+<td align="right">2.35</td>
+<td align="right">14.87</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">PCT_WNR</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">64.29</td>
+<td align="right">9.97</td>
+<td align="right">47.87</td>
+<td align="right">56.12</td>
+<td align="right">63.06</td>
+<td align="right">71.31</td>
+<td align="right">96.15</td>
+<td align="left">▇▇▆▂▁</td>
+</tr>
+<tr class="odd">
+<td align="left">group</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">20.70</td>
+<td align="right">4.52</td>
+<td align="right">11.00</td>
+<td align="right">22.00</td>
+<td align="right">23.00</td>
+<td align="right">24.00</td>
+<td align="right">25.00</td>
+<td align="left">▃▁▁▃▇</td>
+</tr>
+</tbody>
+</table>
+<p>You can combine <code>skim()</code> with other functions in a sequence using the pipe (%&gt;%) operator. For example, use function <code>summary()</code> to find how many variables of each type are in the dataset:</p>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="working-with-data-in-the-tidyverse.html#cb265-1" aria-hidden="true" tabindex="-1"></a>election <span class="sc">%&gt;%</span> </span>
+<span id="cb265-2"><a href="working-with-data-in-the-tidyverse.html#cb265-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">skim</span>() <span class="sc">%&gt;%</span>  <span class="co"># no argument needed here</span></span>
+<span id="cb265-3"><a href="working-with-data-in-the-tidyverse.html#cb265-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summary</span>() <span class="co"># no argument needed here</span></span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-5">Table 5.2: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">3153</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">14</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">9</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Count the data</strong></p>
+<center>
+Distinct()
+</center>
+<p>Use <code>distinct()</code> to find out how many different type of observations are there in one variable. To find out how many distinct states are there in the <code>STATE</code> variable:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="working-with-data-in-the-tidyverse.html#cb266-1" aria-hidden="true" tabindex="-1"></a>election <span class="sc">%&gt;%</span></span>
+<span id="cb266-2"><a href="working-with-data-in-the-tidyverse.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(STATE)</span></code></pre></div>
+<pre><code>## # A tibble: 51 × 1
+##    STATE
+##    &lt;chr&gt;
+##  1 AL   
+##  2 AZ   
+##  3 AR   
+##  4 CA   
+##  5 CO   
+##  6 CT   
+##  7 DE   
+##  8 DC   
+##  9 FL   
+## 10 GA   
+## # … with 41 more rows</code></pre>
+<center>
+Count()
+</center>
+<p><code>count()</code> adds a new column named <code>n</code> to store the counts. this <code>count</code> function basically does the <code>group_by</code> and <code>summarize</code> for you. count the number of <code>counties</code> in each <code>state</code>:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="working-with-data-in-the-tidyverse.html#cb268-1" aria-hidden="true" tabindex="-1"></a>election <span class="sc">%&gt;%</span></span>
+<span id="cb268-2"><a href="working-with-data-in-the-tidyverse.html#cb268-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(STATE)</span></code></pre></div>
+<pre><code>## # A tibble: 51 × 2
+##    STATE     n
+##    &lt;chr&gt; &lt;int&gt;
+##  1 AK       40
+##  2 AL       67
+##  3 AR       75
+##  4 AZ       15
+##  5 CA       58
+##  6 CO       64
+##  7 CT        8
+##  8 DC        1
+##  9 DE        3
+## 10 FL       67
+## # … with 41 more rows</code></pre>
+<p>Adapt the code to count by a logical condition instead:</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="working-with-data-in-the-tidyverse.html#cb270-1" aria-hidden="true" tabindex="-1"></a>election <span class="sc">%&gt;%</span></span>
+<span id="cb270-2"><a href="working-with-data-in-the-tidyverse.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(WINNER <span class="sc">==</span> <span class="st">&quot;Obama&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 2 × 2
+##   `WINNER == &quot;Obama&quot;`     n
+##   &lt;lgl&gt;               &lt;int&gt;
+## 1 FALSE                2449
+## 2 TRUE                  704</code></pre>
+</div>
+<div id="tame-your-data" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Tame your data</h2>
+<p><strong>Cast Column Types</strong>
+To assign or change the type of the columns in the dataset.</p>
+<center>
+<strong>Cast A Column To a Date</strong>
+</center>
+<p>Use <code>parse_date("2012-14-08", format = "%Y-%d-%m")</code> then use <code>col_date(format = "%Y-%d-%m")</code> within cols() as the col_types argument of read_csv().</p>
+<pre><code>parse_date(&quot;2012-14-08&quot;, format = &quot;%Y-%d-%m&quot;)
+
+read_csv(...., col_types = cols( variale_name = col_date(format = &quot;%Y-%d-%m&quot;)))</code></pre>
+<center>
+<strong>Cast A Column To a Number</strong>
+</center>
+<pre><code>read_csv(...., variable_name = col_number())</code></pre>
+<p>Sometimes, there are <code>na</code> contained in the observations which would create errors while trying to cast.</p>
+<p>Diagnose parsing problems using a new <code>readr</code> function called <code>problems()</code>. Using <code>problems()</code> on a result of <code>read_csv()</code> will show you the rows and columns where parsing error occurred, what the parser expected to find (for example, a number), and the actual value that caused the parsing error.</p>
+<center>
+<strong>Cast A Column As A Factor</strong>
+</center>
+<p>Factors are categorical variables, where the possible values are a fixed and known set.</p>
+<p>Use <code>parse_factor()</code> to parse variables and <code>col_factor()</code> to cast columns as categorical. Both functions have a <code>levels</code> argument that is used to specify the possible values for the factors. When <code>levels</code> is set to <code>NULL</code>, the possible values will be inferred from the unique values in the dataset. Alternatively, you can pass a list of possible values.</p>
+<pre><code>read_csv(...., variable_name = col_factor(levels = NULL))</code></pre>
+<p>For more details, go to the <a href="https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#transform-your-data">Cast A Factor And Examine Levels</a> section of this chapter.</p>
+<p><strong>Recode Values</strong></p>
+<p>Use <code>recode()</code> function in the <code>dplyr</code> package. The <code>recode</code> function is to re-name the observations into something easier to understand.</p>
+<center>
+<strong>Recode A Character Variable</strong>
+</center>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="working-with-data-in-the-tidyverse.html#cb275-1" aria-hidden="true" tabindex="-1"></a>election_CA <span class="ot">&lt;-</span> election <span class="sc">%&gt;%</span> <span class="fu">filter</span>(STATE <span class="sc">==</span> <span class="st">&quot;CA&quot;</span>)</span>
+<span id="cb275-2"><a href="working-with-data-in-the-tidyverse.html#cb275-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb275-3"><a href="working-with-data-in-the-tidyverse.html#cb275-3" aria-hidden="true" tabindex="-1"></a>election_CA <span class="sc">%&gt;%</span> </span>
+<span id="cb275-4"><a href="working-with-data-in-the-tidyverse.html#cb275-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">STATE =</span> <span class="fu">recode</span>(STATE, <span class="st">&quot;CA&quot;</span> <span class="ot">=</span> <span class="st">&quot;California&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 58 × 14
+##    FIPS  STATE_FIPS STATE   COUNTY    OBAMA ROMNEY OTHERS TTL_VT PCT_OBM PCT_ROM
+##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 06001 06         Califo… Alameda  469684 108182  17776 595642    78.9    18.2
+##  2 06003 06         Califo… Alpine      389    236     28    653    59.6    36.1
+##  3 06005 06         Califo… Amador     6830  10281    538  17649    38.7    58.3
+##  4 06007 06         Califo… Butte     42669  44479   3604  90752    47.0    49.0
+##  5 06009 06         Califo… Calaver…   8670  12365    751  21786    39.8    56.8
+##  6 06011 06         Califo… Colusa     2314   3601    119   6034    38.3    59.7
+##  7 06013 06         Califo… Contra … 290824 136517  10885 438226    66.4    31.2
+##  8 06015 06         Califo… Del Nor…   3791   4614    365   8770    43.2    52.6
+##  9 06017 06         Califo… El Dora…  35166  50973   2635  88774    39.6    57.4
+## 10 06019 06         Califo… Fresno   129129 124490   5208 258827    49.9    48.1
+## # … with 48 more rows, and 4 more variables: PCT_OTHR &lt;dbl&gt;, WINNER &lt;chr&gt;,
+## #   PCT_WNR &lt;dbl&gt;, group &lt;dbl&gt;</code></pre>
+<center>
+<strong>Recode A Numeric Variable Into Factor </strong>
+</center>
+<p>Dummy variables are often used in data analysis to bin a variable into one of two categories to indicate the absence or presence of something. Dummy variables take the value <code>0</code> or <code>1</code> to stand for, for example, <code>V_engine</code> or <code>S_engine</code>.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="working-with-data-in-the-tidyverse.html#cb277-1" aria-hidden="true" tabindex="-1"></a>Car_engine <span class="ot">&lt;-</span> mtcars[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb277-2"><a href="working-with-data-in-the-tidyverse.html#cb277-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Engine_Type =</span> <span class="fu">recode</span>(vs, <span class="st">&quot;0&quot;</span> <span class="ot">=</span> <span class="st">&quot;V_engine&quot;</span>, <span class="at">.default =</span>  <span class="st">&quot;S_engine&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb277-3"><a href="working-with-data-in-the-tidyverse.html#cb277-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(vs, Engine_Type, <span class="fu">everything</span>(), <span class="sc">-</span><span class="st">&quot;carb&quot;</span>) </span>
+<span id="cb277-4"><a href="working-with-data-in-the-tidyverse.html#cb277-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb277-5"><a href="working-with-data-in-the-tidyverse.html#cb277-5" aria-hidden="true" tabindex="-1"></a>Car_engine</span></code></pre></div>
+<pre><code>##                   vs Engine_Type  mpg cyl  disp  hp drat    wt  qsec am gear
+## Mazda RX4          0    V_engine 21.0   6 160.0 110 3.90 2.620 16.46  1    4
+## Mazda RX4 Wag      0    V_engine 21.0   6 160.0 110 3.90 2.875 17.02  1    4
+## Datsun 710         1    S_engine 22.8   4 108.0  93 3.85 2.320 18.61  1    4
+## Hornet 4 Drive     1    S_engine 21.4   6 258.0 110 3.08 3.215 19.44  0    3
+## Hornet Sportabout  0    V_engine 18.7   8 360.0 175 3.15 3.440 17.02  0    3
+## Valiant            1    S_engine 18.1   6 225.0 105 2.76 3.460 20.22  0    3
+## Duster 360         0    V_engine 14.3   8 360.0 245 3.21 3.570 15.84  0    3
+## Merc 240D          1    S_engine 24.4   4 146.7  62 3.69 3.190 20.00  0    4
+## Merc 230           1    S_engine 22.8   4 140.8  95 3.92 3.150 22.90  0    4
+## Merc 280           1    S_engine 19.2   6 167.6 123 3.92 3.440 18.30  0    4</code></pre>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="working-with-data-in-the-tidyverse.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Since there&#39;re only 2 distinct levels, the &quot;1&quot; = &quot;S_engine&quot; can be coded as &quot;.default&quot;.</span></span></code></pre></div>
+<p><strong>Select And Reorder Variables</strong></p>
+<p>Selecting a subset of columns to print can help check that a <code>mutate()</code> worked as expected, and rearranging columns next to each other can help spot obvious errors in data entry.</p>
+<p>The <code>select()</code> <strong>helpers</strong> are functions that allow selection of variables based on their names:</p>
+<pre><code>##        Function                                   Usage
+## 1 starts_with()                    starts with a prefix
+## 2   ends_with()                      ends with a prefix
+## 3    contains()               contains a literal string
+## 4     matches()            matches a regular expression
+## 5   num_range()   a numerical range like x01, x02, x03.
+## 6      one_of()          variables in character vector.
+## 7  everything()                          all variables.
+## 8    last_col() last variable, possibly with an offset.</code></pre>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="working-with-data-in-the-tidyverse.html#cb281-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Move vs, and Engine_type to front and show only from mpg to drat:</span></span>
+<span id="cb281-2"><a href="working-with-data-in-the-tidyverse.html#cb281-2" aria-hidden="true" tabindex="-1"></a>Car_engine[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span> </span>
+<span id="cb281-3"><a href="working-with-data-in-the-tidyverse.html#cb281-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">select</span>(vs, Engine_Type, mpg<span class="sc">:</span>drat) </span></code></pre></div>
+<pre><code>##                   vs Engine_Type  mpg cyl  disp  hp drat
+## Mazda RX4          0    V_engine 21.0   6 160.0 110 3.90
+## Mazda RX4 Wag      0    V_engine 21.0   6 160.0 110 3.90
+## Datsun 710         1    S_engine 22.8   4 108.0  93 3.85
+## Hornet 4 Drive     1    S_engine 21.4   6 258.0 110 3.08
+## Hornet Sportabout  0    V_engine 18.7   8 360.0 175 3.15
+## Valiant            1    S_engine 18.1   6 225.0 105 2.76
+## Duster 360         0    V_engine 14.3   8 360.0 245 3.21
+## Merc 240D          1    S_engine 24.4   4 146.7  62 3.69
+## Merc 230           1    S_engine 22.8   4 140.8  95 3.92
+## Merc 280           1    S_engine 19.2   6 167.6 123 3.92</code></pre>
+<p><strong>Reformat Variable Names</strong></p>
+<p>To change names <strong>WITHOUT</strong> changing the order of the variables, write <code>everything()</code> first in the <code>select()</code> function.
+The function <code>clean_names()</code> takes an argument case that can be used to convert variable names to other cases, like <code>"upper_camel"</code> or <code>"all_caps"</code>.</p>
+<p>use <code>clean_names()</code> from the <code>janitor</code> package to convert all variable names to snake_case.</p>
+<pre><code>install.packages(&quot;janitor&quot;)</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb284-1"><a href="working-with-data-in-the-tidyverse.html#cb284-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<div class="sourceCode" id="cb287"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb287-1"><a href="working-with-data-in-the-tidyverse.html#cb287-1" aria-hidden="true" tabindex="-1"></a>election[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span> <span class="fu">clean_names</span>(<span class="st">&quot;snake&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 14
+##    fips  state_fips state county   obama romney others ttl_vt pct_obm pct_rom
+##    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 01001 01         AL    Autauga   6363  17379    231  23973    26.5    72.5
+##  2 01003 01         AL    Baldwin  18329  65772    887  84988    21.6    77.4
+##  3 01005 01         AL    Barbour   5912   5550     55  11517    51.3    48.2
+##  4 01007 01         AL    Bibb      2202   6132     86   8420    26.2    72.8
+##  5 01009 01         AL    Blount    2970  20757    333  24060    12.3    86.3
+##  6 01011 01         AL    Bullock   4061   1251     10   5322    76.3    23.5
+##  7 01013 01         AL    Butler    4374   5087     41   9502    46.0    53.5
+##  8 01015 01         AL    Calhoun  15500  30272    468  46240    33.5    65.5
+##  9 01017 01         AL    Chambers  6871   7626    132  14629    47.0    52.1
+## 10 01019 01         AL    Cherokee  2132   7506    154   9792    21.8    76.7
+## # … with 4 more variables: pct_othr &lt;dbl&gt;, winner &lt;chr&gt;, pct_wnr &lt;dbl&gt;,
+## #   group &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb289"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb289-1"><a href="working-with-data-in-the-tidyverse.html#cb289-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Notice how all the variables are lower_case now.</span></span></code></pre></div>
+<p><strong>How To Rename, Subset, And Reorder Variables At Once</strong></p>
+<p>To rename, then subset (choose to show only selected) , and finally reorder variables in one code line, use <code>select()</code>.</p>
+<pre><code>dataset_name %&gt;% select( new_variable_name_ = starts_with(&quot;old_name&quot;) ) </code></pre>
+<p>This code will find all variables in <code>dataset_name</code> whose names start with <code>old_name</code>, then rename each variable as <code>new_name_&lt;N&gt;</code>, where <code>N</code> is a number. If <code>dataset_name</code> has variables <code>oldname</code>, <code>oldname_v1</code>, <code>oldname3</code>, then the code will replace these names with <code>new_name_1</code>, <code>new_name_2</code>, <code>new_name_3</code>.</p>
+<p>The arguments inputted into <code>select()</code> determines what R will show. And, the order of the arguments inputted will determine how the resulting order of the variables will be.</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="working-with-data-in-the-tidyverse.html#cb291-1" aria-hidden="true" tabindex="-1"></a>election[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span> </span>
+<span id="cb291-2"><a href="working-with-data-in-the-tidyverse.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">Precint_ =</span> <span class="fu">contains</span>(<span class="st">&quot;PCT&quot;</span>), <span class="fu">everything</span>(), <span class="sc">-</span><span class="st">&quot;group&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 10 × 13
+##    Precint_1 Precint_2 Precint_3 Precint_4 FIPS  STATE_FIPS STATE COUNTY   OBAMA
+##        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1      26.5      72.5     0.964      72.5 01001 01         AL    Autauga   6363
+##  2      21.6      77.4     1.04       77.4 01003 01         AL    Baldwin  18329
+##  3      51.3      48.2     0.478      51.3 01005 01         AL    Barbour   5912
+##  4      26.2      72.8     1.02       72.8 01007 01         AL    Bibb      2202
+##  5      12.3      86.3     1.38       86.3 01009 01         AL    Blount    2970
+##  6      76.3      23.5     0.188      76.3 01011 01         AL    Bullock   4061
+##  7      46.0      53.5     0.431      53.5 01013 01         AL    Butler    4374
+##  8      33.5      65.5     1.01       65.5 01015 01         AL    Calhoun  15500
+##  9      47.0      52.1     0.902      52.1 01017 01         AL    Chambers  6871
+## 10      21.8      76.7     1.57       76.7 01019 01         AL    Cherokee  2132
+## # … with 4 more variables: ROMNEY &lt;dbl&gt;, OTHERS &lt;dbl&gt;, TTL_VT &lt;dbl&gt;,
+## #   WINNER &lt;chr&gt;</code></pre>
+<p>This example, the <code>PCT_name</code> has been replaced into <code>Precint_&lt;N&gt;</code>. The <code>Precint_</code> is first in the <code>select()</code> function so it will be shown first, then next is <code>everything()</code> so everything else will be shown the way it is, then exclude the <code>group</code> variable.</p>
+</div>
+<div id="tidy-your-data" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Tidy your data</h2>
+<p><strong>gather()</strong></p>
+<pre><code>?gather</code></pre>
+<p>The <code>gather()</code> function collapses multiple columns into two columns. It reshapes the dataset from wide to long, it reduces the number of columns and increases the number of rows.</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="working-with-data-in-the-tidyverse.html#cb294-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb294-2"><a href="working-with-data-in-the-tidyverse.html#cb294-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb294-3"><a href="working-with-data-in-the-tidyverse.html#cb294-3" aria-hidden="true" tabindex="-1"></a>Car_engine[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb294-4"><a href="working-with-data-in-the-tidyverse.html#cb294-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;measurements&quot;</span>, <span class="at">value =</span> <span class="st">&quot;specs&quot;</span>, mpg<span class="sc">:</span>hp) <span class="sc">%&gt;%</span></span>
+<span id="cb294-5"><a href="working-with-data-in-the-tidyverse.html#cb294-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(measurements, specs)</span></code></pre></div>
+<pre><code>##   measurements specs
+## 1          mpg    21
+## 2          mpg    21
+## 3          cyl     6
+## 4          cyl     6
+## 5         disp   160
+## 6         disp   160
+## 7           hp   110
+## 8           hp   110</code></pre>
+<p><strong>seperate()</strong></p>
+<p>Within a tidy dataset, a column should only represent only one variable, but if observations from that variable contains two distinct type of info, we can seperate it with <code>seperate()</code>.</p>
+<p>This is an example for the code before/after using the <code>seperate</code> funtion:</p>
+<pre><code>week_ratings
+
+   series episode viewers_7day
+   &lt;fct&gt;  &lt;chr&gt;          &lt;dbl&gt;
+ 1 1      e1_7day         2.24
+ 2 2      e1_7day         3.1 
+ 3 3      e1_7day         3.85
+ 4 4      e1_7day         6.6 
+ 5 5      e1_7day         8.51
+ 6 6      e1_7day        11.6 
+ 7 7      e1_7day        13.6 
+ 8 8      e1_7day         9.46
+ 9 1      e2_7day         3   
+10 2      e2_7day         3.53
+
+week_ratings &lt;- ratings2 %&gt;% 
+    select(series, ends_with(&quot;7day&quot;)) %&gt;% 
+    gather(episode, viewers_7day, ends_with(&quot;7day&quot;), 
+           na.rm = TRUE) %&gt;%
+    # Edit to separate key column and drop extra
+    separate(episode, into = c(&quot;episode&quot;,&quot;day&quot;)) 
+    
+week_ratings
+
+   series episode   day viewers_7day
+   &lt;fct&gt;  &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;
+ 1 1      e1      7day           2.24
+ 2 2      e1      7day           3.1 
+ 3 3      e1      7day           3.85
+ 4 4      e1      7day           6.6 
+ 5 5      e1      7day           8.51
+ 6 6      e1      7day          11.6 
+ 7 7      e1      7day          13.6 
+ 8 8      e1      7day           9.46
+ 9 1      e2      7day           3   
+10 2      e2      7day           3.53</code></pre>
+<p><strong>Unite Columns</strong></p>
+<p>In the <code>tidyr</code> package, the opposite of <code>separate()</code> is<code>unite()</code>. Sometimes you need to paste values from two or more columns together to tidy. Here is an example usage for <code>unite()</code>:</p>
+<pre><code>data %&gt;%
+    unite(new_var, old_var1, old_var2)</code></pre>
+<p>To apply the function into the <code>election</code> data, merge the <code>COUNTY</code> into the <code>STATE</code>:</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="working-with-data-in-the-tidyverse.html#cb298-1" aria-hidden="true" tabindex="-1"></a>election_CA[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb298-2"><a href="working-with-data-in-the-tidyverse.html#cb298-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(LOCATION, STATE, COUNTY, <span class="at">sep =</span> <span class="st">&quot;, &quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 13
+##   FIPS  STATE_FIPS LOCATION  OBAMA ROMNEY OTHERS TTL_VT PCT_OBM PCT_ROM PCT_OTHR
+##   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+## 1 06001 06         CA, Ala… 469684 108182  17776 595642    78.9    18.2     2.98
+## 2 06003 06         CA, Alp…    389    236     28    653    59.6    36.1     4.29
+## 3 06005 06         CA, Ama…   6830  10281    538  17649    38.7    58.3     3.05
+## 4 06007 06         CA, But…  42669  44479   3604  90752    47.0    49.0     3.97
+## 5 06009 06         CA, Cal…   8670  12365    751  21786    39.8    56.8     3.45
+## # … with 3 more variables: WINNER &lt;chr&gt;, PCT_WNR &lt;dbl&gt;, group &lt;dbl&gt;</code></pre>
+<p><strong>spread()</strong></p>
+<p>Spreading reshapes the data from long to wide, adds columns and shrinks the rows.</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="working-with-data-in-the-tidyverse.html#cb300-1" aria-hidden="true" tabindex="-1"></a>tidy_ratings_all[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code></pre></div>
+<pre><code>##    series episode days viewers
+## 1       1       1    7    2.24
+## 2       2       1    7    3.10
+## 3       3       1    7    3.85
+## 4       4       1    7    6.60
+## 5       5       1    7    8.51
+## 6       6       1    7   11.62
+## 7       7       1    7   13.58
+## 8       8       1    7    9.46
+## 9       6       1   28   11.73
+## 10      7       1   28   13.86</code></pre>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="working-with-data-in-the-tidyverse.html#cb302-1" aria-hidden="true" tabindex="-1"></a>tidy_ratings_all <span class="sc">%&gt;%</span> </span>
+<span id="cb302-2"><a href="working-with-data-in-the-tidyverse.html#cb302-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Count viewers by series and days</span></span>
+<span id="cb302-3"><a href="working-with-data-in-the-tidyverse.html#cb302-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(series, days, <span class="at">wt =</span> viewers) <span class="sc">%&gt;%</span></span>
+<span id="cb302-4"><a href="working-with-data-in-the-tidyverse.html#cb302-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adapt to spread counted values</span></span>
+<span id="cb302-5"><a href="working-with-data-in-the-tidyverse.html#cb302-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">spread</span>(days, n, <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<pre><code>##   series  days_7 days_28
+## 1      1  16.620      NA
+## 2      2  31.610      NA
+## 3      3  50.010      NA
+## 4      4  73.540      NA
+## 5      5 100.393      NA
+## 6      6 123.110  113.00
+## 7      7 135.630  138.45
+## 8      8  90.170   92.87</code></pre>
+</div>
+<div id="transform-your-data" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Transform your data</h2>
+<p><strong>How To Create A Range-filtered Column</strong></p>
+<p>Use case_when() to create a new column that represents a given range:</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="working-with-data-in-the-tidyverse.html#cb304-1" aria-hidden="true" tabindex="-1"></a>bakers_sample <span class="ot">&lt;-</span> bakers[<span class="dv">10</span><span class="sc">:</span><span class="dv">17</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb304-2"><a href="working-with-data-in-the-tidyverse.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(baker, star_baker, technical_winner)</span>
+<span id="cb304-3"><a href="working-with-data-in-the-tidyverse.html#cb304-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb304-4"><a href="working-with-data-in-the-tidyverse.html#cb304-4" aria-hidden="true" tabindex="-1"></a>bakers_sample</span></code></pre></div>
+<pre><code>##     baker star_baker technical_winner
+## 10   Ruth          0                0
+## 11    Ben          0                1
+## 12  Holly          2                2
+## 13    Ian          0                0
+## 14  Janet          1                1
+## 15  Jason          2                1
+## 16 Joanne          1                3
+## 17  Keith          0                0</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="working-with-data-in-the-tidyverse.html#cb306-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create skills variable with 4 levels</span></span>
+<span id="cb306-2"><a href="working-with-data-in-the-tidyverse.html#cb306-2" aria-hidden="true" tabindex="-1"></a>bakers_skill <span class="ot">&lt;-</span> bakers_sample <span class="sc">%&gt;%</span> </span>
+<span id="cb306-3"><a href="working-with-data-in-the-tidyverse.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">skill =</span> <span class="fu">case_when</span>(</span>
+<span id="cb306-4"><a href="working-with-data-in-the-tidyverse.html#cb306-4" aria-hidden="true" tabindex="-1"></a>    star_baker <span class="sc">&gt;</span> technical_winner <span class="sc">~</span> <span class="st">&quot;super_star&quot;</span>,</span>
+<span id="cb306-5"><a href="working-with-data-in-the-tidyverse.html#cb306-5" aria-hidden="true" tabindex="-1"></a>    star_baker <span class="sc">&lt;</span> technical_winner <span class="sc">~</span> <span class="st">&quot;high_tech&quot;</span>,</span>
+<span id="cb306-6"><a href="working-with-data-in-the-tidyverse.html#cb306-6" aria-hidden="true" tabindex="-1"></a>    star_baker <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> technical_winner <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="cn">NA_character_</span>,</span>
+<span id="cb306-7"><a href="working-with-data-in-the-tidyverse.html#cb306-7" aria-hidden="true" tabindex="-1"></a>    star_baker <span class="sc">==</span> technical_winner  <span class="sc">~</span> <span class="st">&quot;well_rounded&quot;</span></span>
+<span id="cb306-8"><a href="working-with-data-in-the-tidyverse.html#cb306-8" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb306-9"><a href="working-with-data-in-the-tidyverse.html#cb306-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">drop_na</span>(skill)</span>
+<span id="cb306-10"><a href="working-with-data-in-the-tidyverse.html#cb306-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb306-11"><a href="working-with-data-in-the-tidyverse.html#cb306-11" aria-hidden="true" tabindex="-1"></a>bakers_skill</span></code></pre></div>
+<pre><code>##    baker star_baker technical_winner        skill
+## 1    Ben          0                1    high_tech
+## 2  Holly          2                2 well_rounded
+## 3  Janet          1                1 well_rounded
+## 4  Jason          2                1   super_star
+## 5 Joanne          1                3    high_tech</code></pre>
+<p><strong>Cast A Factor And Examine Levels</strong></p>
+<p>Cast <code>skill</code> as a factor:</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="working-with-data-in-the-tidyverse.html#cb308-1" aria-hidden="true" tabindex="-1"></a>bakers_fct_skill <span class="ot">&lt;-</span> bakers_skill <span class="sc">%&gt;%</span> </span>
+<span id="cb308-2"><a href="working-with-data-in-the-tidyverse.html#cb308-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">skill =</span> <span class="fu">as.factor</span>(skill))</span>
+<span id="cb308-3"><a href="working-with-data-in-the-tidyverse.html#cb308-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb308-4"><a href="working-with-data-in-the-tidyverse.html#cb308-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine levels</span></span>
+<span id="cb308-5"><a href="working-with-data-in-the-tidyverse.html#cb308-5" aria-hidden="true" tabindex="-1"></a>bakers_fct_skill <span class="sc">%&gt;%</span> </span>
+<span id="cb308-6"><a href="working-with-data-in-the-tidyverse.html#cb308-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(skill) <span class="sc">%&gt;%</span> </span>
+<span id="cb308-7"><a href="working-with-data-in-the-tidyverse.html#cb308-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">levels</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;high_tech&quot;    &quot;super_star&quot;   &quot;well_rounded&quot;</code></pre>
+<p>For more details, go to the <a href="https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#tame-your-data">Cast A Column As A Factor</a> section of this chapter.</p>
+<p><strong>Cast Characters As Dates</strong></p>
+<p>Use <code>lubridate</code> to parse and cast a date variable within a <code>mutate()</code>.</p>
+<pre><code>?lubridate</code></pre>
+<div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="working-with-data-in-the-tidyverse.html#cb311-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;lubridate&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     date, intersect, setdiff, union</code></pre>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="working-with-data-in-the-tidyverse.html#cb314-1" aria-hidden="true" tabindex="-1"></a>bakers <span class="sc">%&gt;%</span> </span>
+<span id="cb314-2"><a href="working-with-data-in-the-tidyverse.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">last_date_appeared =</span> <span class="fu">as.character</span>(last_date_appeared))  <span class="sc">%&gt;%</span></span>
+<span id="cb314-3"><a href="working-with-data-in-the-tidyverse.html#cb314-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">last_date =</span> <span class="fu">ymd</span>(last_date_appeared),</span>
+<span id="cb314-4"><a href="working-with-data-in-the-tidyverse.html#cb314-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">last_month =</span> <span class="fu">month</span>(last_date_appeared, <span class="at">label =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb314-5"><a href="working-with-data-in-the-tidyverse.html#cb314-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(baker, last_date_appeared, last_date, last_month)</span></code></pre></div>
+<pre><code>##         baker last_date_appeared  last_date last_month
+## 1     Annetha         2010-08-24 2010-08-24        Aug
+## 2       David         2010-09-07 2010-09-07        Sep
+## 3         Edd         2010-09-21 2010-09-21        Sep
+## 4   Jasminder         2010-09-14 2010-09-14        Sep
+## 5    Jonathan         2010-08-31 2010-08-31        Aug
+## 6         Lea         2010-08-17 2010-08-17        Aug
+## 7      Louise         2010-08-24 2010-08-24        Aug
+## 8        Mark         2010-08-17 2010-08-17        Aug
+## 9     Miranda         2010-09-21 2010-09-21        Sep
+## 10       Ruth         2010-09-21 2010-09-21        Sep
+## 11        Ben         2011-09-06 2011-09-06        Sep
+## 12      Holly         2011-10-04 2011-10-04        Oct
+## 13        Ian         2011-08-30 2011-08-30        Aug
+## 14      Janet         2011-09-27 2011-09-27        Sep
+## 15      Jason         2011-09-13 2011-09-13        Sep
+## 16     Joanne         2011-10-04 2011-10-04        Oct
+## 17      Keith         2011-08-16 2011-08-16        Aug
+## 18  Mary-Anne         2011-10-04 2011-10-04        Oct
+## 19     Robert         2011-09-13 2011-09-13        Sep
+## 20      Simon         2011-08-23 2011-08-23        Aug
+## 21    Urvashi         2011-08-30 2011-08-30        Aug
+## 22     Yasmin         2011-09-20 2011-09-20        Sep
+## 23    Brendan         2012-10-16 2012-10-16        Oct
+## 24    Cathryn         2012-10-02 2012-10-02        Oct
+## 25      Danny         2012-10-09 2012-10-09        Oct
+## 26      James         2012-10-16 2012-10-16        Oct
+## 27       John         2012-10-16 2012-10-16        Oct
+## 28    Manisha         2012-09-11 2012-09-11        Sep
+## 29    Natasha         2012-08-14 2012-08-14        Aug
+## 30      Peter         2012-08-21 2012-08-21        Aug
+## 31       Ryan         2012-09-25 2012-09-25        Sep
+## 32 Sarah-Jane         2012-09-25 2012-09-25        Sep
+## 33   Victoria         2012-08-28 2012-08-28        Aug
+## 34     Stuart         2012-09-04 2012-09-04        Sep
+## 35        Ali         2013-09-10 2013-09-10        Sep
+## 36       Beca         2013-10-15 2013-10-15        Oct
+## 37  Christine         2013-10-08 2013-10-08        Oct
+## 38    Deborah         2013-09-03 2013-09-03        Sep
+## 39    Frances         2013-10-22 2013-10-22        Oct
+## 40      Glenn         2013-10-01 2013-10-01        Oct
+## 41     Howard         2013-09-24 2013-09-24        Sep
+## 42  Kimberley         2013-10-22 2013-10-22        Oct
+## 43       Lucy         2013-08-27 2013-08-27        Aug
+## 44       Mark         2013-09-03 2013-09-03        Sep
+## 45     Robert         2013-09-17 2013-09-17        Sep
+## 46       Ruby         2013-10-22 2013-10-22        Oct
+## 47       Toby         2013-08-20 2013-08-20        Aug
+## 48     Chetna         2014-10-01 2014-10-01        Oct
+## 49     Claire         2014-08-06 2014-08-06        Aug
+## 50      Diana         2014-09-03 2014-09-03        Sep
+## 51    Enwezor         2014-08-13 2014-08-13        Aug
+## 52       Iain         2014-08-27 2014-08-27        Aug
+## 53     Jordan         2014-08-20 2014-08-20        Aug
+## 54       Kate         2014-09-17 2014-09-17        Sep
+## 55       Luis         2014-10-08 2014-10-08        Oct
+## 56     Martha         2014-09-24 2014-09-24        Sep
+## 57      Nancy         2014-10-08 2014-10-08        Oct
+## 58     Norman         2014-09-03 2014-09-03        Sep
+## 59    Richard         2014-10-08 2014-10-08        Oct
+## 60      Alvin         2015-09-09 2015-09-09        Sep
+## 61     Dorret         2015-08-19 2015-08-19        Aug
+## 62      Flora         2015-09-30 2015-09-30        Sep
+## 63        Ian         2015-10-07 2015-10-07        Oct
+## 64      Marie         2015-08-12 2015-08-12        Aug
+## 65        Mat         2015-09-16 2015-09-16        Sep
+## 66     Nadiya         2015-10-07 2015-10-07        Oct
+## 67       Paul         2015-09-23 2015-09-23        Sep
+## 68      Sandy         2015-08-26 2015-08-26        Aug
+## 69        Stu         2015-08-05 2015-08-05        Aug
+## 70      Tamal         2015-10-07 2015-10-07        Oct
+## 71       Ugnė         2015-09-02 2015-09-02        Sep
+## 72     Andrew         2016-10-26 2016-10-26        Oct
+## 73  Benjamina         2016-10-12 2016-10-12        Oct
+## 74    Candice         2016-10-26 2016-10-26        Oct
+## 75       Jane         2016-10-26 2016-10-26        Oct
+## 76       Kate         2016-09-14 2016-09-14        Sep
+## 77        Lee         2016-08-24 2016-08-24        Aug
+## 78     Louise         2016-08-31 2016-08-31        Aug
+## 79    Michael         2016-09-07 2016-09-07        Sep
+## 80        Rav         2016-09-28 2016-09-28        Sep
+## 81     Selasi         2016-10-19 2016-10-19        Oct
+## 82        Tom         2016-10-05 2016-10-05        Oct
+## 83        Val         2016-09-21 2016-09-21        Sep
+## 84      Chris         2017-09-05 2017-09-05        Sep
+## 85        Flo         2017-09-12 2017-09-12        Sep
+## 86      James         2017-09-26 2017-09-26        Sep
+## 87      Julia         2017-10-03 2017-10-03        Oct
+## 88       Kate         2017-10-31 2017-10-31        Oct
+## 89       Liam         2017-10-17 2017-10-17        Oct
+## 90      Peter         2017-08-29 2017-08-29        Aug
+## 91     Sophie         2017-10-31 2017-10-31        Oct
+## 92     Stacey         2017-10-24 2017-10-24        Oct
+## 93     Steven         2017-10-31 2017-10-31        Oct
+## 94        Tom         2017-09-19 2017-09-19        Sep
+## 95        Yan         2017-10-10 2017-10-10        Oct</code></pre>
+<p>In the example above, I turned <code>last_date_appeared</code> into a <code>character</code> type variable first since it was a <code>date</code> already. But the point of this is proving the function of <code>lubridate</code> in converting <code>character</code> into <code>date</code> variable.</p>
+<p><strong>Calulate Timespans</strong></p>
+<p>The first step to calculating a timespan in <code>lubridate</code> is to make an <code>interval</code>, <code>duration</code>, <code>period</code>, then use division to convert the units to what wanted (like <code>weeks(x)</code> or <code>months(x)</code>). The <code>x</code> refers to the number of time units to be included in the period:</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="working-with-data-in-the-tidyverse.html#cb316-1" aria-hidden="true" tabindex="-1"></a>bakers_time <span class="ot">&lt;-</span> bakers <span class="sc">%&gt;%</span> </span>
+<span id="cb316-2"><a href="working-with-data-in-the-tidyverse.html#cb316-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(baker, first_date_appeared, last_date_appeared)</span>
+<span id="cb316-3"><a href="working-with-data-in-the-tidyverse.html#cb316-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb316-4"><a href="working-with-data-in-the-tidyverse.html#cb316-4" aria-hidden="true" tabindex="-1"></a>bakers_time[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]  <span class="sc">%&gt;%</span> </span>
+<span id="cb316-5"><a href="working-with-data-in-the-tidyverse.html#cb316-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time_on_air =</span> <span class="fu">interval</span>(first_date_appeared, last_date_appeared),</span>
+<span id="cb316-6"><a href="working-with-data-in-the-tidyverse.html#cb316-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">weeks_on_air =</span> time_on_air <span class="sc">/</span> <span class="fu">weeks</span>(<span class="dv">1</span>))</span></code></pre></div>
+<pre><code>##       baker first_date_appeared last_date_appeared
+## 1   Annetha          2010-08-17         2010-08-24
+## 2     David          2010-08-17         2010-09-07
+## 3       Edd          2010-08-17         2010-09-21
+## 4 Jasminder          2010-08-17         2010-09-14
+## 5  Jonathan          2010-08-17         2010-08-31
+##                      time_on_air weeks_on_air
+## 1 2010-08-17 UTC--2010-08-24 UTC            1
+## 2 2010-08-17 UTC--2010-09-07 UTC            3
+## 3 2010-08-17 UTC--2010-09-21 UTC            5
+## 4 2010-08-17 UTC--2010-09-14 UTC            4
+## 5 2010-08-17 UTC--2010-08-31 UTC            2</code></pre>
+<p><strong>String Wrangling</strong></p>
+<p>Use <code>stringr</code> package to transform, detect, replace, and remove observations within a data frame:</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="working-with-data-in-the-tidyverse.html#cb318-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb318-2"><a href="working-with-data-in-the-tidyverse.html#cb318-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb318-3"><a href="working-with-data-in-the-tidyverse.html#cb318-3" aria-hidden="true" tabindex="-1"></a>election[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>,] <span class="sc">%&gt;%</span> </span>
+<span id="cb318-4"><a href="working-with-data-in-the-tidyverse.html#cb318-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">WINNER =</span> <span class="fu">str_to_upper</span>(WINNER),</span>
+<span id="cb318-5"><a href="working-with-data-in-the-tidyverse.html#cb318-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">WINNER =</span> <span class="fu">str_replace</span>(WINNER, <span class="st">&quot;MA&quot;</span>, <span class="st">&quot;mshazam&quot;</span>),</span>
+<span id="cb318-6"><a href="working-with-data-in-the-tidyverse.html#cb318-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">WINNER =</span> <span class="fu">str_replace</span>(WINNER, <span class="st">&quot;RO&quot;</span>, <span class="st">&quot;Bolosho&quot;</span>),</span>
+<span id="cb318-7"><a href="working-with-data-in-the-tidyverse.html#cb318-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">GROUP_24 =</span> <span class="fu">str_detect</span>(group, <span class="st">&quot;24&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb318-8"><a href="working-with-data-in-the-tidyverse.html#cb318-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">select</span>(COUNTY, WINNER, GROUP_24)</span></code></pre></div>
+<pre><code>## # A tibble: 7 × 3
+##   COUNTY  WINNER      GROUP_24
+##   &lt;chr&gt;   &lt;chr&gt;       &lt;lgl&gt;   
+## 1 Autauga BoloshoMNEY TRUE    
+## 2 Baldwin BoloshoMNEY TRUE    
+## 3 Barbour OBAmshazam  FALSE   
+## 4 Bibb    BoloshoMNEY TRUE    
+## 5 Blount  BoloshoMNEY FALSE   
+## 6 Bullock OBAmshazam  FALSE   
+## 7 Butler  BoloshoMNEY FALSE</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intro-to-data-visualization-with-ggplot2.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="categorical-data-in-the-tidyverse.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/05-Working_with_Data_in_Tidyverse.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/05-Working_with_Data_in_Tidyverse.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/05-Working_with_Data_in_Tidyverse.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,509 @@
+# Fixed Effects
+
+[Solutions](https://moodle.lawrence.edu/pluginfile.php/691081/mod_resource/content/3/17-FixedEffects-SOLN.html)
+
+This file demonstrates three approaches to estimating "fixed effects" models (remember this is what economists call "fixed effects", but other disciplines use "fixed effects" to refer to something different). We're going to use the [`wbstats` package](http://nset-ornl.github.io/wbstats/) to download country-level data from the World Bank for 2015 - 2018 (the most recently available for the variables I chose). We'll then estimate models with country fixed effects, with year fixed effects, and with both country and year fixed effects. We'll estimate each model three ways: using the within transformation, using dummy variables, and using the `plm` package to apply the within transformation for us. If you don't know what these are, go through LN5 first. 
+
+Note that the model we'll estimate isn't a great model in terms of producing interesting, reliable result. This is by design. Part of this chapter is introducing you to another API you can use to get data. You've worked with the US Census Bureau's API to get data on US counties. Now you have experience getting data on countries from the World Bank. You are free to use either source for data for your RP. If the model here was a great one, it might take away something you want to do for your RP. This way you get experience with fixed effects models and with getting data from the World Bank, but don't waste any potential ideas you might have for your RP. So just don't read too much into the results. They like suffer from reverse causation and omitted variable bias (both violations of ZCM). If you're interested in cross-country variation in life expectancy you'll need to dig much deeper than we'll go in this chapter. 
+
+So what do you have to do? First, go through the details of the models with country fixed effects. I already did it for you, but you should go through it (together with going through LN5) to make sure you understand. After you feel you understand country fixed effects, try to estimate the models with [Year Fixed Effects] yourself. Once you've figured that out, try to estimate the models with both [Country and Year Fixed Effects] yourself. Just look for the code chunk comments that say "YOUR CODE GOES HERE" or "Un-comment this out after you estimate the models".
+
+Solutions are posted in Moodle. The bare minimum you need to do is copy what I have in the solutions and paste it into this file. Doing that will not be considered cheating (in some classes that would be considered cheating, so always make sure you know whether using posted solutions is ok or not). If all you do is copy the solutions, however, you clearly won't come away with a better understanding of the material, so I strongly encourage you to try to work through the questions on your own before looking at the solutions. But when you're stuck or just can't figure out what I'm asking, use the solutions rather than wasting time.
+
+
+
+```{r, message = FALSE, warning = FALSE}
+library(wbstats) # To get data from the World Bank API
+library(plm) # To estimate fixed effects models
+library(formattable) # to make colorful tables similar to Excel's conditional formatting
+library(stargazer)
+library(tidyverse)
+
+## Set how many decimals at which R starts to use scientific notation 
+options(scipen=3)
+
+# This shows you a lot of what's available from the World Bank API
+## listWBinfo <- wb_cachelist
+
+# List of countries in the World Bank data
+countryList <- wb_countries()
+
+# List of all available variables (what they call "indicators")
+availableIndicators <- wb_cachelist$indicators
+
+## Sometimes it's easier to look through the indicator list if you write it to CSV and open it in Excel (you can do the same thing with the US Census data). The following does that: 
+# write.csv(select(availableIndicators,indicator_id, indicator, indicator_desc),"indicators.csv")
+
+## NOTE: if you use any of these (the full list of variables, exporting it to CSV), make sure you do NOT leave that in your final code. It doesn't belong in your RMD file. I just put these thigns in here so you see how to get to this information. 
+
+## We'll use the following variables: 
+# SP.DYN.LE00.IN	Life expectancy at birth, total (years)
+# NY.GDP.PCAP.KD	GDP per capita (constant 2016 US$)
+# SP.POP.TOTL	Population, total
+# SP.POP.TOTL.FE.ZS	Population, female (% of total population)
+# SP.RUR.TOTL.ZS	Rural population (% of total population)
+
+
+## Create named vector of indicators to download
+indicatorsToDownload <- c(
+  lifeExp = "SP.DYN.LE00.IN", 
+  gdpPerCapita ="NY.GDP.PCAP.KD", 
+  pop = "SP.POP.TOTL",
+  pctFemale = "SP.POP.TOTL.FE.ZS",
+  pctRural = "SP.RUR.TOTL.ZS"
+)
+
+## Download descriptions of on World Bank indicators (i.e., variables)
+indicatorInfo <- availableIndicators %>% 
+                  filter(indicator_id %in% indicatorsToDownload)
+
+
+## Build description of our variables that we'll output in the HTML body
+sDesc <- ""
+for(i in 1:nrow(indicatorInfo)){
+  sDesc <- paste0(sDesc
+                  ,"<b>",
+                  indicatorInfo$indicator[i],
+                  " (",indicatorInfo$indicator_id[i]
+                  , ")</b>: "
+                  ,indicatorInfo$indicator_desc[i]
+                  ,"<br>")
+}
+
+## Download data
+mydataOrig <- wb_data(indicatorsToDownload, 
+                      start_date = 2015, 
+                      end_date = 2018)
+
+## get vector of TRUE and FALSE where FALSE indicates there's one or more NA
+noNAs <- complete.cases(mydataOrig)
+
+## When writing this code, I first checked how many rows do have NAs, and then out of how many rows 
+# sum(noNAs)
+## out of how many rows:
+# nrow(noNAs)
+
+## keep rows without any NA
+mydata <- mydataOrig[noNAs,]
+
+## get count of rows for each country
+countOfYearsByCountry <-  mydata %>% count(country)
+
+## merge the count variable with the data
+mydata <- inner_join(mydata,countOfYearsByCountry, by="country")
+
+## keep only countries that have all 4 years complete
+mydata <- mydata %>% filter(n==4)
+
+## drop count variable (since all are now 4)
+mydata <- mydata %>% select(-n)
+
+
+## For the purposes of this chapter, lets only examine one group of countries 
+## so that we can output results without it taking up hundreds of lines
+## If this weren't a BP chapter we wouldn't do this
+
+## Merge in country info (e.g., region)
+mydata <- inner_join(mydata,select(countryList,country,region),by="country")
+
+## Keep only region "Latin America & Caribbean" (so we end up with only 31 countries)
+mydata <- mydata %>% filter(region == "Latin America & Caribbean") %>% select(-region)
+
+mydata <- mydata %>% rename(year=date)
+
+## Change scale of variables. This re-scales regression coefficients (instead of getting 0.00000123)
+####  Measure population in millions of people instead of people
+####  Measure GDP per Capita in thousands of 2010 US $ (instead of 2010 US $)
+mydata <- mydata %>% mutate(pop=pop/1000000, 
+                            gdpPerCapita=gdpPerCapita/1000)
+
+```
+
+
+
+```{r,warning=FALSE,message=FALSE,results="asis"}
+mydata %>% select(lifeExp, gdpPerCapita, pop, pctFemale, pctRural) %>% as.data.frame() %>%
+  stargazer(., type = "html",summary.stat = c("n","mean","sd", "min", "p25", "median", "p75", "max"))
+```
+
+
+
+## Variables
+
+Variable descriptions from the World Bank API. **These descriptions do not reflect two changes we made (that are reflected in the table of summary statistics above and in the regression results that follow): population is measured in millions of people and GDP per capita is measured in thousands of 2010 US dollars.**
+
+`r sDesc`
+
+Source of data definitions: [`wbstats` package](http://nset-ornl.github.io/wbstats/)
+
+(Note that this is not how you would describe your variables in a paper, but for the purposes of this assignment, it's an easy way to get an accurate description of each variable)
+
+
+
+## OLS
+
+Our focus is fixed effects models, but often when estimating fixed effects models we also estimate regular OLS without fixed effects for comparison.
+
+```{r}
+ols <- lm(data=mydata,lifeExp~gdpPerCapita+pop+pctFemale+pctRural)
+```
+
+
+
+## Country Fixed Effects
+
+
+Our basic OLS model is the following:
+$$
+lifeExp_{it} = \beta_0+\beta_1 gdpPerCapita_{it} + \beta_2 pop_{it} + \beta_3 pctFemale_{it} + \beta_4 pctRural_{it} + v_{it}
+$$
+To save on notation, we'll use generic variables (and I wrote out the "composite error term"), i.e., 
+
+
+$$
+y_{it} = \beta_0+\beta_1 x_{1it} + \beta_2 x_{2it} + \beta_3 x_{2it} + \beta_4 x_{4it} + (c_i + u_{it})
+$$
+
+
+
+Below there are 3 equations. The first is for country $i$ in year $t$ (the same as the one above). The second equation is the average over the four years for country $i$, where $\bar{y}_{i}=\sum_{t=2015}^{2018}y_{it}$ is the average value of $y_{it}$ over the 4 years for country $i$, $\bar{x}_{ji}=\sum_{t=2015}^{2018}x_{jti}$ is the average value of $x_{jti}$ over the 4 years for country $i$ for the four explanatory variables $j\in\{1,2,3,4\}$, $\bar{c}_{i}=\sum_{t=2015}^{2018}c_{i}=c_i$ is the average value of $c_{i}$ over the 4 years for country $i$ (which just equals $c_i$ because $c_i$ is the same in all years for country $i$), and $\bar{u}_{i}=\sum_{t=2015}^{2018}u_{it}$ is the average value of $u_{it}$ over the 4 years for country $i$. For the final equation, subtract country $i$'s average from the value in each year $t$. 
+
+$$
+\begin{align}
+y_{it} &= \beta_0+\beta_1 x_{1it} + \beta_2 x_{2it} + \beta_3 x_{2it} + \beta_4 x_{4it} + (c_i + u_{it})
+\\
+\bar{y}_{i} &= \beta_0+\beta_1 \bar{x}_{1i} + \beta_2 \bar{x}_{2i} + \beta_3 \bar{x}_{3i} + \beta_4 \bar{x}_{4i}  + (\bar{c}_i + \bar{u}_{i})
+\\
+y_{it}-\bar{y}_{i} &= (\beta_0-\beta_0)+\beta_1 (x_{1it}-\bar{x}_{1i}) + \beta_2 (x_{2it}-\bar{x}_{2i}) + \beta_3 (x_{3it}-\bar{x}_{3i})
+\\ &\hspace{6cm} + \beta_4 (x_{4it}-\bar{x}_{4i})  + (c_i-\bar{c}_i + u_{it}-\bar{u}_{i})
+\end{align}
+$$
+
+This final equation simplifies to the "within transformation" for country $i$,
+$$
+y_{it}-\bar{y}_{i} = \beta_1 (x_{1it}-\bar{x}_{1i}) + \beta_2 (x_{2it}-\bar{x}_{2i}) + \beta_3 (x_{3it}-\bar{x}_{3i}) + \beta_4 (x_{4it}-\bar{x}_{4i})  + (u_{it}-\bar{u}_{i})
+$$
+because $\beta_0-\beta_0=0$ and $c_i-\bar{c}_i=0$, where $\bar{c}_i=c_i$ because $c_i$ is the same in all years for country $i$. Mathematically, this is why the fixed effects model allows us to control for unobservable factors that do not change of time (or whatever is measured by $t=1,,,,.T$). If $c_i$ is not constant for all time periods, then $\bar{c}_i=c_i$ isn't correct and it doesn't drop out of the final equation. That means it remains in the equations we estimate, and our coefficients are biased. 
+
+At the end of this file there are tables that demonstrate the within transformation for our dataset. There is a table for each variable. Look at the table for [Life expectancy]. Find the row for Argentina (iso3c code ARG). It's average value of life expectancy is `r round(mean(select(filter(mydata,country=="Argentina"),lifeExp)[[1]]),2)`.  In 2015, their value was `r round(select(filter(mydata,country=="Argentina",year==2015),lifeExp),2)`, which is `r abs(round(select(filter(mydata,country=="Argentina",year==2015),lifeExp),2)- round(mean(select(filter(mydata,country=="Argentina"),lifeExp)[[1]]),2))` below Argentina's four-year average value of `r round(mean(select(filter(mydata,country=="Argentina"),lifeExp)[[1]]),2)`. In 2016, Argentina's life expectancy was `r round(select(filter(mydata,country=="Argentina",year==2016),lifeExp),2)`, which is `r abs(round(select(filter(mydata,country=="Argentina",year==2016),lifeExp),2)- round(mean(select(filter(mydata,country=="Argentina"),lifeExp)[[1]]),2))` above Argentina's four-year average. Below this table for life expectancy is a similar table for each explanatory variable. When economists say a model has country "fixed effects", they mean estimating an OLS regression using data transformed by this "within" transformation.
+
+
+Alternatively, a model with country "fixed effects" can be estimated using the original OLS equation with the addition of a dummy variable for each country (omitting one).
+
+$$
+y_{it} = \beta_0+\beta_1 x_{1it} + \beta_2 x_{2it} + \beta_3 x_{2it} + \beta_4 x_{4it} + \sum_{i=2}^{50}\sigma_idC_i + (c_i + u_{it})
+$$
+
+where $dC_i$ is a dummy variable with a value of 1 if that observation is country $i$ and equals 0 otherwise (and $\sigma_i$ is the coefficient on dummy variable $dC_i$).
+
+These two models, the "within transformation" and the model with a dummy variable for each country, are mathematically and empirically equivalent. To see that they are empirically equivalent, we'll estimate both models and compare the results. Note that the standard errors and $R^2$ values are not equivalent, as discussed below.
+
+
+
+```{r}
+## Dummy variable for each country (it automatically omits one)
+countryDummies <- lm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural+factor(country),data=mydata)
+
+## Within transformation (subtract country averages from each observation for each variable)
+
+## Create Country Averages
+mydata <- mydata %>%
+  group_by(country) %>%
+  mutate(cAvg_lifeExp=mean(lifeExp),
+         cAvg_gdpPerCapita=mean(gdpPerCapita),
+         cAvg_pop=mean(pop),
+         cAvg_pctFemale=mean(pctFemale),
+         cAvg_pctRural=mean(pctRural)
+         ) %>%
+  ungroup()
+
+## Within transformation
+mydataCountry <- mydata %>%
+  mutate(lifeExp=lifeExp-cAvg_lifeExp,
+         gdpPerCapita=gdpPerCapita-cAvg_gdpPerCapita,
+         pop=pop-cAvg_pop,
+         pctFemale=pctFemale-cAvg_pctFemale,
+         pctRural=pctRural-cAvg_pctRural
+         )  %>%
+  ungroup()
+
+## Estimate within transformation using the transformed data
+countryWithin <- lm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural,data=mydataCountry)
+
+## Using plm package
+countryPlm <- plm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural,data=mydata, index=c("country"), model = "within", effect="individual")
+```
+
+
+
+```{r,results='asis'}
+stargazer(countryDummies,countryWithin,countryPlm, 
+          type = "html", 
+          report=('vcs*'),
+          single.row = TRUE,
+          digits = 4,
+          keep.stat = c("n","rsq","adj.rsq"), 
+          notes = "Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE)
+```
+
+
+We've changed a few of the stargazer options for this chapter. We're displaying standard errors instead of p-values so that we can use only one row per variable (it lets us report coefficient and standard error on one line, but not if we use p-values instead). I modified the note to say that standard errors are reported in parentheses. 
+
+Now look at the coefficient estimates. The 3 models all have the same coefficients on `gdpPerCapita`, `pop`, `pctFemale`, and `pctRurla`. In LN5 we discuss how the within transformation is equivalent to including dummy variables for each group (in this case, countries). That's exactly what see in the table. The PLM package estimates the within transformation for us. 
+
+You also may notice that the standard errors (and statistical significance stars) are different in the middle column. When we estimate the model with dummy variables (column 1), the regular OLS standard errors are correct. But when we apply the within transformation, we need to adjust the standard errors to account for the within transformation. This would be a bit difficult for us to do. Thankfully, the PLM package correctly adjusts the standard errors (and thus p-values) for us.  Thus, in practice we won't actually want to apply the within transformation ourselves. We're doing it in this chapter so you can see exactly what it is in practice and see that the coefficient estimates for all 3 versions result in the same coefficients. 
+
+If you compare the $R^2$ values across models, you'll notice that the $R^2$ for the model with dummy variables is much higher. Including all the dummy variables makes it artificially high. We want to use the $R^2$ from the within transformation. The PLM model does this for us. 
+
+Another reason we want to use the PLM model when we estimate fixed effects models is that we often don't want to see all of the coefficients on the dummy variables. For country fixed effects, the coefficient on each country dummy is estimated off of only 4 observations. Thus, it is not a reliable estimate of the effect of being Argentina (or Belize, etc). It still allows us to estimate the model with country fixed effects, even if we don't care about the coefficient estimates themselves.  However, if we had not dropped all countries except South America, we would have hundreds of dummy variables. If we were estimating a model using US county data, we would have over 3000. R probably wouldn't even let us estimate a model with that many variables. This again makes the PLM package preferable. 
+
+
+## Year Fixed Effects
+
+Above you saw how to estimate models with country fixed effects in three different ways. Here, you should estimate models with year fixed effects in the same three ways. Hint: you just have to switch "country" with "year" and everythign else is the same. 
+
+```{r}
+## Dummy variable for each year (it automatically omits one)
+yearDummies <- lm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural+factor(year),data=mydata)
+
+## Within transformation (subtract year averages from each observation for each variable)
+
+## Create Year Averages
+mydata <- mydata %>%
+  group_by(year) %>%
+  mutate(yrAvg_lifeExp=mean(lifeExp),
+         yrAvg_gdpPerCapita=mean(gdpPerCapita),
+         yrAvg_pop=mean(pop),
+         yrAvg_pctFemale=mean(pctFemale),
+         yrAvg_pctRural=mean(pctRural)
+         ) %>%
+  ungroup()
+
+## Within transformation
+mydataYear <- mydata %>%
+  mutate(lifeExp=lifeExp-yrAvg_lifeExp,
+         gdpPerCapita=gdpPerCapita-yrAvg_gdpPerCapita,
+         pop=pop-yrAvg_pop,
+         pctFemale=pctFemale-yrAvg_pctFemale,
+         pctRural=pctRural-yrAvg_pctRural
+         )  %>%
+  ungroup()
+
+
+
+## Estimate within transformation using the transformed data
+yearWithin <- lm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural,data=mydataYear)
+
+## Using plm package
+yearPlm <- plm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural,data=mydata, index=c("year"), model = "within", effect="individual")
+```
+
+
+```{r,warning=FALSE,message=FALSE,results="asis"}
+stargazer(yearDummies,yearWithin,yearPlm, 
+          type = "html", 
+          report=('vcs*'),
+          single.row = TRUE,
+          digits = 4,
+          keep.stat = c("n","rsq","adj.rsq"), 
+          notes = "Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE)
+
+```
+
+
+
+
+## Country and Year Fixed Effects
+
+Now that you've estimated the models with year fixed effects, estimate models with both country and year fixed effects. It works the same way as above, just doing it for both country and year.
+
+```{r}
+## Dummy variable for each country and each year (it automatically omits one of each)
+countryyearDummies <- lm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural+factor(year)+factor(country),data=mydata)
+
+## Within transformation (subtract country AND year averages from each observation for each variable)
+## We already created the country averages and year averages above so we don't need to create them again
+
+## Within transformation
+mydataCountryYear <- mydata %>%
+  mutate(lifeExp=lifeExp-cAvg_lifeExp-yrAvg_lifeExp,
+         gdpPerCapita=gdpPerCapita-cAvg_gdpPerCapita-yrAvg_gdpPerCapita,
+         pop=pop-cAvg_pop-yrAvg_pop,
+         pctFemale=pctFemale-cAvg_pctFemale-yrAvg_pctFemale,
+         pctRural=pctRural-cAvg_pctRural-yrAvg_pctRural
+         )  %>%
+  ungroup()
+
+##Estimate within transformation using the transformed data
+countryYearWithin <- lm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural,data=mydataCountryYear)
+
+##Using plm package
+countryYearPlm <- plm(lifeExp~gdpPerCapita+pop+pctFemale+pctRural,data=mydata, index=c("country","year"), model = "within", effect="twoways")
+
+```
+
+```{r,warning=FALSE,message=FALSE,results="asis"}
+stargazer(countryyearDummies,countryYearWithin, countryYearPlm, 
+          type = "html", 
+          report=('vcs*'),
+          single.row = TRUE,
+          digits = 4,
+          keep.stat = c("n","rsq","adj.rsq"), 
+          notes = "Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE)
+
+```
+
+
+
+
+
+## Comparison of all models
+
+Below we have comparisons of the four models: ols, country fixed effects, year fixed effects, and country and year fixed effects. The comparisons are done three times, one for each method of estimating the models. 
+
+### Within Transformation
+
+
+```{r,warning=FALSE,message=FALSE,results="asis"}
+stargazer(ols,countryWithin,yearWithin,countryYearWithin, 
+          type = "html", 
+          report=('vcs*'),
+          single.row = TRUE,
+          digits = 3,
+          keep.stat = c("n","rsq","adj.rsq"), 
+          notes = "Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE)
+```
+
+### PLM Package
+
+```{r,warning=FALSE,message=FALSE,results="asis"}
+stargazer(ols,countryPlm,yearPlm,countryYearPlm, 
+          type = "html", 
+          report=('vcs*'),
+          single.row = TRUE,
+          digits = 3,
+          keep.stat = c("n","rsq","adj.rsq"), 
+          notes = "Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE)
+```
+
+### Dummy Variables
+
+
+```{r,warning=FALSE,message=FALSE,results="asis"}
+stargazer(ols,countryDummies,yearDummies,countryyearDummies, 
+          type = "html", 
+          report=('vcs*'),
+          single.row = TRUE,
+          digits = 3,
+          keep.stat = c("n","rsq","adj.rsq"), 
+          notes = "Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE)
+```
+
+
+
+
+## Data Summary by Country
+
+```{r,results='asis'}
+stargazer(as.data.frame(mydata) , type = "html",digits = 2 ,summary.stat = c("n","mean","sd", "min", "median", "max"))
+```
+
+
+### Average Values for Each Country
+
+```{r,echo=FALSE,results=TRUE}
+avgByCountry <- mydata %>% group_by(country) %>% summarise(`Avg<br>lifeExp`=mean(lifeExp),
+         `Avg<br>gdpPerCapita`=mean(gdpPerCapita),
+         `Avg<br>pop`=mean(pop),
+         `Avg<br>pctFemale`=mean(pctFemale),
+         `Avg<br>pctRural`=mean(pctRural))
+
+avgByCountry[-1] <- round(avgByCountry[-1],2)
+
+avgByCountry %>% formattable(., c(lapply(c(2,4,6), function(col) { area(,col) ~ color_tile("transparent", "lightgreen")}),lapply(c(3,5), function(col) {
+  area(, col) ~ color_tile("transparent", "lightblue")})))
+```
+
+
+### Variable-Specific Values and Within Transformation for Each Country
+For each variable, display each country's values in 2015, 2016, 2017, and 2018, followed by the country's average. These 5 columns are shaded from red (lowest) to green (highest) for each country. Then, in the final 4 columns display the within transformation (i.e., subtract the country's average from each year's value). These last 4 columns are also shaded for each country.
+
+
+
+
+```{r,include=FALSE}
+## Function that will make and display table
+createVarTable <- function(var,vNames) {
+  vNamesWithin <- paste0(2015:2018,"<br>Within")
+  sumCountryByYear <- mydata %>%
+    select(iso3c,year,!! var) %>%
+    spread(year,!! var) %>% rowwise() %>%
+    mutate(!!vNames[5]:=mean(c(`2015`,`2016`,`2017`,`2018`))) %>%
+    mutate(` `="") %>%
+    rename(!! vNames[1]:=`2015`,!! vNames[2]:=`2016`,!! vNames[3]:=`2017`,!! vNames[4]:=`2018`)
+  
+  sumCountryByYearWITHIN <- mydataCountry %>%
+    select(iso3c,year,!! var) %>%
+    spread(year,!! var) %>% rowwise() %>%
+    rename(!! vNamesWithin[1]:=`2015`,!! vNamesWithin[2]:=`2016`,!! vNamesWithin[3]:=`2017`,!! vNamesWithin[4]:=`2018`)
+  
+  sumJoined <- inner_join(sumCountryByYear,sumCountryByYearWITHIN,by=c("iso3c"))
+  sumJoined[c(2:6,8:11)] <- round(sumJoined[c(2:6,8:11)],2)
+  
+  sumJoined %>% formattable(., c(lapply(1:nrow(.), function(row) { area(row, col = 2:6) ~ color_tile("lightpink", "lightgreen")}),lapply(1:nrow(.), function(row) {
+    area(row, col = 8:11) ~ color_tile("lightpink", "lightgreen")})))
+}
+
+```
+
+
+
+
+
+
+
+### Life expectancy
+```{r,echo=FALSE,results=TRUE}
+createVarTable(quo(lifeExp),paste0(c(2015:2018,"Avg"),"<br>Life Exp"))
+```
+
+### GDP per capita
+
+```{r,echo=FALSE,results=TRUE, scroll = TRUE}
+mydata$gdpPerCapita <- mydata$gdpPerCapita*1000
+createVarTable(quo(gdpPerCapita),paste0(c(2015:2018,"Avg"),"<br>GDP per Capita"))
+```
+
+
+### Population
+```{r,echo=FALSE,results=TRUE}
+mydata$pop <- mydata$pop*1000000
+createVarTable(quo(pop),paste0(c(2015:2018,"Avg"),"<br>Population"))
+```
+
+### Percent female
+```{r,echo=FALSE,results=TRUE}
+createVarTable(quo(pctFemale),paste0(c(2015:2018,"Avg"),"<br>%Female"))
+```
+
+### Percent rural
+```{r,echo=FALSE,results=TRUE}
+createVarTable(quo(pctRural),paste0(c(2015:2018,"Avg"),"<br>%Rural"))
+```
+
+## Bookdown Style Note
+
+To get the above tables to display in bookdown I added HTML code to allow the maximum width to be larger than the default setting. If you find this messes with the rest of your book, you can remove from here to the bottom of this file instide the HTML "style" tag.
+
+
+<style>
+.book .book-body .page-wrapper .page-inner {
+  max-width: 90%;
+}
+</style>

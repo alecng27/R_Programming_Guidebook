@@ -1,0 +1,711 @@
+# Working with Data in the Tidyverse
+
+<https://learn.datacamp.com/courses/working-with-data-in-the-tidyverse>
+
+## Explore your data
+
+Load the `readr` package for every session so things work properly:
+
+```{r}
+library(dplyr)
+library(readr)
+election <- read_csv("http://faculty.baruch.cuny.edu/geoportal/data/county_election/elpo12p010g.csv")
+election
+
+#To skip lines from the top, start from the 2nd line for example, use "skip = 1" after comma in read_csv(...,)
+```
+
+`readr` is for rectangular data with extensions like: `.csv`, .tsv, `.fwf`, and `.log`
+
+`read_csv()` function to read a csv file.
+
+`readxl()` to read Microsoft Excel files.
+
+**Assign Missing Values**
+
+The `read_csv()` function also has an `na` argument, which allows you to specify value(s) that represent missing values in your data. 
+The default values for the na argument are `c("", "NA")`, so both are recorded as missing (`NA`) in R. When you read in data, you can add additional values like the string `"UNKNOWN"` to a vector of missing values using the `c()` function to combine multiple values into a single vector.
+
+The `is.na()` function is also helpful for identifying rows with missing values for a variable.
+
+    read_csv("electiomn.csv", skip = 1, na = c("", "NA", "A new unspecified variable"))
+
+    election %>% filter(is.na(variable you want to filter to find na))
+
+The election data didn't have any observations classified as a `na` so the example above is for when assuming there's a missing value you want to filter/find. 
+
+**How to list out all the variables of a dataset**
+
+Use `glimpse()` to list out the hidden variables in the dataset:
+
+```{r}
+glimpse(election)
+```
+
+Combine `glimpse()` with other functions in a sequence using the pipe (`%>%`) operator. For example, function like `arrange`:
+
+```{r}
+election %>% 
+  arrange(OBAMA) %>% 
+  glimpse() # no argument needed here
+```
+Compare to the two code chunks, this arraged data shows the ascending order of `OBAMA`.
+
+**How to get a list of summarized statistics of all the variables of a dataset**
+
+Use `skim()` to list the standard statistics of the variables:
+
+```{r}
+library(skimr)
+        
+skim(election)
+```
+
+You can combine `skim()` with other functions in a sequence using the pipe (%>%) operator. For example, use function `summary()` to find how many variables of each type are in the dataset:
+
+```{r}
+election %>% 
+  skim() %>%  # no argument needed here
+  summary() # no argument needed here
+```
+
+**Count the data**
+
+<center>Distinct()</center>
+
+Use `distinct()` to find out how many different type of observations are there in one variable. To find out how many distinct states are there in the `STATE` variable:
+
+
+```{r}
+election %>%
+  distinct(STATE)
+``` 
+
+<center>Count()</center>
+
+`count()` adds a new column named `n` to store the counts. this `count` function basically does the `group_by` and `summarize` for you. count the number of `counties` in each `state`:
+
+```{r}
+election %>%
+  count(STATE)
+```
+
+Adapt the code to count by a logical condition instead:
+
+```{r}
+election %>%
+  count(WINNER == "Obama")
+```
+
+## Tame your data
+
+**Cast Column Types**
+To assign or change the type of the columns in the dataset.
+
+<center>**Cast A Column To a Date**</center>
+
+Use `parse_date("2012-14-08", format = "%Y-%d-%m")` then use `col_date(format = "%Y-%d-%m")` within cols() as the col_types argument of read_csv().
+
+    parse_date("2012-14-08", format = "%Y-%d-%m")
+    
+    read_csv(...., col_types = cols( variale_name = col_date(format = "%Y-%d-%m")))
+
+<center>**Cast A Column To a Number**</center>
+
+    read_csv(...., variable_name = col_number())
+
+Sometimes, there are `na` contained in the observations which would create errors while trying to cast. 
+
+Diagnose parsing problems using a new `readr` function called `problems()`. Using `problems()` on a result of `read_csv()` will show you the rows and columns where parsing error occurred, what the parser expected to find (for example, a number), and the actual value that caused the parsing error.
+
+<center>**Cast A Column As A Factor**</center>
+
+Factors are categorical variables, where the possible values are a fixed and known set.
+
+Use `parse_factor()` to parse variables and `col_factor()` to cast columns as categorical. Both functions have a `levels` argument that is used to specify the possible values for the factors. When `levels` is set to `NULL`, the possible values will be inferred from the unique values in the dataset. Alternatively, you can pass a list of possible values.
+
+    read_csv(...., variable_name = col_factor(levels = NULL))
+    
+For more details, go to the [Cast A Factor And Examine Levels](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#transform-your-data) section of this chapter.
+
+**Recode Values**
+
+Use `recode()` function in the `dplyr` package. The `recode` function is to re-name the observations into something easier to understand.
+
+<center>**Recode A Character Variable**</center>
+
+```{r}
+election_CA <- election %>% filter(STATE == "CA")
+
+election_CA %>% 
+  mutate(STATE = recode(STATE, "CA" = "California"))
+```
+
+<center>**Recode A Numeric Variable Into Factor **</center>
+
+Dummy variables are often used in data analysis to bin a variable into one of two categories to indicate the absence or presence of something. Dummy variables take the value `0` or `1` to stand for, for example, `V_engine` or `S_engine`. 
+
+
+```{r}
+Car_engine <- mtcars[1:10,] %>%
+  mutate(Engine_Type = recode(vs, "0" = "V_engine", .default =  "S_engine")) %>%
+    select(vs, Engine_Type, everything(), -"carb") 
+
+Car_engine
+
+#Since there're only 2 distinct levels, the "1" = "S_engine" can be coded as ".default".
+```
+
+**Select And Reorder Variables**
+
+Selecting a subset of columns to print can help check that a `mutate()` worked as expected, and rearranging columns next to each other can help spot obvious errors in data entry.
+
+The `select()` **helpers** are functions that allow selection of variables based on their names:
+
+```{r echo=FALSE}
+Function <- c("starts_with()", "ends_with()", "contains()", "matches()", "num_range()", "one_of()", "everything()", "last_col()")
+Usage <- c("starts with a prefix", "ends with a prefix", "contains a literal string", "matches a regular expression", "a numerical range like x01, x02, x03.", "variables in character vector.", "all variables.", "last variable, possibly with an offset.")
+data.frame(Function, Usage)
+```
+
+```{r}
+# Move vs, and Engine_type to front and show only from mpg to drat:
+Car_engine[1:10,] %>% 
+   select(vs, Engine_Type, mpg:drat) 
+```
+
+**Reformat Variable Names**
+
+To change names **WITHOUT** changing the order of the variables, write `everything()` first in the `select()` function.
+The function `clean_names()` takes an argument case that can be used to convert variable names to other cases, like `"upper_camel"` or `"all_caps"`.
+
+use `clean_names()` from the `janitor` package to convert all variable names to snake_case.
+
+    install.packages("janitor")
+
+```{r}
+library(janitor)
+
+election[1:10,] %>% clean_names("snake")
+
+#Notice how all the variables are lower_case now.
+```
+
+**How To Rename, Subset, And Reorder Variables At Once**
+
+To rename, then subset (choose to show only selected) , and finally reorder variables in one code line, use `select()`.
+
+    dataset_name %>% select( new_variable_name_ = starts_with("old_name") ) 
+
+This code will find all variables in `dataset_name` whose names start with `old_name`, then rename each variable as `new_name_<N>`, where `N` is a number. If `dataset_name` has variables `oldname`, `oldname_v1`, `oldname3`, then the code will replace these names with `new_name_1`, `new_name_2`, `new_name_3`.
+
+
+The arguments inputted into `select()` determines what R will show. And, the order of the arguments inputted will determine how the resulting order of the variables will be.
+
+```{r}
+election[1:10,] %>% 
+  select(Precint_ = contains("PCT"), everything(), -"group")
+```
+This example, the `PCT_name` has been replaced into `Precint_<N>`. The `Precint_` is first in the `select()` function so it will be shown first, then next is `everything()` so everything else will be shown the way it is, then exclude the `group` variable.
+
+## Tidy your data
+
+**gather()**
+
+    ?gather
+
+The `gather()` function collapses multiple columns into two columns. It reshapes the dataset from wide to long, it reduces the number of columns and increases the number of rows.
+
+```{r}
+library(tidyr)
+
+Car_engine[1:2,] %>%
+  gather(key = "measurements", value = "specs", mpg:hp) %>%
+    select(measurements, specs)
+
+```
+
+**seperate()**
+
+Within a tidy dataset, a column should only represent only one variable, but if observations from that variable contains two distinct type of info, we can seperate it with `seperate()`.
+
+This is an example for the code before/after using the `seperate` funtion:
+
+    week_ratings
+    
+       series episode viewers_7day
+       <fct>  <chr>          <dbl>
+     1 1      e1_7day         2.24
+     2 2      e1_7day         3.1 
+     3 3      e1_7day         3.85
+     4 4      e1_7day         6.6 
+     5 5      e1_7day         8.51
+     6 6      e1_7day        11.6 
+     7 7      e1_7day        13.6 
+     8 8      e1_7day         9.46
+     9 1      e2_7day         3   
+    10 2      e2_7day         3.53
+    
+    week_ratings <- ratings2 %>% 
+        select(series, ends_with("7day")) %>% 
+        gather(episode, viewers_7day, ends_with("7day"), 
+               na.rm = TRUE) %>%
+    	# Edit to separate key column and drop extra
+        separate(episode, into = c("episode","day")) 
+        
+    week_ratings
+    
+       series episode   day viewers_7day
+       <fct>  <chr>   <chr>         <dbl>
+     1 1      e1      7day           2.24
+     2 2      e1      7day           3.1 
+     3 3      e1      7day           3.85
+     4 4      e1      7day           6.6 
+     5 5      e1      7day           8.51
+     6 6      e1      7day          11.6 
+     7 7      e1      7day          13.6 
+     8 8      e1      7day           9.46
+     9 1      e2      7day           3   
+    10 2      e2      7day           3.53
+
+
+**Unite Columns**
+
+In the `tidyr` package, the opposite of `separate()` is` unite()`. Sometimes you need to paste values from two or more columns together to tidy. Here is an example usage for `unite()`:
+
+    data %>%
+        unite(new_var, old_var1, old_var2)
+To apply the function into the `election` data, merge the `COUNTY` into the `STATE`: 
+
+```{r}
+election_CA[1:5,] %>%
+  unite(LOCATION, STATE, COUNTY, sep = ", ")
+```
+
+**spread()**
+
+Spreading reshapes the data from long to wide, adds columns and shrinks the rows.
+
+```{r tidy_ratings_all, include=FALSE}
+tidy_ratings_all <- data.frame(structure(list(series = c(1, 2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 1, 
+2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 7, 8, 1, 
+2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 
+1, 2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 
+2, 3, 4, 5, 6, 7, 8, 6, 7, 8, 3, 4, 5, 6, 7, 8, 6, 7, 8, 3, 4, 
+5, 6, 7, 8, 6, 7, 8), episode = c(1, 1, 1, 1, 1, 1, 1, 1, 1, 
+1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 
+3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 
+5, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 
+7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 
+9, 10, 10, 10, 10, 10, 10, 10, 10, 10), days = c(7, 7, 7, 7, 
+7, 7, 7, 7, 28, 28, 28, 7, 7, 7, 7, 7, 7, 7, 7, 28, 28, 28, 7, 
+7, 7, 7, 7, 7, 7, 7, 28, 28, 7, 7, 7, 7, 7, 7, 7, 7, 28, 28, 
+28, 7, 7, 7, 7, 7, 7, 7, 7, 28, 28, 28, 7, 7, 7, 7, 7, 7, 7, 
+7, 28, 28, 28, 7, 7, 7, 7, 7, 7, 7, 28, 28, 28, 7, 7, 7, 7, 7, 
+7, 7, 28, 28, 28, 7, 7, 7, 7, 7, 7, 28, 28, 28, 7, 7, 7, 7, 7, 
+7, 28, 28, 28), viewers = c(2.24, 3.1, 3.85, 6.6, 8.51, 11.62, 
+13.58, 9.46, 11.73, 13.86, 9.72, 3, 3.53, 4.6, 6.65, 8.79, 11.59, 
+13.45, 9.23, 11.84, 13.74, 9.53, 3, 3.82, 4.53, 7.17, 9.28, 12.01, 
+13.01, 8.68, 13.38, 9.06, 2.6, 3.6, 4.71, 6.82, 10.25, 12.36, 
+13.29, 8.55, 12.67, 13.88, 8.87, 3.03, 3.83, 4.61, 6.95, 9.95, 
+12.39, 13.12, 8.61, 12.63, 13.33, 8.98, 2.75, 4.25, 4.82, 7.32, 
+10.13, 12, 13.13, 8.61, 12.26, 13.41, 8.91, 4.42, 5.1, 7.76, 
+10.28, 12.35, 13.45, 9.01, 12.58, 13.72, 9.32, 5.06, 5.35, 7.41, 
+9.023, 11.09, 13.26, 8.95, 11.35, 13.45, 9.19, 5.7, 7.41, 10.67, 
+12.65, 13.44, 9.03, 12.78, 13.65, 9.16, 6.74, 9.45, 13.51, 15.05, 
+15.9, 10.04, 15.16, 16.03, 10.13)), .Names = c("series", "episode", 
+"days", "viewers"), row.names = c(NA, -103L), class = c("tbl_df", 
+"tbl", "data.frame")))
+```
+
+```{r}
+tidy_ratings_all[1:10,]
+```
+
+```{r}
+tidy_ratings_all %>% 
+	# Count viewers by series and days
+    count(series, days, wt = viewers) %>%
+	# Adapt to spread counted values
+    spread(days, n, sep = "_")
+```
+
+## Transform your data
+
+**How To Create A Range-filtered Column**
+
+Use case_when() to create a new column that represents a given range:
+
+```{r include=FALSE}
+bakers <- data.frame(structure(list(series = structure(c(1L, 1L, 1L, 1L, 1L, 1L, 1L, 
+1L, 1L, 1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 
+3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 3L, 4L, 4L, 4L, 4L, 4L, 
+4L, 4L, 4L, 4L, 4L, 4L, 4L, 4L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 5L, 
+5L, 5L, 5L, 5L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 6L, 
+7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 7L, 8L, 8L, 8L, 8L, 
+8L, 8L, 8L, 8L, 8L, 8L, 8L, 8L), class = "factor", .Label = c("1", 
+"2", "3", "4", "5", "6", "7", "8")), baker_full = c("Annetha Mills", 
+"David Chambers", "Edward \"Edd\" Kimber", "Jasminder Randhawa", 
+"Jonathan Shepherd", "Lea Harris", "Louise Brimelow", "Mark Whithers", 
+"Miranda Gore Browne", "Ruth Clemens", "Ben Frazer", "Holly Bell", 
+"Ian Vallance", "Janet Basu", "Jason White", "Joanne Wheatley", 
+"Keith Batsford", "Mary-Anne Boermans", "Robert Billington", 
+"Simon Blackwell", "Urvashi Roe", "Yasmin Limbert", "Brendan Lynch", 
+"Cathryn Dresser", "Danny (Daniele) Bryden", "James Morton", 
+"John Whaite", "Manisha Parmar", "Natasha Stringer", "Peter Maloney", 
+"Ryan Chong", "Sarah-Jane Willis", "Victoria Chester", "Stuart Marston-Smith", 
+"Ali Imdad", "Beca Lyne-Pirkis", "Christine Wallace", "Deborah Manger", 
+"Frances Quinn", "Glenn Cosby", "Howard Middleton", "Kimberley Wilson", 
+"Lucy Bellamy", "Mark Onley", "Robert Smart", "Ruby Tandoh", 
+"Toby Waterworth", "Chetna Makan", "Claire Goodwin", "Diana Beard", 
+"Enwezor Nzegwu", "Iain Watters", "Jordan Cox", "Kate Henry", 
+"Luis Troyano", "Martha Collison", "Nancy Birtwhistle", "Norman Calder", 
+"Richard Burr", "Alvin Magallanes", "Dorret Conway", "Flora Shedden", 
+"Ian Cumming", "Marie Campbell", "Mat Riley", "Nadiya Hussain", 
+"Paul Jagger", "Sandy Docherty", "Stu Henshall", "Tamal Ray", 
+"Ugnė Bubnaityte", "Andrew Smyth", "Benjamina Ebuehi", 
+"Candice Brown", "Jane Beedle", "Kate Barmby", "Lee Banfield", 
+"Louise Williams", "Michael Georgiou", "Rav Bansal", "Selasi Gbormittah", 
+"Tom Gilliford", "Valerie \"Val\" Stones", "Chris Geiger", "Flo Atkins", 
+"James Hillery", "Julia Chernogorova", "Kate Lyon", "Liam Charles", 
+"Peter Abatan", "Sophie Faldo", "Stacey Hart", "Steven Carter-Bailey", 
+"Tom Hetherington", "Chuen-Yan \"Yan\" Tsou"), baker = c("Annetha", 
+"David", "Edd", "Jasminder", "Jonathan", "Lea", "Louise", "Mark", 
+"Miranda", "Ruth", "Ben", "Holly", "Ian", "Janet", "Jason", "Joanne", 
+"Keith", "Mary-Anne", "Robert", "Simon", "Urvashi", "Yasmin", 
+"Brendan", "Cathryn", "Danny", "James", "John", "Manisha", "Natasha", 
+"Peter", "Ryan", "Sarah-Jane", "Victoria", "Stuart", "Ali", "Beca", 
+"Christine", "Deborah", "Frances", "Glenn", "Howard", "Kimberley", 
+"Lucy", "Mark", "Robert", "Ruby", "Toby", "Chetna", "Claire", 
+"Diana", "Enwezor", "Iain", "Jordan", "Kate", "Luis", "Martha", 
+"Nancy", "Norman", "Richard", "Alvin", "Dorret", "Flora", "Ian", 
+"Marie", "Mat", "Nadiya", "Paul", "Sandy", "Stu", "Tamal", "Ugnė", 
+"Andrew", "Benjamina", "Candice", "Jane", "Kate", "Lee", "Louise", 
+"Michael", "Rav", "Selasi", "Tom", "Val", "Chris", "Flo", "James", 
+"Julia", "Kate", "Liam", "Peter", "Sophie", "Stacey", "Steven", 
+"Tom", "Yan"), age = c(30, 31, 24, 45, 25, 51, 44, 48, 37, 31, 
+31, 31, 40, 63, 19, 41, 31, 45, 25, 31, 40, 43, 63, 27, 45, 21, 
+23, 27, 36, 43, 38, 28, 50, 26, 25, 31, 66, 51, 31, 37, 51, 30, 
+38, 37, 54, 20, 30, 35, 31, 69, 39, 31, 32, 41, 42, 17, 60, 66, 
+38, 37, 53, 19, 41, 66, 37, 30, 49, 49, 35, 29, 32, 25, 23, 31, 
+61, 37, 67, 46, 20, 28, 30, 26, 66, 50, 71, 46, 21, 29, 19, 52, 
+33, 42, 34, 29, 46), occupation = c("Single mother", "Entrepreneur", 
+"Debt collector for Yorkshire Bank", "Assistant Credit Control Manager", 
+"Research Analyst", "Retired", "Police Officer", "Bus Driver", 
+"Food buyer for Marks & Spencer", "Retail manager/Housewife", 
+"Graphic Designer", "Advertising executive", "Fundraiser for English Heritage", 
+"Teacher of Modern Languages", "Civil Engineering Student", "Housewife", 
+"House husband", "Housewife", "Photographer", "Rugby Coach", 
+"Head of Marketing", "Childminder", "Recruitment consultant", 
+"Shop assistant", "Intensive care consultant", "Medical student", 
+"Law student", "Nursery nurse", "Midwife", "Sales manager", "Photographer", 
+"Vicar's wife", "CEO of the charity Plantlife", "PE teacher", 
+"Charity worker", "Military Wives' Choir Singer", "Director of an engraving company", 
+"Dentist", "Children's Clothes Designer", "English Teacher", 
+"Council Worker", "Psychologist", "Horticulturist", "Carpenter & Kitchen Fitter", 
+"Space Satellite Designer", "History of Art and Philosophy Student", 
+"Web Programmer", "Fashion designer", "Speech therapist", "Women's Institute (WI) judge", 
+"Business consultant", "Construction engineer", "IT manager", 
+"Furniture restorer", "Graphic designer", "Student", "Retired practice manager", 
+"Retired naval officer", "Builder", "Nurse", "Accountant", "Art gallery assistant", 
+"Travel photographer", "Retired", "Fire fighter", "Full-time mother", 
+"Prison governor", "Child welfare officer", "Professional musician", 
+"Trainee anaesthetist", "PA and administrator", "Aerospace engineer", 
+"Teaching assistant", "PE teacher", "Garden designer", "Nurse", 
+"Pastor", "Hairdresser", "Student", "Student support", "Client service associate", 
+"Project engagement manager", "Semi-retired, Substitute teacher", 
+"Software developer", "Retired", "Banker", "Aviation Broker", 
+"Health and safety inspector", "Student", "IT programme manager", 
+"Former army officer and trainee stuntwoman", "Former school teacher", 
+"Marketer", "Architect", "Laboratory research scientist"), hometown = c("Essex", 
+"Milton Keynes", "Bradford", "Birmingham", "St Albans", "Midlothian, Scotland", 
+"Manchester", "South Wales", "Midhurst, West Sussex", "Poynton, Cheshire", 
+"Northampton", "Leicester", "Dunstable, Bedfordshire", "Formby, Liverpool", 
+"Croydon", "Ongar, Essex", "Arlesey, Bedfordshire", "Kidderminster, Worcestershire", 
+"London", "Norfolk", "Enfield, London", "West Kirby, The Wirral", 
+"Sutton Coldfield", "Pease Pottage, West Sussex", "Sheffield", 
+"Hillswick, Shetland Islands", "Wigan", "Leicester", "Tamworth, Staffordshire", 
+"Windsor, Berkshire", "Bristol", "Bewbush, West Sussex", "Somerset", 
+"Lichfield, Staffordshire", "Saltley, Birmingham", "Aldershot, Hampshire", 
+"Didcot, Oxfordshire", "Peterborough", "Market Harborough, Leicestershire", 
+"Teignmouth, Devon", "Sheffield", "London", "Grimsby, Lincolnshire", 
+"Milton Keynes", "Melbourn, Cambridgeshire", "Southend, Essex", 
+"Reading, Berkshire", "Broadstairs, Kent", "Ashton on Mersey, Trafford", 
+"Alkington, Shropshire", "Portsmouth, Hampshire", "London / Belfast", 
+"Sneinton, Nottingham", "Brighton, East Sussex", "Poynton, Cheshire", 
+"Ascot, Berkshire", "Barton-Upon-Humber, Lincolnshire", "Portknockie, Moray", 
+"Mill Hill, London", "Bracknell, Berkshire", "Penwortham, Lancashire", 
+"Dunkeld, Perth and Kinross", "Great Wilbraham, Cambridgeshire", 
+"Auchterarder, Perthshire", "London", "Leeds / Luton", "Swansea, Wales", 
+"Yeadon, West Yorkshire", "Guildford, Surrey", "Manchester", 
+"Woodford, London", "Derby / Holywood, County Down", "South London", 
+"Barton-Le-Clay, Bedfordshire", "Beckenham", "Brooke, Norfolk", 
+"Bolton", "Cardiff", "Durham", "Erith", "London", "Rochdale", 
+"Yeovil", "Bristol", "Merseyside", "Brentwood, Essex", "Crawley, West Sussex", 
+"Merseyside", "North London", "Southend, Essex", "West Molesey, Surrey", 
+"Radlett, Hertfordshire", "Watford, Hertfordshire", "Edinburgh", 
+"North London"), baker_last = c("Mills", "Chambers", "Kimber", 
+"Randhawa", "Shepherd", "Harris", "Brimelow", "Whithers", "Browne", 
+"Clemens", "Frazer", "Bell", "Vallance", "Basu", "White", "Wheatley", 
+"Batsford", "Boermans", "Billington", "Blackwell", "Roe", "Limbert", 
+"Lynch", "Dresser", "Bryden", "Morton", "Whaite", "Parmar", "Stringer", 
+"Maloney", "Chong", "Willis", "Chester", "Marston-Smith", "Imdad", 
+"Lyne-Pirkis", "Wallace", "Manger", "Quinn", "Cosby", "Middleton", 
+"Wilson", "Bellamy", "Onley", "Smart", "Tandoh", "Waterworth", 
+"Makan", "Goodwin", "Beard", "Nzegwu", "Watters", "Cox", "Henry", 
+"Troyano", "Collison", "Birtwhistle", "Calder", "Burr", "Magallanes", 
+"Conway", "Shedden", "Cumming", "Campbell", "Riley", "Hussain", 
+"Jagger", "Docherty", "Henshall", "Ray", "Bubnaityte", "Smyth", 
+"Ebuehi", "Brown", "Beedle", "Barmby", "Banfield", "Williams", 
+"Georgiou", "Bansal", "Gbormittah", "Gilliford", "Stones", "Geiger", 
+"Atkins", "Hillery", "Chernogorova", "Lyon", "Charles", "Abatan", 
+"Faldo", "Hart", "Carter-Bailey", "Hetherington", "Tsou"), baker_first = c("Annetha", 
+"David", "Edward", "Jasminder", "Jonathan", "Lea", "Louise", 
+"Mark", "Miranda", "Ruth", "Ben", "Holly", "Ian", "Janet", "Jason", 
+"Joanne", "Keith", "Mary-Anne", "Robert", "Simon", "Urvashi", 
+"Yasmin", "Brendan", "Cathryn", "Danny", "James", "John", "Manisha", 
+"Natasha", "Peter", "Ryan", "Sarah-Jane", "Victoria", "Stuart", 
+"Ali", "Beca", "Christine", "Deborah", "Frances", "Glenn", "Howard", 
+"Kimberley", "Lucy", "Mark", "Robert", "Ruby", "Toby", "Chetna", 
+"Claire", "Diana", "Enwezor", "Iain", "Jordan", "Kate", "Luis", 
+"Martha", "Nancy", "Norman", "Richard", "Alvin", "Dorret", "Flora", 
+"Ian", "Marie", "Mat", "Nadiya", "Paul", "Sandy", "Stu", "Tamal", 
+"Ugnė", "Andrew", "Benjamina", "Candice", "Jane", "Kate", 
+"Lee", "Louise", "Michael", "Rav", "Selasi", "Tom", "Valerie", 
+"Chris", "Flo", "James", "Julia", "Kate", "Liam", "Peter", "Sophie", 
+"Stacey", "Steven", "Tom", "Chuen-Yan"), star_baker = c(0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 2, 1, 0, 0, 0, 0, 0, 1, 2, 
+0, 1, 3, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 2, 0, 1, 0, 0, 2, 0, 0, 
+1, 3, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 5, 0, 0, 0, 3, 1, 1, 
+3, 0, 0, 0, 1, 0, 2, 1, 3, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 
+1, 1, 1, 0, 2, 1, 3, 0, 0), technical_winner = c(0, 0, 2, 0, 
+1, 0, 0, 0, 2, 0, 1, 2, 0, 1, 1, 3, 0, 0, 0, 0, 0, 0, 2, 1, 0, 
+5, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 1, 1, 0, 3, 0, 0, 1, 2, 
+0, 1, 0, 0, 0, 0, 0, 1, 1, 2, 3, 0, 2, 0, 1, 1, 1, 0, 1, 4, 1, 
+0, 0, 0, 1, 2, 1, 1, 2, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 
+0, 0, 2, 2, 3, 0, 2), technical_top3 = c(1, 1, 4, 2, 1, 0, 0, 
+0, 4, 2, 3, 5, 1, 1, 2, 4, 0, 4, 2, 0, 0, 2, 6, 4, 5, 7, 6, 0, 
+0, 1, 0, 1, 0, 0, 0, 3, 2, 0, 7, 3, 0, 5, 1, 0, 3, 6, 0, 5, 0, 
+0, 0, 0, 0, 2, 7, 5, 7, 0, 4, 1, 1, 7, 6, 1, 1, 4, 3, 0, 0, 4, 
+2, 5, 4, 7, 5, 1, 0, 0, 1, 1, 3, 2, 1, 0, 0, 3, 3, 3, 3, 0, 6, 
+4, 6, 0, 2), technical_bottom = c(1, 3, 1, 2, 2, 1, 1, 0, 1, 
+2, 1, 3, 2, 6, 3, 4, 1, 4, 3, 2, 3, 4, 4, 4, 4, 3, 4, 5, 1, 1, 
+7, 6, 3, 4, 4, 6, 6, 3, 3, 4, 6, 5, 1, 3, 2, 4, 1, 4, 1, 4, 2, 
+4, 3, 5, 3, 3, 3, 5, 6, 5, 2, 2, 4, 1, 6, 6, 5, 4, 1, 6, 3, 5, 
+4, 3, 5, 3, 1, 2, 2, 5, 6, 5, 4, 2, 3, 2, 3, 7, 5, 1, 4, 5, 4, 
+4, 5), technical_highest = c(2, 3, 1, 2, 1, 10, 4, NA, 1, 2, 
+1, 1, 2, 1, 1, 1, 12, 2, 3, 9, 7, 2, 1, 1, 2, 1, 1, 5, 12, 3, 
+5, 1, 4, 7, 5, 1, 1, 8, 1, 1, 5, 1, 2, 5, 1, 1, 13, 1, 8, 5, 
+9, 4, 6, 1, 1, 1, 1, 4, 1, 2, 1, 1, 1, 3, 1, 1, 1, 4, 11, 2, 
+1, 1, 1, 1, 1, 1, 11, 9, 3, 3, 1, 1, 1, 11, 7, 2, 2, 1, 2, 10, 
+1, 1, 1, 4, 1), technical_lowest = c(7, 8, 6, 5, 9, 10, 4, NA, 
+8, 5, 5, 6, 10, 8, 7, 11, 12, 9, 7, 11, 9, 6, 10, 8, 7, 7, 11, 
+10, 12, 11, 8, 10, 7, 9, 11, 11, 7, 9, 8, 9, 10, 10, 12, 11, 
+5, 12, 13, 8, 8, 9, 9, 11, 12, 7, 7, 5, 5, 11, 10, 9, 6, 6, 8, 
+11, 8, 12, 10, 9, 11, 8, 7, 12, 6, 8, 9, 8, 11, 10, 9, 10, 11, 
+7, 10, 12, 10, 9, 9, 10, 8, 10, 6, 11, 7, 7, 8), technical_median = c(4.5, 
+4.5, 2, 3, 6, 10, 4, NA, 3, 3.5, 2.5, 3, 10, 5, 6, 4.5, 12, 3.5, 
+4, 10, 7, 5, 3, 4, 3, 1.5, 3, 6, 12, 7, 6, 4, 4, 8.5, 8.5, 5, 
+4, 9, 3, 4, 7, 3.5, 7, 6, 3, 3, 13, 3, 8, 7, 9, 7.5, 10, 4, 2.5, 
+3, 2.5, 8, 4.5, 6, 5, 3, 3, 7, 6, 4, 5, 6.5, 11, 4, 5, 3, 3.5, 
+2.5, 3.5, 5.5, 11, 9.5, 7, 8, 5, 4, 6, 11.5, 9, 3, 3.5, 5.5, 
+4.5, 10, 2.5, 4, 3, 5, 5), series_winner = c(0, 0, 1, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+1, 0, 0, 0, 0), series_runner_up = c(0, 0, 0, 0, 0, 0, 0, 0, 
+1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 
+0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 
+1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 
+1, 0, 0), total_episodes_appeared = c(2, 4, 6, 5, 3, 1, 2, 1, 
+6, 6, 4, 8, 3, 7, 5, 8, 1, 8, 5, 2, 3, 6, 10, 8, 9, 10, 10, 5, 
+1, 2, 7, 7, 3, 4, 4, 9, 8, 3, 10, 7, 6, 10, 2, 3, 5, 10, 1, 9, 
+1, 5, 2, 4, 3, 7, 10, 8, 10, 5, 10, 6, 3, 9, 10, 2, 7, 10, 8, 
+4, 1, 10, 5, 10, 8, 10, 10, 4, 1, 2, 3, 6, 9, 7, 5, 2, 3, 5, 
+6, 10, 8, 1, 10, 9, 10, 4, 7), first_date_appeared = structure(c(14838, 
+14838, 14838, 14838, 14838, 14838, 14838, 14838, 14838, 14838, 
+15202, 15202, 15202, 15202, 15202, 15202, 15202, 15202, 15202, 
+15202, 15202, 15202, 15566, 15566, 15566, 15566, 15566, 15566, 
+15566, 15566, 15566, 15566, 15566, 15566, 15937, 15937, 15937, 
+15937, 15937, 15937, 15937, 15937, 15937, 15937, 15937, 15937, 
+15937, 16288, 16288, 16288, 16288, 16288, 16288, 16288, 16288, 
+16288, 16288, 16288, 16288, 16652, 16652, 16652, 16652, 16652, 
+16652, 16652, 16652, 16652, 16652, 16652, 16652, 17037, 17037, 
+17037, 17037, 17037, 17037, 17037, 17037, 17037, 17037, 17037, 
+17037, 17407, 17407, 17407, 17407, 17407, 17407, 17407, 17407, 
+17407, 17407, 17407, 17407), class = "Date"), last_date_appeared = structure(c(14845, 
+14859, 14873, 14866, 14852, 14838, 14845, 14838, 14873, 14873, 
+15223, 15251, 15216, 15244, 15230, 15251, 15202, 15251, 15230, 
+15209, 15216, 15237, 15629, 15615, 15622, 15629, 15629, 15594, 
+15566, 15573, 15608, 15608, 15580, 15587, 15958, 15993, 15986, 
+15951, 16000, 15979, 15972, 16000, 15944, 15951, 15965, 16000, 
+15937, 16344, 16288, 16316, 16295, 16309, 16302, 16330, 16351, 
+16337, 16351, 16316, 16351, 16687, 16666, 16708, 16715, 16659, 
+16694, 16715, 16701, 16673, 16652, 16715, 16680, 17100, 17086, 
+17100, 17100, 17058, 17037, 17044, 17051, 17072, 17093, 17079, 
+17065, 17414, 17421, 17435, 17442, 17470, 17456, 17407, 17470, 
+17463, 17470, 17428, 17449), class = "Date"), first_date_us = structure(c(NA, 
+NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+NA, 16432, 16432, 16432, 16432, 16432, 16432, 16432, 16432, 16432, 
+16432, 16432, 16432, 16432, 16684, 16684, 16684, 16684, 16684, 
+16684, 16684, 16684, 16684, 16684, 16684, 16684, 16983, 16983, 
+16983, 16983, 16983, 16983, 16983, 16983, 16983, 16983, 16983, 
+16983, 17333, 17333, 17333, 17333, 17333, 17333, 17333, 17333, 
+17333, 17333, 17333, 17333, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+NA, NA, NA), class = "Date"), last_date_us = structure(c(NA, 
+NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+NA, 16453, 16488, 16481, 16446, 16495, 16474, 16467, 16495, 16439, 
+16446, 16460, 16495, 16432, 16740, 16684, 16712, 16691, 16705, 
+16698, 16726, 16747, 16733, 16747, 16712, 16747, 17004, 16997, 
+17018, 17025, 16990, 17011, 17025, 17011, 16997, 16983, 17025, 
+17004, 17382, 17375, 17382, 17382, 17347, 17333, 17333, 17340, 
+17361, 17382, 17368, 17354, NA, NA, NA, NA, NA, NA, NA, NA, NA, 
+NA, NA, NA), class = "Date"), percent_episodes_appeared = c(33.3333333333333, 
+66.6666666666667, 100, 83.3333333333333, 50, 16.6666666666667, 
+33.3333333333333, 16.6666666666667, 100, 100, 50, 100, 37.5, 
+87.5, 62.5, 100, 12.5, 100, 62.5, 25, 37.5, 75, 100, 80, 90, 
+100, 100, 50, 10, 20, 70, 70, 30, 40, 40, 90, 80, 30, 100, 70, 
+60, 100, 20, 30, 50, 100, 10, 90, 10, 50, 20, 40, 30, 70, 100, 
+80, 100, 50, 100, 60, 30, 90, 100, 20, 70, 100, 80, 40, 10, 100, 
+50, 100, 80, 100, 100, 40, 10, 20, 30, 60, 90, 70, 50, 20, 30, 
+50, 60, 100, 80, 10, 100, 90, 100, 40, 70), percent_technical_top3 = c(50, 
+25, 66.6666666666667, 40, 33.3333333333333, 0, 0, 0, 66.6666666666667, 
+33.3333333333333, 75, 62.5, 33.3333333333333, 14.2857142857143, 
+40, 50, 0, 50, 40, 0, 0, 33.3333333333333, 60, 50, 55.5555555555556, 
+70, 60, 0, 0, 50, 0, 14.2857142857143, 0, 0, 0, 33.3333333333333, 
+25, 0, 70, 42.8571428571429, 0, 50, 50, 0, 60, 60, 0, 55.5555555555556, 
+0, 0, 0, 0, 0, 28.5714285714286, 70, 62.5, 70, 0, 40, 16.6666666666667, 
+33.3333333333333, 77.7777777777778, 60, 50, 14.2857142857143, 
+40, 37.5, 0, 0, 40, 40, 50, 50, 70, 50, 25, 0, 0, 33.3333333333333, 
+16.6666666666667, 33.3333333333333, 28.5714285714286, 20, 0, 
+0, 60, 50, 30, 37.5, 0, 60, 44.4444444444444, 60, 0, 28.5714285714286
+)), .Names = c("series", "baker_full", "baker", "age", "occupation", 
+"hometown", "baker_last", "baker_first", "star_baker", "technical_winner", 
+"technical_top3", "technical_bottom", "technical_highest", "technical_lowest", 
+"technical_median", "series_winner", "series_runner_up", "total_episodes_appeared", 
+"first_date_appeared", "last_date_appeared", "first_date_us", 
+"last_date_us", "percent_episodes_appeared", "percent_technical_top3"
+), class = c("spec_tbl_df", "tbl_df", "tbl", "data.frame"), row.names = c(NA, 
+-95L), spec = structure(list(cols = structure(list(series = structure(list(
+    levels = NULL, ordered = FALSE, include_na = FALSE), .Names = c("levels", 
+"ordered", "include_na"), class = c("collector_factor", "collector"
+)), baker_full = structure(list(), class = c("collector_character", 
+"collector")), baker = structure(list(), class = c("collector_character", 
+"collector")), age = structure(list(), class = c("collector_double", 
+"collector")), occupation = structure(list(), class = c("collector_character", 
+"collector")), hometown = structure(list(), class = c("collector_character", 
+"collector")), baker_last = structure(list(), class = c("collector_character", 
+"collector")), baker_first = structure(list(), class = c("collector_character", 
+"collector")), star_baker = structure(list(), class = c("collector_double", 
+"collector")), technical_winner = structure(list(), class = c("collector_double", 
+"collector")), technical_top3 = structure(list(), class = c("collector_double", 
+"collector")), technical_bottom = structure(list(), class = c("collector_double", 
+"collector")), technical_highest = structure(list(), class = c("collector_double", 
+"collector")), technical_lowest = structure(list(), class = c("collector_double", 
+"collector")), technical_median = structure(list(), class = c("collector_double", 
+"collector")), series_winner = structure(list(), class = c("collector_double", 
+"collector")), series_runner_up = structure(list(), class = c("collector_double", 
+"collector")), total_episodes_appeared = structure(list(), class = c("collector_double", 
+"collector")), first_date_appeared = structure(list(format = ""), .Names = "format", class = c("collector_date", 
+"collector")), last_date_appeared = structure(list(format = ""), .Names = "format", class = c("collector_date", 
+"collector")), first_date_us = structure(list(format = ""), .Names = "format", class = c("collector_date", 
+"collector")), last_date_us = structure(list(format = ""), .Names = "format", class = c("collector_date", 
+"collector")), percent_episodes_appeared = structure(list(), class = c("collector_double", 
+"collector")), percent_technical_top3 = structure(list(), class = c("collector_double", 
+"collector"))), .Names = c("series", "baker_full", "baker", "age", 
+"occupation", "hometown", "baker_last", "baker_first", "star_baker", 
+"technical_winner", "technical_top3", "technical_bottom", "technical_highest", 
+"technical_lowest", "technical_median", "series_winner", "series_runner_up", 
+"total_episodes_appeared", "first_date_appeared", "last_date_appeared", 
+"first_date_us", "last_date_us", "percent_episodes_appeared", 
+"percent_technical_top3")), default = structure(list(), class = c("collector_guess", 
+"collector")), skip = 1), .Names = c("cols", "default", "skip"
+), class = "col_spec")))
+```
+
+```{r}
+bakers_sample <- bakers[10:17,] %>%
+  select(baker, star_baker, technical_winner)
+
+bakers_sample
+```
+
+```{r}
+# Create skills variable with 4 levels
+bakers_skill <- bakers_sample %>% 
+  mutate(skill = case_when(
+    star_baker > technical_winner ~ "super_star",
+    star_baker < technical_winner ~ "high_tech",
+    star_baker == 0 & technical_winner == 0 ~ NA_character_,
+    star_baker == technical_winner  ~ "well_rounded"
+  )) %>%
+      drop_na(skill)
+
+bakers_skill
+```
+
+**Cast A Factor And Examine Levels**
+
+Cast `skill` as a factor:
+
+```{r}
+bakers_fct_skill <- bakers_skill %>% 
+  mutate(skill = as.factor(skill))
+
+# Examine levels
+bakers_fct_skill %>% 
+  pull(skill) %>% 
+    levels()
+```
+
+For more details, go to the [Cast A Column As A Factor](https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#tame-your-data) section of this chapter.
+
+**Cast Characters As Dates**
+
+Use `lubridate` to parse and cast a date variable within a `mutate()`.
+
+    ?lubridate
+```{r}
+library(lubridate)
+
+bakers %>% 
+  mutate(last_date_appeared = as.character(last_date_appeared))  %>%
+  mutate(last_date = ymd(last_date_appeared),
+         last_month = month(last_date_appeared, label = TRUE)) %>%
+    select(baker, last_date_appeared, last_date, last_month)
+
+```
+
+In the example above, I turned `last_date_appeared` into a `character` type variable first since it was a `date` already. But the point of this is proving the function of `lubridate` in converting `character` into `date` variable.
+
+**Calulate Timespans**
+
+The first step to calculating a timespan in `lubridate` is to make an `interval`, `duration`, `period`, then use division to convert the units to what wanted (like `weeks(x)` or `months(x)`). The `x` refers to the number of time units to be included in the period:
+
+```{r}
+bakers_time <- bakers %>% 
+    select(baker, first_date_appeared, last_date_appeared)
+
+bakers_time[1:5,]  %>% 
+  mutate(time_on_air = interval(first_date_appeared, last_date_appeared),
+         weeks_on_air = time_on_air / weeks(1))
+```
+
+**String Wrangling**
+
+Use `stringr` package to transform, detect, replace, and remove observations within a data frame:
+
+```{r}
+library(stringr)
+
+election[1:7,] %>% 
+  mutate(WINNER = str_to_upper(WINNER),
+    WINNER = str_replace(WINNER, "MA", "mshazam"),
+      WINNER = str_replace(WINNER, "RO", "Bolosho"),
+      GROUP_24 = str_detect(group, "24")) %>%
+        select(COUNTY, WINNER, GROUP_24)
+```

@@ -1,0 +1,7 @@
+book_filename: "R_Programming_Guidebook"
+output_dir: docs
+delete_merged_file: true
+new_session: yes
+edit: https://github.com/alecng27/R_Programming_Guidebook/edit/master/%s
+view: https://github.com/alecng27/R_Programming_Guidebook/blob/master/%s
+history: https://github.com/alecng27/R_Programming_Guidebook/commits/master/%s
