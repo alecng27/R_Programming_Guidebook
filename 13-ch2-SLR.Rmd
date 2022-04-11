@@ -2,8 +2,6 @@
 
 # Ch 2 - SLR
 
-In the second part of your book you will have chapters for main topics we cover. For each, you will replicate empirical examples from the textbook. The second-level headings (i.e., those with 2 hash tags that show up in the navigation bar of the html files) in each file are labeled with the examples you should replicate. The data is loaded for you using the the `wooldridge` package (the `wooldridge` package has datasets from Wooldridge *Introductory Economics* 6th edition). I also suggest that you add notes on each chapter, but doing so is optional (except if I specify that notes are required).
-
 For this chapter, you should do the simple linear regressions from the examples. For each, you should make sure you get the same results as in the example and understand the discussion of the example in the textbook. For this chapter, you should also use ggplot to create a scatter plot of the x and y variables used in the regression, and include a linear regression line. So I suggest doing this chapter after you complete the DataCamp course and your notes on [Intro to Data Visualization with ggplot2].
 
 These are the packages you will need:

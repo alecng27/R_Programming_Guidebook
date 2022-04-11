@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Intermediate R | R_Programming_Guidebook Project</title>
-  <meta name="description" content="2 Intermediate R | R_Programming_Guidebook Project" />
+  <title>2 Intermediate R | R Programming Guidebook Project</title>
+  <meta name="description" content="2 Intermediate R | R Programming Guidebook Project" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Intermediate R | R_Programming_Guidebook Project" />
+  <meta property="og:title" content="2 Intermediate R | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Intermediate R | R_Programming_Guidebook Project" />
+  <meta name="twitter:title" content="2 Intermediate R | R Programming Guidebook Project" />
   
   
   
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>General Notes</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="part"><span><b>I DataCamp</b></span></li>
 <li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
 <ul>
@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R_Programming_Guidebook Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming Guidebook Project</a>
           </h1>
         </div>
 
@@ -749,10 +749,10 @@ However, dates and times are simple numerical values. <code>Date</code> objects 
 <div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="intermediate-r.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the current time: now</span></span>
 <span id="cb155-2"><a href="intermediate-r.html#cb155-2" aria-hidden="true" tabindex="-1"></a>now <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb155-3"><a href="intermediate-r.html#cb155-3" aria-hidden="true" tabindex="-1"></a>now</span></code></pre></div>
-<pre><code>## [1] &quot;2022-04-11 14:32:10 CDT&quot;</code></pre>
+<pre><code>## [1] &quot;2022-04-11 15:18:55 CDT&quot;</code></pre>
 <div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="intermediate-r.html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See what now looks like under the hood</span></span>
 <span id="cb157-2"><a href="intermediate-r.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">unclass</span>(now)</span></code></pre></div>
-<pre><code>## [1] 1649705531</code></pre>
+<pre><code>## [1] 1649708335</code></pre>
 <center>
 <strong>Date Formats</strong>
 </center>
@@ -823,9 +823,9 @@ However, dates and times are simple numerical values. <code>Date</code> objects 
 <p>Examples of doing calculations with <code>POSIXct</code> objects:</p>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="intermediate-r.html#cb177-1" aria-hidden="true" tabindex="-1"></a>now <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb177-2"><a href="intermediate-r.html#cb177-2" aria-hidden="true" tabindex="-1"></a>now <span class="sc">+</span> <span class="dv">3600</span>          <span class="co"># add an hour</span></span></code></pre></div>
-<pre><code>## [1] &quot;2022-04-11 15:32:10 CDT&quot;</code></pre>
+<pre><code>## [1] &quot;2022-04-11 16:18:55 CDT&quot;</code></pre>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="intermediate-r.html#cb179-1" aria-hidden="true" tabindex="-1"></a>now <span class="sc">-</span> <span class="dv">3600</span> <span class="sc">*</span> <span class="dv">24</span>     <span class="co"># subtract a day</span></span></code></pre></div>
-<pre><code>## [1] &quot;2022-04-10 14:32:10 CDT&quot;</code></pre>
+<pre><code>## [1] &quot;2022-04-10 15:18:55 CDT&quot;</code></pre>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="intermediate-r.html#cb181-1" aria-hidden="true" tabindex="-1"></a>birth <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;1879-03-14 14:37:23&quot;</span>)</span>
 <span id="cb181-2"><a href="intermediate-r.html#cb181-2" aria-hidden="true" tabindex="-1"></a>death <span class="ot">&lt;-</span> <span class="fu">as.POSIXct</span>(<span class="st">&quot;1955-04-18 03:47:12&quot;</span>)</span>
 <span id="cb181-3"><a href="intermediate-r.html#cb181-3" aria-hidden="true" tabindex="-1"></a>einstein <span class="ot">&lt;-</span> death <span class="sc">-</span> birth</span>

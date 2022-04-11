@@ -6,11 +6,6 @@ This file demonstrates three approaches to estimating "fixed effects" models (re
 
 Note that the model we'll estimate isn't a great model in terms of producing interesting, reliable result. This is by design. Part of this chapter is introducing you to another API you can use to get data. You've worked with the US Census Bureau's API to get data on US counties. Now you have experience getting data on countries from the World Bank. You are free to use either source for data for your RP. If the model here was a great one, it might take away something you want to do for your RP. This way you get experience with fixed effects models and with getting data from the World Bank, but don't waste any potential ideas you might have for your RP. So just don't read too much into the results. They like suffer from reverse causation and omitted variable bias (both violations of ZCM). If you're interested in cross-country variation in life expectancy you'll need to dig much deeper than we'll go in this chapter. 
 
-So what do you have to do? First, go through the details of the models with country fixed effects. I already did it for you, but you should go through it (together with going through LN5) to make sure you understand. After you feel you understand country fixed effects, try to estimate the models with [Year Fixed Effects] yourself. Once you've figured that out, try to estimate the models with both [Country and Year Fixed Effects] yourself. Just look for the code chunk comments that say "YOUR CODE GOES HERE" or "Un-comment this out after you estimate the models".
-
-Solutions are posted in Moodle. The bare minimum you need to do is copy what I have in the solutions and paste it into this file. Doing that will not be considered cheating (in some classes that would be considered cheating, so always make sure you know whether using posted solutions is ok or not). If all you do is copy the solutions, however, you clearly won't come away with a better understanding of the material, so I strongly encourage you to try to work through the questions on your own before looking at the solutions. But when you're stuck or just can't figure out what I'm asking, use the solutions rather than wasting time.
-
-
 
 
 ```r

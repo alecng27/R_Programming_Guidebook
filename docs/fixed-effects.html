@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>17 Fixed Effects | R_Programming_Guidebook Project</title>
-  <meta name="description" content="17 Fixed Effects | R_Programming_Guidebook Project" />
+  <title>17 Fixed Effects | R Programming Guidebook Project</title>
+  <meta name="description" content="17 Fixed Effects | R Programming Guidebook Project" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="17 Fixed Effects | R_Programming_Guidebook Project" />
+  <meta property="og:title" content="17 Fixed Effects | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="17 Fixed Effects | R_Programming_Guidebook Project" />
+  <meta name="twitter:title" content="17 Fixed Effects | R Programming Guidebook Project" />
   
   
   
@@ -133,7 +133,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>General Notes</a></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
 <li class="part"><span><b>I DataCamp</b></span></li>
 <li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
 <ul>
@@ -330,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R_Programming_Guidebook Project</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming Guidebook Project</a>
           </h1>
         </div>
 
@@ -343,8 +343,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><a href="https://moodle.lawrence.edu/pluginfile.php/691081/mod_resource/content/3/17-FixedEffects-SOLN.html">Solutions</a></p>
 <p>This file demonstrates three approaches to estimating “fixed effects” models (remember this is what economists call “fixed effects,” but other disciplines use “fixed effects” to refer to something different). We’re going to use the <a href="http://nset-ornl.github.io/wbstats/"><code>wbstats</code> package</a> to download country-level data from the World Bank for 2015 - 2018 (the most recently available for the variables I chose). We’ll then estimate models with country fixed effects, with year fixed effects, and with both country and year fixed effects. We’ll estimate each model three ways: using the within transformation, using dummy variables, and using the <code>plm</code> package to apply the within transformation for us. If you don’t know what these are, go through LN5 first.</p>
 <p>Note that the model we’ll estimate isn’t a great model in terms of producing interesting, reliable result. This is by design. Part of this chapter is introducing you to another API you can use to get data. You’ve worked with the US Census Bureau’s API to get data on US counties. Now you have experience getting data on countries from the World Bank. You are free to use either source for data for your RP. If the model here was a great one, it might take away something you want to do for your RP. This way you get experience with fixed effects models and with getting data from the World Bank, but don’t waste any potential ideas you might have for your RP. So just don’t read too much into the results. They like suffer from reverse causation and omitted variable bias (both violations of ZCM). If you’re interested in cross-country variation in life expectancy you’ll need to dig much deeper than we’ll go in this chapter.</p>
-<p>So what do you have to do? First, go through the details of the models with country fixed effects. I already did it for you, but you should go through it (together with going through LN5) to make sure you understand. After you feel you understand country fixed effects, try to estimate the models with <a href="fixed-effects.html#year-fixed-effects">Year Fixed Effects</a> yourself. Once you’ve figured that out, try to estimate the models with both <a href="fixed-effects.html#country-and-year-fixed-effects">Country and Year Fixed Effects</a> yourself. Just look for the code chunk comments that say “YOUR CODE GOES HERE” or “Un-comment this out after you estimate the models.”</p>
-<p>Solutions are posted in Moodle. The bare minimum you need to do is copy what I have in the solutions and paste it into this file. Doing that will not be considered cheating (in some classes that would be considered cheating, so always make sure you know whether using posted solutions is ok or not). If all you do is copy the solutions, however, you clearly won’t come away with a better understanding of the material, so I strongly encourage you to try to work through the questions on your own before looking at the solutions. But when you’re stuck or just can’t figure out what I’m asking, use the solutions rather than wasting time.</p>
 <div class="sourceCode" id="cb766"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb766-1"><a href="fixed-effects.html#cb766-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wbstats) <span class="co"># To get data from the World Bank API</span></span>
 <span id="cb766-2"><a href="fixed-effects.html#cb766-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plm) <span class="co"># To estimate fixed effects models</span></span>
 <span id="cb766-3"><a href="fixed-effects.html#cb766-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(formattable) <span class="co"># to make colorful tables similar to Excel&#39;s conditional formatting</span></span>

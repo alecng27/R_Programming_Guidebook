@@ -1,8 +1,6 @@
 # Ch 3 - MLR
 
-This chapter walks through a few basics of working with MLR models. The last section at the bottom, [Log transformations], asks you to create a few graphs, estimate a few models, and formally interpret a few coefficients. This is the section we'll be checking off when you submit this chapter. Look for instructions about what to do in that section. Each place you need to do something is labeled with **YOUR CODE GOES HERE**.
-
-The other sections are provided to help you learn what to do with common situations that come up with multiple regression. You should read through these parts carefully and make sure you understand. These sections also provide you with examples of how to do these things in R that you will likely find useful later (e.g., when you work on the projects). For example, this file demonstrates a few types of tables you'll need to include in the projects (and how to control aspects of the formatting using HTML/CSS). This file also includes examples of how to use numerical results (e.g., regression coefficients, p-values from hypothesis tests) as part of sentences (that way if the data changes slightly, you don't have to go through and re-type values, and you're also less likely to make typos manually typing values). I'm including this material as part of the BP (instead of only in lecture notes or the textbook) to encourage you to play around with the examples to help you understand (both the econometric aspects and the technical aspects of displaying empirical work via RMarkdown).
+This chapter walks through a few basics of working with MLR models. The last section at the bottom, [Log transformations], asks you to create a few graphs, estimate a few models, and formally interpret a few coefficients. 
 
 You'll need to make sure you have the following packages installed:
 ```{r,message=FALSE,warning=FALSE}

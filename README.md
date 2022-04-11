@@ -1,28 +1,11 @@
 
-
-
-
-<br />
 <p align="center">
-  <h1 align="center">Homeless Data Visualization Tool</h1>
-  </p>
-  
-  <p>
-    This project is the end-product from an internship with Hope Street Coalition.  
+  <h1 align="center">R Programming Guidebook Project</h1>
   </p>
 
-
-
-
-
-
-
-This is my personal guidebook that I assembled upon completion of DataCamp Courses with notes and examples on the basics of R, SQL and Web Scraping.
-
-This online book is created and developed using RStudio and the Bookdown package.
+This is my personal guidebook that I created with notes and examples on the workings of R, SQL and Web Scraping. This online book is created and developed using RStudio and the Bookdown package.
 
 https://alecng27.github.io/R_Programming_Guidebook/
-
 
 **DataCamp Chapters**
 

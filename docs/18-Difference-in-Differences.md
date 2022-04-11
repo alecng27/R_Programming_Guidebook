@@ -12,7 +12,7 @@
 
 In this chapter you will estimate the Garbage Incinerator Difference-In-Differences model discussed in LN6. You can also gain experience working with models that include polynomials. 
 
-Solutions are posted in Moodle. The bare minimum you need to do is copy what I have in the solutions and paste it into this file. Doing that will not be considered cheating (in some classes that would be considered cheating, so always make sure you know whether using posted solutions is ok or not). If all you do is copy the solutions, however, you clearly won't come away with a better understanding of the material, so I strongly encourage you to try to work through the questions on your own before looking at the solutions. But when you're stuck or just can't figure out what I'm asking, use the solutions rather than wasting time.
+Solutions are posted in Moodle. 
 
 
 ```r
