@@ -9,9 +9,7 @@ link-citations: yes
 
 # About {-}
 
-This is my personal guidebook that I assembled upon completion of DataCamp Courses with notes and examples on the basics of R, SQL and Web Scraping.
-
-This online book is created and developed using RStudio and the Bookdown package.
+This is my personal guidebook that I created with notes and examples on the workings of R, SQL and Web Scraping. This online book is created and developed using RStudio and the Bookdown package.
 
 https://alecng27.github.io/R_Programming_Guidebook/
 
