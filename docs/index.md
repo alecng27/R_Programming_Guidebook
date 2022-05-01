@@ -17,13 +17,12 @@ https://alecng27.github.io/R_Programming_Guidebook/
 
 Alec Nguyen
 
-Economics, Lawrence University
+Economics & Data Science B.A, Lawrence University
 
 alec.nguyen27@gmail.com
 
 [LinkedIn](https://www.linkedin.com/in/alec-nguyen-about/)
 
-[Portfolio](https://alecng27.github.io/Portfolio/)
-
+[Project Portfolio](https://alecng27.github.io/Portfolio/)
 
 
