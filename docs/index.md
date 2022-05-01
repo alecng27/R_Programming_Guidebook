@@ -25,7 +25,5 @@ alec.nguyen27@gmail.com
 
 [Portfolio](https://alecng27.github.io/Portfolio/)
 
-[Merit Page](https://meritpages.com/Alec_Nguyen)
-
 
 
