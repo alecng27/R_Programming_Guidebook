@@ -23,6 +23,6 @@ alec.nguyen27@gmail.com
 
 [LinkedIn](https://www.linkedin.com/in/alec-nguyen-about/)
 
-[Project Portfolio](https://alecng27.github.io/Portfolio/)
+[Project Portfolio](https://alecng27.github.io/Project_Portfolio/)
 
 
