@@ -9,9 +9,9 @@ link-citations: yes
 
 # About {-}
 
-This is my personal guidebook that I created with notes and examples on the workings of R, SQL and Web Scraping. This online book is created and developed using RStudio and the Bookdown package.
+Source Code - https://github.com/alecng27/R_Programming_Guidebook
 
-https://alecng27.github.io/R_Programming_Guidebook/
+This is my personal guidebook that I created with notes and examples on the workings of R, SQL and Web Scraping. This online book is created and developed using RStudio and the Bookdown package.
 
 **Author**
 
