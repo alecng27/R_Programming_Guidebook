@@ -7,6 +7,8 @@ This is my personal guidebook that I created with notes and examples on the work
 
 https://alecng27.github.io/R_Programming_Guidebook/
 
+See the [LICENSE](LICENSE) file for license rights and limitations.
+
 **DataCamp Chapters**
 
 - [x] Introduction to R 
