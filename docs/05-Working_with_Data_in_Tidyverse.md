@@ -344,18 +344,18 @@ election_CA %>%
 
 ```
 ## # A tibble: 58 × 14
-##    FIPS  STATE_FIPS STATE   COUNTY    OBAMA ROMNEY OTHERS TTL_VT PCT_OBM PCT_ROM
-##    <chr> <chr>      <chr>   <chr>     <dbl>  <dbl>  <dbl>  <dbl>   <dbl>   <dbl>
-##  1 06001 06         Califo… Alameda  469684 108182  17776 595642    78.9    18.2
-##  2 06003 06         Califo… Alpine      389    236     28    653    59.6    36.1
-##  3 06005 06         Califo… Amador     6830  10281    538  17649    38.7    58.3
-##  4 06007 06         Califo… Butte     42669  44479   3604  90752    47.0    49.0
-##  5 06009 06         Califo… Calaver…   8670  12365    751  21786    39.8    56.8
-##  6 06011 06         Califo… Colusa     2314   3601    119   6034    38.3    59.7
-##  7 06013 06         Califo… Contra … 290824 136517  10885 438226    66.4    31.2
-##  8 06015 06         Califo… Del Nor…   3791   4614    365   8770    43.2    52.6
-##  9 06017 06         Califo… El Dora…  35166  50973   2635  88774    39.6    57.4
-## 10 06019 06         Califo… Fresno   129129 124490   5208 258827    49.9    48.1
+##    FIPS  STATE_FIPS STATE     COUNTY  OBAMA ROMNEY OTHERS TTL_VT PCT_OBM PCT_ROM
+##    <chr> <chr>      <chr>     <chr>   <dbl>  <dbl>  <dbl>  <dbl>   <dbl>   <dbl>
+##  1 06001 06         Californ… Alame… 469684 108182  17776 595642    78.9    18.2
+##  2 06003 06         Californ… Alpine    389    236     28    653    59.6    36.1
+##  3 06005 06         Californ… Amador   6830  10281    538  17649    38.7    58.3
+##  4 06007 06         Californ… Butte   42669  44479   3604  90752    47.0    49.0
+##  5 06009 06         Californ… Calav…   8670  12365    751  21786    39.8    56.8
+##  6 06011 06         Californ… Colusa   2314   3601    119   6034    38.3    59.7
+##  7 06013 06         Californ… Contr… 290824 136517  10885 438226    66.4    31.2
+##  8 06015 06         Californ… Del N…   3791   4614    365   8770    43.2    52.6
+##  9 06017 06         Californ… El Do…  35166  50973   2635  88774    39.6    57.4
+## 10 06019 06         Californ… Fresno 129129 124490   5208 258827    49.9    48.1
 ## # … with 48 more rows, and 4 more variables: PCT_OTHR <dbl>, WINNER <chr>,
 ## #   PCT_WNR <dbl>, group <dbl>
 ```

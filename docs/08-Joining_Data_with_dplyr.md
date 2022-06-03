@@ -42,18 +42,18 @@ parts %>%
 
 ```
 ## # A tibble: 17,501 × 4
-##    part_num   name_part                             part_cat_id name_category   
-##    <chr>      <chr>                                       <dbl> <chr>           
-##  1 0901       Baseplate 16 x 30 with Set 080 Yello…           1 Baseplates      
-##  2 0902       Baseplate 16 x 24 with Set 080 Small…           1 Baseplates      
-##  3 0903       Baseplate 16 x 24 with Set 080 Red H…           1 Baseplates      
-##  4 0904       Baseplate 16 x 24 with Set 080 Large…           1 Baseplates      
-##  5 1          Homemaker Bookcase 2 x 4 x 4                    7 Containers      
-##  6 10016414   Sticker Sheet #1 for 41055-1                   58 Stickers        
-##  7 10026stk01 Sticker for Set 10026 - (44942/41841…          58 Stickers        
-##  8 10039      Pullback Motor 8 x 4 x 2/3                     44 Mechanical      
-##  9 10048      Minifig Hair Tousled                           65 Minifig Headwear
-## 10 10049      Minifig Shield Broad with Spiked Bot…          27 Minifig Accesso…
+##    part_num   name_part                                part_cat_id name_category
+##    <chr>      <chr>                                          <dbl> <chr>        
+##  1 0901       Baseplate 16 x 30 with Set 080 Yellow H…           1 Baseplates   
+##  2 0902       Baseplate 16 x 24 with Set 080 Small Wh…           1 Baseplates   
+##  3 0903       Baseplate 16 x 24 with Set 080 Red Hous…           1 Baseplates   
+##  4 0904       Baseplate 16 x 24 with Set 080 Large Wh…           1 Baseplates   
+##  5 1          Homemaker Bookcase 2 x 4 x 4                       7 Containers   
+##  6 10016414   Sticker Sheet #1 for 41055-1                      58 Stickers     
+##  7 10026stk01 Sticker for Set 10026 - (44942/4184185)           58 Stickers     
+##  8 10039      Pullback Motor 8 x 4 x 2/3                        44 Mechanical   
+##  9 10048      Minifig Hair Tousled                              65 Minifig Head…
+## 10 10049      Minifig Shield Broad with Spiked Bottom…          27 Minifig Acce…
 ## # … with 17,491 more rows
 ```
 
