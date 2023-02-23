@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Categorical Data in the Tidyverse | R Programming Guidebook Project</title>
   <meta name="description" content="6 Categorical Data in the Tidyverse | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Categorical Data in the Tidyverse | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="working-with-data-in-the-tidyverse.html"/>
 <link rel="next" href="data-manipulation-with-dplyr.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,8 +337,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="categorical-data-in-the-tidyverse" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Categorical Data in the Tidyverse</h1>
+<div id="categorical-data-in-the-tidyverse" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">6</span> Categorical Data in the Tidyverse<a href="categorical-data-in-the-tidyverse.html#categorical-data-in-the-tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/categorical-data-in-the-tidyverse" class="uri">https://learn.datacamp.com/courses/categorical-data-in-the-tidyverse</a></p>
 <p>Required packages to load:</p>
 <div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="categorical-data-in-the-tidyverse.html#cb320-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -362,8 +361,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## The following object is masked from &#39;package:readr&#39;:
 ## 
 ##     col_factor</code></pre>
-<div id="introduction-to-factor-variables" class="section level2" number="6.1">
-<h2><span class="header-section-number">6.1</span> Introduction to Factor Variables</h2>
+<div id="introduction-to-factor-variables" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Introduction to Factor Variables<a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Getting Number Of Levels</strong></p>
 <p><code>mutate()</code> and <code>summarise()</code> in <code>dplyr</code> both have variants to add the suffix <code>if</code> or <code>all</code> to change the operation. <code>mutate_if()</code> and <code>summarise_if</code> apply their “second argument”-a function, to all columns where the “first argument” is true, and <code>mutate_all()</code> and <code>summarise_all</code> take one argument, a function, and apply it to all columns.</p>
 <div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="categorical-data-in-the-tidyverse.html#cb327-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Change all the character columns to factors</span></span>
@@ -414,8 +413,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb333-5"><a href="categorical-data-in-the-tidyverse.html#cb333-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>()</span></code></pre></div>
 <p><img src="06-Categorical_Data_in_Tidyverse_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
-<div id="manipulating-factor-variables" class="section level2" number="6.2">
-<h2><span class="header-section-number">6.2</span> Manipulating Factor Variables</h2>
+<div id="manipulating-factor-variables" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Manipulating Factor Variables<a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>How To Change The Order Of Levels</strong></p>
 <p>Use <code>fct_relevel()</code> to change the order of factor levels.</p>
 <div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="categorical-data-in-the-tidyverse.html#cb334-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the levels of WorkInternalVsExternalTools</span></span>
@@ -525,8 +524,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1 other method     10
 ## 2 Deep learning     6</code></pre>
 </div>
-<div id="creating-factor-variables" class="section level2" number="6.3">
-<h2><span class="header-section-number">6.3</span> Creating Factor Variables</h2>
+<div id="creating-factor-variables" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Creating Factor Variables<a href="categorical-data-in-the-tidyverse.html#creating-factor-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Use <code>str_remove()</code> from the <code>stringr</code> package to remove a certain phrase from observations in a column:</p>
 <div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="categorical-data-in-the-tidyverse.html#cb348-1" aria-hidden="true" tabindex="-1"></a>platform_usefulness_long <span class="ot">&lt;-</span> responses_data <span class="sc">%&gt;%</span></span>
 <span id="cb348-2"><a href="categorical-data-in-the-tidyverse.html#cb348-2" aria-hidden="true" tabindex="-1"></a><span class="co"># select columns with LearningPlatformUsefulness in title</span></span>
@@ -601,8 +600,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Valiant           105      Fast
 ## Duster 360        245 Very Fast</code></pre>
 </div>
-<div id="case-study-on-flight-etiquette" class="section level2" number="6.4">
-<h2><span class="header-section-number">6.4</span> Case Study on Flight Etiquette</h2>
+<div id="case-study-on-flight-etiquette" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Case Study on Flight Etiquette<a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Utilize the tools above to practice on an actual dataset:</p>
 <div class="sourceCode" id="cb356"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb356-1"><a href="categorical-data-in-the-tidyverse.html#cb356-1" aria-hidden="true" tabindex="-1"></a>flying_etiquette <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/1834/datasets/bef2c6e1ef42a2f230383e080fa7379912860017/flying-etiquette.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Rows: 1040 Columns: 27

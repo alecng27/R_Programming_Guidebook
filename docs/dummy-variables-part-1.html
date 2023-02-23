@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>15 Dummy Variables Part 1 | R Programming Guidebook Project</title>
   <meta name="description" content="15 Dummy Variables Part 1 | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="15 Dummy Variables Part 1 | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="ch-3---mlr.html"/>
 <link rel="next" href="dummy-variables-part-2.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,23 +337,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="dummy-variables-part-1" class="section level1" number="15">
-<h1><span class="header-section-number">15</span> Dummy Variables Part 1</h1>
+<div id="dummy-variables-part-1" class="section level1 hasAnchor" number="15">
+<h1><span class="header-section-number">15</span> Dummy Variables Part 1<a href="dummy-variables-part-1.html#dummy-variables-part-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This chapter goes with LN4.1. In LN4.1 we examine two models of the relationship between education and wages. We examined two different ways we could define sets of dummy variables to represent people with a high school degree, a BA, a Master’s, or a PhD as their highest level of education. We saw how both models could be used to answer questions such as “what is the average wage for someone with a Master’s degree?” or “What is the expected difference in average wage for a person with a Master’s degree compared to a BA?” In this BP chapter you will explore these models empirically using micro-level data (i.e., data on individual people).</p>
 <p>Specifically, the data we’ll use comes from the 2019 ACS 1-year Public Use <a href="https://www.census.gov/programs-surveys/acs/microdata.html">Microdata Sample (PUMS)</a>. This data has the responses of individuals that the Census Bureau uses to calculate the county- and state-level statistics they publish as part of the ACS (e.g., what you’re using for the CP). Formally to analyze this data properly we need to use survey weights to make calculates done using the individual responses representative of the population as a whole. We’re not going to worry about that. However, note that our calculations will be off somewhat from the true average wages for the groups we explore in this chapter. We’ll obtain our data using the tidycensus package, <a href="https://walker-data.com/tidycensus/articles/pums-data.html">as described here</a>.</p>
-<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="dummy-variables-part-1.html#cb715-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb715-2"><a href="dummy-variables-part-1.html#cb715-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
-<span id="cb715-3"><a href="dummy-variables-part-1.html#cb715-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
-<span id="cb715-4"><a href="dummy-variables-part-1.html#cb715-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
-<span id="cb715-5"><a href="dummy-variables-part-1.html#cb715-5" aria-hidden="true" tabindex="-1"></a><span class="do">## This turns off scientific notation when there are fewer then 4 digits. Otherwise pander displays very small p values with way too many decimal places</span></span>
-<span id="cb715-6"><a href="dummy-variables-part-1.html#cb715-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">4</span>)</span></code></pre></div>
-<div id="obtain-and-prepare-data" class="section level2" number="15.1">
-<h2><span class="header-section-number">15.1</span> Obtain and prepare data</h2>
+<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="dummy-variables-part-1.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb716-2"><a href="dummy-variables-part-1.html#cb716-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb716-3"><a href="dummy-variables-part-1.html#cb716-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb716-4"><a href="dummy-variables-part-1.html#cb716-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb716-5"><a href="dummy-variables-part-1.html#cb716-5" aria-hidden="true" tabindex="-1"></a><span class="do">## This turns off scientific notation when there are fewer then 4 digits. Otherwise pander displays very small p values with way too many decimal places</span></span>
+<span id="cb716-6"><a href="dummy-variables-part-1.html#cb716-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">4</span>)</span></code></pre></div>
+<div id="obtain-and-prepare-data" class="section level2 hasAnchor" number="15.1">
+<h2><span class="header-section-number">15.1</span> Obtain and prepare data<a href="dummy-variables-part-1.html#obtain-and-prepare-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To work with the PUMS data via tidycensus, you can pull the table of variables to find what variables are included. I’ve set this code chunk to not be evaluated (eval = FALSE) when you build because while doing this is helpful while you’re working with this data, it doesn’t belong in your HTML output</p>
-<div class="sourceCode" id="cb716"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb716-1"><a href="dummy-variables-part-1.html#cb716-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To work with the PUMS data via tidycensus, you can pull the table of variables to find what variables are included</span></span>
-<span id="cb716-2"><a href="dummy-variables-part-1.html#cb716-2" aria-hidden="true" tabindex="-1"></a><span class="do">## I&#39;ve set this code chunk to not be evaluated (eval = FALSE) when you build. You might want to do this on your own, but it doesn&#39;t belong in your HTML output</span></span>
-<span id="cb716-3"><a href="dummy-variables-part-1.html#cb716-3" aria-hidden="true" tabindex="-1"></a>pums_vars_2018 <span class="ot">&lt;-</span> pums_variables <span class="sc">%&gt;%</span> </span>
-<span id="cb716-4"><a href="dummy-variables-part-1.html#cb716-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2019</span>, survey <span class="sc">==</span> <span class="st">&quot;acs1&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="dummy-variables-part-1.html#cb717-1" aria-hidden="true" tabindex="-1"></a><span class="do">## To work with the PUMS data via tidycensus, you can pull the table of variables to find what variables are included</span></span>
+<span id="cb717-2"><a href="dummy-variables-part-1.html#cb717-2" aria-hidden="true" tabindex="-1"></a><span class="do">## I&#39;ve set this code chunk to not be evaluated (eval = FALSE) when you build. You might want to do this on your own, but it doesn&#39;t belong in your HTML output</span></span>
+<span id="cb717-3"><a href="dummy-variables-part-1.html#cb717-3" aria-hidden="true" tabindex="-1"></a>pums_vars_2018 <span class="ot">&lt;-</span> pums_variables <span class="sc">%&gt;%</span> </span>
+<span id="cb717-4"><a href="dummy-variables-part-1.html#cb717-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2019</span>, survey <span class="sc">==</span> <span class="st">&quot;acs1&quot;</span>)</span></code></pre></div>
 <style>
 .variablesTable th {
   text-align: left;
@@ -394,18 +393,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <p>The <code>results='hide'</code> code chunk option keeps it from displaying status updates while it downloads (which is sometimes about 100 lines of output, so you definitely don’t want it in your HTML output).</p>
-<div class="sourceCode" id="cb717"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb717-1"><a href="dummy-variables-part-1.html#cb717-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Download 2018 acs1 for Wisconsin.</span></span>
-<span id="cb717-2"><a href="dummy-variables-part-1.html#cb717-2" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> <span class="fu">get_pums</span>(</span>
-<span id="cb717-3"><a href="dummy-variables-part-1.html#cb717-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">&quot;PUMA&quot;</span>,<span class="st">&quot;WAGP&quot;</span>, <span class="st">&quot;AGEP&quot;</span>, <span class="st">&quot;SCHL&quot;</span>, <span class="st">&quot;SEX&quot;</span>),</span>
-<span id="cb717-4"><a href="dummy-variables-part-1.html#cb717-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="st">&quot;wi&quot;</span>,</span>
-<span id="cb717-5"><a href="dummy-variables-part-1.html#cb717-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">survey =</span> <span class="st">&quot;acs1&quot;</span>,</span>
-<span id="cb717-6"><a href="dummy-variables-part-1.html#cb717-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">2018</span>,</span>
-<span id="cb717-7"><a href="dummy-variables-part-1.html#cb717-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode =</span> <span class="cn">TRUE</span></span>
-<span id="cb717-8"><a href="dummy-variables-part-1.html#cb717-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="dummy-variables-part-1.html#cb718-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Download 2018 acs1 for Wisconsin.</span></span>
+<span id="cb718-2"><a href="dummy-variables-part-1.html#cb718-2" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> <span class="fu">get_pums</span>(</span>
+<span id="cb718-3"><a href="dummy-variables-part-1.html#cb718-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">&quot;PUMA&quot;</span>,<span class="st">&quot;WAGP&quot;</span>, <span class="st">&quot;AGEP&quot;</span>, <span class="st">&quot;SCHL&quot;</span>, <span class="st">&quot;SEX&quot;</span>),</span>
+<span id="cb718-4"><a href="dummy-variables-part-1.html#cb718-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="st">&quot;wi&quot;</span>,</span>
+<span id="cb718-5"><a href="dummy-variables-part-1.html#cb718-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">survey =</span> <span class="st">&quot;acs1&quot;</span>,</span>
+<span id="cb718-6"><a href="dummy-variables-part-1.html#cb718-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">2018</span>,</span>
+<span id="cb718-7"><a href="dummy-variables-part-1.html#cb718-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">recode =</span> <span class="cn">TRUE</span></span>
+<span id="cb718-8"><a href="dummy-variables-part-1.html#cb718-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Let’s rename <code>WAGP</code> as <code>wage</code> so that we remember what it is.</p>
-<div class="sourceCode" id="cb718"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb718-1"><a href="dummy-variables-part-1.html#cb718-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> <span class="fu">rename</span>(wiPUMS, <span class="at">wage =</span> WAGP)</span></code></pre></div>
+<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="dummy-variables-part-1.html#cb719-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> <span class="fu">rename</span>(wiPUMS, <span class="at">wage =</span> WAGP)</span></code></pre></div>
 <p>Let’s see what levels of education exist in our data, and how many observations we have for each</p>
-<div class="sourceCode" id="cb719"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb719-1"><a href="dummy-variables-part-1.html#cb719-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="sc">%&gt;%</span> <span class="fu">count</span>(SCHL,SCHL_label) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="dummy-variables-part-1.html#cb720-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="sc">%&gt;%</span> <span class="fu">count</span>(SCHL,SCHL_label) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code></pre></div>
 <table style="width:65%;">
 <colgroup>
 <col width="9%" />
@@ -551,10 +550,10 @@ bachelor’s degree</td>
 </tbody>
 </table>
 <p>We’re interested in examining how wages differ by educational attainment. We’d like to limit our data to people who are old enough to have completed high school (or equivalent) and college, and then be working. So, let’s limit our sample to people age 25 or older. Let’s also only examine people who have a wage.</p>
-<div class="sourceCode" id="cb720"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb720-1"><a href="dummy-variables-part-1.html#cb720-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span> </span>
-<span id="cb720-2"><a href="dummy-variables-part-1.html#cb720-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(AGEP <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> wage <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="dummy-variables-part-1.html#cb721-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span> </span>
+<span id="cb721-2"><a href="dummy-variables-part-1.html#cb721-2" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(AGEP <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> wage <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code></pre></div>
 <p>We should look at what education levels (<code>SCHL</code>) remain after filtering</p>
-<div class="sourceCode" id="cb721"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb721-1"><a href="dummy-variables-part-1.html#cb721-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="sc">%&gt;%</span> <span class="fu">count</span>(SCHL,SCHL_label) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="dummy-variables-part-1.html#cb722-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="sc">%&gt;%</span> <span class="fu">count</span>(SCHL,SCHL_label) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code></pre></div>
 <table style="width:64%;">
 <colgroup>
 <col width="9%" />
@@ -695,13 +694,13 @@ bachelor’s degree</td>
 </tbody>
 </table>
 <p>After filtering, the value “bb” that indicates a person who is under 3 years old and thus can’t have any schooling is now gone. Now all of the levels of <code>SCHL</code> are numeric, which allows us to convert them from a character to a numeric data type. This will then allow us to use inequalities to define dummy variables (e.g., <code>SCHL &lt;16</code>).</p>
-<div class="sourceCode" id="cb722"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb722-1"><a href="dummy-variables-part-1.html#cb722-1" aria-hidden="true" tabindex="-1"></a>wiPUMS<span class="sc">$</span>SCHL <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(wiPUMS<span class="sc">$</span>SCHL)</span></code></pre></div>
+<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="dummy-variables-part-1.html#cb723-1" aria-hidden="true" tabindex="-1"></a>wiPUMS<span class="sc">$</span>SCHL <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(wiPUMS<span class="sc">$</span>SCHL)</span></code></pre></div>
 <p>We’re comparing wages of people who have a high school degree (or equivalent) or higher, so we also need to drop everyone who has less than a high school degree. Because <code>SCHL</code> is now numeric, we can do this using an inequality (rather than listing all of the options separately).</p>
-<div class="sourceCode" id="cb723"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb723-1"><a href="dummy-variables-part-1.html#cb723-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SCHL <span class="sc">&gt;=</span> <span class="dv">16</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="dummy-variables-part-1.html#cb724-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SCHL <span class="sc">&gt;=</span> <span class="dv">16</span>)</span></code></pre></div>
 <p>In order to match with LN4.1, we also need to drop people with a professional degree. In practice we would probably want to examine them too, but for the sake of matching with what is in LN4.1 we’re going to drop them.</p>
-<div class="sourceCode" id="cb724"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb724-1"><a href="dummy-variables-part-1.html#cb724-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SCHL <span class="sc">!=</span> <span class="dv">23</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="dummy-variables-part-1.html#cb725-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span> <span class="fu">filter</span>(SCHL <span class="sc">!=</span> <span class="dv">23</span>)</span></code></pre></div>
 <p>Whenever you do something like filtering data, it’s a very good idea to look at the data and make sure it worked. In previous years of 380, students have wasted many hours trying to get models to work, only to finally go back and look at the data to find that they actually messed up an earlier step that seems easy. So even if it’s something easy you think you know how to do, look at the data. You can display summary measures as we’ll do here, but it’s also a good idea to click on it in the Environment tab and actually scroll through it quickly. Typically you don’t display the results in a paper, but for the purposes of the BP, I want to demonstrate what you might do (e.g., get a count by education levels). Here, we could just re-run this:</p>
-<div class="sourceCode" id="cb725"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb725-1"><a href="dummy-variables-part-1.html#cb725-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="sc">%&gt;%</span> <span class="fu">count</span>(SCHL,SCHL_label) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="dummy-variables-part-1.html#cb726-1" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="sc">%&gt;%</span> <span class="fu">count</span>(SCHL,SCHL_label) <span class="sc">%&gt;%</span> <span class="fu">pander</span>()</span></code></pre></div>
 <table style="width:64%;">
 <colgroup>
 <col width="9%" />
@@ -761,8 +760,8 @@ credit, no degree</td>
 </tbody>
 </table>
 </div>
-<div id="define-dummy-variables" class="section level2" number="15.2">
-<h2><span class="header-section-number">15.2</span> Define dummy variables</h2>
+<div id="define-dummy-variables" class="section level2 hasAnchor" number="15.2">
+<h2><span class="header-section-number">15.2</span> Define dummy variables<a href="dummy-variables-part-1.html#define-dummy-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In LN4.1 we had an “alpha model” and “beta model” which defined education in different ways.</p>
 <div class="variablesTable">
 <table>
@@ -802,23 +801,23 @@ credit, no degree</td>
 </tbody>
 </table>
 </div>
-<div id="alpha-model" class="section level3" number="15.2.1">
-<h3><span class="header-section-number">15.2.1</span> Alpha Model</h3>
+<div id="alpha-model" class="section level3 hasAnchor" number="15.2.1">
+<h3><span class="header-section-number">15.2.1</span> Alpha Model<a href="dummy-variables-part-1.html#alpha-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In LN4.1, we defined the “Alpha Model” as</p>
 <p><span class="math display">\[
 wage = \alpha_0 + \alpha_1 BA + \alpha_2 Masters + \alpha_3 PhD + u
 \]</span></p>
-<p>We need to create the dummy variables used for the “Alpha Model.” We’ll prefix the variables with “a” for “Alpha.” Later you’ll define “Beta Model” variables and prefix them with “b.”</p>
+<p>We need to create the dummy variables used for the “Alpha Model”. We’ll prefix the variables with “a” for “Alpha”. Later you’ll define “Beta Model” variables and prefix them with “b”.</p>
 <p>In our data, some people have some college or an Associates Degree. While we might be interested in differences between people with some college and a only a high school degree, for the purposes of what we’re doing here (learning about dummy variables), let’s classify anyone without a BA as having high school as their highest degree (even if they have some college or an Associates Degree).</p>
-<div class="sourceCode" id="cb726"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb726-1"><a href="dummy-variables-part-1.html#cb726-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dummy variables for &quot;alpha model&quot; (starting with a)</span></span>
-<span id="cb726-2"><a href="dummy-variables-part-1.html#cb726-2" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span></span>
-<span id="cb726-3"><a href="dummy-variables-part-1.html#cb726-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">aBA =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">&gt;=</span> <span class="dv">21</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb726-4"><a href="dummy-variables-part-1.html#cb726-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">aMasters =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">&gt;=</span> <span class="dv">22</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb726-5"><a href="dummy-variables-part-1.html#cb726-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">aPhD =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">24</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb726-6"><a href="dummy-variables-part-1.html#cb726-6" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="dummy-variables-part-1.html#cb727-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dummy variables for &quot;alpha model&quot; (starting with a)</span></span>
+<span id="cb727-2"><a href="dummy-variables-part-1.html#cb727-2" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span></span>
+<span id="cb727-3"><a href="dummy-variables-part-1.html#cb727-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">aBA =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">&gt;=</span> <span class="dv">21</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb727-4"><a href="dummy-variables-part-1.html#cb727-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">aMasters =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">&gt;=</span> <span class="dv">22</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb727-5"><a href="dummy-variables-part-1.html#cb727-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">aPhD =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">24</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb727-6"><a href="dummy-variables-part-1.html#cb727-6" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
 <p>Now let’s estimate the regression shown as “Alpha Model v1” in LN4</p>
-<div class="sourceCode" id="cb727"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb727-1"><a href="dummy-variables-part-1.html#cb727-1" aria-hidden="true" tabindex="-1"></a>alphaModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> aBA <span class="sc">+</span> aMasters <span class="sc">+</span> aPhD, <span class="at">data =</span> wiPUMS)</span>
-<span id="cb727-2"><a href="dummy-variables-part-1.html#cb727-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(alphaModel))</span></code></pre></div>
+<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="dummy-variables-part-1.html#cb728-1" aria-hidden="true" tabindex="-1"></a>alphaModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> aBA <span class="sc">+</span> aMasters <span class="sc">+</span> aPhD, <span class="at">data =</span> wiPUMS)</span>
+<span id="cb728-2"><a href="dummy-variables-part-1.html#cb728-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(alphaModel))</span></code></pre></div>
 <table style="width:90%;">
 <colgroup>
 <col width="25%" />
@@ -893,27 +892,27 @@ wage = \alpha_0 + \alpha_1 BA + \alpha_2 Masters + \alpha_3 PhD + u
 </tbody>
 </table>
 </div>
-<div id="beta-model" class="section level3" number="15.2.2">
-<h3><span class="header-section-number">15.2.2</span> Beta Model</h3>
+<div id="beta-model" class="section level3 hasAnchor" number="15.2.2">
+<h3><span class="header-section-number">15.2.2</span> Beta Model<a href="dummy-variables-part-1.html#beta-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In LN4.1, we defined the “Beta Model” (version 1) as:</p>
 <p><span class="math display">\[
 wage = \beta_0 + \beta_1 BA + \beta_2 Masters + \beta_3 PhD + u
 \]</span></p>
-<p>We need to create the dummy variables for the “Beta Model” from LN4.1. Use the same categories as you did for the Alpha Model (so we’re considering anyone with some college or an associates degree as having high school as their highest education). Prefix these variables with a “b” for “Beta.”</p>
+<p>We need to create the dummy variables for the “Beta Model” from LN4.1. Use the same categories as you did for the Alpha Model (so we’re considering anyone with some college or an associates degree as having high school as their highest education). Prefix these variables with a “b” for “Beta”.</p>
 <hr />
 <p><strong>YOUR CODE GOES HERE: add variables bBA, bMasters, and bPhD to wiPUMS</strong></p>
-<div class="sourceCode" id="cb728"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb728-1"><a href="dummy-variables-part-1.html#cb728-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dummy variables for &quot;Beta Model&quot; (prefix with b)</span></span>
-<span id="cb728-2"><a href="dummy-variables-part-1.html#cb728-2" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span></span>
-<span id="cb728-3"><a href="dummy-variables-part-1.html#cb728-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">bBA =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">21</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb728-4"><a href="dummy-variables-part-1.html#cb728-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bMasters =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">22</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb728-5"><a href="dummy-variables-part-1.html#cb728-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bPhD =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">24</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb728-6"><a href="dummy-variables-part-1.html#cb728-6" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="dummy-variables-part-1.html#cb729-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create dummy variables for &quot;Beta Model&quot; (prefix with b)</span></span>
+<span id="cb729-2"><a href="dummy-variables-part-1.html#cb729-2" aria-hidden="true" tabindex="-1"></a>wiPUMS <span class="ot">&lt;-</span> wiPUMS <span class="sc">%&gt;%</span></span>
+<span id="cb729-3"><a href="dummy-variables-part-1.html#cb729-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">bBA =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">21</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb729-4"><a href="dummy-variables-part-1.html#cb729-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bMasters =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">22</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb729-5"><a href="dummy-variables-part-1.html#cb729-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">bPhD =</span> <span class="fu">ifelse</span>(SCHL <span class="sc">==</span> <span class="dv">24</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb729-6"><a href="dummy-variables-part-1.html#cb729-6" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
 <hr />
 <p>Now let’s estimate the regression shown as “Beta Model v1” in LN4.1</p>
 <hr />
 <p><strong>UN-COMMENT-OUT the following code after you estimate the Beta Model v1</strong></p>
-<div class="sourceCode" id="cb729"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb729-1"><a href="dummy-variables-part-1.html#cb729-1" aria-hidden="true" tabindex="-1"></a>betaModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> bBA <span class="sc">+</span> bMasters <span class="sc">+</span> bPhD, <span class="at">data =</span> wiPUMS)</span>
-<span id="cb729-2"><a href="dummy-variables-part-1.html#cb729-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(betaModel))</span></code></pre></div>
+<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="dummy-variables-part-1.html#cb730-1" aria-hidden="true" tabindex="-1"></a>betaModel <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> bBA <span class="sc">+</span> bMasters <span class="sc">+</span> bPhD, <span class="at">data =</span> wiPUMS)</span>
+<span id="cb730-2"><a href="dummy-variables-part-1.html#cb730-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(betaModel))</span></code></pre></div>
 <table style="width:90%;">
 <colgroup>
 <col width="25%" />
@@ -990,23 +989,23 @@ wage = \beta_0 + \beta_1 BA + \beta_2 Masters + \beta_3 PhD + u
 <hr />
 </div>
 </div>
-<div id="compare-the-regressions-side-by-side" class="section level2" number="15.3">
-<h2><span class="header-section-number">15.3</span> Compare the regressions side-by-side</h2>
+<div id="compare-the-regressions-side-by-side" class="section level2 hasAnchor" number="15.3">
+<h2><span class="header-section-number">15.3</span> Compare the regressions side-by-side<a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In LN4.1 we talk about how different models can lead to equivalent results theoretically. Here we want to examine that theoretical equivalence numerically. Specifically, we want to write out various conditional expectations that should be equivalent theoretically and show that the estimated values are indeed equivalent.</p>
 <p>Let’s start by displaying the two models on the same table. You have to be very careful doing this (so you don’t accidentally mis-label variables), but we can re-name the variable labels for each model so that they are the same (e.g., rename <code>aBA</code> and <code>bBA</code> to both be <code>BA</code>) and thus display on the same row of the stargazer table. We’ll make a copy of the model results that we use specifically for this purpose. Then we’ll rename the coefficients to have the same names. Then we’ll display them using stargazer.</p>
 <hr />
 <p><strong>UN-COMMENT-OUT the following code after you estimate the Beta Model v1</strong></p>
-<div class="sourceCode" id="cb730"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb730-1"><a href="dummy-variables-part-1.html#cb730-1" aria-hidden="true" tabindex="-1"></a>alphaModelStargazer <span class="ot">&lt;-</span> alphaModel</span>
-<span id="cb730-2"><a href="dummy-variables-part-1.html#cb730-2" aria-hidden="true" tabindex="-1"></a>betaModelStargazer <span class="ot">&lt;-</span> betaModel</span>
-<span id="cb730-3"><a href="dummy-variables-part-1.html#cb730-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(alphaModelStargazer<span class="sc">$</span>coefficients) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;BA&quot;</span>, <span class="st">&quot;Masters&quot;</span>, <span class="st">&quot;PhD&quot;</span>)</span>
-<span id="cb730-4"><a href="dummy-variables-part-1.html#cb730-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(betaModelStargazer<span class="sc">$</span>coefficients) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;BA&quot;</span>, <span class="st">&quot;Masters&quot;</span>, <span class="st">&quot;PhD&quot;</span>)</span>
-<span id="cb730-5"><a href="dummy-variables-part-1.html#cb730-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(alphaModelStargazer, betaModelStargazer, </span>
-<span id="cb730-6"><a href="dummy-variables-part-1.html#cb730-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
-<span id="cb730-7"><a href="dummy-variables-part-1.html#cb730-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
-<span id="cb730-8"><a href="dummy-variables-part-1.html#cb730-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
-<span id="cb730-9"><a href="dummy-variables-part-1.html#cb730-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb730-10"><a href="dummy-variables-part-1.html#cb730-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb730-11"><a href="dummy-variables-part-1.html#cb730-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Alpha&quot;</span>,<span class="st">&quot;Beta&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="dummy-variables-part-1.html#cb731-1" aria-hidden="true" tabindex="-1"></a>alphaModelStargazer <span class="ot">&lt;-</span> alphaModel</span>
+<span id="cb731-2"><a href="dummy-variables-part-1.html#cb731-2" aria-hidden="true" tabindex="-1"></a>betaModelStargazer <span class="ot">&lt;-</span> betaModel</span>
+<span id="cb731-3"><a href="dummy-variables-part-1.html#cb731-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(alphaModelStargazer<span class="sc">$</span>coefficients) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;BA&quot;</span>, <span class="st">&quot;Masters&quot;</span>, <span class="st">&quot;PhD&quot;</span>)</span>
+<span id="cb731-4"><a href="dummy-variables-part-1.html#cb731-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(betaModelStargazer<span class="sc">$</span>coefficients) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;(Intercept)&quot;</span>, <span class="st">&quot;BA&quot;</span>, <span class="st">&quot;Masters&quot;</span>, <span class="st">&quot;PhD&quot;</span>)</span>
+<span id="cb731-5"><a href="dummy-variables-part-1.html#cb731-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(alphaModelStargazer, betaModelStargazer, </span>
+<span id="cb731-6"><a href="dummy-variables-part-1.html#cb731-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb731-7"><a href="dummy-variables-part-1.html#cb731-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb731-8"><a href="dummy-variables-part-1.html#cb731-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb731-9"><a href="dummy-variables-part-1.html#cb731-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb731-10"><a href="dummy-variables-part-1.html#cb731-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb731-11"><a href="dummy-variables-part-1.html#cb731-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;Alpha&quot;</span>,<span class="st">&quot;Beta&quot;</span>))</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -1236,26 +1235,26 @@ F Statistic (df = 3; 24759)
 </table>
 <hr />
 </div>
-<div id="compare-the-predictions-of-each-model" class="section level2" number="15.4">
-<h2><span class="header-section-number">15.4</span> Compare the predictions of each model</h2>
+<div id="compare-the-predictions-of-each-model" class="section level2 hasAnchor" number="15.4">
+<h2><span class="header-section-number">15.4</span> Compare the predictions of each model<a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In LN4.1 we claimed that the Alpha Model and Beta Model were theoretically equivalent. Here we are demonstrating that they are also empirically equivalent. The first thing you notice is that the <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span> are identical. We haven’t talked about the other statistics (Residual Std. Error and F STatistic), but they’re identical too. That’s what we would expect if the models are indeed equivalent. Recall the definition of <span class="math inline">\(R^2\)</span>. You’d expect equivalent models to explain the same fraction of the variation in wages.</p>
 <p>Now let’s check if real-world situations that are supposed to be equivalent in theory are indeed equivalent numerically.</p>
 <p>First, let’s store our coefficients in variables so they’re easier to work with:</p>
-<div class="sourceCode" id="cb731"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb731-1"><a href="dummy-variables-part-1.html#cb731-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alpha Model</span></span>
-<span id="cb731-2"><a href="dummy-variables-part-1.html#cb731-2" aria-hidden="true" tabindex="-1"></a>a0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;(Intercept)&quot;</span>]</span>
-<span id="cb731-3"><a href="dummy-variables-part-1.html#cb731-3" aria-hidden="true" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;aBA&quot;</span>]</span>
-<span id="cb731-4"><a href="dummy-variables-part-1.html#cb731-4" aria-hidden="true" tabindex="-1"></a>a2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;aMasters&quot;</span>]</span>
-<span id="cb731-5"><a href="dummy-variables-part-1.html#cb731-5" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;aPhD&quot;</span>]</span>
-<span id="cb731-6"><a href="dummy-variables-part-1.html#cb731-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb731-7"><a href="dummy-variables-part-1.html#cb731-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Beta Model</span></span>
-<span id="cb731-8"><a href="dummy-variables-part-1.html#cb731-8" aria-hidden="true" tabindex="-1"></a><span class="do">## FILL THESE IN WITH COEFFICIENTS FROM YOUR BETA MODEL</span></span>
-<span id="cb731-9"><a href="dummy-variables-part-1.html#cb731-9" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;(Intercept)&quot;</span>]</span>
-<span id="cb731-10"><a href="dummy-variables-part-1.html#cb731-10" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;bBA&quot;</span>]</span>
-<span id="cb731-11"><a href="dummy-variables-part-1.html#cb731-11" aria-hidden="true" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;bMasters&quot;</span>]</span>
-<span id="cb731-12"><a href="dummy-variables-part-1.html#cb731-12" aria-hidden="true" tabindex="-1"></a>b3 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;bPhD&quot;</span>]</span>
-<span id="cb731-13"><a href="dummy-variables-part-1.html#cb731-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb731-14"><a href="dummy-variables-part-1.html#cb731-14" aria-hidden="true" tabindex="-1"></a><span class="do">## I&#39;ll use this to let you know where you need to fill in answers</span></span>
-<span id="cb731-15"><a href="dummy-variables-part-1.html#cb731-15" aria-hidden="true" tabindex="-1"></a>PLACEHOLDER <span class="ot">&lt;-</span> <span class="st">&quot;PLACEHOLDER&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="dummy-variables-part-1.html#cb732-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Alpha Model</span></span>
+<span id="cb732-2"><a href="dummy-variables-part-1.html#cb732-2" aria-hidden="true" tabindex="-1"></a>a0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;(Intercept)&quot;</span>]</span>
+<span id="cb732-3"><a href="dummy-variables-part-1.html#cb732-3" aria-hidden="true" tabindex="-1"></a>a1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;aBA&quot;</span>]</span>
+<span id="cb732-4"><a href="dummy-variables-part-1.html#cb732-4" aria-hidden="true" tabindex="-1"></a>a2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;aMasters&quot;</span>]</span>
+<span id="cb732-5"><a href="dummy-variables-part-1.html#cb732-5" aria-hidden="true" tabindex="-1"></a>a3 <span class="ot">&lt;-</span> <span class="fu">coef</span>(alphaModel)[<span class="st">&quot;aPhD&quot;</span>]</span>
+<span id="cb732-6"><a href="dummy-variables-part-1.html#cb732-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb732-7"><a href="dummy-variables-part-1.html#cb732-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Beta Model</span></span>
+<span id="cb732-8"><a href="dummy-variables-part-1.html#cb732-8" aria-hidden="true" tabindex="-1"></a><span class="do">## FILL THESE IN WITH COEFFICIENTS FROM YOUR BETA MODEL</span></span>
+<span id="cb732-9"><a href="dummy-variables-part-1.html#cb732-9" aria-hidden="true" tabindex="-1"></a>b0 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;(Intercept)&quot;</span>]</span>
+<span id="cb732-10"><a href="dummy-variables-part-1.html#cb732-10" aria-hidden="true" tabindex="-1"></a>b1 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;bBA&quot;</span>]</span>
+<span id="cb732-11"><a href="dummy-variables-part-1.html#cb732-11" aria-hidden="true" tabindex="-1"></a>b2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;bMasters&quot;</span>]</span>
+<span id="cb732-12"><a href="dummy-variables-part-1.html#cb732-12" aria-hidden="true" tabindex="-1"></a>b3 <span class="ot">&lt;-</span> <span class="fu">coef</span>(betaModel)[<span class="st">&quot;bPhD&quot;</span>]</span>
+<span id="cb732-13"><a href="dummy-variables-part-1.html#cb732-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb732-14"><a href="dummy-variables-part-1.html#cb732-14" aria-hidden="true" tabindex="-1"></a><span class="do">## I&#39;ll use this to let you know where you need to fill in answers</span></span>
+<span id="cb732-15"><a href="dummy-variables-part-1.html#cb732-15" aria-hidden="true" tabindex="-1"></a>PLACEHOLDER <span class="ot">&lt;-</span> <span class="st">&quot;PLACEHOLDER&quot;</span></span></code></pre></div>
 <p>We’ll check a variety of situations explored by these models. For each situation, we’ll write out the following 6 steps:</p>
 <ol style="list-style-type: decimal">
 <li><p>First, we’ll write out the situation in English (e.g., “Expected/average wage for a person whose highest degree is high school”)</p></li>
@@ -1271,20 +1270,20 @@ F Statistic (df = 3; 24759)
 <p>Expected/average wage for a person whose highest degree is high school (HS)
 <span class="math display">\[
 \begin{aligned}
-E(wage|HS) 
-&amp;= \alpha_0 
-\\&amp;= \beta_0 
-\\&amp;= 40890.68 
+E(wage|HS)
+&amp;= \alpha_0
+\\&amp;= \beta_0
+\\&amp;= 40890.68
 \\&amp;= 40890.68
 \end{aligned}
 \]</span></p>
 <p>Expected/average wage for a person whose highest degree is BA
 <span class="math display">\[
   \begin{aligned}
-E(wage|BA) 
+E(wage|BA)
 &amp;= \alpha_0 + \alpha_1
 \\&amp;= \beta_0 + \beta_1
-\\&amp;= 62850.71 
+\\&amp;= 62850.71
 \\&amp;= 62850.71
 \end{aligned}
 \]</span></p>
@@ -1294,7 +1293,7 @@ E(wage|BA)
 E(wage|Masters)  
 &amp;= \alpha_0 + \alpha_1 + \alpha_2
 \\&amp;= \beta_0 + \beta_2
-\\&amp;= 72085.99 
+\\&amp;= 72085.99
 \\&amp;= 72085.99
 \end{aligned}
 \]</span></p>
@@ -1304,7 +1303,7 @@ E(wage|Masters)
 E(wage|PhD)  
 &amp;= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3
 \\&amp;= \beta_0 + \beta_3
-\\&amp;= 106437.03 
+\\&amp;= 106437.03
 \\&amp;= 106437.03
 \end{aligned}
 \]</span></p>
@@ -1314,75 +1313,75 @@ E(wage|PhD)
 E(wage|BA) - E(wage|HS)
 &amp;= \alpha_0 + \alpha_1 - (\alpha_0) = \alpha_1
 \\&amp;= \beta_0 + \beta_1 - (\beta_0) = \beta_1
-\\&amp;= 21960.03 
+\\&amp;= 21960.03
 \\&amp;= 21960.03
 \end{aligned}
 \]</span></p>
 <p>How much higher do you expect the average wage to be for someone whose highest degree is a Master’s compared to someone whose highest degree is high school (HS)
 <span class="math display">\[
 \begin{aligned}
-E(wage|Masters) - E(wage|HS) 
+E(wage|Masters) - E(wage|HS)
 &amp;= \alpha_0 + \alpha_1 + \alpha_2 - (\alpha_0) = \alpha_1 + \alpha_2
 \\&amp;= \beta_0 + \beta_2 - (\beta_0) = \beta_2
-\\&amp;= 31195.31 
+\\&amp;= 31195.31
 \\&amp;= 31195.31
 \end{aligned}
 \]</span></p>
 <p>How much higher do you expect the average wage to be for someone whose highest degree is a PhD compared to someone whose highest degree is high school (HS)
 <span class="math display">\[
 \begin{aligned}
-E(wage|PhD) - E(wage|HS) 
+E(wage|PhD) - E(wage|HS)
 &amp;= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3 - (\alpha_0) = \alpha_1 + \alpha_2 + \alpha_3
 \\&amp;= \beta_0 + \beta_3 - (\beta_0) = \beta_3
-\\&amp;= 65546.35 
+\\&amp;= 65546.35
 \\&amp;= 65546.35
 \end{aligned}
 \]</span></p>
 <p>How much higher do you expect the average wage to be for someone whose highest degree is a Master’s compared to someone whose highest degree is a BA
 <span class="math display">\[
 \begin{aligned}
-E(wage|Masters) - E(wage|BA) 
+E(wage|Masters) - E(wage|BA)
 &amp;= \alpha_0 + \alpha_1 + \alpha_2 - (\alpha_0 + \alpha_1) = \alpha_2
 \\&amp;= \beta_0 + \beta_2 - (\beta_0 + \beta_1) = \beta_2 - \beta_1
-\\&amp;= 9235.282 
+\\&amp;= 9235.282
 \\&amp;= 9235.282
 \end{aligned}
 \]</span></p>
 <p>How much higher do you expect the average wage to be for someone whose highest degree is a PhD compared to someone whose highest degree is a BA
 <span class="math display">\[
 \begin{aligned}
-E(wage|PhD) - E(wage|BA) 
+E(wage|PhD) - E(wage|BA)
 &amp;= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3 - (\alpha_0 + \alpha_1) = \alpha_2 + \alpha_3
 \\&amp;= \beta_0 + \beta_3 - (\beta_0 + \beta_1) = \beta_3 - \beta_1
-\\&amp;= 43586.32 
+\\&amp;= 43586.32
 \\&amp;= 43586.32
 \end{aligned}
 \]</span></p>
 <p>How much higher do you expect the average wage to be for someone whose highest degree is a PhD compared to someone whose highest degree is a Master’s
 <span class="math display">\[
 \begin{aligned}
-E(wage|PhD) - E(wage|Masters) 
+E(wage|PhD) - E(wage|Masters)
 &amp;= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3 - (\alpha_0 + \alpha_1 + \alpha_2) = \alpha_3
 \\&amp;= \beta_0 + \beta_3 - (\beta_0 + \beta_2) = \beta_3 - \beta_2
-\\&amp;= 34351.04 
+\\&amp;= 34351.04
 \\&amp;= 34351.04
 \end{aligned}
 \]</span></p>
-<div id="group-averages" class="section level3" number="15.4.1">
-<h3><span class="header-section-number">15.4.1</span> Group averages</h3>
+<div id="group-averages" class="section level3 hasAnchor" number="15.4.1">
+<h3><span class="header-section-number">15.4.1</span> Group averages<a href="dummy-variables-part-1.html#group-averages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Linear regression when all explanatory variables are dummy variables produces the same estimates of average values for different groups as if you simply took the average of the <span class="math inline">\(y\)</span> value for each group. You should be able to confirm this by going back in your BP to chapters where you calculated group averages. Create a single variable for education level (with levels HS, BA, Masters, PhD) and then calculate the average wage for each group.</p>
 <p>Why then do we use regression? One reason is because we easily get standard errors, confidence intervals, and p-values for hypothesis tests of the group averages and differences between groups. Another reason is because we can also control for other variables (such as age…see below).</p>
 </div>
-<div id="causal-estimates" class="section level3" number="15.4.2">
-<h3><span class="header-section-number">15.4.2</span> Causal estimates?</h3>
+<div id="causal-estimates" class="section level3 hasAnchor" number="15.4.2">
+<h3><span class="header-section-number">15.4.2</span> Causal estimates?<a href="dummy-variables-part-1.html#causal-estimates" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Make sure you can explain why we should not interpret our results as causal. For example, above we estimated that the average wage is 21960.03 higher for someone whose highest degree is a BA compared to someone whose highest degree is high school (HS). Why can we not claim that getting a BA causes this increase in wage? In other words, why is <span class="math inline">\(\hat{\alpha}_1\)</span> (or <span class="math inline">\(\hat{\beta}_1\)</span>) not an unbiased estimate of the true effect of getting a BA on wages?</p>
 </div>
-<div id="what-about-age" class="section level3" number="15.4.3">
-<h3><span class="header-section-number">15.4.3</span> What about age?</h3>
+<div id="what-about-age" class="section level3 hasAnchor" number="15.4.3">
+<h3><span class="header-section-number">15.4.3</span> What about age?<a href="dummy-variables-part-1.html#what-about-age" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You may find it interesting to estimate the models above, but controlling for age (i.e., add age as a variable). What changes</p>
 </div>
-<div id="what-about-sex" class="section level3" number="15.4.4">
-<h3><span class="header-section-number">15.4.4</span> What about sex?</h3>
+<div id="what-about-sex" class="section level3 hasAnchor" number="15.4.4">
+<h3><span class="header-section-number">15.4.4</span> What about sex?<a href="dummy-variables-part-1.html#what-about-sex" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>How might you add sex to the model? Suppose you create a <code>female</code> dummy variable and then include it in the model? What would that allow you to say about differences in wages by sex? What would you have to do to estimate how education affects wages differently for males versus females?</p>
 
 </div>

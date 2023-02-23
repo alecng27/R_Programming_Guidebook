@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 Intro to the Tidyverse | R Programming Guidebook Project</title>
+  <meta name="description" content="3 Intro to the Tidyverse | R Programming Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 Intro to the Tidyverse | R Programming Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 Intro to the Tidyverse | R Programming Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intermediate-r.html"/>
+<link rel="next" href="intro-to-data-visualization-with-ggplot2.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro-to-the-tidyverse" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Intro to the Tidyverse</h1>
+<p><a href="https://learn.datacamp.com/courses/introduction-to-the-tidyverse" class="uri">https://learn.datacamp.com/courses/introduction-to-the-tidyverse</a></p>
+<div id="data-wrangling" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Data wrangling</h2>
+<p>The following info goes into how to select (filter), arrange, add, change (mutate) specific variables and observations. Install these two packages so codes below work properly:</p>
+<pre><code>install.packages(&quot;gapminder&quot;)
+install.packages(&quot;dplyr&quot;)</code></pre>
+<p><strong>Loading the gapminder and dplyr packages</strong></p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="intro-to-the-tidyverse.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the gapminder package</span></span>
+<span id="cb184-2"><a href="intro-to-the-tidyverse.html#cb184-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gapminder)</span>
+<span id="cb184-3"><a href="intro-to-the-tidyverse.html#cb184-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the dplyr package</span></span>
+<span id="cb184-4"><a href="intro-to-the-tidyverse.html#cb184-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="intro-to-the-tidyverse.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the gapminder dataset</span></span>
+<span id="cb188-2"><a href="intro-to-the-tidyverse.html#cb188-2" aria-hidden="true" tabindex="-1"></a>gapminder</span></code></pre></div>
+<pre><code>## # A tibble: 1,704 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## # … with 1,694 more rows</code></pre>
+<p><strong>Filter, Arrange, And Mutate Verbs</strong></p>
+<center>
+<strong>Filter Verb</strong>
+</center>
+<p>The <code>filter</code> verb extracts particular observations based on a condition. The <code>==</code>is to compare two values.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="intro-to-the-tidyverse.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for China in 2002</span></span>
+<span id="cb190-2"><a href="intro-to-the-tidyverse.html#cb190-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb190-3"><a href="intro-to-the-tidyverse.html#cb190-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">&quot;China&quot;</span>,year <span class="sc">==</span> <span class="dv">2002</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 6
+##   country continent  year lifeExp        pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;      &lt;int&gt;     &lt;dbl&gt;
+## 1 China   Asia       2002    72.0 1280400000     3119.</code></pre>
+<center>
+<strong>Arrange Verb</strong>
+</center>
+<p>use arrange() to sort observations in ascending or descending order of a particular variable:</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="intro-to-the-tidyverse.html#cb192-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort in ascending order of lifeExp</span></span>
+<span id="cb192-2"><a href="intro-to-the-tidyverse.html#cb192-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb192-3"><a href="intro-to-the-tidyverse.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(lifeExp)</span></code></pre></div>
+<pre><code>## # A tibble: 1,704 × 6
+##    country      continent  year lifeExp     pop gdpPercap
+##    &lt;fct&gt;        &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+##  1 Rwanda       Africa     1992    23.6 7290203      737.
+##  2 Afghanistan  Asia       1952    28.8 8425333      779.
+##  3 Gambia       Africa     1952    30    284320      485.
+##  4 Angola       Africa     1952    30.0 4232095     3521.
+##  5 Sierra Leone Africa     1952    30.3 2143249      880.
+##  6 Afghanistan  Asia       1957    30.3 9240934      821.
+##  7 Cambodia     Asia       1977    31.2 6978607      525.
+##  8 Mozambique   Africa     1952    31.3 6446316      469.
+##  9 Sierra Leone Africa     1957    31.6 2295678     1004.
+## 10 Burkina Faso Africa     1952    32.0 4469979      543.
+## # … with 1,694 more rows</code></pre>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb194-1"><a href="intro-to-the-tidyverse.html#cb194-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort in descending order of lifeExp</span></span>
+<span id="cb194-2"><a href="intro-to-the-tidyverse.html#cb194-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb194-3"><a href="intro-to-the-tidyverse.html#cb194-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(lifeExp))</span></code></pre></div>
+<pre><code>## # A tibble: 1,704 × 6
+##    country          continent  year lifeExp       pop gdpPercap
+##    &lt;fct&gt;            &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+##  1 Japan            Asia       2007    82.6 127467972    31656.
+##  2 Hong Kong, China Asia       2007    82.2   6980412    39725.
+##  3 Japan            Asia       2002    82   127065841    28605.
+##  4 Iceland          Europe     2007    81.8    301931    36181.
+##  5 Switzerland      Europe     2007    81.7   7554661    37506.
+##  6 Hong Kong, China Asia       2002    81.5   6762476    30209.
+##  7 Australia        Oceania    2007    81.2  20434176    34435.
+##  8 Spain            Europe     2007    80.9  40448191    28821.
+##  9 Sweden           Europe     2007    80.9   9031088    33860.
+## 10 Israel           Asia       2007    80.7   6426679    25523.
+## # … with 1,694 more rows</code></pre>
+<center>
+<strong>Mutate Verb</strong>
+</center>
+<p><code>mutate()</code> changes or adds variables:</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="intro-to-the-tidyverse.html#cb196-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use mutate to change lifeExp to be in months</span></span>
+<span id="cb196-2"><a href="intro-to-the-tidyverse.html#cb196-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb196-3"><a href="intro-to-the-tidyverse.html#cb196-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">lifeExp =</span> <span class="dv">12</span> <span class="sc">*</span> lifeExp)</span></code></pre></div>
+<pre><code>## # A tibble: 1,704 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    346.  8425333      779.
+##  2 Afghanistan Asia       1957    364.  9240934      821.
+##  3 Afghanistan Asia       1962    384. 10267083      853.
+##  4 Afghanistan Asia       1967    408. 11537966      836.
+##  5 Afghanistan Asia       1972    433. 13079460      740.
+##  6 Afghanistan Asia       1977    461. 14880372      786.
+##  7 Afghanistan Asia       1982    478. 12881816      978.
+##  8 Afghanistan Asia       1987    490. 13867957      852.
+##  9 Afghanistan Asia       1992    500. 16317921      649.
+## 10 Afghanistan Asia       1997    501. 22227415      635.
+## # … with 1,694 more rows</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb198-1"><a href="intro-to-the-tidyverse.html#cb198-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use mutate to create a new column called lifeExpMonths</span></span>
+<span id="cb198-2"><a href="intro-to-the-tidyverse.html#cb198-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb198-3"><a href="intro-to-the-tidyverse.html#cb198-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">lifeExpMonths =</span> <span class="dv">12</span> <span class="sc">*</span> lifeExp) </span></code></pre></div>
+<pre><code>## # A tibble: 1,704 × 7
+##    country     continent  year lifeExp      pop gdpPercap lifeExpMonths
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.          346.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.          364.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.          384.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.          408.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.          433.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.          461.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.          478.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.          490.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.          500.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.          501.
+## # … with 1,694 more rows</code></pre>
+<center>
+<strong>Combining Filter, Mutate, And Arrange</strong>
+</center>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="intro-to-the-tidyverse.html#cb200-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter, mutate, and arrange the gapminder dataset</span></span>
+<span id="cb200-2"><a href="intro-to-the-tidyverse.html#cb200-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb200-3"><a href="intro-to-the-tidyverse.html#cb200-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2007</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb200-4"><a href="intro-to-the-tidyverse.html#cb200-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">lifeExpMonths =</span> <span class="dv">12</span> <span class="sc">*</span> lifeExp) <span class="sc">%&gt;%</span></span>
+<span id="cb200-5"><a href="intro-to-the-tidyverse.html#cb200-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(lifeExpMonths))</span></code></pre></div>
+<pre><code>## # A tibble: 142 × 7
+##    country          continent  year lifeExp       pop gdpPercap lifeExpMonths
+##    &lt;fct&gt;            &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Japan            Asia       2007    82.6 127467972    31656.          991.
+##  2 Hong Kong, China Asia       2007    82.2   6980412    39725.          986.
+##  3 Iceland          Europe     2007    81.8    301931    36181.          981.
+##  4 Switzerland      Europe     2007    81.7   7554661    37506.          980.
+##  5 Australia        Oceania    2007    81.2  20434176    34435.          975.
+##  6 Spain            Europe     2007    80.9  40448191    28821.          971.
+##  7 Sweden           Europe     2007    80.9   9031088    33860.          971.
+##  8 Israel           Asia       2007    80.7   6426679    25523.          969.
+##  9 France           Europe     2007    80.7  61083916    30470.          968.
+## 10 Canada           Americas   2007    80.7  33390141    36319.          968.
+## # … with 132 more rows</code></pre>
+</div>
+<div id="data-visualization" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> Data visualization</h2>
+<p>Make sure to load the <code>ggplot2</code> package. <code>ggplot2</code> will allow the visualization of data into graphs.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="intro-to-the-tidyverse.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb202-2"><a href="intro-to-the-tidyverse.html#cb202-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-3"><a href="intro-to-the-tidyverse.html#cb202-3" aria-hidden="true" tabindex="-1"></a>gapminder_1952 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb202-4"><a href="intro-to-the-tidyverse.html#cb202-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1952</span>)</span>
+<span id="cb202-5"><a href="intro-to-the-tidyverse.html#cb202-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb202-6"><a href="intro-to-the-tidyverse.html#cb202-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a plot to compare population and life expectancy</span></span>
+<span id="cb202-7"><a href="intro-to-the-tidyverse.html#cb202-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> lifeExp)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><code>geom_point()</code> stands for “geometric,” and the “point” tells R that it’s a scatter plot. <code>aes()</code> stands for aesthetic.
+The data is too cramped up to the left of the plot so use “log scales” to distribute the data better.</p>
+<p>*<strong>Log Scale</strong></p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="intro-to-the-tidyverse.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot comparing pop and gdpPercap, with both axes on a log scale</span></span>
+<span id="cb203-2"><a href="intro-to-the-tidyverse.html#cb203-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> gdpPercap)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span><span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>the newly added “log_scales” has created a better looking graph by adjusting the scale of the x-axis.</p>
+<p><strong>Additional Aesthetic Functions</strong></p>
+<center>
+<strong>Color And Size</strong>
+</center>
+<p>Adding color to a scatter plot can be used to show which continent each point in a scatter plot represents. Then, adding size can be used to show the magnitude of each observations:</p>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb204-1"><a href="intro-to-the-tidyverse.html#cb204-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the color, and size aesthetics to represent the continents and the country&#39;s gdpPercap</span></span>
+<span id="cb204-2"><a href="intro-to-the-tidyverse.html#cb204-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> lifeExp, <span class="at">color =</span> continent, <span class="at">size =</span> gdpPercap)) <span class="sc">+</span></span>
+<span id="cb204-3"><a href="intro-to-the-tidyverse.html#cb204-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb204-4"><a href="intro-to-the-tidyverse.html#cb204-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>()</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<center>
+<strong>Faceting/Subgraphs</strong>
+</center>
+<p>Use <code>facet_wrap(~ )</code> function to divide a graph into subplots based on one of its variables:</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb205-1"><a href="intro-to-the-tidyverse.html#cb205-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot comparing pop and lifeExp, faceted by continent</span></span>
+<span id="cb205-2"><a href="intro-to-the-tidyverse.html#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> lifeExp)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent)</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="grouping-and-summarizing" class="section level2" number="3.3">
+<h2><span class="header-section-number">3.3</span> Grouping and summarizing</h2>
+<p><strong>Summarize Verb</strong></p>
+<p>The function <code>summarize()</code> combines many observations from the same variable into one:</p>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="intro-to-the-tidyverse.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for 1957 then summarize the median life expectancy and the maximum GDP per capita</span></span>
+<span id="cb206-2"><a href="intro-to-the-tidyverse.html#cb206-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb206-3"><a href="intro-to-the-tidyverse.html#cb206-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1957</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb206-4"><a href="intro-to-the-tidyverse.html#cb206-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarize</span>(<span class="at">medianLifeExp =</span> <span class="fu">median</span>(lifeExp), <span class="at">maxGdpPercap =</span> <span class="fu">max</span>(gdpPercap))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 2
+##   medianLifeExp maxGdpPercap
+##           &lt;dbl&gt;        &lt;dbl&gt;
+## 1          48.4      113523.</code></pre>
+<p>In this case, the code summarized the median life expectancy and maximum GDP/capita of all the countries and conitents from 1957.</p>
+<p><strong>Group_by Verb</strong></p>
+<p>This function <code>group_by()</code> is basically an advanced version of the <code>filter()</code> function. If the <code>filter()</code> along with the <code>summarize()</code> functions can summarize observations of variable(s) one of each filtered type at a time, then <code>group_by()</code> function can run the same calculations for all the observation units:</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="intro-to-the-tidyverse.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find median life expectancy and maximum GDP per capita in each year</span></span>
+<span id="cb208-2"><a href="intro-to-the-tidyverse.html#cb208-2" aria-hidden="true" tabindex="-1"></a>gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb208-3"><a href="intro-to-the-tidyverse.html#cb208-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb208-4"><a href="intro-to-the-tidyverse.html#cb208-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">summarize</span>(<span class="at">medianLifeExp =</span> <span class="fu">median</span>(lifeExp), <span class="at">maxGdpPercap =</span> <span class="fu">max</span>(gdpPercap))</span></code></pre></div>
+<pre><code>## # A tibble: 12 × 3
+##     year medianLifeExp maxGdpPercap
+##    &lt;int&gt;         &lt;dbl&gt;        &lt;dbl&gt;
+##  1  1952          45.1      108382.
+##  2  1957          48.4      113523.
+##  3  1962          50.9       95458.
+##  4  1967          53.8       80895.
+##  5  1972          56.5      109348.
+##  6  1977          59.7       59265.
+##  7  1982          62.4       33693.
+##  8  1987          65.8       31541.
+##  9  1992          67.7       34933.
+## 10  1997          69.4       41283.
+## 11  2002          70.8       44684.
+## 12  2007          71.9       49357.</code></pre>
+<p><strong>Visualizing the dataset</strong></p>
+<p>Assigning the dataset to a variable then plug it in to the <code>ggplot2</code> to make a graph:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="intro-to-the-tidyverse.html#cb210-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize medianGdpPercap within each continent within each year: by_year_continent</span></span>
+<span id="cb210-2"><a href="intro-to-the-tidyverse.html#cb210-2" aria-hidden="true" tabindex="-1"></a>by_year_continent <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb210-3"><a href="intro-to-the-tidyverse.html#cb210-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">group_by</span>(continent, year) <span class="sc">%&gt;%</span></span>
+<span id="cb210-4"><a href="intro-to-the-tidyverse.html#cb210-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">summarize</span>(<span class="at">medianGdpPercap =</span> <span class="fu">median</span>(gdpPercap))</span></code></pre></div>
+<pre><code>## `summarise()` has grouped output by &#39;continent&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="intro-to-the-tidyverse.html#cb212-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the change in medianGdpPercap in each continent over time</span></span>
+<span id="cb212-2"><a href="intro-to-the-tidyverse.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(by_year_continent, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> medianGdpPercap, <span class="at">color =</span> continent)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<div id="types-of-visualizations" class="section level2" number="3.4">
+<h2><span class="header-section-number">3.4</span> Types of visualizations</h2>
+<p><strong>Line Plot</strong></p>
+<p>A line plot is useful for visualizing trends over time. Use <code>geom_line()</code> to create a line plot instead of <code>geom_point()</code> to create a scatter plot. The function <code>expand_limits(y = 0)</code> tells the y-axis to start from <code>0</code>:</p>
+<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="intro-to-the-tidyverse.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot showing the change in medianGdpPercap by continent over time</span></span>
+<span id="cb213-2"><a href="intro-to-the-tidyverse.html#cb213-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(by_year_continent, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> medianGdpPercap, <span class="at">color =</span> continent)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>)</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p><strong>Bar Plot</strong></p>
+<p>A bar plot is useful for visualizing summary statistics. use <code>geom_col()</code> to create a bar plot:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="intro-to-the-tidyverse.html#cb214-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for observations in the Oceania continent in 1952</span></span>
+<span id="cb214-2"><a href="intro-to-the-tidyverse.html#cb214-2" aria-hidden="true" tabindex="-1"></a>oceania_1952 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb214-3"><a href="intro-to-the-tidyverse.html#cb214-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">&quot;Oceania&quot;</span>, year <span class="sc">==</span> <span class="dv">1952</span>)</span>
+<span id="cb214-4"><a href="intro-to-the-tidyverse.html#cb214-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb214-5"><a href="intro-to-the-tidyverse.html#cb214-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a bar plot of gdpPercap by country</span></span>
+<span id="cb214-6"><a href="intro-to-the-tidyverse.html#cb214-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(oceania_1952, <span class="fu">aes</span>(<span class="at">x =</span> country, <span class="at">y =</span> gdpPercap)) <span class="sc">+</span> <span class="fu">geom_col</span>()</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><strong>Histogram</strong></p>
+<p>A histogram is useful for examining the distribution of a numeric variable. Every bar represents a <code>bin</code> of a variable, and the height of the bar represents how many observations fall into that <code>bin</code>. Use <code>geom_histogram()</code> to create a histogram:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="intro-to-the-tidyverse.html#cb215-1" aria-hidden="true" tabindex="-1"></a>gapminder_1952 <span class="ot">&lt;-</span> gapminder <span class="sc">%&gt;%</span></span>
+<span id="cb215-2"><a href="intro-to-the-tidyverse.html#cb215-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1952</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb215-3"><a href="intro-to-the-tidyverse.html#cb215-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pop_by_mil =</span> pop <span class="sc">/</span> <span class="dv">1000000</span>)</span>
+<span id="cb215-4"><a href="intro-to-the-tidyverse.html#cb215-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb215-5"><a href="intro-to-the-tidyverse.html#cb215-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of population (pop_by_mil)</span></span>
+<span id="cb215-6"><a href="intro-to-the-tidyverse.html#cb215-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop_by_mil)) <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>)</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><strong>Boxplot</strong></p>
+<p>A boxplot is useful for comparing a distribution of values across several groups.</p>
+<div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="intro-to-the-tidyverse.html#cb216-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boxplot comparing gdpPercap among continents</span></span>
+<span id="cb216-2"><a href="intro-to-the-tidyverse.html#cb216-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> gdpPercap)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>() <span class="sc">+</span> <span class="fu">scale_y_log10</span>()</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><strong>How To Add A Title To A Graph</strong></p>
+<p>Use <code>ggtitle()</code> function to add a title to a graph:</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="intro-to-the-tidyverse.html#cb217-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a title to this graph: &quot;Comparing GDP per capita across continents&quot;</span></span>
+<span id="cb217-2"><a href="intro-to-the-tidyverse.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> gdpPercap)) <span class="sc">+</span></span>
+<span id="cb217-3"><a href="intro-to-the-tidyverse.html#cb217-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb217-4"><a href="intro-to-the-tidyverse.html#cb217-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
+<span id="cb217-5"><a href="intro-to-the-tidyverse.html#cb217-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Comparing GDP per capita across continents&quot;</span>)</span></code></pre></div>
+<p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intermediate-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="intro-to-data-visualization-with-ggplot2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/03-Intro_to_the_Tidyverse.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/03-Intro_to_the_Tidyverse.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/03-Intro_to_the_Tidyverse.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

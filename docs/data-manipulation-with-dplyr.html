@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>7 Data Manipulation with dplyr | R Programming Guidebook Project</title>
   <meta name="description" content="7 Data Manipulation with dplyr | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="7 Data Manipulation with dplyr | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="categorical-data-in-the-tidyverse.html"/>
 <link rel="next" href="joining-data-with-dplyr.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,16 +337,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-manipulation-with-dplyr" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Data Manipulation with dplyr</h1>
+<div id="data-manipulation-with-dplyr" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Data Manipulation with dplyr<a href="data-manipulation-with-dplyr.html#data-manipulation-with-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/data-manipulation-with-dplyr" class="uri">https://learn.datacamp.com/courses/data-manipulation-with-dplyr</a></p>
-<div id="transforming-data-with-dplyr" class="section level2" number="7.1">
-<h2><span class="header-section-number">7.1</span> Transforming Data with dplyr</h2>
+<div id="transforming-data-with-dplyr" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Transforming Data with dplyr<a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>select(), mutate(), filter(), and arrange()</strong></p>
 <p>For more details, go to the <a href="https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/intro-to-the-tidyverse.html#data-wrangling">Data Wrangling</a> section of <em>Intro to the Tidyverse</em>.</p>
 </div>
-<div id="aggregating-data" class="section level2" number="7.2">
-<h2><span class="header-section-number">7.2</span> Aggregating Data</h2>
+<div id="aggregating-data" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Aggregating Data<a href="data-manipulation-with-dplyr.html#aggregating-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>count()</strong></p>
 <p>A simple way to aggregate data is to count to find out the number of observations. Use <code>count()</code>:</p>
 <div class="sourceCode" id="cb374"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb374-1"><a href="data-manipulation-with-dplyr.html#cb374-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">%&gt;%</span></span>
@@ -376,8 +375,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 3 8       335</code></pre>
 <p>For more details, go to the <a href="https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/categorical-data-in-the-tidyverse.html#introduction-to-factor-variables">Introduction to Factor Variables</a> section of <em>Categorical Data in the Tidyverse</em>.</p>
 </div>
-<div id="selecting-and-transforming-data" class="section level2" number="7.3">
-<h2><span class="header-section-number">7.3</span> Selecting and Transforming Data</h2>
+<div id="selecting-and-transforming-data" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Selecting and Transforming Data<a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>select() And rename()</strong>*</p>
 <p>For more details, go to the <a href="https://econ380w21.github.io/bpAlNw1Ae7YwY9H3f/working-with-data-in-the-tidyverse.html#tame-your-data">Tame your data</a> section of <em>Working with Data in the Tidyverse</em>.</p>
 <p><strong>Transmute()</strong></p>
@@ -391,8 +390,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Hornet 4 Drive         3.215  1.458050
 ## Hornet Sportabout      3.440  1.560091</code></pre>
 </div>
-<div id="case-study-the-babynames-dataset" class="section level2" number="7.4">
-<h2><span class="header-section-number">7.4</span> Case Study: The babynames Dataset</h2>
+<div id="case-study-the-babynames-dataset" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Case Study: The babynames Dataset<a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="data-manipulation-with-dplyr.html#cb380-1" aria-hidden="true" tabindex="-1"></a>babynames <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/4984/datasets/a924ac5d86adba2e934d489cb9db446236f62b2c/babynames.rds&quot;</span>)))</span>
 <span id="cb380-2"><a href="data-manipulation-with-dplyr.html#cb380-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb380-3"><a href="data-manipulation-with-dplyr.html#cb380-3" aria-hidden="true" tabindex="-1"></a>babynames</span></code></pre></div>

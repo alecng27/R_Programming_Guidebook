@@ -1,0 +1,2496 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>14 Ch 3 - MLR | R Programming Guidebook Project</title>
+  <meta name="description" content="14 Ch 3 - MLR | R Programming Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="14 Ch 3 - MLR | R Programming Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="14 Ch 3 - MLR | R Programming Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ch-2---slr.html"/>
+<link rel="next" href="dummy-variables-part-1.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="ch-3---mlr" class="section level1" number="14">
+<h1><span class="header-section-number">14</span> Ch 3 - MLR</h1>
+<p>This chapter walks through a few basics of working with MLR models. The last section at the bottom, <a href="ch-3---mlr.html#log-transformations">Log transformations</a>, asks you to create a few graphs, estimate a few models, and formally interpret a few coefficients.</p>
+<p>You’ll need to make sure you have the following packages installed:</p>
+<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="ch-3---mlr.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb678-2"><a href="ch-3---mlr.html#cb678-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb678-3"><a href="ch-3---mlr.html#cb678-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb678-4"><a href="ch-3---mlr.html#cb678-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb678-5"><a href="ch-3---mlr.html#cb678-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb678-6"><a href="ch-3---mlr.html#cb678-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div id="data" class="section level2" number="14.1">
+<h2><span class="header-section-number">14.1</span> Data</h2>
+<style>
+.variableTable th {
+  text-align: left;
+  color: orange;
+}
+</style>
+<p>The dataset <code>ceo.csv</code> has the following variables:</p>
+<div class="variableTable">
+<table>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>salary</code></td>
+<td>1990 compensation in dollars ($)</td>
+</tr>
+<tr class="even">
+<td><code>age</code></td>
+<td>age of CEO in years</td>
+</tr>
+<tr class="odd">
+<td><code>comten</code></td>
+<td>years CEO with company</td>
+</tr>
+<tr class="even">
+<td><code>ceoten</code></td>
+<td>years as ceo with company</td>
+</tr>
+<tr class="odd">
+<td><code>sales</code></td>
+<td>1990 firm sales in $millions</td>
+</tr>
+<tr class="even">
+<td><code>profits</code></td>
+<td>1990 profits in $millions</td>
+</tr>
+<tr class="odd">
+<td><code>mktval</code></td>
+<td>1990 market value in $millions</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that the table above has custom formatting applied by adding an HTML class name “variableTable” (via a “div” element that surrounds the table), formatting the table header (th) to be left-aligned and have an orange font so you can easily see what was affected.</p>
+<style>
+.sumstats td {
+  text-align: right;
+  color: green;
+}
+</style>
+<div id="summary-statistics" class="section level3 sumstats" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Summary Statistics</h3>
+<p>The <code>stargazer</code> package provides an easy way to display summary statistics. You need the <code>result='asis'</code> code chunk option so that it displays the html table in the knit output file (and you need the <code>type="html"</code> stargazer option to produce the html table). The <code>warning=FALSE</code> and <code>message=FALSE</code> keep it from displaying some of the messages it displays by default.</p>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="ch-3---mlr.html#cb679-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/econ380w21/380data/main/ceosal.csv&quot;</span>)</span>
+<span id="cb679-2"><a href="ch-3---mlr.html#cb679-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(mydata, <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,<span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;sd&quot;</span>, <span class="st">&quot;min&quot;</span>, <span class="st">&quot;p25&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;p75&quot;</span>, <span class="st">&quot;max&quot;</span>))</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Statistic
+</td>
+<td>
+Mean
+</td>
+<td>
+St. Dev.
+</td>
+<td>
+Min
+</td>
+<td>
+Pctl(25)
+</td>
+<td>
+Median
+</td>
+<td>
+Pctl(75)
+</td>
+<td>
+Max
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+salary
+</td>
+<td>
+865,864.400
+</td>
+<td>
+587,589.300
+</td>
+<td>
+100,000
+</td>
+<td>
+471,000
+</td>
+<td>
+707,000
+</td>
+<td>
+1,119,000
+</td>
+<td>
+5,299,000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+age
+</td>
+<td>
+56.429
+</td>
+<td>
+8.422
+</td>
+<td>
+33
+</td>
+<td>
+52
+</td>
+<td>
+57
+</td>
+<td>
+62
+</td>
+<td>
+86
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+comten
+</td>
+<td>
+22.503
+</td>
+<td>
+12.295
+</td>
+<td>
+2
+</td>
+<td>
+12
+</td>
+<td>
+23
+</td>
+<td>
+33
+</td>
+<td>
+58
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ceoten
+</td>
+<td>
+7.955
+</td>
+<td>
+7.151
+</td>
+<td>
+0
+</td>
+<td>
+3
+</td>
+<td>
+6
+</td>
+<td>
+11
+</td>
+<td>
+37
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+sales
+</td>
+<td>
+3,529.463
+</td>
+<td>
+6,088.654
+</td>
+<td>
+29
+</td>
+<td>
+561
+</td>
+<td>
+1,400
+</td>
+<td>
+3,500
+</td>
+<td>
+51,300
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+profits
+</td>
+<td>
+207.831
+</td>
+<td>
+404.454
+</td>
+<td>
+-463
+</td>
+<td>
+34
+</td>
+<td>
+63
+</td>
+<td>
+208
+</td>
+<td>
+2,700
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+mktval
+</td>
+<td>
+3,600.316
+</td>
+<td>
+6,442.276
+</td>
+<td>
+387
+</td>
+<td>
+644
+</td>
+<td>
+1,200
+</td>
+<td>
+3,500
+</td>
+<td>
+45,400
+</td>
+</tr>
+<tr>
+<td colspan="8" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>In addition to providing you with an example of how to display a summary statistics table, this section also provides an example of how you can control aspects of how the table displays using HTML/CSS. In bookdown, the horizontal space is already modified for you, but if you use this in a regular RMD file that you knit, there will be no spacing at all between cells (so the numbers bump right up next to each other). To fix this, you can add padding (e.g., padding-left, padding-right). Often you want to right-align summary statistics. To do this, I’ve added an HTML class name “sumstats” to this section by including .sumstats in curly brackets in the section header (the part started with ##). I included CSS styling to align the text right. I also make the font green so that you could easily see what was modified.</p>
+<p>Beyond simply formatting a table, this example, and the one above that uses a “div” and class name, are the two main ways you can control the formatting of specific parts of your book (without affecting the entire book).</p>
+<p>Now back to econometrics…</p>
+</div>
+</div>
+<div id="regression-model-comparisons" class="section level2" number="14.2">
+<h2><span class="header-section-number">14.2</span> Regression model comparisons</h2>
+<p>Consider four models:</p>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="ch-3---mlr.html#cb680-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span>
+<span id="cb680-2"><a href="ch-3---mlr.html#cb680-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>age,<span class="at">data=</span>mydata)</span>
+<span id="cb680-3"><a href="ch-3---mlr.html#cb680-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb680-4"><a href="ch-3---mlr.html#cb680-4" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten<span class="sc">+</span>age,<span class="at">data=</span>mydata)</span></code></pre></div>
+<p>The package you should use for 380 to report the results of multiple models side-by-side is the <code>stargazer</code> package. Each column is a separate model. If a variable does not have a coefficient displayed in a column, that means it was not included as an explanatory variable in that model.</p>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="ch-3---mlr.html#cb681-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3, model4, </span>
+<span id="cb681-2"><a href="ch-3---mlr.html#cb681-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb681-3"><a href="ch-3---mlr.html#cb681-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb681-4"><a href="ch-3---mlr.html#cb681-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb681-5"><a href="ch-3---mlr.html#cb681-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb681-6"><a href="ch-3---mlr.html#cb681-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+salary
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+<td>
+(4)
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+sales
+</td>
+<td>
+15.984
+</td>
+<td>
+15.369
+</td>
+<td>
+18.233<sup>*</sup>
+</td>
+<td>
+18.061
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.152
+</td>
+<td>
+p = 0.169
+</td>
+<td>
+p = 0.100
+</td>
+<td>
+p = 0.106
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+mktval
+</td>
+<td>
+23.831
+</td>
+<td>
+23.842
+</td>
+<td>
+21.157
+</td>
+<td>
+21.231
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.137
+</td>
+<td>
+p = 0.137
+</td>
+<td>
+p = 0.183
+</td>
+<td>
+p = 0.183
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+profits
+</td>
+<td>
+31.703
+</td>
+<td>
+28.100
+</td>
+<td>
+48.636
+</td>
+<td>
+47.528
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.909
+</td>
+<td>
+p = 0.920
+</td>
+<td>
+p = 0.859
+</td>
+<td>
+p = 0.863
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+age
+</td>
+<td>
+</td>
+<td>
+4,528.026
+</td>
+<td>
+</td>
+<td>
+823.966
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+p = 0.353
+</td>
+<td>
+</td>
+<td>
+p = 0.873
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ceoten
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+12,730.860<sup>**</sup>
+</td>
+<td>
+12,390.430<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+p = 0.026
+</td>
+<td>
+p = 0.042
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+717,062.400<sup>***</sup>
+</td>
+<td>
+464,424.700<sup>*</sup>
+</td>
+<td>
+613,958.800<sup>***</sup>
+</td>
+<td>
+570,743.300<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.093
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.042
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.178
+</td>
+<td>
+0.182
+</td>
+<td>
+0.201
+</td>
+<td>
+0.202
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.163
+</td>
+<td>
+0.163
+</td>
+<td>
+0.183
+</td>
+<td>
+0.178
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="4" style="text-align:right">
+<em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.01</em>
+</td>
+</tr>
+</table>
+<p>Just like for the summary statistics table, you need the <code>result='asis'</code> code chunk option so that it displays the html table in the knit output file (and you need the <code>type="html"</code> stargazer option to produce the html table), and you want the <code>warning=FALSE</code> and <code>message=FALSE</code> code chunk options to keep it from displaying some of the messages it displays by default.</p>
+<p>For displaying regression results for 380, please use the <code>report=('vc*p')</code> stargazer option to display p-values and the <code>keep.stat = c("n","rsq","adj.rsq")</code> stargazer option to display the sample size (it’s important to know the sample size for each model so you can see if it changes, which happens if some variables have missing values), r-squared, and adjusted r-squared.</p>
+<p>The final two options (notes and notes.append) fix a bug in stargazer. The table is supposed to display a note that explains the stars (asterisks) used to denote statistical significance (one star means statistically significant at the 10% level, two stars mean statistically significant at the 5% level, and 3 stars mean statistically significant at the 1% level). However, asterisks are also how you make words <em>italic</em> and <strong>bold</strong> in RMarkdown, and that’s what happens in the table footnote (try removing those options and building to see what I mean). The solution is to use the character code 42 (*) instead. So, just use the options above and it should work correctly.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This option also highlights why you often want to have easily-accessible examples. You’re probably not going to remember all that to type it yourself, but if you have this chapter in your BP, you can easily search for stargazer, find this example, and copy/paste into your project or wherever you want to report results.</p>
+</div>
+<div id="adjusted-r-squared" class="section level2" number="14.3">
+<h2><span class="header-section-number">14.3</span> Adjusted R-Squared</h2>
+<p>Recall the definition of <span class="math inline">\(R^2\)</span> from “LN3.6 (R-Squared, Goodness of Fit).pptx” (posted in Moodle):
+<span class="math display">\[
+R^2 = \frac{SSM}{SST} = 1 - \frac{SSR}{SST}
+\]</span></p>
+<p>The denominator measures the total variation in the <span class="math inline">\(y\)</span> variable: <span class="math inline">\(SST = (n-1)\text{VAR}(y)\)</span> (where <span class="math inline">\(\text{VAR}(y)\)</span> is the variance of <span class="math inline">\(y\)</span>); thus, <span class="math inline">\(SST\)</span> has nothing to do with the explanatory variables (it’s calculated only using <span class="math inline">\(y\)</span>). Consequently, adding additional <span class="math inline">\(x\)</span> variables to the model does not affect <span class="math inline">\(SST\)</span>. Adding an additional <span class="math inline">\(x\)</span> variable cannot decrease how much of the variation in <span class="math inline">\(y\)</span> is explained by the model, so <span class="math inline">\(SSM\)</span> will not decrease. Usually it increases at least a little bit. Thus, adding an additional <span class="math inline">\(x\)</span> variable cannot decrease <span class="math inline">\(R^2\)</span>, and it usually increases it at least a little bit. This means that <span class="math inline">\(R^2\)</span> increasing is a not a good justification for adding an additional <span class="math inline">\(x\)</span> variable to the model.</p>
+<p>Adjusted <span class="math inline">\(R^2\)</span> penalizes you for adding an additional <span class="math inline">\(x\)</span> variable. Adjusted <span class="math inline">\(R^2\)</span> only increases if the new variable has a sufficiently significant effect on <span class="math inline">\(y\)</span>. Adjusted <span class="math inline">\(R^2\)</span> is defined as</p>
+<p><span class="math display">\[
+\text{Adjusted }\bar{R}^2 = 1 - \frac{\left(\frac{SSR}{n-k-1}\right)}{\left(\frac{SST}{n-1}\right)}
+\]</span></p>
+<p>Look at the models above. All four models include measures of the company, including sales, market value, and profits. Models 2-4 add variables measuring characteristics of the CEO. Compare models 1 and 2. Adding the CEO’s age increases <span class="math inline">\(R^2\)</span> (from 0.178 to 0.182) but adjusted <span class="math inline">\(R^2\)</span> remains essentially the same (it goes down by 0.000625), indicating that adding age does not improve the model (you’ll also note that the p-value for the <code>age</code> coefficient is 0.352, meaning that the effect of the CEO’s age on salary is not statistically significant at any standard level of significance, providing further evidence that including age does not improve the model).</p>
+<p>Comparing models 1 and 3, both <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span> increase when adding the CEO’s tenure (from 0.178 to 0.201 for <span class="math inline">\(R^2\)</span> and from 0.163 to 0.183 for adjusted <span class="math inline">\(R^2\)</span>). This increase in adjusted <span class="math inline">\(R^2\)</span> corresponds with statistical significance of the coefficient; the p-value for the <code>ceoten</code> coefficient is 0.0251, meaning that the effect of CEO’s tenure on salary is statistically significant at the 5% level. The increase in adjusted <span class="math inline">\(R^2\)</span> provides support for including this variable in the model (with the statistically significant coefficient providing additional support).</p>
+<p>Comparing models 3 and 4, we again see that adding the CEO’s age does not improve the model; <span class="math inline">\(R^2\)</span> increases slightly (from 0.201 to 0.202) but adjusted <span class="math inline">\(R^2\)</span> goes down (from 0.183 to 0.178). The coefficient on age is also not statistically significant at any standard level of significance (the p-value is 0.873,). These results indicate that age should be left out of the model.</p>
+</div>
+<div id="multicollinearity" class="section level2" number="14.4">
+<h2><span class="header-section-number">14.4</span> Multicollinearity</h2>
+<p>Sometimes two variables are both important in determining <span class="math inline">\(y\)</span>, but when both are included in the model, neither appears to have a significant effect. Consider the following four models. Note that the final column is model 3 from above (so I numbered the models 5, 6, 7, and 3).</p>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="ch-3---mlr.html#cb682-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb682-2"><a href="ch-3---mlr.html#cb682-2" aria-hidden="true" tabindex="-1"></a>model6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval,<span class="at">data=</span>mydata)</span>
+<span id="cb682-3"><a href="ch-3---mlr.html#cb682-3" aria-hidden="true" tabindex="-1"></a>model7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span>
+<span id="cb682-4"><a href="ch-3---mlr.html#cb682-4" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span></code></pre></div>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="ch-3---mlr.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model5, model6, model7, model3, </span>
+<span id="cb683-2"><a href="ch-3---mlr.html#cb683-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb683-3"><a href="ch-3---mlr.html#cb683-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb683-4"><a href="ch-3---mlr.html#cb683-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb683-5"><a href="ch-3---mlr.html#cb683-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb683-6"><a href="ch-3---mlr.html#cb683-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb683-7"><a href="ch-3---mlr.html#cb683-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb683-8"><a href="ch-3---mlr.html#cb683-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;(5)&quot;</span>,<span class="st">&quot;(6)&quot;</span>, <span class="st">&quot;(7)&quot;</span>, <span class="st">&quot;(3)&quot;</span>))</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+salary
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(5)
+</td>
+<td>
+(6)
+</td>
+<td>
+(7)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+sales
+</td>
+<td>
+37.801<sup>***</sup>
+</td>
+<td>
+19.019<sup>*</sup>
+</td>
+<td>
+19.667<sup>*</sup>
+</td>
+<td>
+18.233<sup>*</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.00000
+</td>
+<td>
+p = 0.061
+</td>
+<td>
+p = 0.076
+</td>
+<td>
+p = 0.100
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ceoten
+</td>
+<td>
+13,925.610<sup>**</sup>
+</td>
+<td>
+12,703.360<sup>**</sup>
+</td>
+<td>
+13,296.830<sup>**</sup>
+</td>
+<td>
+12,730.860<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.016
+</td>
+<td>
+p = 0.025
+</td>
+<td>
+p = 0.020
+</td>
+<td>
+p = 0.026
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+mktval
+</td>
+<td>
+</td>
+<td>
+23.400<sup>**</sup>
+</td>
+<td>
+</td>
+<td>
+21.157
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+p = 0.015
+</td>
+<td>
+</td>
+<td>
+p = 0.183
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+profits
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+341.028<sup>**</sup>
+</td>
+<td>
+48.636
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+p = 0.041
+</td>
+<td>
+p = 0.859
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+621,670.900<sup>***</sup>
+</td>
+<td>
+613,436.100<sup>***</sup>
+</td>
+<td>
+619,800.500<sup>***</sup>
+</td>
+<td>
+613,958.800<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.173
+</td>
+<td>
+0.201
+</td>
+<td>
+0.193
+</td>
+<td>
+0.201
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.164
+</td>
+<td>
+0.187
+</td>
+<td>
+0.179
+</td>
+<td>
+0.183
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="4" style="text-align:right">
+<em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.01</em>
+</td>
+</tr>
+</table>
+<p>Following similar logic to our discussion above about using adjusted <span class="math inline">\(R^2\)</span> and p-values to decide which variables to include in the model, we can make several conclusions about market value (<code>mktval</code>) and profits. Comparing models 5 and 6, adjusted <span class="math inline">\(R^2\)</span> increases (from 0.164 to 0.187) and the coefficient on <code>mktval</code> is statistically significant at the 5% level (p-value of 0.0146). Thus, market value should be added to the model to join sales and CEO tenure in explaining CEO salary. Similarly, comparing models 5 and 7, adjusted <span class="math inline">\(R^2\)</span> increases (from 0.164 to 0.179) and the coefficient on <code>profits</code> is statistically significant at the 5% level (p-value of 0.0402), indicating that profits should be added to the model to join sales and CEO tenure in explaining CEO salary.</p>
+<p>However, look at what happens when we include both market value (<code>mktval</code>) and profits. Comparing models 7 and 3, adjusted <span class="math inline">\(R^2\)</span> goes up slightly (from 0.179 to 0.183), but comparing models 6 and 3, adjusted <span class="math inline">\(R^2\)</span> goes down (from 0.187 to 0.183). And both <code>mktval</code> and <code>profits</code> are not statistically significant at any standard level of significance in model 3 (p-values are 0.1821 and 0.859, respectively).</p>
+<p>How can adding <code>mktval</code> improve model 5 and adding <code>profits</code> improve model 5, but adding both doesn’t? Often this happens when there is correlation between explanatory variables. Sometimes this happens when several explanatory variables essentially measure the same concept. If the variables are very similar measures of the same underlying concept, it often makes sense to include only one or the other (sometimes papers will include “robustness checks” that show results are similar if you use alternative measures).</p>
+<p>Sometimes, however, variables measure different concepts but are still highly correlated with each other. Correlation between explanatory variables is called <strong>multicollinearity</strong>. When we do a regression, we’re looking at variation in the explanatory variables and how that explains variation in the outcome. When two explanatory variables tend to move together (i.e., are correlated), it’s hard for OLS to tell which explanatory variable is driving the changes in the outcome. Pretend the index finger on your left hand represents <span class="math inline">\(y\)</span> and the index finger on your right hand represents <span class="math inline">\(x_1\)</span>. Move your hands up and down somewhat together, as if demonstrating how <span class="math inline">\(x_1\)</span> affects <span class="math inline">\(y\)</span>. Now also extend your pinky finger on your right hand to represent <span class="math inline">\(x_4\)</span>. Make the same hand movements. If we were watching your hand movements, we wouldn’t be able to tell if it was <span class="math inline">\(x_1\)</span> or <span class="math inline">\(x_4\)</span> affecting <span class="math inline">\(y\)</span> because whenever <span class="math inline">\(x_1\)</span> goes up, so does <span class="math inline">\(x_4\)</span> (since both are on your right hand, you can tip your hand one way or the other so the correlation isn’t perfect, but they’re generally going to move pretty closely together).</p>
+<p>Formally, we can measure this relationship between explanatory variables with a regression. Here is the regression of profits on market value:</p>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="ch-3---mlr.html#cb684-1" aria-hidden="true" tabindex="-1"></a>mktvalAndProfits <span class="ot">&lt;-</span> <span class="fu">lm</span>(profits<span class="sc">~</span>mktval,<span class="at">data=</span>mydata)</span>
+<span id="cb684-2"><a href="ch-3---mlr.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(mktvalAndProfits))</span></code></pre></div>
+<table style="width:89%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">0.3038</td>
+<td align="center">13.85</td>
+<td align="center">0.02194</td>
+<td align="center">0.9825</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>mktval</strong></td>
+<td align="center">0.05764</td>
+<td align="center">0.001881</td>
+<td align="center">30.65</td>
+<td align="center">2.935e-72</td>
+</tr>
+</tbody>
+</table>
+<table style="width:86%;">
+<caption>Fitting linear model: profits ~ mktval</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="11%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">177</td>
+<td align="center">160.7</td>
+<td align="center">0.843</td>
+<td align="center">0.8421</td>
+</tr>
+</tbody>
+</table>
+<p>The <span class="math inline">\(R^2\)</span> is 0.843, meaning that 84.3% of the variation in profits can be explained by variation in market value (in a linear model). Because profits and market value tend to both be low or both be high at the same time, it is hard for OLS to tell to what extent it’s market value affecting salary, and to what extent it’s profits.</p>
+<div id="variance-inflation-factor-vif" class="section level3" number="14.4.1">
+<h3><span class="header-section-number">14.4.1</span> Variance Inflation Factor (VIF)</h3>
+<p>The Variance Inflation Factor (VIF) is a common measure used to gauge how much multicollinearity might be affecting the precision with which we are able to measure a particular coefficient. The VIF is one part of the equation used to calculate the standard error of a coefficient.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<p>Consider the general regression equation:
+<span class="math display">\[
+y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_k x_{ki} + u_i
+\]</span></p>
+<p>For variable <span class="math inline">\(j\)</span>, the VIF is
+<span class="math display">\[
+\text{VIF}_j = \frac{1}{1-R^2_j}
+\]</span>
+where <span class="math inline">\(R^2_j\)</span> is the <span class="math inline">\(R^2\)</span> of the regression of <span class="math inline">\(x_j\)</span> on the other explanatory variables (including an intercept). The variance of <span class="math inline">\(\hat{\beta}_j\)</span> is
+<span class="math display">\[
+\text{VAR}(\hat{\beta}_j)=\frac{\sigma^2}{SST_j}\text{VIF}_j
+\]</span>
+where <span class="math inline">\(\sigma^2\)</span> is a measure of the variance of the unobservables, given the explanatory variables, and <span class="math inline">\(SST_j\)</span> is the total variation in <span class="math inline">\(x_j\)</span>. This equation makes a lot of intuitive sense. The more variable the unobservable factors that affect <span class="math inline">\(y\)</span>, the noisier (less precise) our estimates of how each explanatory variable affects <span class="math inline">\(y\)</span>; thus, <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> is larger. The more variation there is in explanatory variable <span class="math inline">\(x_j\)</span>, the more information we have about how <span class="math inline">\(x_j\)</span> relates to <span class="math inline">\(y\)</span>, and the more precise the estimate of <span class="math inline">\(\beta_j\)</span>; thus, <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> is smaller. However, if a lot of that variation in <span class="math inline">\(x_j\)</span> can be explained by the other explanatory variables, the harder it is for OLS to tell which variable is affecting <span class="math inline">\(y\)</span>, and thus the less precise the estimate of <span class="math inline">\(\hat{\beta}_j\)</span>; thus, <span class="math inline">\(\text{VIF}_j\)</span> is higher, and so is <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span>. In other words, to precisely estimate the effect of <span class="math inline">\(x_j\)</span> on <span class="math inline">\(y\)</span>, we need independent variation in <span class="math inline">\(x_j\)</span>.</p>
+<p>Consider two extreme cases. First, if there is no variation in <span class="math inline">\(x_j\)</span>, then <span class="math inline">\(SST_j=0\)</span> and <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> is infinite. This situation is also a violation of MLR.3 that prohibits perfect collinearity (because if <span class="math inline">\(x_j\)</span> is constant, it is perfectly collinear with the constant). Second, if all of the variation in <span class="math inline">\(x_j\)</span> is perfectly explained by the other explanatory variables, then <span class="math inline">\(R^2_j=1\)</span> and <span class="math inline">\(\text{VIF}_j\)</span> is infinite. This means <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> is also infinite. This situation is also a violation of MLR.3; <span class="math inline">\(R^2_j=1\)</span> means there is a perfect linear relationship between <span class="math inline">\(x_j\)</span> and the other explanatory variables, exactly what is prohibited by MLR.3.</p>
+<p>At the other end if the spectrum is the best case for precisely estimating a coefficient <span class="math inline">\(\hat{\beta}_j\)</span>, which is when there is lots of variation in <span class="math inline">\(x_j\)</span> (i.e., <span class="math inline">\(SST_j\)</span> is large), and that variation is completely unrelated to variation in the other explanatory variables (i.e., <span class="math inline">\(R^2_j=0\)</span> so <span class="math inline">\(\text{VIF}_j=1\)</span>).</p>
+<p>The only other term in <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> we haven’t discussed is <span class="math inline">\(\sigma^2\)</span>, the variation in the unobservables given the explanatory variables. The less unobservable factors are affecting <span class="math inline">\(y\)</span>, the more precisely we can estimate how our explanatory variables affect <span class="math inline">\(y\)</span>. In the extreme case, there are no unobservables affecting <span class="math inline">\(y\)</span>. Thus, <span class="math inline">\(\sigma^2=0\)</span>, meaning <span class="math inline">\(\text{VAR}(\hat{\beta}_j)=0\)</span>. In this situation, we can exactly estimate the effect of each explanatory variable on <span class="math inline">\(y\)</span>; hence, <span class="math inline">\(\text{VAR}(\hat{\beta}_j)=0\)</span>.</p>
+<p>Let’s examine the VIF for our specific example. In the example above, we focused on just two variables, profits and market value, but the regression in question (model 3) also includes sales and CEO tenure. Thus, we want to know how much of the variation in market value can be explained by variation in the other explanatory variables. We find this via this regression:</p>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="ch-3---mlr.html#cb685-1" aria-hidden="true" tabindex="-1"></a>modelProfits <span class="ot">&lt;-</span> <span class="fu">lm</span>(profits<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval,<span class="at">data=</span>mydata)</span>
+<span id="cb685-2"><a href="ch-3---mlr.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelProfits))</span></code></pre></div>
+<table style="width:89%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">-10.75</td>
+<td align="center">18.19</td>
+<td align="center">-0.5907</td>
+<td align="center">0.5555</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>sales</strong></td>
+<td align="center">0.01615</td>
+<td align="center">0.002805</td>
+<td align="center">5.76</td>
+<td align="center">3.775e-08</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ceoten</strong></td>
+<td align="center">-0.5654</td>
+<td align="center">1.567</td>
+<td align="center">-0.3608</td>
+<td align="center">0.7187</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>mktval</strong></td>
+<td align="center">0.04612</td>
+<td align="center">0.002645</td>
+<td align="center">17.44</td>
+<td align="center">5.822e-40</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: profits ~ sales + ceoten + mktval</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">177</td>
+<td align="center">147.7</td>
+<td align="center">0.8689</td>
+<td align="center">0.8666</td>
+</tr>
+</tbody>
+</table>
+<p>The <span class="math inline">\(R^2\)</span> is 0.869, meaning that 86.9% of the variation in profits can be explained by variation in market value, sales, and CEO tenure (the other explanatory variables. This <span class="math inline">\(R^2\)</span> value, denoted <span class="math inline">\(R^2_{profits}\)</span>, is the value used to calculate the VIF for <span class="math inline">\(\hat{\beta}_{profits}\)</span>:
+<span class="math display">\[
+\text{VIF}_{profits} = \frac{1}{1-R^2_{profits}} = \frac{1}{1-0.8689} = 7.63
+\]</span>
+This is a somewhat high VIF, but not so high that we would necessarily expect a problem. Sometimes a VIF of 10 is used as a rule of thumb for a cutoff for how much multicollinearity is too much, but using 10 as a cutoff is arbitrary (so don’t rely on this too much). The following table gives you an idea of how <span class="math inline">\(R^2_j\)</span> relates to <span class="math inline">\(\text{VIF}_j\)</span>.</p>
+<style>
+.centerTable {
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<table class="centerTable" style="width:200px">
+<tr style="text-align: left;">
+<th>
+<span class="math inline">\(R^2_j\)</span>
+</th>
+<th>
+<span class="math inline">\(\text{VIF}_j\)</span>
+</th>
+</tr>
+<tr>
+<td>
+0
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<td>
+0.1
+</td>
+<td>
+1.111
+</td>
+</tr>
+<tr>
+<td>
+0.2
+</td>
+<td>
+1.25
+</td>
+</tr>
+<tr>
+<td>
+0.3
+</td>
+<td>
+1.429
+</td>
+</tr>
+<tr>
+<td>
+0.4
+</td>
+<td>
+1.667
+</td>
+</tr>
+<tr>
+<td>
+0.5
+</td>
+<td>
+2
+</td>
+</tr>
+<tr>
+<td>
+0.6
+</td>
+<td>
+2.5
+</td>
+</tr>
+<tr>
+<td>
+0.7
+</td>
+<td>
+3.333
+</td>
+</tr>
+<tr>
+<td>
+0.8
+</td>
+<td>
+5
+</td>
+</tr>
+<tr>
+<td>
+0.9
+</td>
+<td>
+10
+</td>
+</tr>
+<tr>
+<td>
+0.99
+</td>
+<td>
+100
+</td>
+</tr>
+<tr>
+<td>
+0.999
+</td>
+<td>
+1000
+</td>
+</tr>
+</table>
+<p>The VIF value of 10 corresponds with <span class="math inline">\(R^2_j=0.9\)</span>. For <span class="math inline">\(R^2_j\)</span> above 0.9, the VIF increases quite steeply.</p>
+</div>
+<div id="joint-hypotheses-test" class="section level3" number="14.4.2">
+<h3><span class="header-section-number">14.4.2</span> Joint hypotheses test</h3>
+<p>So should we only include one or the other? Not necessarily. Both market value and profits affect salary. If we leave one out, we’ll have omitted variable bias. Look at how the coefficient on profits changes between models 7 and 3: it falls by 292 (from 341 down to 48.63609). However, due to the multicollinearity in model 3, we get very imprecise estimates of <code>mktval</code> and <code>profits</code>. Multicollinearity often makes it difficult to estimate effects precisely, but if we don’t include both variables, we introduce omitted variable bias. A larger sample size might help,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> but that’s obviously not something we can change in most situations (since we’re usually using data other people have already collected).</p>
+<p>A common approach is to include several models for comparison, both with and without the variables (like the table above with models 5, 6, 7, and 3). Then, do a formal test of whether the two variables are jointly significant in determining <span class="math inline">\(y\)</span>. Formally, this is a hypothesis test of the joint null hypothesis that <span class="math inline">\(\beta_{mktval}=0\)</span> and <span class="math inline">\(\beta_{profits}=0\)</span>. To perform this test, we can use the <code>linearHypothesis</code> function from the <code>car</code> package:</p>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="ch-3---mlr.html#cb686-1" aria-hidden="true" tabindex="-1"></a>jointTest <span class="ot">&lt;-</span> <span class="fu">linearHypothesis</span>(model3, <span class="fu">c</span>(<span class="st">&quot;mktval=0&quot;</span>, <span class="st">&quot;profits=0&quot;</span>))</span>
+<span id="cb686-2"><a href="ch-3---mlr.html#cb686-2" aria-hidden="true" tabindex="-1"></a>jointTest</span></code></pre></div>
+<pre><code>## Linear hypothesis test
+## 
+## Hypothesis:
+## mktval = 0
+## profits = 0
+## 
+## Model 1: restricted model
+## Model 2: salary ~ sales + ceoten + mktval + profits
+## 
+##   Res.Df        RSS Df  Sum of Sq      F  Pr(&gt;F)  
+## 1    174 5.0244e+13                               
+## 2    172 4.8526e+13  2 1.7174e+12 3.0436 0.05024 .
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>The p-value is 0.0502. The interpretation is the same as for other hypothesis tests. Here, we reject the null hypothesis at the 10% level. This provides evidence that market value and profits together are important in determining salary.</p>
+<p>You can see section 4-5a in Wooldridge 6e for more on joint hypothesis tests. This test can be beneficial when you have a situation where you have reason to believe two (or more) variables are important in determining <span class="math inline">\(y\)</span>, but each is individually insignificant. Take care not to abuse this test by testing a highly insignificant variable with a highly significant variable. Any joint hypothesis test that includes a variable that is individually highly significant (i.e., that has a p-value under 0.01) will usually be jointly significant as well; so trying to use this test as evidence that the insignificant variable is actually jointly significant is essentially cheating (i.e., mis-representing what the test is telling us).</p>
+</div>
+</div>
+<div id="testing-linear-combinations-of-parameters" class="section level2" number="14.5">
+<h2><span class="header-section-number">14.5</span> Testing linear combinations of parameters</h2>
+<p>It’s common for people to look at regression results and make comparisons between coefficients. For example, looking at models 6 and 3 above, the coefficient on market value is larger than the coefficient on sales. Does this mean market value is more important that sales in terms of its effect on salary? To see how we answer this question, let’s consider model 3 for the rest of this section, reprinted here for convenience:</p>
+<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="ch-3---mlr.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model3))</span></code></pre></div>
+<table style="width:88%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">613959</td>
+<td align="center">65486</td>
+<td align="center">9.375</td>
+<td align="center">3.95e-17</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>sales</strong></td>
+<td align="center">18.23</td>
+<td align="center">11.01</td>
+<td align="center">1.656</td>
+<td align="center">0.09949</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>ceoten</strong></td>
+<td align="center">12731</td>
+<td align="center">5636</td>
+<td align="center">2.259</td>
+<td align="center">0.02515</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>mktval</strong></td>
+<td align="center">21.16</td>
+<td align="center">15.79</td>
+<td align="center">1.34</td>
+<td align="center">0.1821</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>profits</strong></td>
+<td align="center">48.64</td>
+<td align="center">273.4</td>
+<td align="center">0.1779</td>
+<td align="center">0.859</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: salary ~ sales + ceoten + mktval + profits</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">177</td>
+<td align="center">531159</td>
+<td align="center">0.2014</td>
+<td align="center">0.1828</td>
+</tr>
+</tbody>
+</table>
+<p>There’s two main things to keep in mind when attempting to compare coefficients in the same model. First, pay attention to the units. In this case, both market value and sales are measured in millions of dollars, so the coefficients are both in terms of a $1 million increase. Thus, the comparison is between a $1 million increase in market value versus a $1 million increase in sales, which increase CEO salary by $18.23 and $21.16, respectively (holding constant the other explanatory variables). This is an apples to apples comparison that is easy to understand. Be extra careful that the scale is the same. Here, the scale is the same because both are in millions, but watch out for when one variable is measured in millions and another is measured in thousands, etc. If the variables have different units, be extra clear about what you are comparing. For example, if you were trying to compare sales to CEO tenure, you’d be comparing the effects on salary of an additional $1 million in sales and 1 additional year of tenure as CEO.</p>
+<p>The other thing to keep in mind when comparing coefficients is statistical significance. A coefficient could be larger by chance, so we need to run a hypothesis test to see if we have evidence to believe the difference is not just occurring randomly. We need to do a hypothesis test on the null hypothesis that <span class="math inline">\(\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)=0\)</span> versus the alternative that it does not. Formally, our test statistic is:
+<span class="math display">\[
+t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)}
+\]</span></p>
+<p>Thus, we need to calculate not just the difference in coefficients, <span class="math inline">\(\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)\)</span>, but also the standard error of the difference, <span class="math inline">\(\text{SE}\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)\)</span>. To calculate the standard error of the difference, we need to know not just the standard error of <span class="math inline">\(\hat{\beta}_{profit}\)</span> and <span class="math inline">\(\hat{\beta}_{sales}\)</span>, but also the correlation between the two estimates (if both coefficients tend to be big together and small together, the coefficients tend to stay closer together, making the difference smaller, but if they are negatively correlated, one tends to be bigger when the other one is smaller and the difference tends to be larger). Thus, calculating <span class="math inline">\(\text{SE}\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)\)</span> requires the full variance-covariance matrix. Instead, we’ll use the <code>glht</code> function from the <code>multcomp</code> package to perform the test for us:</p>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="ch-3---mlr.html#cb689-1" aria-hidden="true" tabindex="-1"></a>testOfDif <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> <span class="fu">c</span>(<span class="st">&quot;profits - sales = 0&quot;</span>))</span>
+<span id="cb689-2"><a href="ch-3---mlr.html#cb689-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(testOfDif)</span></code></pre></div>
+<pre><code>## 
+##   Simultaneous Tests for General Linear Hypotheses
+## 
+## Fit: lm(formula = salary ~ sales + ceoten + mktval + profits, data = mydata)
+## 
+## Linear Hypotheses:
+##                      Estimate Std. Error t value Pr(&gt;|t|)
+## profits - sales == 0     30.4      278.0   0.109    0.913
+## (Adjusted p values reported -- single-step method)</code></pre>
+<p>We can interpret the p-value just like the p-value for a hypothesis test of a single coefficient. The p-value is 0.9130323, so we fail to reject the null hypothesis that the two coefficients are the same at all standard levels of significance. In other words, we can’t reject that the difference is due to chance. We could also form a confidence interval. Here’s the 90% confidence interval for the difference in coefficients:</p>
+<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="ch-3---mlr.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(testOfDif,<span class="at">level =</span> <span class="fl">0.9</span>)</span></code></pre></div>
+<pre><code>## 
+##   Simultaneous Confidence Intervals
+## 
+## Fit: lm(formula = salary ~ sales + ceoten + mktval + profits, data = mydata)
+## 
+## Quantile = 1.6538
+## 90% family-wise confidence level
+##  
+## 
+## Linear Hypotheses:
+##                      Estimate  lwr       upr      
+## profits - sales == 0   30.4026 -429.2872  490.0925</code></pre>
+<p>This 90% confidence interval contains 0; thus, we fail to reject the null hypothesis that the difference is 0 at all standard levels of significance.</p>
+<p>So you can see what it looks like when we reach the opposite conclusion, here’s the same test for the difference between the coefficient on <code>ceoten</code> and the coefficient on <code>sales</code>:</p>
+<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="ch-3---mlr.html#cb693-1" aria-hidden="true" tabindex="-1"></a>testOfDif2 <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> <span class="fu">c</span>(<span class="st">&quot;ceoten - sales = 0&quot;</span>))</span>
+<span id="cb693-2"><a href="ch-3---mlr.html#cb693-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(testOfDif2)</span></code></pre></div>
+<pre><code>## 
+##   Simultaneous Tests for General Linear Hypotheses
+## 
+## Fit: lm(formula = salary ~ sales + ceoten + mktval + profits, data = mydata)
+## 
+## Linear Hypotheses:
+##                     Estimate Std. Error t value Pr(&gt;|t|)  
+## ceoten - sales == 0    12713       5635   2.256   0.0253 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## (Adjusted p values reported -- single-step method)</code></pre>
+<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="ch-3---mlr.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(testOfDif2)</span></code></pre></div>
+<pre><code>## 
+##   Simultaneous Confidence Intervals
+## 
+## Fit: lm(formula = salary ~ sales + ceoten + mktval + profits, data = mydata)
+## 
+## Quantile = 1.9739
+## 95% family-wise confidence level
+##  
+## 
+## Linear Hypotheses:
+##                     Estimate   lwr        upr       
+## ceoten - sales == 0 12712.6292  1590.0204 23835.2380</code></pre>
+<p>The p-value is 0.0253289, so we reject the null hypothesis that the coefficients are the same at the 5% level. In other words, we have evidence (at the 5% level) supporting the claim that the effect on CEO salary of an additional year of CEO tenure is larger than the effect of an additional $1 million in sales, holding constant market value and profits.</p>
+</div>
+<div id="a-note-on-presentation" class="section level2" number="14.6">
+<h2><span class="header-section-number">14.6</span> A note on presentation</h2>
+<p>If you include formal hypothesis tests like those just discussed in the <a href="ch-3---mlr.html#joint-hypotheses-test">Joint hypotheses test</a> and <a href="ch-3---mlr.html#testing-linear-combinations-of-parameters">Testing linear combinations of parameters</a> sections in a paper, you will typically not include the complete test output. Instead, you’ll just say what the test is, report the p-value, and explain the conclusion of the test. The detailed output of the test is included here as part of the BP because it is useful to see all the output as a reference later.</p>
+</div>
+<div id="log-transformations" class="section level2" number="14.7">
+<h2><span class="header-section-number">14.7</span> Log transformations</h2>
+<p>This section has several things you need to do (and after you complete everything you need to do in this section, you can submit this chapter of your BP).</p>
+<p>This data provides a good example of why visualizing your data can be helpful. By visualizing the data using histograms and scatter plots, it is easy to see how skewed the data is and how log transformations can help center it. You will focus on two variables, sales and salary. You will first make histograms and then make scatter plots showing the relationship between these two variables.</p>
+<div id="histograms" class="section level3" number="14.7.1">
+<h3><span class="header-section-number">14.7.1</span> Histograms</h3>
+<p>Make four histograms:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>salary</code></p></li>
+<li><p><code>log(salary)</code></p></li>
+<li><p><code>sales</code></p></li>
+<li><p><code>log(sales)</code></p></li>
+</ol>
+<p>You can format them however you’d like, but make sure they are clearly labeled.</p>
+<hr />
+<ol style="list-style-type: decimal">
+<li><code>salary</code></li>
+</ol>
+<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="ch-3---mlr.html#cb697-1" aria-hidden="true" tabindex="-1"></a>salary_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(salary)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb697-2"><a href="ch-3---mlr.html#cb697-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb697-3"><a href="ch-3---mlr.html#cb697-3" aria-hidden="true" tabindex="-1"></a>salary_histogram</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>log(salary)</code></li>
+</ol>
+<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="ch-3---mlr.html#cb699-1" aria-hidden="true" tabindex="-1"></a>log_salary_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(salary))) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb699-2"><a href="ch-3---mlr.html#cb699-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb699-3"><a href="ch-3---mlr.html#cb699-3" aria-hidden="true" tabindex="-1"></a>log_salary_histogram</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><code>sales</code></li>
+</ol>
+<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="ch-3---mlr.html#cb701-1" aria-hidden="true" tabindex="-1"></a>sales_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb701-2"><a href="ch-3---mlr.html#cb701-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb701-3"><a href="ch-3---mlr.html#cb701-3" aria-hidden="true" tabindex="-1"></a>sales_histogram</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li><code>log(sales)</code></li>
+</ol>
+<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="ch-3---mlr.html#cb703-1" aria-hidden="true" tabindex="-1"></a>log_sales_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales))) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb703-2"><a href="ch-3---mlr.html#cb703-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb703-3"><a href="ch-3---mlr.html#cb703-3" aria-hidden="true" tabindex="-1"></a>log_sales_histogram</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="scatter-plots" class="section level3" number="14.7.2">
+<h3><span class="header-section-number">14.7.2</span> Scatter plots</h3>
+<p>You can also see how log transformations spread out the data by looking at scatter plots of <code>salary</code> or <code>log(salary)</code> (y) versus <code>sales</code> or <code>log(sales)</code> corresponding with the four different combinations. Specifically, create four scatter plots:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>salary</code> (y) vs. <code>sales</code> (x)</p></li>
+<li><p><code>log(salary)</code> (y) vs. <code>sales</code> (x)</p></li>
+<li><p><code>salary</code> (y) vs. <code>log(sales)</code> (x)</p></li>
+<li><p><code>log(salary)</code> (y) vs. <code>log(sales)</code> (x)</p></li>
+</ol>
+<p>Also add the following to each of the four plots:</p>
+<ol style="list-style-type: decimal">
+<li><p>A best fit (geom_smooth) “lm” line.</p></li>
+<li><p>Just to get a bit more experience with data visualization, color the points by <code>ceoten</code> using whatever scale_color_gradient (or scale_color_gradientn) you’d like.</p></li>
+</ol>
+<hr />
+<ol style="list-style-type: decimal">
+<li><code>salary</code> (y) vs. <code>sales</code> (x)</li>
+</ol>
+<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="ch-3---mlr.html#cb705-1" aria-hidden="true" tabindex="-1"></a>salary_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales, salary, <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span>
+<span id="cb705-2"><a href="ch-3---mlr.html#cb705-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb705-3"><a href="ch-3---mlr.html#cb705-3" aria-hidden="true" tabindex="-1"></a>salary_sales</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><code>log(salary)</code> (y) vs. <code>sales</code> (x)</li>
+</ol>
+<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="ch-3---mlr.html#cb707-1" aria-hidden="true" tabindex="-1"></a>log_salary_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales, <span class="fu">log</span>(salary), <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb707-2"><a href="ch-3---mlr.html#cb707-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb707-3"><a href="ch-3---mlr.html#cb707-3" aria-hidden="true" tabindex="-1"></a>log_salary_sales</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><code>salary</code> (y) vs. <code>log(sales)</code> (x)</li>
+</ol>
+<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="ch-3---mlr.html#cb709-1" aria-hidden="true" tabindex="-1"></a>salary_log_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales), salary, <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span>    <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb709-2"><a href="ch-3---mlr.html#cb709-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb709-3"><a href="ch-3---mlr.html#cb709-3" aria-hidden="true" tabindex="-1"></a>salary_log_sales</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<ol start="4" style="list-style-type: decimal">
+<li><code>log(salary)</code> (y) vs. <code>log(sales)</code> (x)</li>
+</ol>
+<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="ch-3---mlr.html#cb711-1" aria-hidden="true" tabindex="-1"></a>salary_log_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales), <span class="fu">log</span>(salary), <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb711-2"><a href="ch-3---mlr.html#cb711-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb711-3"><a href="ch-3---mlr.html#cb711-3" aria-hidden="true" tabindex="-1"></a>salary_log_sales</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="regression-models-with-levels-and-logs" class="section level3" number="14.7.3">
+<h3><span class="header-section-number">14.7.3</span> Regression models with levels and logs</h3>
+<p>To make sure you know how to estimate models and display the results using stargazer, you should estimate the following 4 models and display the results.</p>
+<ol style="list-style-type: decimal">
+<li><p>model 3 (the same one discussed above…either version is fine)</p></li>
+<li><p>model 3, but with <code>log(salary)</code> instead of <code>salary</code></p></li>
+<li><p>model 3, but with <code>log(sales)</code> instead of <code>sales</code></p></li>
+<li><p>model 3, but with <code>log(salary)</code> instead of <code>salary</code> and <code>log(sales)</code> instead of <code>sales</code></p></li>
+</ol>
+<p>Display all four models in the same stargazer table. And yes, this just requires you to copy/paste what you can find above in this file, but part of the point is to make sure you know how to use the above examples and modify them as needed.</p>
+<p>Finally, to demonstrate that you understand how to formally interpret regression coefficients, you will type formal interpretations of coefficients. To make sure you understand what is required of you when formally interpreting regression coefficients for Econ 380, you should use “LN3.3 (MLR Interpretations).pptx,” “Rules for Interpreting Regression Results.pdf,” “Interpretations Rubric (all 4 level log cases).pdf,” and the example PDFs posted in Moodle.</p>
+<p>The interpretations you type must include formal interpretation of coefficients that include the following combinations of level/log:</p>
+<ol style="list-style-type: decimal">
+<li><p>One coefficient where <span class="math inline">\(y\)</span> is a level and <span class="math inline">\(x\)</span> is a level</p></li>
+<li><p>One coefficient where <span class="math inline">\(y\)</span> is a log and <span class="math inline">\(x\)</span> is a level</p></li>
+<li><p>One coefficient where <span class="math inline">\(y\)</span> is a level and <span class="math inline">\(x\)</span> is a log</p></li>
+<li><p>One coefficient where <span class="math inline">\(y\)</span> is a log and <span class="math inline">\(x\)</span> is a log</p></li>
+</ol>
+<p>Your interpretations must also include:</p>
+<ol style="list-style-type: decimal">
+<li><p>One coefficient that is statistically significant at the 1% level</p></li>
+<li><p>One coefficient that is statistically significant at the 5% level</p></li>
+<li><p>One coefficient that is statistically significant at the 10% level</p></li>
+<li><p>One coefficient that is not statistically significant at any standard level of significance</p></li>
+</ol>
+<p>Note that you can combine these where possible (i.e., one interpretation can be both a log y / level x and a particular level of significance) so you don’t need to type out 8 separate interpretations. I don’t believe you can do it with only 4 interpretations, but I believe you can do it with 5.</p>
+<p>Please say which model you’re looking at for each interpretation.</p>
+<div id="regression-models" class="section level4" number="14.7.3.1">
+<h4><span class="header-section-number">14.7.3.1</span> Regression Models</h4>
+<hr />
+<ol style="list-style-type: decimal">
+<li><p>model 3 (the same one discussed above…either version is fine)</p></li>
+<li><p>model 3, but with <code>log(salary)</code> instead of <code>salary</code></p></li>
+<li><p>model 3, but with <code>log(sales)</code> instead of <code>sales</code></p></li>
+<li><p>model 3, but with <code>log(salary)</code> instead of <code>salary</code> and <code>log(sales)</code> instead of <code>sales</code></p></li>
+</ol>
+<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="ch-3---mlr.html#cb713-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb713-2"><a href="ch-3---mlr.html#cb713-2" aria-hidden="true" tabindex="-1"></a>model3_logsalary <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(salary)<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb713-3"><a href="ch-3---mlr.html#cb713-3" aria-hidden="true" tabindex="-1"></a>model3_logsales <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span><span class="fu">log</span>(sales)<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb713-4"><a href="ch-3---mlr.html#cb713-4" aria-hidden="true" tabindex="-1"></a>model3_logsalarylogsales <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(salary)<span class="sc">~</span><span class="fu">log</span>(sales)<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span></code></pre></div>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="ch-3---mlr.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model3, model3_logsalary, model3_logsales, model3_logsalarylogsales, </span>
+<span id="cb714-2"><a href="ch-3---mlr.html#cb714-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb714-3"><a href="ch-3---mlr.html#cb714-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb714-4"><a href="ch-3---mlr.html#cb714-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb714-5"><a href="ch-3---mlr.html#cb714-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb714-6"><a href="ch-3---mlr.html#cb714-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb714-7"><a href="ch-3---mlr.html#cb714-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb714-8"><a href="ch-3---mlr.html#cb714-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;level-level&quot;</span>,<span class="st">&quot;log-level&quot;</span>, <span class="st">&quot;level-log&quot;</span>, <span class="st">&quot;log-log&quot;</span>))</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+salary
+</td>
+<td>
+log(salary)
+</td>
+<td>
+salary
+</td>
+<td>
+log(salary)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+level-level
+</td>
+<td>
+log-level
+</td>
+<td>
+level-log
+</td>
+<td>
+log-log
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+sales
+</td>
+<td>
+18.233<sup>*</sup>
+</td>
+<td>
+0.00003<sup>**</sup>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.100
+</td>
+<td>
+p = 0.022
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+log(sales)
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+124,542.800<sup>***</sup>
+</td>
+<td>
+0.193<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+p = 0.0004
+</td>
+<td>
+p = 0.00000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+mktval
+</td>
+<td>
+21.157
+</td>
+<td>
+0.00002
+</td>
+<td>
+19.715
+</td>
+<td>
+0.00002
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.183
+</td>
+<td>
+p = 0.276
+</td>
+<td>
+p = 0.200
+</td>
+<td>
+p = 0.314
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+profits
+</td>
+<td>
+48.636
+</td>
+<td>
+0.00002
+</td>
+<td>
+21.408
+</td>
+<td>
+-0.00004
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.859
+</td>
+<td>
+p = 0.935
+</td>
+<td>
+p = 0.932
+</td>
+<td>
+p = 0.873
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+ceoten
+</td>
+<td>
+12,730.860<sup>**</sup>
+</td>
+<td>
+0.011<sup>*</sup>
+</td>
+<td>
+12,594.850<sup>**</sup>
+</td>
+<td>
+0.011<sup>**</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.026
+</td>
+<td>
+p = 0.056
+</td>
+<td>
+p = 0.023
+</td>
+<td>
+p = 0.042
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+613,958.800<sup>***</sup>
+</td>
+<td>
+13.240<sup>***</sup>
+</td>
+<td>
+-210,327.500
+</td>
+<td>
+11.957<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.385
+</td>
+<td>
+p = 0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+<td>
+177
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.201
+</td>
+<td>
+0.206
+</td>
+<td>
+0.247
+</td>
+<td>
+0.312
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.183
+</td>
+<td>
+0.187
+</td>
+<td>
+0.229
+</td>
+<td>
+0.296
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="4" style="text-align:right">
+<em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.01</em>
+</td>
+</tr>
+</table>
+<hr />
+</div>
+<div id="interpretations" class="section level4" number="14.7.3.2">
+<h4><span class="header-section-number">14.7.3.2</span> Interpretations</h4>
+<hr />
+<ol style="list-style-type: decimal">
+<li>One coefficient where <span class="math inline">\(y\)</span> is a level and <span class="math inline">\(x\)</span> is a level &amp; One coefficient that is statistically significant at the 5% level</li>
+</ol>
+<p>From <code>model3</code>: Holding the company’s sales, the company’s market value, and the company’s profits constant, if the CEO’s tenure as CEO at the company increases by 1 year, the CEO’s salary is predicted to increase by $12,730.86, on
+average. This is statistically significant at the 5% level.</p>
+<ol style="list-style-type: decimal">
+<li>One coefficient where <span class="math inline">\(y\)</span> is a log and <span class="math inline">\(x\)</span> is a level &amp; One coefficient that is statistically significant at the 10% level</li>
+</ol>
+<p>From <code>model3_logsalary</code>: Holding the company’s sales, the company’s market value, and the company’s profits constant, if the CEO’s tenure as CEO at the company increases by 1 year, the CEO’s salary is predicted to increase by 1.1%, on
+average. This is statistically significant at the 10% level.</p>
+<ol style="list-style-type: decimal">
+<li>One coefficient where <span class="math inline">\(y\)</span> is a level and <span class="math inline">\(x\)</span> is a log &amp; One coefficient that is statistically significant at the 1% level</li>
+</ol>
+<p>From <code>model3_logsales</code>: Holding the company’s market value, the company’s profits, and the CEO’s tenure constant, if the company’s sales increases by 1%, the CEO’s salary is predicted to increase by $1245.428, on
+average. This is statistically significant at the 1% level.</p>
+<ol style="list-style-type: decimal">
+<li>One coefficient where <span class="math inline">\(y\)</span> is a log and <span class="math inline">\(x\)</span> is a log</li>
+</ol>
+<p>From <code>model3_logsalarylogsales</code>: Holding the company’s market value, the company’s profits, and the CEO’s tenure constant, if the company’s sales increases by 1%, the CEO’s salary is predicted to increase by 0.193%, on
+average. This is statistically significant at the 1% level.</p>
+<ol style="list-style-type: decimal">
+<li>One coefficient that is not statistically significant at any standard level of significance</li>
+</ol>
+<p>From <code>model3_logsalarylogsales</code>: Holding the company’s sales, the company’s profits, and the CEO’s tenure constant, if the company’s market value increases by 1%, the CEO’s salary is predicted to increase by 0.00002%, on
+average. This is not statistically significant at any standard level.</p>
+<hr />
+
+</div>
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Credit to this <a href="https://stackoverflow.com/a/44474493">Stack Exchange answer</a> for this fix.<a href="ch-3---mlr.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>See Wooldridge section 3.4 for a full discussion of the variance of OLS coefficients, and section 3.4a for a discussion of multicollinearity, including the VIF. For these explanations I am assuming homoskedasticity, but the same concepts and intuition apply when there is heteroskedasticity.<a href="ch-3---mlr.html#fnref2" class="footnote-back">↩︎</a></p></li>
+<li id="fn3"><p>In fact, the <span class="math inline">\(SST_j\)</span> in the denominator of <span class="math inline">\(\text{VAR}(j)\)</span> is equivalent to <span class="math inline">\((n-1)\text{VAR}(x_j)\)</span>, so you can re-write the equation for <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> with <span class="math inline">\((n-1)\)</span> in the denominator; hence, larger <span class="math inline">\(n\)</span> leads to lower <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span>.<a href="ch-3---mlr.html#fnref3" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ch-2---slr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="dummy-variables-part-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/14-ch3-MLR.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/14-ch3-MLR.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/14-ch3-MLR.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

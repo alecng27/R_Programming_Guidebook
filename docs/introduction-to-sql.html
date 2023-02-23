@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>10 Introduction to SQL | R Programming Guidebook Project</title>
   <meta name="description" content="10 Introduction to SQL | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="10 Introduction to SQL | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="cleaning-data-in-r.html"/>
 <link rel="next" href="joining-data-in-sql.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,44 +337,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-sql" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Introduction to SQL</h1>
+<div id="introduction-to-sql" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">10</span> Introduction to SQL<a href="introduction-to-sql.html#introduction-to-sql" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/introduction-to-sql" class="uri">https://learn.datacamp.com/courses/introduction-to-sql</a></p>
-<div id="selecting-columns" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Selecting columns</h2>
+<div id="selecting-columns" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Selecting columns<a href="introduction-to-sql.html#selecting-columns" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>SELECTing single columns</strong></p>
 <p>A <code>query</code> is a request for data from a database table (or combination of tables). Querying is an essential skill for a data scientist, since the data you need for your analyses will often live in databases.</p>
 <p>In SQL, you can select data from a table using a <code>SELECT</code> statement. For example, the following query selects the name column from the people table:</p>
-<div class="sourceCode" id="cb530"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb530-1"><a href="introduction-to-sql.html#cb530-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
-<span id="cb530-2"><a href="introduction-to-sql.html#cb530-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="introduction-to-sql.html#cb531-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
+<span id="cb531-2"><a href="introduction-to-sql.html#cb531-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
 <p>In this query, <code>SELECT</code> and <code>FROM</code> are called keywords. In SQL, keywords are not case-sensitive, which means you can write the same query as:</p>
-<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="introduction-to-sql.html#cb531-1" aria-hidden="true" tabindex="-1"></a>select name</span>
-<span id="cb531-2"><a href="introduction-to-sql.html#cb531-2" aria-hidden="true" tabindex="-1"></a>from people;</span></code></pre></div>
+<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="introduction-to-sql.html#cb532-1" aria-hidden="true" tabindex="-1"></a>select name</span>
+<span id="cb532-2"><a href="introduction-to-sql.html#cb532-2" aria-hidden="true" tabindex="-1"></a>from people;</span></code></pre></div>
 <p><strong>SELECTing multiple columns</strong></p>
 <p>To select multiple columns from a table, simply separate the column names with commas!</p>
 <p>For example, this query selects two columns, <code>name</code> and <code>birthdate</code>, from the <code>people</code> table:</p>
-<div class="sourceCode" id="cb532"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb532-1"><a href="introduction-to-sql.html#cb532-1" aria-hidden="true" tabindex="-1"></a>SELECT name, birthdate</span>
-<span id="cb532-2"><a href="introduction-to-sql.html#cb532-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
-<p>Sometimes, you may want to select all columns from a table. Typing out every column name would be a pain, so there’s a handy shortcut:</p>
-<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="introduction-to-sql.html#cb533-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="sc">*</span>)</span>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="introduction-to-sql.html#cb533-1" aria-hidden="true" tabindex="-1"></a>SELECT name, birthdate</span>
 <span id="cb533-2"><a href="introduction-to-sql.html#cb533-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
-<p>If you only want to return a certain number of results, you can use the LIMIT keyword to limit the number of rows returned:</p>
+<p>Sometimes, you may want to select all columns from a table. Typing out every column name would be a pain, so there’s a handy shortcut:</p>
 <div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="introduction-to-sql.html#cb534-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="sc">*</span>)</span>
-<span id="cb534-2"><a href="introduction-to-sql.html#cb534-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
-<span id="cb534-3"><a href="introduction-to-sql.html#cb534-3" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">10</span>;</span></code></pre></div>
+<span id="cb534-2"><a href="introduction-to-sql.html#cb534-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
+<p>If you only want to return a certain number of results, you can use the LIMIT keyword to limit the number of rows returned:</p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="introduction-to-sql.html#cb535-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="sc">*</span>)</span>
+<span id="cb535-2"><a href="introduction-to-sql.html#cb535-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
+<span id="cb535-3"><a href="introduction-to-sql.html#cb535-3" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">10</span>;</span></code></pre></div>
 <p><strong>SELECT DISTINCT</strong></p>
 <p>Often your results will include many duplicate values. If you want to select all the unique values from a column, you can use the <code>DISTINCT</code> keyword.</p>
 <p>This might be useful if, for example, you’re interested in knowing which languages are represented in the <code>films</code> table:</p>
-<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="introduction-to-sql.html#cb535-1" aria-hidden="true" tabindex="-1"></a>SELECT DISTINCT language</span>
-<span id="cb535-2"><a href="introduction-to-sql.html#cb535-2" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
+<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="introduction-to-sql.html#cb536-1" aria-hidden="true" tabindex="-1"></a>SELECT DISTINCT language</span>
+<span id="cb536-2"><a href="introduction-to-sql.html#cb536-2" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
 <p><strong>Learning to COUNT</strong></p>
 <p>The <code>COUNT</code> statement allow counting the number of observations in one or more columns.</p>
 <p>For example, this code gives the number of rows in the <code>people</code> table:</p>
-<div class="sourceCode" id="cb536"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb536-1"><a href="introduction-to-sql.html#cb536-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">COUNT</span>(<span class="sc">*</span>)</span>
-<span id="cb536-2"><a href="introduction-to-sql.html#cb536-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="introduction-to-sql.html#cb537-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">COUNT</span>(<span class="sc">*</span>)</span>
+<span id="cb537-2"><a href="introduction-to-sql.html#cb537-2" aria-hidden="true" tabindex="-1"></a>FROM people;</span></code></pre></div>
 </div>
-<div id="filtering-rows" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Filtering rows</h2>
+<div id="filtering-rows" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Filtering rows<a href="introduction-to-sql.html#filtering-rows" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Filtering results</strong></p>
 <p>In SQL, the <code>WHERE</code> keyword allows you to filter based on both text and numeric values in a table. There are a few different comparison operators you can use:</p>
 <p><code>=</code> equal</p>
@@ -385,204 +384,204 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><code>&lt;=</code> less than or equal to</p>
 <p><code>&gt;=</code> greater than or equal to</p>
 <p>For example, you can filter text records such as <code>title</code>. The following code returns all films with the title <code>'Metropolis'</code>:</p>
-<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="introduction-to-sql.html#cb537-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
-<span id="cb537-2"><a href="introduction-to-sql.html#cb537-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb537-3"><a href="introduction-to-sql.html#cb537-3" aria-hidden="true" tabindex="-1"></a>WHERE title <span class="ot">=</span> <span class="st">&#39;Metropolis&#39;</span>;</span>
-<span id="cb537-4"><a href="introduction-to-sql.html#cb537-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb537-5"><a href="introduction-to-sql.html#cb537-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that the `WHERE` clause always comes after the `FROM` statement!</span></span>
-<span id="cb537-6"><a href="introduction-to-sql.html#cb537-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb537-7"><a href="introduction-to-sql.html#cb537-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Note that in this course we will use `&lt;&gt;` and not `!=` for the not equal operator, as per the SQL standard.</span></span></code></pre></div>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="introduction-to-sql.html#cb538-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
+<span id="cb538-2"><a href="introduction-to-sql.html#cb538-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb538-3"><a href="introduction-to-sql.html#cb538-3" aria-hidden="true" tabindex="-1"></a>WHERE title <span class="ot">=</span> <span class="st">&#39;Metropolis&#39;</span>;</span>
+<span id="cb538-4"><a href="introduction-to-sql.html#cb538-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb538-5"><a href="introduction-to-sql.html#cb538-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Notice that the `WHERE` clause always comes after the `FROM` statement!</span></span>
+<span id="cb538-6"><a href="introduction-to-sql.html#cb538-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb538-7"><a href="introduction-to-sql.html#cb538-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Note that in this course we will use `&lt;&gt;` and not `!=` for the not equal operator, as per the SQL standard.</span></span></code></pre></div>
 <p><strong>Simple filtering of numeric values</strong></p>
 <p>The <code>WHERE</code> clause can also be used to filter numeric records, such as years or ages.</p>
 <p>For example, the following query selects all details for <code>films</code> with a <code>budget</code> over ten thousand dollars:</p>
-<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="introduction-to-sql.html#cb538-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
-<span id="cb538-2"><a href="introduction-to-sql.html#cb538-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb538-3"><a href="introduction-to-sql.html#cb538-3" aria-hidden="true" tabindex="-1"></a>WHERE budget <span class="sc">&gt;</span> <span class="dv">10000</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="introduction-to-sql.html#cb539-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
+<span id="cb539-2"><a href="introduction-to-sql.html#cb539-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb539-3"><a href="introduction-to-sql.html#cb539-3" aria-hidden="true" tabindex="-1"></a>WHERE budget <span class="sc">&gt;</span> <span class="dv">10000</span>;</span></code></pre></div>
 <p><strong>Simple filtering of text</strong></p>
 <p>The <code>WHERE</code> clause can also be used to filter text results, such as names or countries.</p>
 <p>For example, this query gets the titles of all <code>films</code> which were filmed in <code>China</code>:</p>
-<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="introduction-to-sql.html#cb539-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
-<span id="cb539-2"><a href="introduction-to-sql.html#cb539-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb539-3"><a href="introduction-to-sql.html#cb539-3" aria-hidden="true" tabindex="-1"></a>WHERE country <span class="ot">=</span> <span class="st">&#39;China&#39;</span>;</span></code></pre></div>
-<p><strong>WHERE AND</strong></p>
-<p>Often, you’ll want to select data based on multiple conditions. You can build up your <code>WHERE</code> queries by combining multiple conditions with the <code>AND</code> keyword:</p>
 <div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="introduction-to-sql.html#cb540-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb540-2"><a href="introduction-to-sql.html#cb540-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb540-3"><a href="introduction-to-sql.html#cb540-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;</span> <span class="dv">1994</span></span>
-<span id="cb540-4"><a href="introduction-to-sql.html#cb540-4" aria-hidden="true" tabindex="-1"></a>AND release_year <span class="sc">&lt;</span> <span class="dv">2000</span>;</span>
-<span id="cb540-5"><a href="introduction-to-sql.html#cb540-5" aria-hidden="true" tabindex="-1"></a>gives you the titles of films released between <span class="dv">1994</span> and <span class="fl">2000.</span></span></code></pre></div>
-<p>Note that you need to specify the column name separately for every <code>AND</code> condition, so the following would be invalid:</p>
+<span id="cb540-3"><a href="introduction-to-sql.html#cb540-3" aria-hidden="true" tabindex="-1"></a>WHERE country <span class="ot">=</span> <span class="st">&#39;China&#39;</span>;</span></code></pre></div>
+<p><strong>WHERE AND</strong></p>
+<p>Often, you’ll want to select data based on multiple conditions. You can build up your <code>WHERE</code> queries by combining multiple conditions with the <code>AND</code> keyword:</p>
 <div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="introduction-to-sql.html#cb541-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb541-2"><a href="introduction-to-sql.html#cb541-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb541-3"><a href="introduction-to-sql.html#cb541-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;</span> <span class="dv">1994</span> AND <span class="sc">&lt;</span> <span class="dv">2000</span>;</span></code></pre></div>
+<span id="cb541-3"><a href="introduction-to-sql.html#cb541-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;</span> <span class="dv">1994</span></span>
+<span id="cb541-4"><a href="introduction-to-sql.html#cb541-4" aria-hidden="true" tabindex="-1"></a>AND release_year <span class="sc">&lt;</span> <span class="dv">2000</span>;</span>
+<span id="cb541-5"><a href="introduction-to-sql.html#cb541-5" aria-hidden="true" tabindex="-1"></a>gives you the titles of films released between <span class="dv">1994</span> and <span class="fl">2000.</span></span></code></pre></div>
+<p>Note that you need to specify the column name separately for every <code>AND</code> condition, so the following would be invalid:</p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="introduction-to-sql.html#cb542-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
+<span id="cb542-2"><a href="introduction-to-sql.html#cb542-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb542-3"><a href="introduction-to-sql.html#cb542-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;</span> <span class="dv">1994</span> AND <span class="sc">&lt;</span> <span class="dv">2000</span>;</span></code></pre></div>
 <p><strong>WHERE AND OR</strong></p>
 <p>To select rows based on multiple conditions where some but not all of the conditions need to be met, SQL has the <code>OR</code> operator.</p>
 <p>For example, the following returns all films released in either 1994 or 2000:</p>
-<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="introduction-to-sql.html#cb542-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
-<span id="cb542-2"><a href="introduction-to-sql.html#cb542-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb542-3"><a href="introduction-to-sql.html#cb542-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="ot">=</span> <span class="dv">1994</span></span>
-<span id="cb542-4"><a href="introduction-to-sql.html#cb542-4" aria-hidden="true" tabindex="-1"></a>OR release_year <span class="ot">=</span> <span class="dv">2000</span>;</span></code></pre></div>
-<p>Note that you need to specify the column for every <code>OR</code> condition, so the following is invalid:</p>
 <div class="sourceCode" id="cb543"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb543-1"><a href="introduction-to-sql.html#cb543-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb543-2"><a href="introduction-to-sql.html#cb543-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb543-3"><a href="introduction-to-sql.html#cb543-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="ot">=</span> <span class="dv">1994</span> OR <span class="dv">2000</span>;</span></code></pre></div>
-<p>When combining <code>AND</code> and <code>OR</code>, be sure to enclose the individual clauses in parentheses, like so:</p>
+<span id="cb543-3"><a href="introduction-to-sql.html#cb543-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="ot">=</span> <span class="dv">1994</span></span>
+<span id="cb543-4"><a href="introduction-to-sql.html#cb543-4" aria-hidden="true" tabindex="-1"></a>OR release_year <span class="ot">=</span> <span class="dv">2000</span>;</span></code></pre></div>
+<p>Note that you need to specify the column for every <code>OR</code> condition, so the following is invalid:</p>
 <div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="introduction-to-sql.html#cb544-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb544-2"><a href="introduction-to-sql.html#cb544-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb544-3"><a href="introduction-to-sql.html#cb544-3" aria-hidden="true" tabindex="-1"></a><span class="fu">WHERE</span> (<span class="at">release_year =</span> <span class="dv">1994</span> OR <span class="at">release_year =</span> <span class="dv">1995</span>)</span>
-<span id="cb544-4"><a href="introduction-to-sql.html#cb544-4" aria-hidden="true" tabindex="-1"></a><span class="fu">AND</span> (<span class="at">certification =</span> <span class="st">&#39;PG&#39;</span> OR <span class="at">certification =</span> <span class="st">&#39;R&#39;</span>);</span></code></pre></div>
-<p><strong>BETWEEN</strong></p>
-<p>Use the following query to get titles of all films released in and between 1994 and 2000:</p>
+<span id="cb544-3"><a href="introduction-to-sql.html#cb544-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="ot">=</span> <span class="dv">1994</span> OR <span class="dv">2000</span>;</span></code></pre></div>
+<p>When combining <code>AND</code> and <code>OR</code>, be sure to enclose the individual clauses in parentheses, like so:</p>
 <div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="introduction-to-sql.html#cb545-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb545-2"><a href="introduction-to-sql.html#cb545-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb545-3"><a href="introduction-to-sql.html#cb545-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;=</span> <span class="dv">1994</span></span>
-<span id="cb545-4"><a href="introduction-to-sql.html#cb545-4" aria-hidden="true" tabindex="-1"></a>AND release_year <span class="sc">&lt;=</span> <span class="dv">2000</span>;</span></code></pre></div>
-<p>Checking for ranges like this is very common, so in SQL the <code>BETWEEN</code> keyword provides a useful shorthand for filtering values within a specified range. This query is equivalent to the one above:</p>
+<span id="cb545-3"><a href="introduction-to-sql.html#cb545-3" aria-hidden="true" tabindex="-1"></a><span class="fu">WHERE</span> (<span class="at">release_year =</span> <span class="dv">1994</span> OR <span class="at">release_year =</span> <span class="dv">1995</span>)</span>
+<span id="cb545-4"><a href="introduction-to-sql.html#cb545-4" aria-hidden="true" tabindex="-1"></a><span class="fu">AND</span> (<span class="at">certification =</span> <span class="st">&#39;PG&#39;</span> OR <span class="at">certification =</span> <span class="st">&#39;R&#39;</span>);</span></code></pre></div>
+<p><strong>BETWEEN</strong></p>
+<p>Use the following query to get titles of all films released in and between 1994 and 2000:</p>
 <div class="sourceCode" id="cb546"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb546-1"><a href="introduction-to-sql.html#cb546-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb546-2"><a href="introduction-to-sql.html#cb546-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb546-3"><a href="introduction-to-sql.html#cb546-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year</span>
-<span id="cb546-4"><a href="introduction-to-sql.html#cb546-4" aria-hidden="true" tabindex="-1"></a>BETWEEN <span class="dv">1994</span> AND <span class="dv">2000</span>;</span>
-<span id="cb546-5"><a href="introduction-to-sql.html#cb546-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb546-6"><a href="introduction-to-sql.html#cb546-6" aria-hidden="true" tabindex="-1"></a><span class="do">## It&#39;s important to remember that `BETWEEN` is inclusive, meaning the beginning and end values are included in the results!</span></span></code></pre></div>
+<span id="cb546-3"><a href="introduction-to-sql.html#cb546-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;=</span> <span class="dv">1994</span></span>
+<span id="cb546-4"><a href="introduction-to-sql.html#cb546-4" aria-hidden="true" tabindex="-1"></a>AND release_year <span class="sc">&lt;=</span> <span class="dv">2000</span>;</span></code></pre></div>
+<p>Checking for ranges like this is very common, so in SQL the <code>BETWEEN</code> keyword provides a useful shorthand for filtering values within a specified range. This query is equivalent to the one above:</p>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="introduction-to-sql.html#cb547-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
+<span id="cb547-2"><a href="introduction-to-sql.html#cb547-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb547-3"><a href="introduction-to-sql.html#cb547-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year</span>
+<span id="cb547-4"><a href="introduction-to-sql.html#cb547-4" aria-hidden="true" tabindex="-1"></a>BETWEEN <span class="dv">1994</span> AND <span class="dv">2000</span>;</span>
+<span id="cb547-5"><a href="introduction-to-sql.html#cb547-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb547-6"><a href="introduction-to-sql.html#cb547-6" aria-hidden="true" tabindex="-1"></a><span class="do">## It&#39;s important to remember that `BETWEEN` is inclusive, meaning the beginning and end values are included in the results!</span></span></code></pre></div>
 <p><strong>WHERE IN</strong></p>
 <p>As you’ve seen, <code>WHERE</code> is very useful for filtering results. However, if you want to filter based on many conditions, <code>WHERE</code> can get unwieldy. For example:</p>
-<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="introduction-to-sql.html#cb547-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
-<span id="cb547-2"><a href="introduction-to-sql.html#cb547-2" aria-hidden="true" tabindex="-1"></a>FROM kids</span>
-<span id="cb547-3"><a href="introduction-to-sql.html#cb547-3" aria-hidden="true" tabindex="-1"></a>WHERE age <span class="ot">=</span> <span class="dv">2</span></span>
-<span id="cb547-4"><a href="introduction-to-sql.html#cb547-4" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">4</span></span>
-<span id="cb547-5"><a href="introduction-to-sql.html#cb547-5" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">6</span></span>
-<span id="cb547-6"><a href="introduction-to-sql.html#cb547-6" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">8</span></span>
-<span id="cb547-7"><a href="introduction-to-sql.html#cb547-7" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">10</span>;</span></code></pre></div>
-<p>Enter the <code>IN</code> operator! The <code>IN</code> operator allows you to specify multiple values in a <code>WHERE</code> clause, making it easier and quicker to specify multiple <code>OR</code> conditions!</p>
-<p>So, the above example would become simply:</p>
 <div class="sourceCode" id="cb548"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb548-1"><a href="introduction-to-sql.html#cb548-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
 <span id="cb548-2"><a href="introduction-to-sql.html#cb548-2" aria-hidden="true" tabindex="-1"></a>FROM kids</span>
-<span id="cb548-3"><a href="introduction-to-sql.html#cb548-3" aria-hidden="true" tabindex="-1"></a>WHERE age <span class="fu">IN</span> (<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>);</span></code></pre></div>
+<span id="cb548-3"><a href="introduction-to-sql.html#cb548-3" aria-hidden="true" tabindex="-1"></a>WHERE age <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb548-4"><a href="introduction-to-sql.html#cb548-4" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">4</span></span>
+<span id="cb548-5"><a href="introduction-to-sql.html#cb548-5" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">6</span></span>
+<span id="cb548-6"><a href="introduction-to-sql.html#cb548-6" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">8</span></span>
+<span id="cb548-7"><a href="introduction-to-sql.html#cb548-7" aria-hidden="true" tabindex="-1"></a>OR age <span class="ot">=</span> <span class="dv">10</span>;</span></code></pre></div>
+<p>Enter the <code>IN</code> operator! The <code>IN</code> operator allows you to specify multiple values in a <code>WHERE</code> clause, making it easier and quicker to specify multiple <code>OR</code> conditions!</p>
+<p>So, the above example would become simply:</p>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="introduction-to-sql.html#cb549-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
+<span id="cb549-2"><a href="introduction-to-sql.html#cb549-2" aria-hidden="true" tabindex="-1"></a>FROM kids</span>
+<span id="cb549-3"><a href="introduction-to-sql.html#cb549-3" aria-hidden="true" tabindex="-1"></a>WHERE age <span class="fu">IN</span> (<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>);</span></code></pre></div>
 <p><strong>NULL and IS NULL</strong></p>
 <p>In SQL, <code>NULL</code> represents a missing or unknown value. You can check for <code>NULL</code> values using the expression <code>IS NULL</code>. For example, to count the number of missing birth dates in the people table:</p>
-<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="introduction-to-sql.html#cb549-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">COUNT</span>(<span class="sc">*</span>)</span>
-<span id="cb549-2"><a href="introduction-to-sql.html#cb549-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
-<span id="cb549-3"><a href="introduction-to-sql.html#cb549-3" aria-hidden="true" tabindex="-1"></a>WHERE birthdate IS <span class="cn">NULL</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="introduction-to-sql.html#cb550-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">COUNT</span>(<span class="sc">*</span>)</span>
+<span id="cb550-2"><a href="introduction-to-sql.html#cb550-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
+<span id="cb550-3"><a href="introduction-to-sql.html#cb550-3" aria-hidden="true" tabindex="-1"></a>WHERE birthdate IS <span class="cn">NULL</span>;</span></code></pre></div>
 <p><code>IS NULL</code> is useful when combined with WHERE to figure out what data you’re missing.</p>
 <p>Sometimes, you’ll want to filter out missing values so you only get results which are not <code>NULL</code>. To do this, you can use the <code>IS NOT NULL</code> operator.</p>
 <p>For example, this query gives the names of all people whose birth dates are not missing in the people table.</p>
-<div class="sourceCode" id="cb550"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb550-1"><a href="introduction-to-sql.html#cb550-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
-<span id="cb550-2"><a href="introduction-to-sql.html#cb550-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
-<span id="cb550-3"><a href="introduction-to-sql.html#cb550-3" aria-hidden="true" tabindex="-1"></a>WHERE birthdate IS NOT <span class="cn">NULL</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="introduction-to-sql.html#cb551-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
+<span id="cb551-2"><a href="introduction-to-sql.html#cb551-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
+<span id="cb551-3"><a href="introduction-to-sql.html#cb551-3" aria-hidden="true" tabindex="-1"></a>WHERE birthdate IS NOT <span class="cn">NULL</span>;</span></code></pre></div>
 <p><strong>LIKE and NOT LIKE</strong></p>
 <p>The <code>WHERE</code> clause can be used to filter text data. However, so far you’ve only been able to filter by specifying the exact text you’re interested in. Often you’ll want to search for a pattern rather than a specific text string.</p>
 <p>In SQL, the <code>LIKE</code> operator can be used in a <code>WHERE</code> clause to search for a pattern in a column. To accomplish this, you use something called a <em>wildcard</em> as a placeholder for some other values. There are two wildcards you can use with <code>LIKE</code>:</p>
 <p>The <code>%</code> wildcard will match zero, one, or many characters in text. For example, the following query matches companies like <code>'Data'</code>, <code>'DataC'</code> <code>'DataCamp'</code>, <code>'DataMind'</code>, and so on:</p>
-<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="introduction-to-sql.html#cb551-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
-<span id="cb551-2"><a href="introduction-to-sql.html#cb551-2" aria-hidden="true" tabindex="-1"></a>FROM companies</span>
-<span id="cb551-3"><a href="introduction-to-sql.html#cb551-3" aria-hidden="true" tabindex="-1"></a>WHERE name LIKE <span class="st">&#39;Data%&#39;</span>;</span></code></pre></div>
-<p>The <code>_</code> wildcard will match a single character. For example, the following query matches companies like <code>'DataCamp'</code>, <code>'DataComp'</code>, and so on:</p>
 <div class="sourceCode" id="cb552"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb552-1"><a href="introduction-to-sql.html#cb552-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
 <span id="cb552-2"><a href="introduction-to-sql.html#cb552-2" aria-hidden="true" tabindex="-1"></a>FROM companies</span>
-<span id="cb552-3"><a href="introduction-to-sql.html#cb552-3" aria-hidden="true" tabindex="-1"></a>WHERE name LIKE <span class="st">&#39;DataC_mp&#39;</span>;</span></code></pre></div>
+<span id="cb552-3"><a href="introduction-to-sql.html#cb552-3" aria-hidden="true" tabindex="-1"></a>WHERE name LIKE <span class="st">&#39;Data%&#39;</span>;</span></code></pre></div>
+<p>The <code>_</code> wildcard will match a single character. For example, the following query matches companies like <code>'DataCamp'</code>, <code>'DataComp'</code>, and so on:</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="introduction-to-sql.html#cb553-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
+<span id="cb553-2"><a href="introduction-to-sql.html#cb553-2" aria-hidden="true" tabindex="-1"></a>FROM companies</span>
+<span id="cb553-3"><a href="introduction-to-sql.html#cb553-3" aria-hidden="true" tabindex="-1"></a>WHERE name LIKE <span class="st">&#39;DataC_mp&#39;</span>;</span></code></pre></div>
 <p>You can also use the <code>NOT LIKE</code> operator to find records that don’t match the pattern you specify.</p>
 </div>
-<div id="aggregate-functions" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Aggregate Functions</h2>
+<div id="aggregate-functions" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Aggregate Functions<a href="introduction-to-sql.html#aggregate-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>SQL provides a few functions, called aggregate functions: AVG(), MAX(), MIN(), SUM().</p>
-<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="introduction-to-sql.html#cb553-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">AVG</span>(budget)</span>
-<span id="cb553-2"><a href="introduction-to-sql.html#cb553-2" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
-<p>Gives the average value from the <code>budget</code> column of the <code>films</code> table. Similarly, the <code>MAX</code> function returns the highest <code>budget</code>:</p>
-<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="introduction-to-sql.html#cb554-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">MAX</span>(budget)</span>
+<div class="sourceCode" id="cb554"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb554-1"><a href="introduction-to-sql.html#cb554-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">AVG</span>(budget)</span>
 <span id="cb554-2"><a href="introduction-to-sql.html#cb554-2" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
-<p>The <code>SUM</code> function returns the result of adding up the numeric values in a column:</p>
-<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="introduction-to-sql.html#cb555-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">SUM</span>(budget)</span>
+<p>Gives the average value from the <code>budget</code> column of the <code>films</code> table. Similarly, the <code>MAX</code> function returns the highest <code>budget</code>:</p>
+<div class="sourceCode" id="cb555"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb555-1"><a href="introduction-to-sql.html#cb555-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">MAX</span>(budget)</span>
 <span id="cb555-2"><a href="introduction-to-sql.html#cb555-2" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
+<p>The <code>SUM</code> function returns the result of adding up the numeric values in a column:</p>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="introduction-to-sql.html#cb556-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">SUM</span>(budget)</span>
+<span id="cb556-2"><a href="introduction-to-sql.html#cb556-2" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
 <p><strong>Combining aggregate functions with WHERE</strong></p>
 <p>Aggregate functions can be combined with the <code>WHERE</code> clause to gain further insights from the data.</p>
 <p>For example, to get the total <code>budget</code> of movies made in the year <code>2010</code> or later:</p>
-<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="introduction-to-sql.html#cb556-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">SUM</span>(budget)</span>
-<span id="cb556-2"><a href="introduction-to-sql.html#cb556-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb556-3"><a href="introduction-to-sql.html#cb556-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;=</span> <span class="dv">2010</span>;</span></code></pre></div>
-<p>Get the amount grossed by the worst performing film in 1994:</p>
-<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="introduction-to-sql.html#cb557-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">MIN</span>(gross)</span>
+<div class="sourceCode" id="cb557"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb557-1"><a href="introduction-to-sql.html#cb557-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">SUM</span>(budget)</span>
 <span id="cb557-2"><a href="introduction-to-sql.html#cb557-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb557-3"><a href="introduction-to-sql.html#cb557-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="ot">=</span> <span class="dv">1994</span>;</span></code></pre></div>
+<span id="cb557-3"><a href="introduction-to-sql.html#cb557-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="sc">&gt;=</span> <span class="dv">2010</span>;</span></code></pre></div>
+<p>Get the amount grossed by the worst performing film in 1994:</p>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="introduction-to-sql.html#cb558-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">MIN</span>(gross)</span>
+<span id="cb558-2"><a href="introduction-to-sql.html#cb558-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb558-3"><a href="introduction-to-sql.html#cb558-3" aria-hidden="true" tabindex="-1"></a>WHERE release_year <span class="ot">=</span> <span class="dv">1994</span>;</span></code></pre></div>
 <p><strong>A note on arithmetic</strong></p>
 <p>In addition to using aggregate functions, you can perform basic arithmetic with symbols like <code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code>.</p>
 <p>So, for example, this gives a result of 12:</p>
-<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="introduction-to-sql.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="dv">4</span> <span class="sc">*</span> <span class="dv">3</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="introduction-to-sql.html#cb559-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="dv">4</span> <span class="sc">*</span> <span class="dv">3</span>);</span></code></pre></div>
 <p>However, the following gives a result of 1:</p>
-<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="introduction-to-sql.html#cb559-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="dv">4</span> <span class="sc">/</span> <span class="dv">3</span>);</span></code></pre></div>
+<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="introduction-to-sql.html#cb560-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="dv">4</span> <span class="sc">/</span> <span class="dv">3</span>);</span></code></pre></div>
 <p>SQL assumes that if you divide an integer by an integer, you want to get an integer back.</p>
 <p>Add decimal places to your numbers. For example,</p>
-<div class="sourceCode" id="cb560"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb560-1"><a href="introduction-to-sql.html#cb560-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="fl">4.0</span> <span class="sc">/</span> <span class="fl">3.0</span>) AS result;</span></code></pre></div>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="introduction-to-sql.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">SELECT</span> (<span class="fl">4.0</span> <span class="sc">/</span> <span class="fl">3.0</span>) AS result;</span></code></pre></div>
 <p>gives the result expected: 1.333.</p>
 <p><strong>It’s AS simple AS aliasing</strong></p>
 <p>SQL allows aliasing. Aliasing simply means you assign a temporary name to something. To alias, use the <code>AS</code> keyword.</p>
 <p>For example, in the above example we could use aliases to make the result clearer:</p>
-<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="introduction-to-sql.html#cb561-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">MAX</span>(budget) AS max_budget,</span>
-<span id="cb561-2"><a href="introduction-to-sql.html#cb561-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MAX</span>(duration) AS max_duration</span>
-<span id="cb561-3"><a href="introduction-to-sql.html#cb561-3" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
+<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="introduction-to-sql.html#cb562-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="fu">MAX</span>(budget) AS max_budget,</span>
+<span id="cb562-2"><a href="introduction-to-sql.html#cb562-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">MAX</span>(duration) AS max_duration</span>
+<span id="cb562-3"><a href="introduction-to-sql.html#cb562-3" aria-hidden="true" tabindex="-1"></a>FROM films;</span></code></pre></div>
 </div>
-<div id="sorting-and-grouping" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Sorting and grouping</h2>
+<div id="sorting-and-grouping" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Sorting and grouping<a href="introduction-to-sql.html#sorting-and-grouping" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>ORDER BY</strong></p>
 <p>In SQL, the <code>ORDER BY</code> keyword is used to sort results in ascending or descending order according to the values of one or more columns.</p>
 <p>By default <code>ORDER BY</code> will sort in ascending order. If you want to sort the results in descending order, you can use the <code>DESC</code> keyword. For example:</p>
-<div class="sourceCode" id="cb562"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb562-1"><a href="introduction-to-sql.html#cb562-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
-<span id="cb562-2"><a href="introduction-to-sql.html#cb562-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb562-3"><a href="introduction-to-sql.html#cb562-3" aria-hidden="true" tabindex="-1"></a>ORDER BY release_year DESC;</span></code></pre></div>
-<p>Get the title and gross earnings for movies which begin with the letter ‘M’ and order the results alphabetically:</p>
-<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="introduction-to-sql.html#cb563-1" aria-hidden="true" tabindex="-1"></a>SELECT title, gross</span>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="introduction-to-sql.html#cb563-1" aria-hidden="true" tabindex="-1"></a>SELECT title</span>
 <span id="cb563-2"><a href="introduction-to-sql.html#cb563-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb563-3"><a href="introduction-to-sql.html#cb563-3" aria-hidden="true" tabindex="-1"></a>WHERE title LIKE <span class="st">&#39;M%&#39;</span></span>
-<span id="cb563-4"><a href="introduction-to-sql.html#cb563-4" aria-hidden="true" tabindex="-1"></a>ORDER BY title;</span></code></pre></div>
+<span id="cb563-3"><a href="introduction-to-sql.html#cb563-3" aria-hidden="true" tabindex="-1"></a>ORDER BY release_year DESC;</span></code></pre></div>
+<p>Get the title and gross earnings for movies which begin with the letter ‘M’ and order the results alphabetically:</p>
+<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="introduction-to-sql.html#cb564-1" aria-hidden="true" tabindex="-1"></a>SELECT title, gross</span>
+<span id="cb564-2"><a href="introduction-to-sql.html#cb564-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb564-3"><a href="introduction-to-sql.html#cb564-3" aria-hidden="true" tabindex="-1"></a>WHERE title LIKE <span class="st">&#39;M%&#39;</span></span>
+<span id="cb564-4"><a href="introduction-to-sql.html#cb564-4" aria-hidden="true" tabindex="-1"></a>ORDER BY title;</span></code></pre></div>
 <p>To order results in descending order, you can put the keyword <code>DESC</code> after <code>ORDER BY</code>. For example, to get all the <code>names</code> in the <code>people</code> table, in reverse alphabetical order:</p>
-<div class="sourceCode" id="cb564"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb564-1"><a href="introduction-to-sql.html#cb564-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
-<span id="cb564-2"><a href="introduction-to-sql.html#cb564-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
-<span id="cb564-3"><a href="introduction-to-sql.html#cb564-3" aria-hidden="true" tabindex="-1"></a>ORDER BY name DESC;</span></code></pre></div>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="introduction-to-sql.html#cb565-1" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
+<span id="cb565-2"><a href="introduction-to-sql.html#cb565-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
+<span id="cb565-3"><a href="introduction-to-sql.html#cb565-3" aria-hidden="true" tabindex="-1"></a>ORDER BY name DESC;</span></code></pre></div>
 <p><strong>Sorting multiple columns</strong></p>
 <p><code>ORDER BY</code> can also be used to sort on multiple columns. It will sort by the first column specified, then sort by the next, then the next, and so on. For example:</p>
-<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="introduction-to-sql.html#cb565-1" aria-hidden="true" tabindex="-1"></a>SELECT birthdate, name</span>
-<span id="cb565-2"><a href="introduction-to-sql.html#cb565-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
-<span id="cb565-3"><a href="introduction-to-sql.html#cb565-3" aria-hidden="true" tabindex="-1"></a>ORDER BY birthdate, name;</span></code></pre></div>
+<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="introduction-to-sql.html#cb566-1" aria-hidden="true" tabindex="-1"></a>SELECT birthdate, name</span>
+<span id="cb566-2"><a href="introduction-to-sql.html#cb566-2" aria-hidden="true" tabindex="-1"></a>FROM people</span>
+<span id="cb566-3"><a href="introduction-to-sql.html#cb566-3" aria-hidden="true" tabindex="-1"></a>ORDER BY birthdate, name;</span></code></pre></div>
 <p>Sorts on birth dates first (oldest to newest) and then sorts on the names in alphabetical order. <strong>The order of columns is important!</strong></p>
 <p><strong>GROUP BY</strong></p>
 <p>In SQL, <code>GROUP BY</code> allows you to group a result by one or more columns, like so:</p>
-<div class="sourceCode" id="cb566"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb566-1"><a href="introduction-to-sql.html#cb566-1" aria-hidden="true" tabindex="-1"></a>SELECT sex, <span class="fu">count</span>(<span class="sc">*</span>)</span>
-<span id="cb566-2"><a href="introduction-to-sql.html#cb566-2" aria-hidden="true" tabindex="-1"></a>FROM employees</span>
-<span id="cb566-3"><a href="introduction-to-sql.html#cb566-3" aria-hidden="true" tabindex="-1"></a>GROUP BY sex;</span></code></pre></div>
-<p>Note that you can combine <code>GROUP BY</code> with <code>ORDER BY</code> to group your results, calculate something about them, and then order your results. For example:</p>
 <div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="introduction-to-sql.html#cb567-1" aria-hidden="true" tabindex="-1"></a>SELECT sex, <span class="fu">count</span>(<span class="sc">*</span>)</span>
 <span id="cb567-2"><a href="introduction-to-sql.html#cb567-2" aria-hidden="true" tabindex="-1"></a>FROM employees</span>
-<span id="cb567-3"><a href="introduction-to-sql.html#cb567-3" aria-hidden="true" tabindex="-1"></a>GROUP BY sex</span>
-<span id="cb567-4"><a href="introduction-to-sql.html#cb567-4" aria-hidden="true" tabindex="-1"></a>ORDER BY count DESC;</span></code></pre></div>
+<span id="cb567-3"><a href="introduction-to-sql.html#cb567-3" aria-hidden="true" tabindex="-1"></a>GROUP BY sex;</span></code></pre></div>
+<p>Note that you can combine <code>GROUP BY</code> with <code>ORDER BY</code> to group your results, calculate something about them, and then order your results. For example:</p>
+<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="introduction-to-sql.html#cb568-1" aria-hidden="true" tabindex="-1"></a>SELECT sex, <span class="fu">count</span>(<span class="sc">*</span>)</span>
+<span id="cb568-2"><a href="introduction-to-sql.html#cb568-2" aria-hidden="true" tabindex="-1"></a>FROM employees</span>
+<span id="cb568-3"><a href="introduction-to-sql.html#cb568-3" aria-hidden="true" tabindex="-1"></a>GROUP BY sex</span>
+<span id="cb568-4"><a href="introduction-to-sql.html#cb568-4" aria-hidden="true" tabindex="-1"></a>ORDER BY count DESC;</span></code></pre></div>
 <p>Get the release year, country, and highest budget spent making a film for each year, for each country. Sort your results by release year and country:</p>
-<div class="sourceCode" id="cb568"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb568-1"><a href="introduction-to-sql.html#cb568-1" aria-hidden="true" tabindex="-1"></a>SELECT release_year, country, <span class="fu">MAX</span>(budget)</span>
-<span id="cb568-2"><a href="introduction-to-sql.html#cb568-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb568-3"><a href="introduction-to-sql.html#cb568-3" aria-hidden="true" tabindex="-1"></a>GROUP BY release_year, country</span>
-<span id="cb568-4"><a href="introduction-to-sql.html#cb568-4" aria-hidden="true" tabindex="-1"></a>ORDER BY release_year, country;</span></code></pre></div>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="introduction-to-sql.html#cb569-1" aria-hidden="true" tabindex="-1"></a>SELECT release_year, country, <span class="fu">MAX</span>(budget)</span>
+<span id="cb569-2"><a href="introduction-to-sql.html#cb569-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb569-3"><a href="introduction-to-sql.html#cb569-3" aria-hidden="true" tabindex="-1"></a>GROUP BY release_year, country</span>
+<span id="cb569-4"><a href="introduction-to-sql.html#cb569-4" aria-hidden="true" tabindex="-1"></a>ORDER BY release_year, country;</span></code></pre></div>
 <p><strong>HAVING a great time</strong></p>
 <p>In SQL, aggregate functions can’t be used in <code>WHERE</code> clauses. For example, the following query is invalid:</p>
-<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="introduction-to-sql.html#cb569-1" aria-hidden="true" tabindex="-1"></a>SELECT release_year</span>
-<span id="cb569-2"><a href="introduction-to-sql.html#cb569-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb569-3"><a href="introduction-to-sql.html#cb569-3" aria-hidden="true" tabindex="-1"></a>GROUP BY release_year</span>
-<span id="cb569-4"><a href="introduction-to-sql.html#cb569-4" aria-hidden="true" tabindex="-1"></a>WHERE <span class="fu">COUNT</span>(title) <span class="sc">&gt;</span> <span class="dv">10</span>;</span></code></pre></div>
-<p>This means that if you want to filter based on the result of an aggregate function, you need another way! That’s where the <code>HAVING</code> clause comes in. For example:</p>
 <div class="sourceCode" id="cb570"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb570-1"><a href="introduction-to-sql.html#cb570-1" aria-hidden="true" tabindex="-1"></a>SELECT release_year</span>
 <span id="cb570-2"><a href="introduction-to-sql.html#cb570-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
 <span id="cb570-3"><a href="introduction-to-sql.html#cb570-3" aria-hidden="true" tabindex="-1"></a>GROUP BY release_year</span>
-<span id="cb570-4"><a href="introduction-to-sql.html#cb570-4" aria-hidden="true" tabindex="-1"></a>HAVING <span class="fu">COUNT</span>(title) <span class="sc">&gt;</span> <span class="dv">10</span>;</span></code></pre></div>
+<span id="cb570-4"><a href="introduction-to-sql.html#cb570-4" aria-hidden="true" tabindex="-1"></a>WHERE <span class="fu">COUNT</span>(title) <span class="sc">&gt;</span> <span class="dv">10</span>;</span></code></pre></div>
+<p>This means that if you want to filter based on the result of an aggregate function, you need another way! That’s where the <code>HAVING</code> clause comes in. For example:</p>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="introduction-to-sql.html#cb571-1" aria-hidden="true" tabindex="-1"></a>SELECT release_year</span>
+<span id="cb571-2"><a href="introduction-to-sql.html#cb571-2" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb571-3"><a href="introduction-to-sql.html#cb571-3" aria-hidden="true" tabindex="-1"></a>GROUP BY release_year</span>
+<span id="cb571-4"><a href="introduction-to-sql.html#cb571-4" aria-hidden="true" tabindex="-1"></a>HAVING <span class="fu">COUNT</span>(title) <span class="sc">&gt;</span> <span class="dv">10</span>;</span></code></pre></div>
 <p>shows only those years in which more than 10 films were released.</p>
 <p>Get the country, average budget, and average gross take of countries that have made more than 10 films. Order the result by country name, and limit the number of results displayed to 5. You should alias the averages as <code>avg_budget</code> and <code>avg_gross</code> respectively:</p>
-<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="introduction-to-sql.html#cb571-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select country, average budget, and average gross</span></span>
-<span id="cb571-2"><a href="introduction-to-sql.html#cb571-2" aria-hidden="true" tabindex="-1"></a>SELECT country, <span class="fu">AVG</span>(budget) AS avg_budget, <span class="fu">AVG</span>(gross) as avg_gross</span>
-<span id="cb571-3"><a href="introduction-to-sql.html#cb571-3" aria-hidden="true" tabindex="-1"></a><span class="co"># from the films table</span></span>
-<span id="cb571-4"><a href="introduction-to-sql.html#cb571-4" aria-hidden="true" tabindex="-1"></a>FROM films</span>
-<span id="cb571-5"><a href="introduction-to-sql.html#cb571-5" aria-hidden="true" tabindex="-1"></a><span class="co"># group by country </span></span>
-<span id="cb571-6"><a href="introduction-to-sql.html#cb571-6" aria-hidden="true" tabindex="-1"></a>GROUP BY country</span>
-<span id="cb571-7"><a href="introduction-to-sql.html#cb571-7" aria-hidden="true" tabindex="-1"></a><span class="co"># where the country has more than 10 titles</span></span>
-<span id="cb571-8"><a href="introduction-to-sql.html#cb571-8" aria-hidden="true" tabindex="-1"></a>HAVING <span class="fu">COUNT</span>(title) <span class="sc">&gt;</span> <span class="dv">10</span></span>
-<span id="cb571-9"><a href="introduction-to-sql.html#cb571-9" aria-hidden="true" tabindex="-1"></a><span class="co"># order by country</span></span>
-<span id="cb571-10"><a href="introduction-to-sql.html#cb571-10" aria-hidden="true" tabindex="-1"></a>ORDER BY country</span>
-<span id="cb571-11"><a href="introduction-to-sql.html#cb571-11" aria-hidden="true" tabindex="-1"></a><span class="co"># limit to only show 5 results</span></span>
-<span id="cb571-12"><a href="introduction-to-sql.html#cb571-12" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="introduction-to-sql.html#cb572-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select country, average budget, and average gross</span></span>
+<span id="cb572-2"><a href="introduction-to-sql.html#cb572-2" aria-hidden="true" tabindex="-1"></a>SELECT country, <span class="fu">AVG</span>(budget) AS avg_budget, <span class="fu">AVG</span>(gross) as avg_gross</span>
+<span id="cb572-3"><a href="introduction-to-sql.html#cb572-3" aria-hidden="true" tabindex="-1"></a><span class="co"># from the films table</span></span>
+<span id="cb572-4"><a href="introduction-to-sql.html#cb572-4" aria-hidden="true" tabindex="-1"></a>FROM films</span>
+<span id="cb572-5"><a href="introduction-to-sql.html#cb572-5" aria-hidden="true" tabindex="-1"></a><span class="co"># group by country </span></span>
+<span id="cb572-6"><a href="introduction-to-sql.html#cb572-6" aria-hidden="true" tabindex="-1"></a>GROUP BY country</span>
+<span id="cb572-7"><a href="introduction-to-sql.html#cb572-7" aria-hidden="true" tabindex="-1"></a><span class="co"># where the country has more than 10 titles</span></span>
+<span id="cb572-8"><a href="introduction-to-sql.html#cb572-8" aria-hidden="true" tabindex="-1"></a>HAVING <span class="fu">COUNT</span>(title) <span class="sc">&gt;</span> <span class="dv">10</span></span>
+<span id="cb572-9"><a href="introduction-to-sql.html#cb572-9" aria-hidden="true" tabindex="-1"></a><span class="co"># order by country</span></span>
+<span id="cb572-10"><a href="introduction-to-sql.html#cb572-10" aria-hidden="true" tabindex="-1"></a>ORDER BY country</span>
+<span id="cb572-11"><a href="introduction-to-sql.html#cb572-11" aria-hidden="true" tabindex="-1"></a><span class="co"># limit to only show 5 results</span></span>
+<span id="cb572-12"><a href="introduction-to-sql.html#cb572-12" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">5</span>;</span></code></pre></div>
 
 </div>
 </div>

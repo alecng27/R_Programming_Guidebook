@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Intro to the Tidyverse | R Programming Guidebook Project</title>
   <meta name="description" content="3 Intro to the Tidyverse | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Intro to the Tidyverse | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="intermediate-r.html"/>
 <link rel="next" href="intro-to-data-visualization-with-ggplot2.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,11 +337,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro-to-the-tidyverse" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Intro to the Tidyverse</h1>
+<div id="intro-to-the-tidyverse" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Intro to the Tidyverse<a href="intro-to-the-tidyverse.html#intro-to-the-tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/introduction-to-the-tidyverse" class="uri">https://learn.datacamp.com/courses/introduction-to-the-tidyverse</a></p>
-<div id="data-wrangling" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Data wrangling</h2>
+<div id="data-wrangling" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Data wrangling<a href="intro-to-the-tidyverse.html#data-wrangling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The following info goes into how to select (filter), arrange, add, change (mutate) specific variables and observations. Install these two packages so codes below work properly:</p>
 <pre><code>install.packages(&quot;gapminder&quot;)
 install.packages(&quot;dplyr&quot;)</code></pre>
@@ -486,8 +485,8 @@ install.packages(&quot;dplyr&quot;)</code></pre>
 ## 10 Canada           Americas   2007    80.7  33390141    36319.          968.
 ## # … with 132 more rows</code></pre>
 </div>
-<div id="data-visualization" class="section level2" number="3.2">
-<h2><span class="header-section-number">3.2</span> Data visualization</h2>
+<div id="data-visualization" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Data visualization<a href="intro-to-the-tidyverse.html#data-visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Make sure to load the <code>ggplot2</code> package. <code>ggplot2</code> will allow the visualization of data into graphs.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="intro-to-the-tidyverse.html#cb202-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb202-2"><a href="intro-to-the-tidyverse.html#cb202-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -497,7 +496,7 @@ install.packages(&quot;dplyr&quot;)</code></pre>
 <span id="cb202-6"><a href="intro-to-the-tidyverse.html#cb202-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a plot to compare population and life expectancy</span></span>
 <span id="cb202-7"><a href="intro-to-the-tidyverse.html#cb202-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> lifeExp)) <span class="sc">+</span> <span class="fu">geom_point</span>()</span></code></pre></div>
 <p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p><code>geom_point()</code> stands for “geometric,” and the “point” tells R that it’s a scatter plot. <code>aes()</code> stands for aesthetic.
+<p><code>geom_point()</code> stands for “geometric”, and the “point” tells R that it’s a scatter plot. <code>aes()</code> stands for aesthetic.
 The data is too cramped up to the left of the plot so use “log scales” to distribute the data better.</p>
 <p>*<strong>Log Scale</strong></p>
 <div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb203-1"><a href="intro-to-the-tidyverse.html#cb203-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot comparing pop and gdpPercap, with both axes on a log scale</span></span>
@@ -522,8 +521,8 @@ The data is too cramped up to the left of the plot so use “log scales” to di
 <span id="cb205-2"><a href="intro-to-the-tidyverse.html#cb205-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gapminder_1952, <span class="fu">aes</span>(<span class="at">x =</span> pop, <span class="at">y =</span> lifeExp)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>() <span class="sc">+</span> <span class="fu">facet_wrap</span>(<span class="sc">~</span> continent)</span></code></pre></div>
 <p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
-<div id="grouping-and-summarizing" class="section level2" number="3.3">
-<h2><span class="header-section-number">3.3</span> Grouping and summarizing</h2>
+<div id="grouping-and-summarizing" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Grouping and summarizing<a href="intro-to-the-tidyverse.html#grouping-and-summarizing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Summarize Verb</strong></p>
 <p>The function <code>summarize()</code> combines many observations from the same variable into one:</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb206-1"><a href="intro-to-the-tidyverse.html#cb206-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for 1957 then summarize the median life expectancy and the maximum GDP per capita</span></span>
@@ -568,8 +567,8 @@ The data is too cramped up to the left of the plot so use “log scales” to di
 <span id="cb212-2"><a href="intro-to-the-tidyverse.html#cb212-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(by_year_continent, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> medianGdpPercap, <span class="at">color =</span> continent)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">expand_limits</span>(<span class="at">y =</span> <span class="dv">0</span>)</span></code></pre></div>
 <p><img src="03-Intro_to_the_Tidyverse_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
-<div id="types-of-visualizations" class="section level2" number="3.4">
-<h2><span class="header-section-number">3.4</span> Types of visualizations</h2>
+<div id="types-of-visualizations" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Types of visualizations<a href="intro-to-the-tidyverse.html#types-of-visualizations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Line Plot</strong></p>
 <p>A line plot is useful for visualizing trends over time. Use <code>geom_line()</code> to create a line plot instead of <code>geom_point()</code> to create a scatter plot. The function <code>expand_limits(y = 0)</code> tells the y-axis to start from <code>0</code>:</p>
 <div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="intro-to-the-tidyverse.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot showing the change in medianGdpPercap by continent over time</span></span>

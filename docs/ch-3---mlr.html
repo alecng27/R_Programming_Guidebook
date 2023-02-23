@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>14 Ch 3 - MLR | R Programming Guidebook Project</title>
   <meta name="description" content="14 Ch 3 - MLR | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="14 Ch 3 - MLR | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="ch-2---slr.html"/>
 <link rel="next" href="dummy-variables-part-1.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,18 +337,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ch-3---mlr" class="section level1" number="14">
-<h1><span class="header-section-number">14</span> Ch 3 - MLR</h1>
+<div id="ch-3---mlr" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">14</span> Ch 3 - MLR<a href="ch-3---mlr.html#ch-3---mlr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>This chapter walks through a few basics of working with MLR models. The last section at the bottom, <a href="ch-3---mlr.html#log-transformations">Log transformations</a>, asks you to create a few graphs, estimate a few models, and formally interpret a few coefficients.</p>
 <p>You’ll need to make sure you have the following packages installed:</p>
-<div class="sourceCode" id="cb678"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb678-1"><a href="ch-3---mlr.html#cb678-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb678-2"><a href="ch-3---mlr.html#cb678-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
-<span id="cb678-3"><a href="ch-3---mlr.html#cb678-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
-<span id="cb678-4"><a href="ch-3---mlr.html#cb678-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
-<span id="cb678-5"><a href="ch-3---mlr.html#cb678-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb678-6"><a href="ch-3---mlr.html#cb678-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
-<div id="data" class="section level2" number="14.1">
-<h2><span class="header-section-number">14.1</span> Data</h2>
+<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="ch-3---mlr.html#cb679-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb679-2"><a href="ch-3---mlr.html#cb679-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb679-3"><a href="ch-3---mlr.html#cb679-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb679-4"><a href="ch-3---mlr.html#cb679-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb679-5"><a href="ch-3---mlr.html#cb679-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb679-6"><a href="ch-3---mlr.html#cb679-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div id="data" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> Data<a href="ch-3---mlr.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <style>
 .variableTable th {
   text-align: left;
@@ -404,11 +403,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   color: green;
 }
 </style>
-<div id="summary-statistics" class="section level3 sumstats" number="14.1.1">
-<h3><span class="header-section-number">14.1.1</span> Summary Statistics</h3>
+<div id="summary-statistics" class="section level3 sumstats hasAnchor" number="14.1.1">
+<h3><span class="header-section-number">14.1.1</span> Summary Statistics<a href="ch-3---mlr.html#summary-statistics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The <code>stargazer</code> package provides an easy way to display summary statistics. You need the <code>result='asis'</code> code chunk option so that it displays the html table in the knit output file (and you need the <code>type="html"</code> stargazer option to produce the html table). The <code>warning=FALSE</code> and <code>message=FALSE</code> keep it from displaying some of the messages it displays by default.</p>
-<div class="sourceCode" id="cb679"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb679-1"><a href="ch-3---mlr.html#cb679-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/econ380w21/380data/main/ceosal.csv&quot;</span>)</span>
-<span id="cb679-2"><a href="ch-3---mlr.html#cb679-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(mydata, <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,<span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;sd&quot;</span>, <span class="st">&quot;min&quot;</span>, <span class="st">&quot;p25&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;p75&quot;</span>, <span class="st">&quot;max&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="ch-3---mlr.html#cb680-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/econ380w21/380data/main/ceosal.csv&quot;</span>)</span>
+<span id="cb680-2"><a href="ch-3---mlr.html#cb680-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(mydata, <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,<span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;sd&quot;</span>, <span class="st">&quot;min&quot;</span>, <span class="st">&quot;p25&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;p75&quot;</span>, <span class="st">&quot;max&quot;</span>))</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="8" style="border-bottom: 1px solid black">
@@ -636,20 +635,20 @@ mktval
 <p>Now back to econometrics…</p>
 </div>
 </div>
-<div id="regression-model-comparisons" class="section level2" number="14.2">
-<h2><span class="header-section-number">14.2</span> Regression model comparisons</h2>
+<div id="regression-model-comparisons" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> Regression model comparisons<a href="ch-3---mlr.html#regression-model-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Consider four models:</p>
-<div class="sourceCode" id="cb680"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb680-1"><a href="ch-3---mlr.html#cb680-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span>
-<span id="cb680-2"><a href="ch-3---mlr.html#cb680-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>age,<span class="at">data=</span>mydata)</span>
-<span id="cb680-3"><a href="ch-3---mlr.html#cb680-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
-<span id="cb680-4"><a href="ch-3---mlr.html#cb680-4" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten<span class="sc">+</span>age,<span class="at">data=</span>mydata)</span></code></pre></div>
+<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="ch-3---mlr.html#cb681-1" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span>
+<span id="cb681-2"><a href="ch-3---mlr.html#cb681-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>age,<span class="at">data=</span>mydata)</span>
+<span id="cb681-3"><a href="ch-3---mlr.html#cb681-3" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb681-4"><a href="ch-3---mlr.html#cb681-4" aria-hidden="true" tabindex="-1"></a>model4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten<span class="sc">+</span>age,<span class="at">data=</span>mydata)</span></code></pre></div>
 <p>The package you should use for 380 to report the results of multiple models side-by-side is the <code>stargazer</code> package. Each column is a separate model. If a variable does not have a coefficient displayed in a column, that means it was not included as an explanatory variable in that model.</p>
-<div class="sourceCode" id="cb681"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb681-1"><a href="ch-3---mlr.html#cb681-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3, model4, </span>
-<span id="cb681-2"><a href="ch-3---mlr.html#cb681-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
-<span id="cb681-3"><a href="ch-3---mlr.html#cb681-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
-<span id="cb681-4"><a href="ch-3---mlr.html#cb681-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
-<span id="cb681-5"><a href="ch-3---mlr.html#cb681-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
-<span id="cb681-6"><a href="ch-3---mlr.html#cb681-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="ch-3---mlr.html#cb682-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2, model3, model4, </span>
+<span id="cb682-2"><a href="ch-3---mlr.html#cb682-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb682-3"><a href="ch-3---mlr.html#cb682-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb682-4"><a href="ch-3---mlr.html#cb682-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb682-5"><a href="ch-3---mlr.html#cb682-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb682-6"><a href="ch-3---mlr.html#cb682-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="5" style="border-bottom: 1px solid black">
@@ -1029,8 +1028,8 @@ Adjusted R<sup>2</sup>
 <p>For displaying regression results for 380, please use the <code>report=('vc*p')</code> stargazer option to display p-values and the <code>keep.stat = c("n","rsq","adj.rsq")</code> stargazer option to display the sample size (it’s important to know the sample size for each model so you can see if it changes, which happens if some variables have missing values), r-squared, and adjusted r-squared.</p>
 <p>The final two options (notes and notes.append) fix a bug in stargazer. The table is supposed to display a note that explains the stars (asterisks) used to denote statistical significance (one star means statistically significant at the 10% level, two stars mean statistically significant at the 5% level, and 3 stars mean statistically significant at the 1% level). However, asterisks are also how you make words <em>italic</em> and <strong>bold</strong> in RMarkdown, and that’s what happens in the table footnote (try removing those options and building to see what I mean). The solution is to use the character code 42 (*) instead. So, just use the options above and it should work correctly.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> This option also highlights why you often want to have easily-accessible examples. You’re probably not going to remember all that to type it yourself, but if you have this chapter in your BP, you can easily search for stargazer, find this example, and copy/paste into your project or wherever you want to report results.</p>
 </div>
-<div id="adjusted-r-squared" class="section level2" number="14.3">
-<h2><span class="header-section-number">14.3</span> Adjusted R-Squared</h2>
+<div id="adjusted-r-squared" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> Adjusted R-Squared<a href="ch-3---mlr.html#adjusted-r-squared" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Recall the definition of <span class="math inline">\(R^2\)</span> from “LN3.6 (R-Squared, Goodness of Fit).pptx” (posted in Moodle):
 <span class="math display">\[
 R^2 = \frac{SSM}{SST} = 1 - \frac{SSR}{SST}
@@ -1044,21 +1043,21 @@ R^2 = \frac{SSM}{SST} = 1 - \frac{SSR}{SST}
 <p>Comparing models 1 and 3, both <span class="math inline">\(R^2\)</span> and adjusted <span class="math inline">\(R^2\)</span> increase when adding the CEO’s tenure (from 0.178 to 0.201 for <span class="math inline">\(R^2\)</span> and from 0.163 to 0.183 for adjusted <span class="math inline">\(R^2\)</span>). This increase in adjusted <span class="math inline">\(R^2\)</span> corresponds with statistical significance of the coefficient; the p-value for the <code>ceoten</code> coefficient is 0.0251, meaning that the effect of CEO’s tenure on salary is statistically significant at the 5% level. The increase in adjusted <span class="math inline">\(R^2\)</span> provides support for including this variable in the model (with the statistically significant coefficient providing additional support).</p>
 <p>Comparing models 3 and 4, we again see that adding the CEO’s age does not improve the model; <span class="math inline">\(R^2\)</span> increases slightly (from 0.201 to 0.202) but adjusted <span class="math inline">\(R^2\)</span> goes down (from 0.183 to 0.178). The coefficient on age is also not statistically significant at any standard level of significance (the p-value is 0.873,). These results indicate that age should be left out of the model.</p>
 </div>
-<div id="multicollinearity" class="section level2" number="14.4">
-<h2><span class="header-section-number">14.4</span> Multicollinearity</h2>
+<div id="multicollinearity" class="section level2 hasAnchor" number="14.4">
+<h2><span class="header-section-number">14.4</span> Multicollinearity<a href="ch-3---mlr.html#multicollinearity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Sometimes two variables are both important in determining <span class="math inline">\(y\)</span>, but when both are included in the model, neither appears to have a significant effect. Consider the following four models. Note that the final column is model 3 from above (so I numbered the models 5, 6, 7, and 3).</p>
-<div class="sourceCode" id="cb682"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb682-1"><a href="ch-3---mlr.html#cb682-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
-<span id="cb682-2"><a href="ch-3---mlr.html#cb682-2" aria-hidden="true" tabindex="-1"></a>model6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval,<span class="at">data=</span>mydata)</span>
-<span id="cb682-3"><a href="ch-3---mlr.html#cb682-3" aria-hidden="true" tabindex="-1"></a>model7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span>
-<span id="cb682-4"><a href="ch-3---mlr.html#cb682-4" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span></code></pre></div>
-<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="ch-3---mlr.html#cb683-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model5, model6, model7, model3, </span>
-<span id="cb683-2"><a href="ch-3---mlr.html#cb683-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
-<span id="cb683-3"><a href="ch-3---mlr.html#cb683-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
-<span id="cb683-4"><a href="ch-3---mlr.html#cb683-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
-<span id="cb683-5"><a href="ch-3---mlr.html#cb683-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
-<span id="cb683-6"><a href="ch-3---mlr.html#cb683-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb683-7"><a href="ch-3---mlr.html#cb683-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb683-8"><a href="ch-3---mlr.html#cb683-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;(5)&quot;</span>,<span class="st">&quot;(6)&quot;</span>, <span class="st">&quot;(7)&quot;</span>, <span class="st">&quot;(3)&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb683"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb683-1"><a href="ch-3---mlr.html#cb683-1" aria-hidden="true" tabindex="-1"></a>model5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb683-2"><a href="ch-3---mlr.html#cb683-2" aria-hidden="true" tabindex="-1"></a>model6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval,<span class="at">data=</span>mydata)</span>
+<span id="cb683-3"><a href="ch-3---mlr.html#cb683-3" aria-hidden="true" tabindex="-1"></a>model7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span>
+<span id="cb683-4"><a href="ch-3---mlr.html#cb683-4" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval<span class="sc">+</span>profits,<span class="at">data=</span>mydata)</span></code></pre></div>
+<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="ch-3---mlr.html#cb684-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model5, model6, model7, model3, </span>
+<span id="cb684-2"><a href="ch-3---mlr.html#cb684-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb684-3"><a href="ch-3---mlr.html#cb684-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb684-4"><a href="ch-3---mlr.html#cb684-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb684-5"><a href="ch-3---mlr.html#cb684-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb684-6"><a href="ch-3---mlr.html#cb684-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb684-7"><a href="ch-3---mlr.html#cb684-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb684-8"><a href="ch-3---mlr.html#cb684-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;(5)&quot;</span>,<span class="st">&quot;(6)&quot;</span>, <span class="st">&quot;(7)&quot;</span>, <span class="st">&quot;(3)&quot;</span>))</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="5" style="border-bottom: 1px solid black">
@@ -1394,8 +1393,8 @@ Adjusted R<sup>2</sup>
 <p>How can adding <code>mktval</code> improve model 5 and adding <code>profits</code> improve model 5, but adding both doesn’t? Often this happens when there is correlation between explanatory variables. Sometimes this happens when several explanatory variables essentially measure the same concept. If the variables are very similar measures of the same underlying concept, it often makes sense to include only one or the other (sometimes papers will include “robustness checks” that show results are similar if you use alternative measures).</p>
 <p>Sometimes, however, variables measure different concepts but are still highly correlated with each other. Correlation between explanatory variables is called <strong>multicollinearity</strong>. When we do a regression, we’re looking at variation in the explanatory variables and how that explains variation in the outcome. When two explanatory variables tend to move together (i.e., are correlated), it’s hard for OLS to tell which explanatory variable is driving the changes in the outcome. Pretend the index finger on your left hand represents <span class="math inline">\(y\)</span> and the index finger on your right hand represents <span class="math inline">\(x_1\)</span>. Move your hands up and down somewhat together, as if demonstrating how <span class="math inline">\(x_1\)</span> affects <span class="math inline">\(y\)</span>. Now also extend your pinky finger on your right hand to represent <span class="math inline">\(x_4\)</span>. Make the same hand movements. If we were watching your hand movements, we wouldn’t be able to tell if it was <span class="math inline">\(x_1\)</span> or <span class="math inline">\(x_4\)</span> affecting <span class="math inline">\(y\)</span> because whenever <span class="math inline">\(x_1\)</span> goes up, so does <span class="math inline">\(x_4\)</span> (since both are on your right hand, you can tip your hand one way or the other so the correlation isn’t perfect, but they’re generally going to move pretty closely together).</p>
 <p>Formally, we can measure this relationship between explanatory variables with a regression. Here is the regression of profits on market value:</p>
-<div class="sourceCode" id="cb684"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb684-1"><a href="ch-3---mlr.html#cb684-1" aria-hidden="true" tabindex="-1"></a>mktvalAndProfits <span class="ot">&lt;-</span> <span class="fu">lm</span>(profits<span class="sc">~</span>mktval,<span class="at">data=</span>mydata)</span>
-<span id="cb684-2"><a href="ch-3---mlr.html#cb684-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(mktvalAndProfits))</span></code></pre></div>
+<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="ch-3---mlr.html#cb685-1" aria-hidden="true" tabindex="-1"></a>mktvalAndProfits <span class="ot">&lt;-</span> <span class="fu">lm</span>(profits<span class="sc">~</span>mktval,<span class="at">data=</span>mydata)</span>
+<span id="cb685-2"><a href="ch-3---mlr.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(mktvalAndProfits))</span></code></pre></div>
 <table style="width:89%;">
 <colgroup>
 <col width="25%" />
@@ -1456,8 +1455,8 @@ Adjusted R<sup>2</sup>
 </tbody>
 </table>
 <p>The <span class="math inline">\(R^2\)</span> is 0.843, meaning that 84.3% of the variation in profits can be explained by variation in market value (in a linear model). Because profits and market value tend to both be low or both be high at the same time, it is hard for OLS to tell to what extent it’s market value affecting salary, and to what extent it’s profits.</p>
-<div id="variance-inflation-factor-vif" class="section level3" number="14.4.1">
-<h3><span class="header-section-number">14.4.1</span> Variance Inflation Factor (VIF)</h3>
+<div id="variance-inflation-factor-vif" class="section level3 hasAnchor" number="14.4.1">
+<h3><span class="header-section-number">14.4.1</span> Variance Inflation Factor (VIF)<a href="ch-3---mlr.html#variance-inflation-factor-vif" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The Variance Inflation Factor (VIF) is a common measure used to gauge how much multicollinearity might be affecting the precision with which we are able to measure a particular coefficient. The VIF is one part of the equation used to calculate the standard error of a coefficient.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
 <p>Consider the general regression equation:
 <span class="math display">\[
@@ -1476,8 +1475,8 @@ where <span class="math inline">\(\sigma^2\)</span> is a measure of the variance
 <p>At the other end if the spectrum is the best case for precisely estimating a coefficient <span class="math inline">\(\hat{\beta}_j\)</span>, which is when there is lots of variation in <span class="math inline">\(x_j\)</span> (i.e., <span class="math inline">\(SST_j\)</span> is large), and that variation is completely unrelated to variation in the other explanatory variables (i.e., <span class="math inline">\(R^2_j=0\)</span> so <span class="math inline">\(\text{VIF}_j=1\)</span>).</p>
 <p>The only other term in <span class="math inline">\(\text{VAR}(\hat{\beta}_j)\)</span> we haven’t discussed is <span class="math inline">\(\sigma^2\)</span>, the variation in the unobservables given the explanatory variables. The less unobservable factors are affecting <span class="math inline">\(y\)</span>, the more precisely we can estimate how our explanatory variables affect <span class="math inline">\(y\)</span>. In the extreme case, there are no unobservables affecting <span class="math inline">\(y\)</span>. Thus, <span class="math inline">\(\sigma^2=0\)</span>, meaning <span class="math inline">\(\text{VAR}(\hat{\beta}_j)=0\)</span>. In this situation, we can exactly estimate the effect of each explanatory variable on <span class="math inline">\(y\)</span>; hence, <span class="math inline">\(\text{VAR}(\hat{\beta}_j)=0\)</span>.</p>
 <p>Let’s examine the VIF for our specific example. In the example above, we focused on just two variables, profits and market value, but the regression in question (model 3) also includes sales and CEO tenure. Thus, we want to know how much of the variation in market value can be explained by variation in the other explanatory variables. We find this via this regression:</p>
-<div class="sourceCode" id="cb685"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb685-1"><a href="ch-3---mlr.html#cb685-1" aria-hidden="true" tabindex="-1"></a>modelProfits <span class="ot">&lt;-</span> <span class="fu">lm</span>(profits<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval,<span class="at">data=</span>mydata)</span>
-<span id="cb685-2"><a href="ch-3---mlr.html#cb685-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelProfits))</span></code></pre></div>
+<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="ch-3---mlr.html#cb686-1" aria-hidden="true" tabindex="-1"></a>modelProfits <span class="ot">&lt;-</span> <span class="fu">lm</span>(profits<span class="sc">~</span>sales<span class="sc">+</span>ceoten<span class="sc">+</span>mktval,<span class="at">data=</span>mydata)</span>
+<span id="cb686-2"><a href="ch-3---mlr.html#cb686-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelProfits))</span></code></pre></div>
 <table style="width:89%;">
 <colgroup>
 <col width="25%" />
@@ -1670,12 +1669,12 @@ This is a somewhat high VIF, but not so high that we would necessarily expect a 
 </table>
 <p>The VIF value of 10 corresponds with <span class="math inline">\(R^2_j=0.9\)</span>. For <span class="math inline">\(R^2_j\)</span> above 0.9, the VIF increases quite steeply.</p>
 </div>
-<div id="joint-hypotheses-test" class="section level3" number="14.4.2">
-<h3><span class="header-section-number">14.4.2</span> Joint hypotheses test</h3>
+<div id="joint-hypotheses-test" class="section level3 hasAnchor" number="14.4.2">
+<h3><span class="header-section-number">14.4.2</span> Joint hypotheses test<a href="ch-3---mlr.html#joint-hypotheses-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>So should we only include one or the other? Not necessarily. Both market value and profits affect salary. If we leave one out, we’ll have omitted variable bias. Look at how the coefficient on profits changes between models 7 and 3: it falls by 292 (from 341 down to 48.63609). However, due to the multicollinearity in model 3, we get very imprecise estimates of <code>mktval</code> and <code>profits</code>. Multicollinearity often makes it difficult to estimate effects precisely, but if we don’t include both variables, we introduce omitted variable bias. A larger sample size might help,<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> but that’s obviously not something we can change in most situations (since we’re usually using data other people have already collected).</p>
 <p>A common approach is to include several models for comparison, both with and without the variables (like the table above with models 5, 6, 7, and 3). Then, do a formal test of whether the two variables are jointly significant in determining <span class="math inline">\(y\)</span>. Formally, this is a hypothesis test of the joint null hypothesis that <span class="math inline">\(\beta_{mktval}=0\)</span> and <span class="math inline">\(\beta_{profits}=0\)</span>. To perform this test, we can use the <code>linearHypothesis</code> function from the <code>car</code> package:</p>
-<div class="sourceCode" id="cb686"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb686-1"><a href="ch-3---mlr.html#cb686-1" aria-hidden="true" tabindex="-1"></a>jointTest <span class="ot">&lt;-</span> <span class="fu">linearHypothesis</span>(model3, <span class="fu">c</span>(<span class="st">&quot;mktval=0&quot;</span>, <span class="st">&quot;profits=0&quot;</span>))</span>
-<span id="cb686-2"><a href="ch-3---mlr.html#cb686-2" aria-hidden="true" tabindex="-1"></a>jointTest</span></code></pre></div>
+<div class="sourceCode" id="cb687"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb687-1"><a href="ch-3---mlr.html#cb687-1" aria-hidden="true" tabindex="-1"></a>jointTest <span class="ot">&lt;-</span> <span class="fu">linearHypothesis</span>(model3, <span class="fu">c</span>(<span class="st">&quot;mktval=0&quot;</span>, <span class="st">&quot;profits=0&quot;</span>))</span>
+<span id="cb687-2"><a href="ch-3---mlr.html#cb687-2" aria-hidden="true" tabindex="-1"></a>jointTest</span></code></pre></div>
 <pre><code>## Linear hypothesis test
 ## 
 ## Hypothesis:
@@ -1694,10 +1693,10 @@ This is a somewhat high VIF, but not so high that we would necessarily expect a 
 <p>You can see section 4-5a in Wooldridge 6e for more on joint hypothesis tests. This test can be beneficial when you have a situation where you have reason to believe two (or more) variables are important in determining <span class="math inline">\(y\)</span>, but each is individually insignificant. Take care not to abuse this test by testing a highly insignificant variable with a highly significant variable. Any joint hypothesis test that includes a variable that is individually highly significant (i.e., that has a p-value under 0.01) will usually be jointly significant as well; so trying to use this test as evidence that the insignificant variable is actually jointly significant is essentially cheating (i.e., mis-representing what the test is telling us).</p>
 </div>
 </div>
-<div id="testing-linear-combinations-of-parameters" class="section level2" number="14.5">
-<h2><span class="header-section-number">14.5</span> Testing linear combinations of parameters</h2>
+<div id="testing-linear-combinations-of-parameters" class="section level2 hasAnchor" number="14.5">
+<h2><span class="header-section-number">14.5</span> Testing linear combinations of parameters<a href="ch-3---mlr.html#testing-linear-combinations-of-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It’s common for people to look at regression results and make comparisons between coefficients. For example, looking at models 6 and 3 above, the coefficient on market value is larger than the coefficient on sales. Does this mean market value is more important that sales in terms of its effect on salary? To see how we answer this question, let’s consider model 3 for the rest of this section, reprinted here for convenience:</p>
-<div class="sourceCode" id="cb688"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb688-1"><a href="ch-3---mlr.html#cb688-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model3))</span></code></pre></div>
+<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="ch-3---mlr.html#cb689-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model3))</span></code></pre></div>
 <table style="width:88%;">
 <colgroup>
 <col width="25%" />
@@ -1784,8 +1783,8 @@ This is a somewhat high VIF, but not so high that we would necessarily expect a 
 t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)}
 \]</span></p>
 <p>Thus, we need to calculate not just the difference in coefficients, <span class="math inline">\(\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)\)</span>, but also the standard error of the difference, <span class="math inline">\(\text{SE}\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)\)</span>. To calculate the standard error of the difference, we need to know not just the standard error of <span class="math inline">\(\hat{\beta}_{profit}\)</span> and <span class="math inline">\(\hat{\beta}_{sales}\)</span>, but also the correlation between the two estimates (if both coefficients tend to be big together and small together, the coefficients tend to stay closer together, making the difference smaller, but if they are negatively correlated, one tends to be bigger when the other one is smaller and the difference tends to be larger). Thus, calculating <span class="math inline">\(\text{SE}\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)\)</span> requires the full variance-covariance matrix. Instead, we’ll use the <code>glht</code> function from the <code>multcomp</code> package to perform the test for us:</p>
-<div class="sourceCode" id="cb689"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb689-1"><a href="ch-3---mlr.html#cb689-1" aria-hidden="true" tabindex="-1"></a>testOfDif <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> <span class="fu">c</span>(<span class="st">&quot;profits - sales = 0&quot;</span>))</span>
-<span id="cb689-2"><a href="ch-3---mlr.html#cb689-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(testOfDif)</span></code></pre></div>
+<div class="sourceCode" id="cb690"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb690-1"><a href="ch-3---mlr.html#cb690-1" aria-hidden="true" tabindex="-1"></a>testOfDif <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> <span class="fu">c</span>(<span class="st">&quot;profits - sales = 0&quot;</span>))</span>
+<span id="cb690-2"><a href="ch-3---mlr.html#cb690-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(testOfDif)</span></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Tests for General Linear Hypotheses
 ## 
@@ -1796,7 +1795,7 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 ## profits - sales == 0     30.4      278.0   0.109    0.913
 ## (Adjusted p values reported -- single-step method)</code></pre>
 <p>We can interpret the p-value just like the p-value for a hypothesis test of a single coefficient. The p-value is 0.9130323, so we fail to reject the null hypothesis that the two coefficients are the same at all standard levels of significance. In other words, we can’t reject that the difference is due to chance. We could also form a confidence interval. Here’s the 90% confidence interval for the difference in coefficients:</p>
-<div class="sourceCode" id="cb691"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb691-1"><a href="ch-3---mlr.html#cb691-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(testOfDif,<span class="at">level =</span> <span class="fl">0.9</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb692"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb692-1"><a href="ch-3---mlr.html#cb692-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(testOfDif,<span class="at">level =</span> <span class="fl">0.9</span>)</span></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Confidence Intervals
 ## 
@@ -1811,8 +1810,8 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 ## profits - sales == 0   30.4026 -429.2872  490.0925</code></pre>
 <p>This 90% confidence interval contains 0; thus, we fail to reject the null hypothesis that the difference is 0 at all standard levels of significance.</p>
 <p>So you can see what it looks like when we reach the opposite conclusion, here’s the same test for the difference between the coefficient on <code>ceoten</code> and the coefficient on <code>sales</code>:</p>
-<div class="sourceCode" id="cb693"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb693-1"><a href="ch-3---mlr.html#cb693-1" aria-hidden="true" tabindex="-1"></a>testOfDif2 <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> <span class="fu">c</span>(<span class="st">&quot;ceoten - sales = 0&quot;</span>))</span>
-<span id="cb693-2"><a href="ch-3---mlr.html#cb693-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(testOfDif2)</span></code></pre></div>
+<div class="sourceCode" id="cb694"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb694-1"><a href="ch-3---mlr.html#cb694-1" aria-hidden="true" tabindex="-1"></a>testOfDif2 <span class="ot">&lt;-</span> <span class="fu">glht</span>(model3, <span class="at">linfct =</span> <span class="fu">c</span>(<span class="st">&quot;ceoten - sales = 0&quot;</span>))</span>
+<span id="cb694-2"><a href="ch-3---mlr.html#cb694-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(testOfDif2)</span></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Tests for General Linear Hypotheses
 ## 
@@ -1824,7 +1823,7 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## (Adjusted p values reported -- single-step method)</code></pre>
-<div class="sourceCode" id="cb695"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb695-1"><a href="ch-3---mlr.html#cb695-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(testOfDif2)</span></code></pre></div>
+<div class="sourceCode" id="cb696"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb696-1"><a href="ch-3---mlr.html#cb696-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(testOfDif2)</span></code></pre></div>
 <pre><code>## 
 ##   Simultaneous Confidence Intervals
 ## 
@@ -1839,16 +1838,16 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 ## ceoten - sales == 0 12712.6292  1590.0204 23835.2380</code></pre>
 <p>The p-value is 0.0253289, so we reject the null hypothesis that the coefficients are the same at the 5% level. In other words, we have evidence (at the 5% level) supporting the claim that the effect on CEO salary of an additional year of CEO tenure is larger than the effect of an additional $1 million in sales, holding constant market value and profits.</p>
 </div>
-<div id="a-note-on-presentation" class="section level2" number="14.6">
-<h2><span class="header-section-number">14.6</span> A note on presentation</h2>
+<div id="a-note-on-presentation" class="section level2 hasAnchor" number="14.6">
+<h2><span class="header-section-number">14.6</span> A note on presentation<a href="ch-3---mlr.html#a-note-on-presentation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>If you include formal hypothesis tests like those just discussed in the <a href="ch-3---mlr.html#joint-hypotheses-test">Joint hypotheses test</a> and <a href="ch-3---mlr.html#testing-linear-combinations-of-parameters">Testing linear combinations of parameters</a> sections in a paper, you will typically not include the complete test output. Instead, you’ll just say what the test is, report the p-value, and explain the conclusion of the test. The detailed output of the test is included here as part of the BP because it is useful to see all the output as a reference later.</p>
 </div>
-<div id="log-transformations" class="section level2" number="14.7">
-<h2><span class="header-section-number">14.7</span> Log transformations</h2>
+<div id="log-transformations" class="section level2 hasAnchor" number="14.7">
+<h2><span class="header-section-number">14.7</span> Log transformations<a href="ch-3---mlr.html#log-transformations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This section has several things you need to do (and after you complete everything you need to do in this section, you can submit this chapter of your BP).</p>
 <p>This data provides a good example of why visualizing your data can be helpful. By visualizing the data using histograms and scatter plots, it is easy to see how skewed the data is and how log transformations can help center it. You will focus on two variables, sales and salary. You will first make histograms and then make scatter plots showing the relationship between these two variables.</p>
-<div id="histograms" class="section level3" number="14.7.1">
-<h3><span class="header-section-number">14.7.1</span> Histograms</h3>
+<div id="histograms" class="section level3 hasAnchor" number="14.7.1">
+<h3><span class="header-section-number">14.7.1</span> Histograms<a href="ch-3---mlr.html#histograms" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Make four histograms:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>salary</code></p></li>
@@ -1861,39 +1860,39 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 <ol style="list-style-type: decimal">
 <li><code>salary</code></li>
 </ol>
-<div class="sourceCode" id="cb697"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb697-1"><a href="ch-3---mlr.html#cb697-1" aria-hidden="true" tabindex="-1"></a>salary_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(salary)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
-<span id="cb697-2"><a href="ch-3---mlr.html#cb697-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb697-3"><a href="ch-3---mlr.html#cb697-3" aria-hidden="true" tabindex="-1"></a>salary_histogram</span></code></pre></div>
+<div class="sourceCode" id="cb698"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb698-1"><a href="ch-3---mlr.html#cb698-1" aria-hidden="true" tabindex="-1"></a>salary_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(salary)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb698-2"><a href="ch-3---mlr.html#cb698-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb698-3"><a href="ch-3---mlr.html#cb698-3" aria-hidden="true" tabindex="-1"></a>salary_histogram</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li><code>log(salary)</code></li>
 </ol>
-<div class="sourceCode" id="cb699"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb699-1"><a href="ch-3---mlr.html#cb699-1" aria-hidden="true" tabindex="-1"></a>log_salary_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(salary))) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
-<span id="cb699-2"><a href="ch-3---mlr.html#cb699-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb699-3"><a href="ch-3---mlr.html#cb699-3" aria-hidden="true" tabindex="-1"></a>log_salary_histogram</span></code></pre></div>
+<div class="sourceCode" id="cb700"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb700-1"><a href="ch-3---mlr.html#cb700-1" aria-hidden="true" tabindex="-1"></a>log_salary_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(salary))) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb700-2"><a href="ch-3---mlr.html#cb700-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb700-3"><a href="ch-3---mlr.html#cb700-3" aria-hidden="true" tabindex="-1"></a>log_salary_histogram</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li><code>sales</code></li>
 </ol>
-<div class="sourceCode" id="cb701"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb701-1"><a href="ch-3---mlr.html#cb701-1" aria-hidden="true" tabindex="-1"></a>sales_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
-<span id="cb701-2"><a href="ch-3---mlr.html#cb701-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb701-3"><a href="ch-3---mlr.html#cb701-3" aria-hidden="true" tabindex="-1"></a>sales_histogram</span></code></pre></div>
+<div class="sourceCode" id="cb702"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb702-1"><a href="ch-3---mlr.html#cb702-1" aria-hidden="true" tabindex="-1"></a>sales_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb702-2"><a href="ch-3---mlr.html#cb702-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb702-3"><a href="ch-3---mlr.html#cb702-3" aria-hidden="true" tabindex="-1"></a>sales_histogram</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li><code>log(sales)</code></li>
 </ol>
-<div class="sourceCode" id="cb703"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb703-1"><a href="ch-3---mlr.html#cb703-1" aria-hidden="true" tabindex="-1"></a>log_sales_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales))) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
-<span id="cb703-2"><a href="ch-3---mlr.html#cb703-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb703-3"><a href="ch-3---mlr.html#cb703-3" aria-hidden="true" tabindex="-1"></a>log_sales_histogram</span></code></pre></div>
+<div class="sourceCode" id="cb704"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb704-1"><a href="ch-3---mlr.html#cb704-1" aria-hidden="true" tabindex="-1"></a>log_sales_histogram <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales))) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span>
+<span id="cb704-2"><a href="ch-3---mlr.html#cb704-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb704-3"><a href="ch-3---mlr.html#cb704-3" aria-hidden="true" tabindex="-1"></a>log_sales_histogram</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="scatter-plots" class="section level3" number="14.7.2">
-<h3><span class="header-section-number">14.7.2</span> Scatter plots</h3>
+<div id="scatter-plots" class="section level3 hasAnchor" number="14.7.2">
+<h3><span class="header-section-number">14.7.2</span> Scatter plots<a href="ch-3---mlr.html#scatter-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>You can also see how log transformations spread out the data by looking at scatter plots of <code>salary</code> or <code>log(salary)</code> (y) versus <code>sales</code> or <code>log(sales)</code> corresponding with the four different combinations. Specifically, create four scatter plots:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>salary</code> (y) vs. <code>sales</code> (x)</p></li>
@@ -1910,39 +1909,39 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 <ol style="list-style-type: decimal">
 <li><code>salary</code> (y) vs. <code>sales</code> (x)</li>
 </ol>
-<div class="sourceCode" id="cb705"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb705-1"><a href="ch-3---mlr.html#cb705-1" aria-hidden="true" tabindex="-1"></a>salary_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales, salary, <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span>
-<span id="cb705-2"><a href="ch-3---mlr.html#cb705-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb705-3"><a href="ch-3---mlr.html#cb705-3" aria-hidden="true" tabindex="-1"></a>salary_sales</span></code></pre></div>
+<div class="sourceCode" id="cb706"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb706-1"><a href="ch-3---mlr.html#cb706-1" aria-hidden="true" tabindex="-1"></a>salary_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales, salary, <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span>
+<span id="cb706-2"><a href="ch-3---mlr.html#cb706-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb706-3"><a href="ch-3---mlr.html#cb706-3" aria-hidden="true" tabindex="-1"></a>salary_sales</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li><code>log(salary)</code> (y) vs. <code>sales</code> (x)</li>
 </ol>
-<div class="sourceCode" id="cb707"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb707-1"><a href="ch-3---mlr.html#cb707-1" aria-hidden="true" tabindex="-1"></a>log_salary_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales, <span class="fu">log</span>(salary), <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;black&quot;</span>)</span>
-<span id="cb707-2"><a href="ch-3---mlr.html#cb707-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb707-3"><a href="ch-3---mlr.html#cb707-3" aria-hidden="true" tabindex="-1"></a>log_salary_sales</span></code></pre></div>
+<div class="sourceCode" id="cb708"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb708-1"><a href="ch-3---mlr.html#cb708-1" aria-hidden="true" tabindex="-1"></a>log_salary_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(sales, <span class="fu">log</span>(salary), <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb708-2"><a href="ch-3---mlr.html#cb708-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb708-3"><a href="ch-3---mlr.html#cb708-3" aria-hidden="true" tabindex="-1"></a>log_salary_sales</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li><code>salary</code> (y) vs. <code>log(sales)</code> (x)</li>
 </ol>
-<div class="sourceCode" id="cb709"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb709-1"><a href="ch-3---mlr.html#cb709-1" aria-hidden="true" tabindex="-1"></a>salary_log_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales), salary, <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span>    <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb709-2"><a href="ch-3---mlr.html#cb709-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb709-3"><a href="ch-3---mlr.html#cb709-3" aria-hidden="true" tabindex="-1"></a>salary_log_sales</span></code></pre></div>
+<div class="sourceCode" id="cb710"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb710-1"><a href="ch-3---mlr.html#cb710-1" aria-hidden="true" tabindex="-1"></a>salary_log_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales), salary, <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span>    <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb710-2"><a href="ch-3---mlr.html#cb710-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb710-3"><a href="ch-3---mlr.html#cb710-3" aria-hidden="true" tabindex="-1"></a>salary_log_sales</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li><code>log(salary)</code> (y) vs. <code>log(sales)</code> (x)</li>
 </ol>
-<div class="sourceCode" id="cb711"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb711-1"><a href="ch-3---mlr.html#cb711-1" aria-hidden="true" tabindex="-1"></a>salary_log_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales), <span class="fu">log</span>(salary), <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;blue&quot;</span>)</span>
-<span id="cb711-2"><a href="ch-3---mlr.html#cb711-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb711-3"><a href="ch-3---mlr.html#cb711-3" aria-hidden="true" tabindex="-1"></a>salary_log_sales</span></code></pre></div>
+<div class="sourceCode" id="cb712"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb712-1"><a href="ch-3---mlr.html#cb712-1" aria-hidden="true" tabindex="-1"></a>salary_log_sales <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mydata, <span class="fu">aes</span>(<span class="fu">log</span>(sales), <span class="fu">log</span>(salary), <span class="at">color =</span> ceoten)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span> <span class="fu">scale_color_gradient2</span>(<span class="at">high =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb712-2"><a href="ch-3---mlr.html#cb712-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb712-3"><a href="ch-3---mlr.html#cb712-3" aria-hidden="true" tabindex="-1"></a>salary_log_sales</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="14-ch3-MLR_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <hr />
 </div>
-<div id="regression-models-with-levels-and-logs" class="section level3" number="14.7.3">
-<h3><span class="header-section-number">14.7.3</span> Regression models with levels and logs</h3>
+<div id="regression-models-with-levels-and-logs" class="section level3 hasAnchor" number="14.7.3">
+<h3><span class="header-section-number">14.7.3</span> Regression models with levels and logs<a href="ch-3---mlr.html#regression-models-with-levels-and-logs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>To make sure you know how to estimate models and display the results using stargazer, you should estimate the following 4 models and display the results.</p>
 <ol style="list-style-type: decimal">
 <li><p>model 3 (the same one discussed above…either version is fine)</p></li>
@@ -1951,7 +1950,7 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 <li><p>model 3, but with <code>log(salary)</code> instead of <code>salary</code> and <code>log(sales)</code> instead of <code>sales</code></p></li>
 </ol>
 <p>Display all four models in the same stargazer table. And yes, this just requires you to copy/paste what you can find above in this file, but part of the point is to make sure you know how to use the above examples and modify them as needed.</p>
-<p>Finally, to demonstrate that you understand how to formally interpret regression coefficients, you will type formal interpretations of coefficients. To make sure you understand what is required of you when formally interpreting regression coefficients for Econ 380, you should use “LN3.3 (MLR Interpretations).pptx,” “Rules for Interpreting Regression Results.pdf,” “Interpretations Rubric (all 4 level log cases).pdf,” and the example PDFs posted in Moodle.</p>
+<p>Finally, to demonstrate that you understand how to formally interpret regression coefficients, you will type formal interpretations of coefficients. To make sure you understand what is required of you when formally interpreting regression coefficients for Econ 380, you should use “LN3.3 (MLR Interpretations).pptx”, “Rules for Interpreting Regression Results.pdf”, “Interpretations Rubric (all 4 level log cases).pdf”, and the example PDFs posted in Moodle.</p>
 <p>The interpretations you type must include formal interpretation of coefficients that include the following combinations of level/log:</p>
 <ol style="list-style-type: decimal">
 <li><p>One coefficient where <span class="math inline">\(y\)</span> is a level and <span class="math inline">\(x\)</span> is a level</p></li>
@@ -1968,8 +1967,8 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 </ol>
 <p>Note that you can combine these where possible (i.e., one interpretation can be both a log y / level x and a particular level of significance) so you don’t need to type out 8 separate interpretations. I don’t believe you can do it with only 4 interpretations, but I believe you can do it with 5.</p>
 <p>Please say which model you’re looking at for each interpretation.</p>
-<div id="regression-models" class="section level4" number="14.7.3.1">
-<h4><span class="header-section-number">14.7.3.1</span> Regression Models</h4>
+<div id="regression-models" class="section level4 hasAnchor" number="14.7.3.1">
+<h4><span class="header-section-number">14.7.3.1</span> Regression Models<a href="ch-3---mlr.html#regression-models" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <hr />
 <ol style="list-style-type: decimal">
 <li><p>model 3 (the same one discussed above…either version is fine)</p></li>
@@ -1977,18 +1976,18 @@ t=\frac{\left(\hat{\beta}_{profit}-\hat{\beta}_{sales}\right)-0}{\text{SE}\left(
 <li><p>model 3, but with <code>log(sales)</code> instead of <code>sales</code></p></li>
 <li><p>model 3, but with <code>log(salary)</code> instead of <code>salary</code> and <code>log(sales)</code> instead of <code>sales</code></p></li>
 </ol>
-<div class="sourceCode" id="cb713"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb713-1"><a href="ch-3---mlr.html#cb713-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
-<span id="cb713-2"><a href="ch-3---mlr.html#cb713-2" aria-hidden="true" tabindex="-1"></a>model3_logsalary <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(salary)<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
-<span id="cb713-3"><a href="ch-3---mlr.html#cb713-3" aria-hidden="true" tabindex="-1"></a>model3_logsales <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span><span class="fu">log</span>(sales)<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
-<span id="cb713-4"><a href="ch-3---mlr.html#cb713-4" aria-hidden="true" tabindex="-1"></a>model3_logsalarylogsales <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(salary)<span class="sc">~</span><span class="fu">log</span>(sales)<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span></code></pre></div>
-<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="ch-3---mlr.html#cb714-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model3, model3_logsalary, model3_logsales, model3_logsalarylogsales, </span>
-<span id="cb714-2"><a href="ch-3---mlr.html#cb714-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
-<span id="cb714-3"><a href="ch-3---mlr.html#cb714-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
-<span id="cb714-4"><a href="ch-3---mlr.html#cb714-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
-<span id="cb714-5"><a href="ch-3---mlr.html#cb714-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
-<span id="cb714-6"><a href="ch-3---mlr.html#cb714-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb714-7"><a href="ch-3---mlr.html#cb714-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
-<span id="cb714-8"><a href="ch-3---mlr.html#cb714-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;level-level&quot;</span>,<span class="st">&quot;log-level&quot;</span>, <span class="st">&quot;level-log&quot;</span>, <span class="st">&quot;log-log&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb714"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb714-1"><a href="ch-3---mlr.html#cb714-1" aria-hidden="true" tabindex="-1"></a>model3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb714-2"><a href="ch-3---mlr.html#cb714-2" aria-hidden="true" tabindex="-1"></a>model3_logsalary <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(salary)<span class="sc">~</span>sales<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb714-3"><a href="ch-3---mlr.html#cb714-3" aria-hidden="true" tabindex="-1"></a>model3_logsales <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary<span class="sc">~</span><span class="fu">log</span>(sales)<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span>
+<span id="cb714-4"><a href="ch-3---mlr.html#cb714-4" aria-hidden="true" tabindex="-1"></a>model3_logsalarylogsales <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(salary)<span class="sc">~</span><span class="fu">log</span>(sales)<span class="sc">+</span>mktval<span class="sc">+</span>profits<span class="sc">+</span>ceoten,<span class="at">data=</span>mydata)</span></code></pre></div>
+<div class="sourceCode" id="cb715"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb715-1"><a href="ch-3---mlr.html#cb715-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model3, model3_logsalary, model3_logsales, model3_logsalarylogsales, </span>
+<span id="cb715-2"><a href="ch-3---mlr.html#cb715-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb715-3"><a href="ch-3---mlr.html#cb715-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb715-4"><a href="ch-3---mlr.html#cb715-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb715-5"><a href="ch-3---mlr.html#cb715-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb715-6"><a href="ch-3---mlr.html#cb715-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb715-7"><a href="ch-3---mlr.html#cb715-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">model.numbers =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb715-8"><a href="ch-3---mlr.html#cb715-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">column.labels =</span> <span class="fu">c</span>(<span class="st">&quot;level-level&quot;</span>,<span class="st">&quot;log-level&quot;</span>, <span class="st">&quot;level-log&quot;</span>, <span class="st">&quot;log-log&quot;</span>))</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="5" style="border-bottom: 1px solid black">
@@ -2375,8 +2374,8 @@ Adjusted R<sup>2</sup>
 </table>
 <hr />
 </div>
-<div id="interpretations" class="section level4" number="14.7.3.2">
-<h4><span class="header-section-number">14.7.3.2</span> Interpretations</h4>
+<div id="interpretations" class="section level4 hasAnchor" number="14.7.3.2">
+<h4><span class="header-section-number">14.7.3.2</span> Interpretations<a href="ch-3---mlr.html#interpretations" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <hr />
 <ol style="list-style-type: decimal">
 <li>One coefficient where <span class="math inline">\(y\)</span> is a level and <span class="math inline">\(x\)</span> is a level &amp; One coefficient that is statistically significant at the 5% level</li>

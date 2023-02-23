@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Joining Data with dplyr | R Programming Guidebook Project</title>
+  <meta name="description" content="8 Joining Data with dplyr | R Programming Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Joining Data with dplyr | R Programming Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Joining Data with dplyr | R Programming Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-manipulation-with-dplyr.html"/>
+<link rel="next" href="cleaning-data-in-r.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="joining-data-with-dplyr" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Joining Data with dplyr</h1>
+<p><a href="https://learn.datacamp.com/courses/joining-data-with-dplyr" class="uri">https://learn.datacamp.com/courses/joining-data-with-dplyr</a></p>
+<div id="joining-tables" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> Joining Tables</h2>
+<p><strong>inner_join()</strong></p>
+<p>The <code>inner_join()</code> is the key to bring tables together.This function will allow two tables to be joined from the commonly-shared value column(s) on which they should be joined.</p>
+<p>In this example, <code>parts</code> and <code>part_categories</code> are merged by using <code>part_cat_id</code> and <code>id</code> columns from each dataset, then the <code>suffix()</code> added the names to help differentiate the variables:</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="joining-data-with-dplyr.html#cb396-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(parts)</span></code></pre></div>
+<pre><code>## Rows: 17,501
+## Columns: 3
+## $ part_num    &lt;chr&gt; &quot;0901&quot;, &quot;0902&quot;, &quot;0903&quot;, &quot;0904&quot;, &quot;1&quot;, &quot;10016414&quot;, &quot;10026stk…
+## $ name        &lt;chr&gt; &quot;Baseplate 16 x 30 with Set 080 Yellow House Print&quot;, &quot;Base…
+## $ part_cat_id &lt;dbl&gt; 1, 1, 1, 1, 7, 58, 58, 44, 65, 27, 27, 27, 65, 65, 27, 27,…</code></pre>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="joining-data-with-dplyr.html#cb398-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(part_categories)</span></code></pre></div>
+<pre><code>## Rows: 64
+## Columns: 2
+## $ id   &lt;dbl&gt; 1, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 2…
+## $ name &lt;chr&gt; &quot;Baseplates&quot;, &quot;Bricks Sloped&quot;, &quot;Duplo, Quatro and Primo&quot;, &quot;Bricks…</code></pre>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="joining-data-with-dplyr.html#cb400-1" aria-hidden="true" tabindex="-1"></a>parts <span class="sc">%&gt;%</span> </span>
+<span id="cb400-2"><a href="joining-data-with-dplyr.html#cb400-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(part_categories, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;part_cat_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_part&quot;</span>, <span class="st">&quot;_category&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 17,501 × 4
+##    part_num   name_part                             part_cat_id name_category   
+##    &lt;chr&gt;      &lt;chr&gt;                                       &lt;dbl&gt; &lt;chr&gt;           
+##  1 0901       Baseplate 16 x 30 with Set 080 Yello…           1 Baseplates      
+##  2 0902       Baseplate 16 x 24 with Set 080 Small…           1 Baseplates      
+##  3 0903       Baseplate 16 x 24 with Set 080 Red H…           1 Baseplates      
+##  4 0904       Baseplate 16 x 24 with Set 080 Large…           1 Baseplates      
+##  5 1          Homemaker Bookcase 2 x 4 x 4                    7 Containers      
+##  6 10016414   Sticker Sheet #1 for 41055-1                   58 Stickers        
+##  7 10026stk01 Sticker for Set 10026 - (44942/41841…          58 Stickers        
+##  8 10039      Pullback Motor 8 x 4 x 2/3                     44 Mechanical      
+##  9 10048      Minifig Hair Tousled                           65 Minifig Headwear
+## 10 10049      Minifig Shield Broad with Spiked Bot…          27 Minifig Accesso…
+## # … with 17,491 more rows</code></pre>
+<p>Another situation is when wanting to merge two datasets that share the same column(s), using <code>c()</code> won’t be necessary. Here, the <code>by =</code> argument only needs the shared column name:</p>
+<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="joining-data-with-dplyr.html#cb402-1" aria-hidden="true" tabindex="-1"></a>parts <span class="sc">%&gt;%</span></span>
+<span id="cb402-2"><a href="joining-data-with-dplyr.html#cb402-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(inventory_parts, <span class="at">by =</span> <span class="st">&quot;part_num&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 258,958 × 6
+##    part_num name                      part_cat_id inventory_id color_id quantity
+##    &lt;chr&gt;    &lt;chr&gt;                           &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 0901     Baseplate 16 x 30 with S…           1         1973        2        1
+##  2 0902     Baseplate 16 x 24 with S…           1         1973        2        1
+##  3 0903     Baseplate 16 x 24 with S…           1         1973        2        1
+##  4 0904     Baseplate 16 x 24 with S…           1         1973        2        1
+##  5 1        Homemaker Bookcase 2 x 4…           7          508       15        1
+##  6 1        Homemaker Bookcase 2 x 4…           7         1158       15        2
+##  7 1        Homemaker Bookcase 2 x 4…           7         6590       15        2
+##  8 1        Homemaker Bookcase 2 x 4…           7         9679       15        2
+##  9 1        Homemaker Bookcase 2 x 4…           7        12256        1        2
+## 10 1        Homemaker Bookcase 2 x 4…           7        13356       15        1
+## # … with 258,948 more rows</code></pre>
+<p><strong>Joining Multiple Datasets</strong></p>
+<p>Use <code>inner_join()</code> and the pipe (<code>%&gt;%</code>) to join together multiple datasets.</p>
+<p>In this example, <code>sets</code>, a table that tells us about each LEGO kit, will be connected with <code>inventories</code>, a table that tells us the specific version of a given set, and finally to <code>inventory_parts</code>, a table which tells us how many of each part is available in each LEGO kit:</p>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="joining-data-with-dplyr.html#cb404-1" aria-hidden="true" tabindex="-1"></a>sets <span class="sc">%&gt;%</span></span>
+<span id="cb404-2"><a href="joining-data-with-dplyr.html#cb404-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add inventories using an inner join </span></span>
+<span id="cb404-3"><a href="joining-data-with-dplyr.html#cb404-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(inventories, <span class="at">by =</span> <span class="st">&quot;set_num&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb404-4"><a href="joining-data-with-dplyr.html#cb404-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add inventory_parts using an inner join </span></span>
+<span id="cb404-5"><a href="joining-data-with-dplyr.html#cb404-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(inventory_parts, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;inventory_id&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 258,958 × 9
+##    set_num name           year theme_id    id version part_num color_id quantity
+##    &lt;chr&gt;   &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+##  1 700.3-1 Medium Gift …  1949      365 24197       1 bdoor01         2        2
+##  2 700.3-1 Medium Gift …  1949      365 24197       1 bdoor01        15        1
+##  3 700.3-1 Medium Gift …  1949      365 24197       1 bdoor01         4        1
+##  4 700.3-1 Medium Gift …  1949      365 24197       1 bslot02        15        6
+##  5 700.3-1 Medium Gift …  1949      365 24197       1 bslot02         2        6
+##  6 700.3-1 Medium Gift …  1949      365 24197       1 bslot02         4        6
+##  7 700.3-1 Medium Gift …  1949      365 24197       1 bslot02         1        6
+##  8 700.3-1 Medium Gift …  1949      365 24197       1 bslot02        14        6
+##  9 700.3-1 Medium Gift …  1949      365 24197       1 bslot02a       15        6
+## 10 700.3-1 Medium Gift …  1949      365 24197       1 bslot02a        2        6
+## # … with 258,948 more rows</code></pre>
+<p>To utilize this, join an additional table, <code>colors</code>, which tell the color of each part in each set, to answer the question, “what is the most common color of a LEGO piece?”</p>
+<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="joining-data-with-dplyr.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of colors and sort</span></span>
+<span id="cb406-2"><a href="joining-data-with-dplyr.html#cb406-2" aria-hidden="true" tabindex="-1"></a>sets <span class="sc">%&gt;%</span></span>
+<span id="cb406-3"><a href="joining-data-with-dplyr.html#cb406-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(inventories, <span class="at">by =</span> <span class="st">&quot;set_num&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb406-4"><a href="joining-data-with-dplyr.html#cb406-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(inventory_parts, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;inventory_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb406-5"><a href="joining-data-with-dplyr.html#cb406-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(colors, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;color_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_set&quot;</span>, <span class="st">&quot;_color&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb406-6"><a href="joining-data-with-dplyr.html#cb406-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">count</span>(name_color, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 134 × 2
+##    name_color            n
+##    &lt;chr&gt;             &lt;int&gt;
+##  1 Black             48068
+##  2 White             30105
+##  3 Light Bluish Gray 26024
+##  4 Red               21602
+##  5 Dark Bluish Gray  19948
+##  6 Yellow            17088
+##  7 Blue              12980
+##  8 Light Gray         8632
+##  9 Reddish Brown      6960
+## 10 Tan                6664
+## # … with 124 more rows</code></pre>
+<p>From the output, <code>Black</code> seems to be the most common LEGO piece.</p>
+<p><code>inner_join()</code> <em>ONLY</em> keeps the perfectly matched observations between two connected datasets.</p>
+</div>
+<div id="left-and-right-joins" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Left and Right Joins</h2>
+<p><strong>left_join()</strong></p>
+<p><code>left_join()</code> keeps <em>ALL</em> the observations from the left dataset and keep <em>ONLY</em> the matched observations from the right-side dataset.</p>
+<p>Combine the <code>star_destroyer</code> and <code>millennium_falcon</code> tables with the suffixes <code>_falcon</code> and <code>_star_destroyer</code>:</p>
+<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="joining-data-with-dplyr.html#cb408-1" aria-hidden="true" tabindex="-1"></a>inventory_parts_joined <span class="ot">&lt;-</span> inventories <span class="sc">%&gt;%</span></span>
+<span id="cb408-2"><a href="joining-data-with-dplyr.html#cb408-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(inventory_parts, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;inventory_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb408-3"><a href="joining-data-with-dplyr.html#cb408-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id, <span class="sc">-</span>version) <span class="sc">%&gt;%</span></span>
+<span id="cb408-4"><a href="joining-data-with-dplyr.html#cb408-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(quantity))</span>
+<span id="cb408-5"><a href="joining-data-with-dplyr.html#cb408-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb408-6"><a href="joining-data-with-dplyr.html#cb408-6" aria-hidden="true" tabindex="-1"></a>millennium_falcon <span class="ot">&lt;-</span> inventory_parts_joined <span class="sc">%&gt;%</span></span>
+<span id="cb408-7"><a href="joining-data-with-dplyr.html#cb408-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(set_num <span class="sc">==</span> <span class="st">&quot;7965-1&quot;</span>)</span>
+<span id="cb408-8"><a href="joining-data-with-dplyr.html#cb408-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb408-9"><a href="joining-data-with-dplyr.html#cb408-9" aria-hidden="true" tabindex="-1"></a>star_destroyer <span class="ot">&lt;-</span> inventory_parts_joined <span class="sc">%&gt;%</span></span>
+<span id="cb408-10"><a href="joining-data-with-dplyr.html#cb408-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(set_num <span class="sc">==</span> <span class="st">&quot;75190-1&quot;</span>)</span>
+<span id="cb408-11"><a href="joining-data-with-dplyr.html#cb408-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb408-12"><a href="joining-data-with-dplyr.html#cb408-12" aria-hidden="true" tabindex="-1"></a>millennium_falcon <span class="sc">%&gt;%</span></span>
+<span id="cb408-13"><a href="joining-data-with-dplyr.html#cb408-13" aria-hidden="true" tabindex="-1"></a> <span class="fu">left_join</span>(star_destroyer, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;part_num&quot;</span>, <span class="st">&quot;color_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_falcon&quot;</span>, <span class="st">&quot;_star_destroyer&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 263 × 6
+##    set_num_falcon part_num color_id quantity_falcon set_num_star_destroyer
+##    &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt;                 
+##  1 7965-1         63868          71              62 &lt;NA&gt;                  
+##  2 7965-1         3023            0              60 &lt;NA&gt;                  
+##  3 7965-1         3021           72              46 75190-1               
+##  4 7965-1         2780            0              37 75190-1               
+##  5 7965-1         60478          72              36 &lt;NA&gt;                  
+##  6 7965-1         6636           71              34 75190-1               
+##  7 7965-1         3009           71              28 75190-1               
+##  8 7965-1         3665           71              22 &lt;NA&gt;                  
+##  9 7965-1         2412b          72              20 75190-1               
+## 10 7965-1         3010           71              19 &lt;NA&gt;                  
+## # … with 253 more rows, and 1 more variable: quantity_star_destroyer &lt;dbl&gt;</code></pre>
+<p>From the output, the <code>quantity_falcon</code> kept all the observations, and the <code>quantity_star_destroyer</code> only kept the matched ones, the <code>NA</code>s are the unmatched ones.</p>
+<p><strong>right_join()</strong></p>
+<p><code>right_join()</code> keeps <em>ALL</em> the observations from the right dataset and keep <em>ONLY</em> the matched observations from the left-side dataset.</p>
+<p>In this example, count the <code>part_cat_id</code> from <code>parts</code>, before using a <code>right_join</code> to join with <code>part_categories.</code> This is to know the count of <code>part_cat_id</code> in parts, and also to see if there are any <code>part_cat_id</code> observations not available in <code>parts</code> by using <code>filter()</code>:</p>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="joining-data-with-dplyr.html#cb410-1" aria-hidden="true" tabindex="-1"></a>parts <span class="sc">%&gt;%</span></span>
+<span id="cb410-2"><a href="joining-data-with-dplyr.html#cb410-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(part_cat_id) <span class="sc">%&gt;%</span></span>
+<span id="cb410-3"><a href="joining-data-with-dplyr.html#cb410-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">right_join</span>(part_categories, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;part_cat_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb410-4"><a href="joining-data-with-dplyr.html#cb410-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter for NA</span></span>
+<span id="cb410-5"><a href="joining-data-with-dplyr.html#cb410-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">is.na</span>(n))</span></code></pre></div>
+<pre><code>## # A tibble: 1 × 3
+##   part_cat_id     n name   
+##         &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;  
+## 1          66    NA Modulex</code></pre>
+<p>Here, the left-side dataset is the <code>n</code> column, which contains a <code>NA</code> observation, and the <code>name</code> column is the right-sde dataset which retains all the observations.</p>
+<p><strong>Joining tables to themselves</strong></p>
+<p>Tables can be joined to themselves!</p>
+<p>In the <code>themes</code> dataset, there are two <code>columns</code> id and <code>parent_id</code>, which has a connection to each other. On the <code>parent_id</code> side, <code>Arctic Technic</code>, <code>Competition</code>, <code>Expert Builder</code>, <code>Model</code> are assigned as <code>1</code> on <code>parent_id</code> column, which are sub-branches of the <code>Technic</code>, which has <code>id</code> of <code>1</code> on the left-side.</p>
+<p>Then, the <code>Airport</code>, <code>Construction</code>, <code>Farm</code>, <code>Fire</code>, <code>Harbor</code> are assigned as <code>5</code> on <code>parent_id</code> column, which are the sub-branches of <code>Model</code>, which has <code>id</code> of <code>5</code> of the left-side.</p>
+<p>This table has a hierarchical table.</p>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="joining-data-with-dplyr.html#cb412-1" aria-hidden="true" tabindex="-1"></a>themes</span></code></pre></div>
+<pre><code>## # A tibble: 665 × 3
+##       id name           parent_id
+##    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
+##  1     1 Technic               NA
+##  2     2 Arctic Technic         1
+##  3     3 Competition            1
+##  4     4 Expert Builder         1
+##  5     5 Model                  1
+##  6     6 Airport                5
+##  7     7 Construction           5
+##  8     8 Farm                   5
+##  9     9 Fire                   5
+## 10    10 Harbor                 5
+## # … with 655 more rows</code></pre>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="joining-data-with-dplyr.html#cb414-1" aria-hidden="true" tabindex="-1"></a>themes <span class="sc">%&gt;%</span> </span>
+<span id="cb414-2"><a href="joining-data-with-dplyr.html#cb414-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Inner join the themes table</span></span>
+<span id="cb414-3"><a href="joining-data-with-dplyr.html#cb414-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(themes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;parent_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_parent&quot;</span>, <span class="st">&quot;_child&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb414-4"><a href="joining-data-with-dplyr.html#cb414-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Filter for the &quot;Harry Potter&quot; parent name </span></span>
+<span id="cb414-5"><a href="joining-data-with-dplyr.html#cb414-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(name_parent <span class="sc">==</span> <span class="st">&quot;Harry Potter&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 6 × 5
+##      id name_parent  parent_id id_child name_child          
+##   &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;               
+## 1   246 Harry Potter        NA      247 Chamber of Secrets  
+## 2   246 Harry Potter        NA      248 Goblet of Fire      
+## 3   246 Harry Potter        NA      249 Order of the Phoenix
+## 4   246 Harry Potter        NA      250 Prisoner of Azkaban 
+## 5   246 Harry Potter        NA      251 Sorcerer&#39;s Stone    
+## 6   246 Harry Potter        NA      667 Fantastic Beasts</code></pre>
+<p>The code chunk above outputs all the sub-branches that belong to the <code>Harry Potter</code>.</p>
+<p><strong>Joining themes to their grandchildren</strong></p>
+<p><code>inner_join()</code> can merge <code>themes</code> to a filtered version of itself again to establish a connection between our last join’s children and their children. Use another inner join to combine themes again with itself:</p>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="joining-data-with-dplyr.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join themes to itself again to find the grandchild relationships</span></span>
+<span id="cb416-2"><a href="joining-data-with-dplyr.html#cb416-2" aria-hidden="true" tabindex="-1"></a>themes <span class="sc">%&gt;%</span> </span>
+<span id="cb416-3"><a href="joining-data-with-dplyr.html#cb416-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(themes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;parent_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_parent&quot;</span>, <span class="st">&quot;_child&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb416-4"><a href="joining-data-with-dplyr.html#cb416-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(themes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id_child&quot;</span> <span class="ot">=</span> <span class="st">&quot;parent_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_parent&quot;</span>, <span class="st">&quot;_grandchild&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 158 × 7
+##    id_parent name_parent parent_id id_child name_child id_grandchild name       
+##        &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;      
+##  1         1 Technic            NA        5 Model                  6 Airport    
+##  2         1 Technic            NA        5 Model                  7 Constructi…
+##  3         1 Technic            NA        5 Model                  8 Farm       
+##  4         1 Technic            NA        5 Model                  9 Fire       
+##  5         1 Technic            NA        5 Model                 10 Harbor     
+##  6         1 Technic            NA        5 Model                 11 Off-Road   
+##  7         1 Technic            NA        5 Model                 12 Race       
+##  8         1 Technic            NA        5 Model                 13 Riding Cyc…
+##  9         1 Technic            NA        5 Model                 14 Robot      
+## 10         1 Technic            NA        5 Model                 15 Traffic    
+## # … with 148 more rows</code></pre>
+<p><strong>Left-joining a table to itself</strong></p>
+<p>Some <code>themes</code> might not have any sub-branches at all, which means they won’t be included in the <code>inner_join()</code>. Identify those with a <code>left_join()</code> and a <code>filter()</code>:</p>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="joining-data-with-dplyr.html#cb418-1" aria-hidden="true" tabindex="-1"></a>themes <span class="sc">%&gt;%</span> </span>
+<span id="cb418-2"><a href="joining-data-with-dplyr.html#cb418-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Left join the themes table to its own children</span></span>
+<span id="cb418-3"><a href="joining-data-with-dplyr.html#cb418-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(themes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;parent_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_parent&quot;</span>, <span class="st">&quot;_child&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb418-4"><a href="joining-data-with-dplyr.html#cb418-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for themes that have no child themes</span></span>
+<span id="cb418-5"><a href="joining-data-with-dplyr.html#cb418-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">is.na</span>(name_child))</span></code></pre></div>
+<pre><code>## # A tibble: 586 × 5
+##       id name_parent    parent_id id_child name_child
+##    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
+##  1     2 Arctic Technic         1       NA &lt;NA&gt;      
+##  2     3 Competition            1       NA &lt;NA&gt;      
+##  3     4 Expert Builder         1       NA &lt;NA&gt;      
+##  4     6 Airport                5       NA &lt;NA&gt;      
+##  5     7 Construction           5       NA &lt;NA&gt;      
+##  6     8 Farm                   5       NA &lt;NA&gt;      
+##  7     9 Fire                   5       NA &lt;NA&gt;      
+##  8    10 Harbor                 5       NA &lt;NA&gt;      
+##  9    11 Off-Road               5       NA &lt;NA&gt;      
+## 10    12 Race                   5       NA &lt;NA&gt;      
+## # … with 576 more rows</code></pre>
+<p>The output above shows all the theme groups that doesn’t have any sub-branches.</p>
+</div>
+<div id="full-semi-and-anti-joins" class="section level2" number="8.3">
+<h2><span class="header-section-number">8.3</span> Full, Semi, and Anti Joins</h2>
+<p><strong>full_join()</strong></p>
+<p>left_join and right_join keeps all the observations in one of the two sides. full_join() keeps all the observations on <em>BOTH</em> sides:</p>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="joining-data-with-dplyr.html#cb420-1" aria-hidden="true" tabindex="-1"></a>inventory_sets_themes <span class="ot">&lt;-</span> inventory_parts_joined <span class="sc">%&gt;%</span></span>
+<span id="cb420-2"><a href="joining-data-with-dplyr.html#cb420-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(sets, <span class="at">by =</span> <span class="st">&quot;set_num&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb420-3"><a href="joining-data-with-dplyr.html#cb420-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(themes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;theme_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_set&quot;</span>, <span class="st">&quot;_theme&quot;</span>))</span>
+<span id="cb420-4"><a href="joining-data-with-dplyr.html#cb420-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb420-5"><a href="joining-data-with-dplyr.html#cb420-5" aria-hidden="true" tabindex="-1"></a>batman <span class="ot">&lt;-</span> inventory_sets_themes <span class="sc">%&gt;%</span></span>
+<span id="cb420-6"><a href="joining-data-with-dplyr.html#cb420-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name_theme <span class="sc">==</span> <span class="st">&quot;Batman&quot;</span>)</span>
+<span id="cb420-7"><a href="joining-data-with-dplyr.html#cb420-7" aria-hidden="true" tabindex="-1"></a>batman_parts <span class="ot">&lt;-</span> batman <span class="sc">%&gt;%</span></span>
+<span id="cb420-8"><a href="joining-data-with-dplyr.html#cb420-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(part_num, color_id, <span class="at">wt =</span> quantity)</span>
+<span id="cb420-9"><a href="joining-data-with-dplyr.html#cb420-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb420-10"><a href="joining-data-with-dplyr.html#cb420-10" aria-hidden="true" tabindex="-1"></a>star_wars <span class="ot">&lt;-</span> inventory_sets_themes <span class="sc">%&gt;%</span></span>
+<span id="cb420-11"><a href="joining-data-with-dplyr.html#cb420-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name_theme <span class="sc">==</span> <span class="st">&quot;Star Wars&quot;</span>)</span>
+<span id="cb420-12"><a href="joining-data-with-dplyr.html#cb420-12" aria-hidden="true" tabindex="-1"></a>star_wars_parts <span class="ot">&lt;-</span> star_wars <span class="sc">%&gt;%</span></span>
+<span id="cb420-13"><a href="joining-data-with-dplyr.html#cb420-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(part_num, color_id, <span class="at">wt =</span> quantity)</span></code></pre></div>
+<p>The variables above set up the data to prepare for the <code>full_join</code> to find out the difference pieces used in <code>batman</code> and <code>star_wars</code>:</p>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="joining-data-with-dplyr.html#cb421-1" aria-hidden="true" tabindex="-1"></a>batman_parts <span class="sc">%&gt;%</span></span>
+<span id="cb421-2"><a href="joining-data-with-dplyr.html#cb421-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the star_wars_parts table </span></span>
+<span id="cb421-3"><a href="joining-data-with-dplyr.html#cb421-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(star_wars_parts, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;part_num&quot;</span>, <span class="st">&quot;color_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_batman&quot;</span>, <span class="st">&quot;_star_wars&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb421-4"><a href="joining-data-with-dplyr.html#cb421-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace NAs with 0s in the n_batman and n_star_wars columns </span></span>
+<span id="cb421-5"><a href="joining-data-with-dplyr.html#cb421-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">n_batman =</span> <span class="dv">0</span>, <span class="at">n_star_wars =</span> <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 3,628 × 4
+##    part_num color_id n_batman n_star_wars
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+##  1 10113           0       11           0
+##  2 10113         272        1           0
+##  3 10113         320        1           0
+##  4 10183          57        1           0
+##  5 10190           0        2           0
+##  6 10201           0        1          21
+##  7 10201           4        3           0
+##  8 10201          14        1           0
+##  9 10201          15        6           0
+## 10 10201          71        4           5
+## # … with 3,618 more rows</code></pre>
+<p><strong>semi_join()</strong></p>
+<p><code>semi_join()</code> filter and output the observations that of the left-side dataset that matches with the right-side. (ONLY show the left-side observations that arematched, not showing both datasets).</p>
+<p>Let’s focus on the <code>batwing</code> dataset, determine which parts are in both the <code>batwing</code> and <code>batmobile</code> sets.</p>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="joining-data-with-dplyr.html#cb423-1" aria-hidden="true" tabindex="-1"></a>batmobile <span class="ot">&lt;-</span> inventory_parts_joined <span class="sc">%&gt;%</span></span>
+<span id="cb423-2"><a href="joining-data-with-dplyr.html#cb423-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(set_num <span class="sc">==</span> <span class="st">&quot;7784-1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb423-3"><a href="joining-data-with-dplyr.html#cb423-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>set_num)</span>
+<span id="cb423-4"><a href="joining-data-with-dplyr.html#cb423-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-5"><a href="joining-data-with-dplyr.html#cb423-5" aria-hidden="true" tabindex="-1"></a>batwing <span class="ot">&lt;-</span> inventory_parts_joined <span class="sc">%&gt;%</span></span>
+<span id="cb423-6"><a href="joining-data-with-dplyr.html#cb423-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(set_num <span class="sc">==</span> <span class="st">&quot;70916-1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb423-7"><a href="joining-data-with-dplyr.html#cb423-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>set_num)</span>
+<span id="cb423-8"><a href="joining-data-with-dplyr.html#cb423-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-9"><a href="joining-data-with-dplyr.html#cb423-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the batwing set for parts that are also in the batmobile set</span></span>
+<span id="cb423-10"><a href="joining-data-with-dplyr.html#cb423-10" aria-hidden="true" tabindex="-1"></a>batwing <span class="sc">%&gt;%</span></span>
+<span id="cb423-11"><a href="joining-data-with-dplyr.html#cb423-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">semi_join</span>(batmobile, <span class="at">by =</span> <span class="st">&quot;part_num&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 126 × 3
+##    part_num color_id quantity
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+##  1 3023            0       22
+##  2 3024            0       22
+##  3 3623            0       20
+##  4 2780            0       17
+##  5 3666            0       16
+##  6 3710            0       14
+##  7 6141            4       12
+##  8 2412b          71       10
+##  9 6141           72       10
+## 10 6558            1        9
+## # … with 116 more rows</code></pre>
+<p><strong>anti_join()</strong></p>
+<p>The opposite of <code>semi_join</code> is <code>anti_join()</code>. It shows the observations that are in the left-side dataset but is not in the right-side dataset. In other words, what observations are in the first table but not in the second table?</p>
+<p>Let’s focus on the <code>batwing</code> dataset, determine which sets are in one, but not the other.</p>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="joining-data-with-dplyr.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the batwing set for parts that aren&#39;t in the batmobile set</span></span>
+<span id="cb425-2"><a href="joining-data-with-dplyr.html#cb425-2" aria-hidden="true" tabindex="-1"></a>batwing <span class="sc">%&gt;%</span></span>
+<span id="cb425-3"><a href="joining-data-with-dplyr.html#cb425-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">anti_join</span>(batmobile, <span class="at">by =</span> <span class="st">&quot;part_num&quot;</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 183 × 3
+##    part_num color_id quantity
+##    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+##  1 11477           0       18
+##  2 99207          71       18
+##  3 22385           0       14
+##  4 99563           0       13
+##  5 10247          72       12
+##  6 2877           72       12
+##  7 61409          72       12
+##  8 11153           0       10
+##  9 98138          46       10
+## 10 2419           72        9
+## # … with 173 more rows</code></pre>
+<p><strong>Aggregating sets to look at their differences</strong></p>
+<p>To compare two individual <code>sets</code>, and the kinds of LEGO pieces that comprise them, aggregate the data into separate themes. Additionally, add a column to understand the percentages of specific pieces that are part of each set, rather than looking at the numbers of pieces alone.</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="joining-data-with-dplyr.html#cb427-1" aria-hidden="true" tabindex="-1"></a>inventory_parts_themes <span class="ot">&lt;-</span> inventories <span class="sc">%&gt;%</span></span>
+<span id="cb427-2"><a href="joining-data-with-dplyr.html#cb427-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(inventory_parts, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;inventory_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb427-3"><a href="joining-data-with-dplyr.html#cb427-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(quantity)) <span class="sc">%&gt;%</span></span>
+<span id="cb427-4"><a href="joining-data-with-dplyr.html#cb427-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>id, <span class="sc">-</span>version) <span class="sc">%&gt;%</span></span>
+<span id="cb427-5"><a href="joining-data-with-dplyr.html#cb427-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(sets, <span class="at">by =</span> <span class="st">&quot;set_num&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb427-6"><a href="joining-data-with-dplyr.html#cb427-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(themes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;theme_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_set&quot;</span>, <span class="st">&quot;_theme&quot;</span>))</span>
+<span id="cb427-7"><a href="joining-data-with-dplyr.html#cb427-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb427-8"><a href="joining-data-with-dplyr.html#cb427-8" aria-hidden="true" tabindex="-1"></a>batman_colors <span class="ot">&lt;-</span> inventory_parts_themes <span class="sc">%&gt;%</span></span>
+<span id="cb427-9"><a href="joining-data-with-dplyr.html#cb427-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name_theme <span class="sc">==</span> <span class="st">&quot;Batman&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb427-10"><a href="joining-data-with-dplyr.html#cb427-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color_id) <span class="sc">%&gt;%</span></span>
+<span id="cb427-11"><a href="joining-data-with-dplyr.html#cb427-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">sum</span>(quantity)) <span class="sc">%&gt;%</span></span>
+<span id="cb427-12"><a href="joining-data-with-dplyr.html#cb427-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> total <span class="sc">/</span> <span class="fu">sum</span>(total))</span>
+<span id="cb427-13"><a href="joining-data-with-dplyr.html#cb427-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb427-14"><a href="joining-data-with-dplyr.html#cb427-14" aria-hidden="true" tabindex="-1"></a>star_wars_colors <span class="ot">&lt;-</span> inventory_parts_themes <span class="sc">%&gt;%</span></span>
+<span id="cb427-15"><a href="joining-data-with-dplyr.html#cb427-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(name_theme <span class="sc">==</span> <span class="st">&quot;Star Wars&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb427-16"><a href="joining-data-with-dplyr.html#cb427-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(color_id) <span class="sc">%&gt;%</span></span>
+<span id="cb427-17"><a href="joining-data-with-dplyr.html#cb427-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">sum</span>(quantity)) <span class="sc">%&gt;%</span></span>
+<span id="cb427-18"><a href="joining-data-with-dplyr.html#cb427-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent =</span> total <span class="sc">/</span> <span class="fu">sum</span>(total))</span></code></pre></div>
+<p><strong>Combining sets</strong></p>
+<p>Prior to visualizing the data, combine these tables to be able to directly compare the themes’ colors. Join the <code>batman_colors</code> and <code>star_wars_colors</code> tables; be sure to include all observations from both tables. Replace the <code>NA</code>s in the <code>total_batman</code> and <code>total_star_wars</code> columns.</p>
+<p>Add a <code>difference</code> column that calculates the difference between <code>percent_batman</code> and <code>percent_star_wars</code>, and a <code>total</code> column, which is the sum of <code>total_batman</code> and <code>total_star_wars.</code>
+Add a <code>filter</code> to select observations where <code>total</code> is at least <code>200</code>.</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="joining-data-with-dplyr.html#cb428-1" aria-hidden="true" tabindex="-1"></a>colors_joined <span class="ot">&lt;-</span> batman_colors <span class="sc">%&gt;%</span></span>
+<span id="cb428-2"><a href="joining-data-with-dplyr.html#cb428-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Join the Batman and Star Wars colors</span></span>
+<span id="cb428-3"><a href="joining-data-with-dplyr.html#cb428-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(star_wars_colors, <span class="at">by =</span> <span class="st">&quot;color_id&quot;</span>, <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_batman&quot;</span>, <span class="st">&quot;_star_wars&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb428-4"><a href="joining-data-with-dplyr.html#cb428-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Replace NAs in the total_batman and total_star_wars columns</span></span>
+<span id="cb428-5"><a href="joining-data-with-dplyr.html#cb428-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">total_batman =</span> <span class="dv">0</span>, <span class="at">total_star_wars =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb428-6"><a href="joining-data-with-dplyr.html#cb428-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(colors, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;color_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb428-7"><a href="joining-data-with-dplyr.html#cb428-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create the difference and total columns</span></span>
+<span id="cb428-8"><a href="joining-data-with-dplyr.html#cb428-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> percent_batman <span class="sc">-</span> percent_star_wars,</span>
+<span id="cb428-9"><a href="joining-data-with-dplyr.html#cb428-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">total =</span> total_batman <span class="sc">+</span> total_star_wars) <span class="sc">%&gt;%</span></span>
+<span id="cb428-10"><a href="joining-data-with-dplyr.html#cb428-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for totals greater than 200</span></span>
+<span id="cb428-11"><a href="joining-data-with-dplyr.html#cb428-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(total <span class="sc">&gt;=</span> <span class="dv">200</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb428-12"><a href="joining-data-with-dplyr.html#cb428-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">fct_reorder</span>(name, difference)) </span>
+<span id="cb428-13"><a href="joining-data-with-dplyr.html#cb428-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb428-14"><a href="joining-data-with-dplyr.html#cb428-14" aria-hidden="true" tabindex="-1"></a>colors_joined</span></code></pre></div>
+<pre><code>## # A tibble: 16 × 9
+##    color_id total_batman percent_batman total_star_wars percent_star_wars name  
+##       &lt;dbl&gt;        &lt;dbl&gt;          &lt;dbl&gt;           &lt;dbl&gt;             &lt;dbl&gt; &lt;fct&gt; 
+##  1        0         2807        0.296              3258           0.207   Black 
+##  2        1          243        0.0256              410           0.0261  Blue  
+##  3        4          529        0.0558              434           0.0276  Red   
+##  4       14          426        0.0449              207           0.0132  Yellow
+##  5       15          404        0.0426             1771           0.113   White 
+##  6       19          142        0.0150             1012           0.0644  Tan   
+##  7       28           98        0.0103              183           0.0116  Dark …
+##  8       36           86        0.00907             246           0.0156  Trans…
+##  9       46          200        0.0211               39           0.00248 Trans…
+## 10       70          297        0.0313              373           0.0237  Reddi…
+## 11       71         1148        0.121              3264           0.208   Light…
+## 12       72         1453        0.153              2433           0.155   Dark …
+## 13       84          278        0.0293               31           0.00197 Mediu…
+## 14      179          154        0.0162              232           0.0148  Flat …
+## 15      378           22        0.00232             430           0.0273  Sand …
+## 16        7            0       NA                   209           0.0133  Light…
+## # … with 3 more variables: rgb &lt;chr&gt;, difference &lt;dbl&gt;, total &lt;dbl&gt;</code></pre>
+<p><strong>Visualizing the difference: Batman and Star Wars</strong></p>
+<p>Create a bar plot using the <code>colors_joined</code> table to display the most prominent colors in the Batman and Star Wars themes, with the bars colored by their <code>name</code>.</p>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="joining-data-with-dplyr.html#cb430-1" aria-hidden="true" tabindex="-1"></a>color_palette <span class="ot">&lt;-</span> <span class="fu">structure</span>(<span class="fu">c</span>(<span class="st">&quot;#05131D&quot;</span>, <span class="st">&quot;#0055BF&quot;</span>, <span class="st">&quot;#C91A09&quot;</span>, <span class="st">&quot;#F2CD37&quot;</span>, <span class="st">&quot;#FFFFFF&quot;</span>, </span>
+<span id="cb430-2"><a href="joining-data-with-dplyr.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;#E4CD9E&quot;</span>, <span class="st">&quot;#958A73&quot;</span>, <span class="st">&quot;#C91A09&quot;</span>, <span class="st">&quot;#F5CD2F&quot;</span>, <span class="st">&quot;#582A12&quot;</span>, <span class="st">&quot;#A0A5A9&quot;</span>, </span>
+<span id="cb430-3"><a href="joining-data-with-dplyr.html#cb430-3" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;#6C6E68&quot;</span>, <span class="st">&quot;#CC702A&quot;</span>, <span class="st">&quot;#898788&quot;</span>, <span class="st">&quot;#A0BCAC&quot;</span>), <span class="at">.Names =</span> <span class="fu">c</span>(<span class="st">&quot;Black&quot;</span>, </span>
+<span id="cb430-4"><a href="joining-data-with-dplyr.html#cb430-4" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Blue&quot;</span>, <span class="st">&quot;Red&quot;</span>, <span class="st">&quot;Yellow&quot;</span>, <span class="st">&quot;White&quot;</span>, <span class="st">&quot;Tan&quot;</span>, <span class="st">&quot;Dark Tan&quot;</span>, <span class="st">&quot;Trans-Red&quot;</span>, </span>
+<span id="cb430-5"><a href="joining-data-with-dplyr.html#cb430-5" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Trans-Yellow&quot;</span>, <span class="st">&quot;Reddish Brown&quot;</span>, <span class="st">&quot;Light Bluish Gray&quot;</span>, <span class="st">&quot;Dark Bluish Gray&quot;</span>, </span>
+<span id="cb430-6"><a href="joining-data-with-dplyr.html#cb430-6" aria-hidden="true" tabindex="-1"></a><span class="st">&quot;Medium Dark Flesh&quot;</span>, <span class="st">&quot;Flat Silver&quot;</span>, <span class="st">&quot;Sand Green&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="joining-data-with-dplyr.html#cb431-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a bar plot using colors_joined and the name and difference columns</span></span>
+<span id="cb431-2"><a href="joining-data-with-dplyr.html#cb431-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(colors_joined, <span class="fu">aes</span>(name, difference, <span class="at">fill =</span> name)) <span class="sc">+</span></span>
+<span id="cb431-3"><a href="joining-data-with-dplyr.html#cb431-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb431-4"><a href="joining-data-with-dplyr.html#cb431-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb431-5"><a href="joining-data-with-dplyr.html#cb431-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> color_palette, <span class="at">guide =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb431-6"><a href="joining-data-with-dplyr.html#cb431-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Difference: Batman - Star Wars&quot;</span>)</span></code></pre></div>
+<pre><code>## Warning: Removed 1 rows containing missing values (position_stack).</code></pre>
+<pre><code>## Warning: It is deprecated to specify `guide = FALSE` to remove a guide. Please
+## use `guide = &quot;none&quot;` instead.</code></pre>
+<p><img src="08-Joining_Data_with_dplyr_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+</div>
+<div id="case-study-joins-on-stack-overflow-data" class="section level2" number="8.4">
+<h2><span class="header-section-number">8.4</span> Case Study: Joins on Stack Overflow Data</h2>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="joining-data-with-dplyr.html#cb434-1" aria-hidden="true" tabindex="-1"></a>questions <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/5284/datasets/89d5a716b4f41dbe4fcda1a7a1190f24f58f0e47/questions.rds&quot;</span>)))</span>
+<span id="cb434-2"><a href="joining-data-with-dplyr.html#cb434-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-3"><a href="joining-data-with-dplyr.html#cb434-3" aria-hidden="true" tabindex="-1"></a>tags <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/5284/datasets/207c31b235786e73496fd7e58e416779911a9d98/tags.rds&quot;</span>)))</span>
+<span id="cb434-4"><a href="joining-data-with-dplyr.html#cb434-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-5"><a href="joining-data-with-dplyr.html#cb434-5" aria-hidden="true" tabindex="-1"></a>question_tags <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/5284/datasets/966938d665c69bffd87393b345ea2837a94bab97/question_tags.rds&quot;</span>)))</span>
+<span id="cb434-6"><a href="joining-data-with-dplyr.html#cb434-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb434-7"><a href="joining-data-with-dplyr.html#cb434-7" aria-hidden="true" tabindex="-1"></a>answers <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/5284/datasets/6cb9c039aa8326d98de37afefa32e1c458764638/answers.rds&quot;</span>)))</span></code></pre></div>
+<p><strong>Left-joining questions and tags</strong></p>
+<p>Three of the Stack Overflow survey datasets are <code>questions</code>, <code>question_tags</code>, and <code>tags</code>:</p>
+<p><code>questions</code>: an ID and the score, or how many times the question has been upvoted; the data only includes R-based questions</p>
+<p><code>question_tags</code>: a tag ID for each question and the question’s id</p>
+<p><code>tags</code>: a tag id and the tag’s name, which can be used to identify the subject of each question, such as ggplot2 or dplyr</p>
+<p>In this exercise, stitch together these datasets and replacing <code>NA</code>s in important fields:</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="joining-data-with-dplyr.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace the NAs in the tag_name column</span></span>
+<span id="cb435-2"><a href="joining-data-with-dplyr.html#cb435-2" aria-hidden="true" tabindex="-1"></a>questions_with_tags <span class="ot">&lt;-</span> questions <span class="sc">%&gt;%</span></span>
+<span id="cb435-3"><a href="joining-data-with-dplyr.html#cb435-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(question_tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;question_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb435-4"><a href="joining-data-with-dplyr.html#cb435-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;tag_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb435-5"><a href="joining-data-with-dplyr.html#cb435-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">tag_name =</span> <span class="st">&quot;only-r&quot;</span>))</span>
+<span id="cb435-6"><a href="joining-data-with-dplyr.html#cb435-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-7"><a href="joining-data-with-dplyr.html#cb435-7" aria-hidden="true" tabindex="-1"></a>questions_with_tags</span></code></pre></div>
+<pre><code>## # A tibble: 545,694 × 5
+##          id creation_date score tag_id tag_name       
+##       &lt;int&gt; &lt;date&gt;        &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;          
+##  1 22557677 2014-03-21        1     18 regex          
+##  2 22557677 2014-03-21        1    139 string         
+##  3 22557677 2014-03-21        1  16088 time-complexity
+##  4 22557677 2014-03-21        1   1672 backreference  
+##  5 22557707 2014-03-21        2     NA only-r         
+##  6 22558084 2014-03-21        2   6419 time-series    
+##  7 22558084 2014-03-21        2  92764 panel-data     
+##  8 22558395 2014-03-21        2   5569 function       
+##  9 22558395 2014-03-21        2    134 sorting        
+## 10 22558395 2014-03-21        2   9412 vectorization  
+## # … with 545,684 more rows</code></pre>
+<p><strong>Comparing scores across tags</strong></p>
+<p>Let’s do a quick bit of analysis on it! You’ll use familiar <code>dplyr</code> verbs like <code>group_by</code>, <code>summarize</code>, <code>arrange</code>, and <code>n</code> to find out the average score of the most asked questions:</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="joining-data-with-dplyr.html#cb437-1" aria-hidden="true" tabindex="-1"></a>questions_with_tags <span class="sc">%&gt;%</span></span>
+<span id="cb437-2"><a href="joining-data-with-dplyr.html#cb437-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Group by tag_name</span></span>
+<span id="cb437-3"><a href="joining-data-with-dplyr.html#cb437-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tag_name) <span class="sc">%&gt;%</span></span>
+<span id="cb437-4"><a href="joining-data-with-dplyr.html#cb437-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get mean score and num_questions</span></span>
+<span id="cb437-5"><a href="joining-data-with-dplyr.html#cb437-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">score =</span> <span class="fu">mean</span>(score),</span>
+<span id="cb437-6"><a href="joining-data-with-dplyr.html#cb437-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">num_questions =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb437-7"><a href="joining-data-with-dplyr.html#cb437-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort num_questions in descending order</span></span>
+<span id="cb437-8"><a href="joining-data-with-dplyr.html#cb437-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(num_questions))</span></code></pre></div>
+<pre><code>## # A tibble: 7,841 × 3
+##    tag_name   score num_questions
+##    &lt;chr&gt;      &lt;dbl&gt;         &lt;int&gt;
+##  1 only-r     1.26          48541
+##  2 ggplot2    2.61          28228
+##  3 dataframe  2.31          18874
+##  4 shiny      1.45          14219
+##  5 dplyr      1.95          14039
+##  6 plot       2.24          11315
+##  7 data.table 2.97           8809
+##  8 matrix     1.66           6205
+##  9 loops      0.743          5149
+## 10 regex      2              4912
+## # … with 7,831 more rows</code></pre>
+<p><strong>What tags never appear on R questions?</strong></p>
+<p>The <code>tags</code> table includes all Stack Overflow tags, but some have nothing to do with <code>R</code>. Filter for just the tags that never appear on an R question with <code>anti_join</code>:</p>
+<div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="joining-data-with-dplyr.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using a join, filter for tags that are never on an R question</span></span>
+<span id="cb439-2"><a href="joining-data-with-dplyr.html#cb439-2" aria-hidden="true" tabindex="-1"></a>tags <span class="sc">%&gt;%</span></span>
+<span id="cb439-3"><a href="joining-data-with-dplyr.html#cb439-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">anti_join</span>(question_tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;tag_id&quot;</span>))</span></code></pre></div>
+<pre><code>## # A tibble: 40,459 × 2
+##        id tag_name                 
+##     &lt;dbl&gt; &lt;chr&gt;                    
+##  1 124399 laravel-dusk             
+##  2 124402 spring-cloud-vault-config
+##  3 124404 spring-vault             
+##  4 124405 apache-bahir             
+##  5 124407 astc                     
+##  6 124408 simulacrum               
+##  7 124410 angulartics2             
+##  8 124411 django-rest-viewsets     
+##  9 124414 react-native-lightbox    
+## 10 124417 java-module              
+## # … with 40,449 more rows</code></pre>
+<p><strong>Finding gaps between questions and answers</strong></p>
+<p>Join together <code>questions</code> with <code>answers</code> to measure the time between questions and answers.</p>
+<p>Use an <code>inner_join</code> to combine the <code>questions</code> and <code>answers</code> tables using the suffixes <code>"_question"</code> and <code>"_answer"</code>, respectively.</p>
+<p>Subtract <code>creation_date_question</code> from <code>creation_date_answer</code> within the <code>as.integer()</code> function to create the <code>gap</code> column.</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="joining-data-with-dplyr.html#cb441-1" aria-hidden="true" tabindex="-1"></a>questions <span class="sc">%&gt;%</span></span>
+<span id="cb441-2"><a href="joining-data-with-dplyr.html#cb441-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Inner join questions and answers with proper suffixes</span></span>
+<span id="cb441-3"><a href="joining-data-with-dplyr.html#cb441-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(answers, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;question_id&quot;</span>), <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">&quot;_question&quot;</span>, <span class="st">&quot;_answer&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb441-4"><a href="joining-data-with-dplyr.html#cb441-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Subtract creation_date_question from creation_date_answer to create gap</span></span>
+<span id="cb441-5"><a href="joining-data-with-dplyr.html#cb441-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">gap =</span> <span class="fu">as.integer</span>(creation_date_answer <span class="sc">-</span> creation_date_question)) </span></code></pre></div>
+<pre><code>## # A tibble: 380,643 × 7
+##          id creation_date_question score_question id_answer creation_date_answer
+##       &lt;int&gt; &lt;date&gt;                          &lt;int&gt;     &lt;int&gt; &lt;date&gt;              
+##  1 22557677 2014-03-21                          1  22560670 2014-03-21          
+##  2 22557707 2014-03-21                          2  22558516 2014-03-21          
+##  3 22557707 2014-03-21                          2  22558726 2014-03-21          
+##  4 22558084 2014-03-21                          2  22558085 2014-03-21          
+##  5 22558084 2014-03-21                          2  22606545 2014-03-24          
+##  6 22558084 2014-03-21                          2  22610396 2014-03-24          
+##  7 22558084 2014-03-21                          2  34374729 2015-12-19          
+##  8 22558395 2014-03-21                          2  22559327 2014-03-21          
+##  9 22558395 2014-03-21                          2  22560102 2014-03-21          
+## 10 22558395 2014-03-21                          2  22560288 2014-03-21          
+## # … with 380,633 more rows, and 2 more variables: score_answer &lt;int&gt;, gap &lt;int&gt;</code></pre>
+<p><strong>Joining question and answer counts</strong></p>
+<p>Determine how many questions actually yield answers. Count the number of answers for each question, then join the answers counts with the <code>questions</code> table:</p>
+<div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="joining-data-with-dplyr.html#cb443-1" aria-hidden="true" tabindex="-1"></a>answer_counts <span class="ot">&lt;-</span> answers <span class="sc">%&gt;%</span></span>
+<span id="cb443-2"><a href="joining-data-with-dplyr.html#cb443-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(question_id, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb443-3"><a href="joining-data-with-dplyr.html#cb443-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb443-4"><a href="joining-data-with-dplyr.html#cb443-4" aria-hidden="true" tabindex="-1"></a>question_answer_counts <span class="ot">&lt;-</span> questions <span class="sc">%&gt;%</span></span>
+<span id="cb443-5"><a href="joining-data-with-dplyr.html#cb443-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(answer_counts, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;question_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb443-6"><a href="joining-data-with-dplyr.html#cb443-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>))</span></code></pre></div>
+<p><strong>Average answers by question</strong></p>
+<p>Determine, on average, how many answers each questions gets. Some of the important variables from this table include: <code>n</code>, the number of answers for each question, and <code>tag_name</code>, the name of each tag associated with each question.</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="joining-data-with-dplyr.html#cb444-1" aria-hidden="true" tabindex="-1"></a>tagged_answers <span class="ot">&lt;-</span> question_answer_counts <span class="sc">%&gt;%</span></span>
+<span id="cb444-2"><a href="joining-data-with-dplyr.html#cb444-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(question_tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;question_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb444-3"><a href="joining-data-with-dplyr.html#cb444-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;tag_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>))</span>
+<span id="cb444-4"><a href="joining-data-with-dplyr.html#cb444-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb444-5"><a href="joining-data-with-dplyr.html#cb444-5" aria-hidden="true" tabindex="-1"></a>tagged_answers <span class="sc">%&gt;%</span></span>
+<span id="cb444-6"><a href="joining-data-with-dplyr.html#cb444-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Aggregate by tag_name</span></span>
+<span id="cb444-7"><a href="joining-data-with-dplyr.html#cb444-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(tag_name) <span class="sc">%&gt;%</span></span>
+<span id="cb444-8"><a href="joining-data-with-dplyr.html#cb444-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Summarize questions and average_answers</span></span>
+<span id="cb444-9"><a href="joining-data-with-dplyr.html#cb444-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">questions =</span> <span class="fu">n</span>(),</span>
+<span id="cb444-10"><a href="joining-data-with-dplyr.html#cb444-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">average_answers =</span> <span class="fu">mean</span>(n)) <span class="sc">%&gt;%</span></span>
+<span id="cb444-11"><a href="joining-data-with-dplyr.html#cb444-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort the questions in descending order</span></span>
+<span id="cb444-12"><a href="joining-data-with-dplyr.html#cb444-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(questions))</span></code></pre></div>
+<pre><code>## # A tibble: 7,840 × 3
+##    tag_name   questions average_answers
+##    &lt;chr&gt;          &lt;int&gt;           &lt;dbl&gt;
+##  1 ggplot2        28228           1.15 
+##  2 dataframe      18874           1.67 
+##  3 shiny          14219           0.921
+##  4 dplyr          14039           1.55 
+##  5 plot           11315           1.23 
+##  6 data.table      8809           1.47 
+##  7 matrix          6205           1.45 
+##  8 loops           5149           1.39 
+##  9 regex           4912           1.91 
+## 10 function        4892           1.30 
+## # … with 7,830 more rows</code></pre>
+<p><strong>bind_rows()</strong></p>
+<p>The <code>bind_row</code> function basically merges two tables together, or stack them into one big dataset instead of leaving them as two seperate tables.</p>
+<p><strong>Binding and counting posts with tags</strong></p>
+<p>Combine the <code>questions_with_tags</code> and <code>answers_with_tags</code> tables into <code>posts_with_tags</code>.</p>
+<p>Add a <code>year</code> column to the <code>posts_with_tags</code> table, then aggregate to count posts by <code>type</code>, <code>year</code>, and <code>tag_name</code>.</p>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="joining-data-with-dplyr.html#cb446-1" aria-hidden="true" tabindex="-1"></a>questions_with_tags <span class="ot">&lt;-</span> questions <span class="sc">%&gt;%</span></span>
+<span id="cb446-2"><a href="joining-data-with-dplyr.html#cb446-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(question_tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;id&quot;</span> <span class="ot">=</span> <span class="st">&quot;question_id&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb446-3"><a href="joining-data-with-dplyr.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;tag_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>))</span>
+<span id="cb446-4"><a href="joining-data-with-dplyr.html#cb446-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-5"><a href="joining-data-with-dplyr.html#cb446-5" aria-hidden="true" tabindex="-1"></a>answers_with_tags <span class="ot">&lt;-</span> answers <span class="sc">%&gt;%</span></span>
+<span id="cb446-6"><a href="joining-data-with-dplyr.html#cb446-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(question_tags, <span class="at">by =</span> <span class="st">&quot;question_id&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb446-7"><a href="joining-data-with-dplyr.html#cb446-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(tags, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;tag_id&quot;</span> <span class="ot">=</span> <span class="st">&quot;id&quot;</span>))</span>
+<span id="cb446-8"><a href="joining-data-with-dplyr.html#cb446-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-9"><a href="joining-data-with-dplyr.html#cb446-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the two tables into posts_with_tags</span></span>
+<span id="cb446-10"><a href="joining-data-with-dplyr.html#cb446-10" aria-hidden="true" tabindex="-1"></a>posts_with_tags <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(questions_with_tags <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;question&quot;</span>),</span>
+<span id="cb446-11"><a href="joining-data-with-dplyr.html#cb446-11" aria-hidden="true" tabindex="-1"></a>                              answers_with_tags <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">type =</span> <span class="st">&quot;answer&quot;</span>))</span>
+<span id="cb446-12"><a href="joining-data-with-dplyr.html#cb446-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-13"><a href="joining-data-with-dplyr.html#cb446-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a year column, then aggregate by type, year, and tag_name</span></span>
+<span id="cb446-14"><a href="joining-data-with-dplyr.html#cb446-14" aria-hidden="true" tabindex="-1"></a>by_type_year_tag <span class="ot">&lt;-</span> posts_with_tags <span class="sc">%&gt;%</span></span>
+<span id="cb446-15"><a href="joining-data-with-dplyr.html#cb446-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(creation_date)) <span class="sc">%&gt;%</span></span>
+<span id="cb446-16"><a href="joining-data-with-dplyr.html#cb446-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type, year, tag_name)</span>
+<span id="cb446-17"><a href="joining-data-with-dplyr.html#cb446-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb446-18"><a href="joining-data-with-dplyr.html#cb446-18" aria-hidden="true" tabindex="-1"></a>by_type_year_tag</span></code></pre></div>
+<pre><code>## # A tibble: 58,299 × 4
+##    type    year tag_name                      n
+##    &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;                     &lt;int&gt;
+##  1 answer  2008 bayesian                      1
+##  2 answer  2008 dataframe                     3
+##  3 answer  2008 dirichlet                     1
+##  4 answer  2008 eof                           1
+##  5 answer  2008 file                          1
+##  6 answer  2008 file-io                       1
+##  7 answer  2008 function                      7
+##  8 answer  2008 global-variables              7
+##  9 answer  2008 math                          2
+## 10 answer  2008 mathematical-optimization     1
+## # … with 58,289 more rows</code></pre>
+<p>The code chunk outputs a dataset of posts (either questions or answers) that are tagged with their created dates, and a count for that post.</p>
+<p><strong>Visualizing questions and answers in tags</strong></p>
+<p>Create a plot to examine the information that the table contains about questions and answers for the <code>dplyr</code> and <code>ggplot2</code> tags.</p>
+<p><code>Filter</code> the <code>by_type_year_tag</code> table for the <code>dplyr</code> and <code>ggplot2</code> tags.</p>
+<p>Create a line plot with that filtered table that plots the frequency (<code>n</code>) over time, colored by question/answer and faceted by tag.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="joining-data-with-dplyr.html#cb448-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for the dplyr and ggplot2 tag names </span></span>
+<span id="cb448-2"><a href="joining-data-with-dplyr.html#cb448-2" aria-hidden="true" tabindex="-1"></a>by_type_year_tag_filtered <span class="ot">&lt;-</span> by_type_year_tag <span class="sc">%&gt;%</span></span>
+<span id="cb448-3"><a href="joining-data-with-dplyr.html#cb448-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tag_name <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;dplyr&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>))</span>
+<span id="cb448-4"><a href="joining-data-with-dplyr.html#cb448-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb448-5"><a href="joining-data-with-dplyr.html#cb448-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line plot faceted by the tag name </span></span>
+<span id="cb448-6"><a href="joining-data-with-dplyr.html#cb448-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(by_type_year_tag_filtered, <span class="fu">aes</span>(year, n, <span class="at">color =</span> type)) <span class="sc">+</span></span>
+<span id="cb448-7"><a href="joining-data-with-dplyr.html#cb448-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb448-8"><a href="joining-data-with-dplyr.html#cb448-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> tag_name)</span></code></pre></div>
+<p><img src="08-Joining_Data_with_dplyr_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-manipulation-with-dplyr.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cleaning-data-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/08-Joining_Data_with_dplyr.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/08-Joining_Data_with_dplyr.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/08-Joining_Data_with_dplyr.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>9 Cleaning Data in R | R Programming Guidebook Project</title>
   <meta name="description" content="9 Cleaning Data in R | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="9 Cleaning Data in R | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="joining-data-with-dplyr.html"/>
 <link rel="next" href="introduction-to-sql.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,11 +337,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cleaning-data-in-r" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Cleaning Data in R</h1>
+<div id="cleaning-data-in-r" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Cleaning Data in R<a href="cleaning-data-in-r.html#cleaning-data-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/cleaning-data-in-r" class="uri">https://learn.datacamp.com/courses/cleaning-data-in-r</a></p>
-<div id="common-data-problems" class="section level2" number="9.1">
-<h2><span class="header-section-number">9.1</span> Common Data Problems</h2>
+<div id="common-data-problems" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Common Data Problems<a href="cleaning-data-in-r.html#common-data-problems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Converting data types</strong></p>
 <p>Before beginning to analyze any dataset, it’s important to take a look at the different types of columns from the. do that by using <code>glimpse()</code>:</p>
 <div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="cleaning-data-in-r.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Glimpse at bike_share_rides</span></span>
@@ -524,8 +523,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## #   user_birth_year_fct &lt;fct&gt;, duration_trimmed &lt;chr&gt;,
 ## #   duration_min_const &lt;dbl&gt;, duration_min_avg &lt;dbl&gt;</code></pre>
 </div>
-<div id="categorical-and-text-data" class="section level2" number="9.2">
-<h2><span class="header-section-number">9.2</span> Categorical and Text Data</h2>
+<div id="categorical-and-text-data" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Categorical and Text Data<a href="cleaning-data-in-r.html#categorical-and-text-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Membership data range</strong></p>
 <p>A categorical data column would sometime have a limited range of observations that can be classified into membership list. Observations that doesn’t belong to this membership are outliers, and wouldn’t make sense.</p>
 <p><code>Count</code> the number of occurrences of each <code>dest_size</code> in <code>sfo_survey</code>.</p>
@@ -734,8 +733,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 9            UNITED             clean
 ## 10         FRONTIER             clean</code></pre>
 </div>
-<div id="advanced-data-problems" class="section level2" number="9.3">
-<h2><span class="header-section-number">9.3</span> Advanced Data Problems</h2>
+<div id="advanced-data-problems" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Advanced Data Problems<a href="cleaning-data-in-r.html#advanced-data-problems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Date uniformity</strong></p>
 <p>Make sure that the <code>accounts</code> dataset doesn’t contain any uniformity problems. In this exercise, investigate the <code>date_opened</code> column and clean it up so that all the dates are in the same format.</p>
 <p>By default, <code>as.Date()</code> can’t convert <code>"Month DD, YYYY"</code> formats:</p>
@@ -835,168 +834,172 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb510-5"><a href="cleaning-data-in-r.html#cb510-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Filter for rows where acct_age is different from theoretical_age</span></span>
 <span id="cb510-6"><a href="cleaning-data-in-r.html#cb510-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(acct_age <span class="sc">!=</span> theoretical_age)</span></code></pre></div>
 <pre><code>##          id date_opened  total fund_A fund_B fund_C acct_age theoretical_age
-## 1  A880C79F  2003-10-19 169305  85018  75580   8707       17              18
-## 2  BE8222DF  2018-10-05 107460  64784  35194   7482        2               3
-## 3  19F9E113  2008-07-29 147088  64029  15300  67759       12              13
-## 4  A2FE52A3  2005-06-09 143243  63466  54053  25724       15              16
+## 1  A880C79F  2003-10-19 169305  85018  75580   8707       17              19
+## 2  BE8222DF  2018-10-05 107460  64784  35194   7482        2               4
+## 3  19F9E113  2008-07-29 147088  64029  15300  67759       12              14
+## 4  A2FE52A3  2005-06-09 143243  63466  54053  25724       15              17
 ## 5  F6DC2C08  2012-03-31 124568  21156  47935  55477        8              10
-## 6  D2E55799  2007-06-20 131113  79241  26800  25072       13              14
-## 7  53AE87EF  2017-12-01 147846  38450  29185  80211        3               4
+## 6  D2E55799  2007-06-20 131113  79241  26800  25072       13              15
+## 7  53AE87EF  2017-12-01 147846  38450  29185  80211        3               5
 ## 8  3E97F253  2019-06-03 139575  11045  65907  62623        1               3
 ## 9  4AE79EA1  2011-05-07 224409  68394  80418  75597        9              11
 ## 10 2322DFB4  2018-04-07 189524  66964  52238  70322        2               4
-## 11 645335B2  2018-11-16 154001  68691  56400  28910        2               3
+## 11 645335B2  2018-11-16 154001  68691  56400  28910        2               4
 ## 12 D5EB0F00  2001-04-16 130920  69487  48681  56408       19              21
 ## 13 1EB593F7  2005-04-21 191989  75388  84199  32402       15              17
-## 14 DDBA03D9  2006-06-13  92473  32931  22162  37380       14              15
-## 15 40E4A2F4  2009-01-07 180547  82564  68210  29773       12              13
-## 16 39132EEA  2012-07-07 150115  26358  74286  49471        8               9
-## 17 387F8E4D  2011-01-03  90410   7520  67142  15748       10              11
-## 18 11C3C3C0  2017-12-24 180003  84295  31591  64117        2               4
+## 14 DDBA03D9  2006-06-13  92473  32931  22162  37380       14              16
+## 15 40E4A2F4  2009-01-07 180547  82564  68210  29773       12              14
+## 16 39132EEA  2012-07-07 150115  26358  74286  49471        8              10
+## 17 387F8E4D  2011-01-03  90410   7520  67142  15748       10              12
+## 18 11C3C3C0  2017-12-24 180003  84295  31591  64117        2               5
 ## 19 C2FC91E1  2004-05-21 105722  25398  24075  56249       16              18
-## 20 FB8F01C1  2001-09-06 217068  69738  86768  60562       19              20
+## 20 FB8F01C1  2001-09-06 217068  69738  86768  60562       19              21
 ## 21 0128D2D0  2005-04-09 184421  82221  60149  42051       15              17
-## 22 BE6E4B3F  2009-10-20 150769  49607  55417  45745       11              12
+## 22 BE6E4B3F  2009-10-20 150769  49607  55417  45745       11              13
 ## 23 7C6E2ECC  2003-05-16 169814  82093  62756  24965       17              19
-## 24 02E63545  2015-10-25 125117  50287  23342  51488        5               6
+## 24 02E63545  2015-10-25 125117  50287  23342  51488        5               7
 ## 25 4399C98B  2001-05-19 130421  58177  43912  28332       19              21
 ## 26 98F4CF0F  2014-05-27 143211  84645   7088  51478        6               8
 ## 27 247222A6  2015-05-26 150372  69104  63369  17899        5               7
-## 28 420985EE  2008-12-27 123125  59390  27890  35845       12              13
-## 29 0E3903BA  2015-11-11 182668  47236  87437  47995        5               6
+## 28 420985EE  2008-12-27 123125  59390  27890  35845       12              14
+## 29 0E3903BA  2015-11-11 182668  47236  87437  47995        5               7
 ## 30 64EF994F  2009-02-26 161141  89269  25939  45933       11              13
-## 31 CCF84EDB  2008-12-26 136128  33405  89016  13707       12              13
+## 31 CCF84EDB  2008-12-26 136128  33405  89016  13707       12              14
 ## 32 51C21705  2016-04-22 155684  53542  38234  63908        4               6
-## 33 C868C6AD  2000-01-31 112818  17876  15057  79885       21              22
-## 34 92C237C6  2005-12-13  85362  72556  21739  19537       15              16
+## 33 C868C6AD  2000-01-31 112818  17876  15057  79885       21              23
+## 34 92C237C6  2005-12-13  85362  72556  21739  19537       15              17
 ## 35 9ECEADB2  2018-05-17 146153  40675  46482  58996        2               4
-## 36 DF0AFE50  2004-12-03 146635  67373  63443  15819       16              17
-## 37 5CD605B3  2016-10-19  87921   8474  50284  29163        4               5
-## 38 402839E2  2019-09-14 163416  59213  23460  80743        1               2
-## 39 78286CE7  2009-10-05 144704  72495  38450  33759       11              12
-## 40 168E071B  2013-07-11  87826  21642  42937  23247        7               8
+## 36 DF0AFE50  2004-12-03 146635  67373  63443  15819       16              18
+## 37 5CD605B3  2016-10-19  87921   8474  50284  29163        4               6
+## 38 402839E2  2019-09-14 163416  59213  23460  80743        1               3
+## 39 78286CE7  2009-10-05 144704  72495  38450  33759       11              13
+## 40 168E071B  2013-07-11  87826  21642  42937  23247        7               9
 ## 41 466CCDAA  2002-03-24 144051  19756  80182  44113       18              20
-## 42 8DE1ECB9  2015-10-17 217975  67105  72907  77963        5               6
-## 43 E19FE6B5  2009-06-06 101936  39942  38580  23414       11              12
-## 44 1240D39C  2011-09-07 151556  18835  46135  86586        9              10
-## 45 A7BFAA72  2019-11-12 133790  56001  54885  22904        1               2
+## 42 8DE1ECB9  2015-10-17 217975  67105  72907  77963        5               7
+## 43 E19FE6B5  2009-06-06 101936  39942  38580  23414       11              13
+## 44 1240D39C  2011-09-07 151556  18835  46135  86586        9              11
+## 45 A7BFAA72  2019-11-12 133790  56001  54885  22904        1               3
 ## 46 C3D24436  2002-05-24 101584  58434  21069  22081       18              20
-## 47 FAD92F0F  2007-09-13 164241  70211  73984  20046       13              14
-## 48 236A1D51  2019-10-01 177759  20886  80883  75990        1               2
-## 49 A6DDDC4C  2000-08-17  67962   5970  20088  41904       20              21
+## 47 FAD92F0F  2007-09-13 164241  70211  73984  20046       13              15
+## 48 236A1D51  2019-10-01 177759  20886  80883  75990        1               3
+## 49 A6DDDC4C  2000-08-17  67962   5970  20088  41904       20              22
 ## 50 DDFD0B3D  2001-04-11 151696  30596  84390  36710       19              21
-## 51 D13375E9  2005-11-01 134083  28545  37537  68001       15              16
-## 52 AC50B796  2016-06-30 154916  54451  35906  64559        4               5
+## 51 D13375E9  2005-11-01 134083  28545  37537  68001       15              17
+## 52 AC50B796  2016-06-30 154916  54451  35906  64559        4               6
 ## 53 290319FD  2005-05-27 170178  54341  32764  83073       15              17
-## 54 FC71925A  2006-11-02 186281  89127  43356  53798       14              15
+## 54 FC71925A  2006-11-02 186281  89127  43356  53798       14              16
 ## 55 7B0F3685  2013-05-23 179102  81321  18106  79675        7               9
 ## 56 BE411172  2017-02-24 170096  86735  56580  26781        3               5
-## 57 58066E39  2015-09-16 163708  59004  16987  87717        5               6
-## 58 EA7FF83A  2004-11-02 111526  86856  19406   5264       15              17
+## 57 58066E39  2015-09-16 163708  59004  16987  87717        5               7
+## 58 EA7FF83A  2004-11-02 111526  86856  19406   5264       15              18
 ## 59 14A2DDB7  2019-03-06 123163  49666  25407  48090        1               3
-## 60 305EEAA8  2018-09-01 138632  20307  35028  83297        2               3
-## 61 8F25E54C  2008-11-24 189126  72037  62513  54576       12              13
-## 62 19DD73C6  2002-12-31 141275  72872  51219  17184       18              19
-## 63 ACB8E6AF  2013-07-27  71359  10203  51163   9993        7               8
-## 64 91BFCC40  2014-01-10 132859  67405   7399  58055        7               8
-## 65 86ACAF81  2011-12-14 235901  79599  79291  77011        9              10
-## 66 77E85C14  2009-11-20 133348  20954  33018  79376       11              12
+## 60 305EEAA8  2018-09-01 138632  20307  35028  83297        2               4
+## 61 8F25E54C  2008-11-24 189126  72037  62513  54576       12              14
+## 62 19DD73C6  2002-12-31 141275  72872  51219  17184       18              20
+## 63 ACB8E6AF  2013-07-27  71359  10203  51163   9993        7               9
+## 64 91BFCC40  2014-01-10 132859  67405   7399  58055        7               9
+## 65 86ACAF81  2011-12-14 235901  79599  79291  77011        9              11
+## 66 77E85C14  2009-11-20 133348  20954  33018  79376       11              13
 ## 67 C5C6B79D  2008-03-01 188424  61972  69266  57186       12              14
 ## 68 0E5B69F5  2018-05-07 134488  88475  44383  46475        2               4
-## 69 5275B518  2017-11-23  71665  16114  35691  19860        3               4
+## 69 5275B518  2017-11-23  71665  16114  35691  19860        3               5
 ## 70 17217048  2001-05-25 193377  45365  58558  89454       19              21
-## 71 E7496A7F  2008-09-27 142669   8615  72841  61213       12              13
-## 72 41BBB7B4  2005-02-22 144229  26449  83938  33842       15              17
-## 73 F6C7ABA1  2008-01-07 183440  82468  73281  27691       13              14
-## 74 E699DF01  2008-02-17 199603  84788  47808  67007       12              14
+## 71 E7496A7F  2008-09-27 142669   8615  72841  61213       12              14
+## 72 41BBB7B4  2005-02-22 144229  26449  83938  33842       15              18
+## 73 F6C7ABA1  2008-01-07 183440  82468  73281  27691       13              15
+## 74 E699DF01  2008-02-17 199603  84788  47808  67007       12              15
 ## 75 BACA7378  2005-05-11 204271  87254  57043  59974       15              17
-## 76 84A4302F  2003-08-12 186737  86632  33506  66599       17              18
+## 76 84A4302F  2003-08-12 186737  86632  33506  66599       17              19
 ## 77 F8A78C27  2006-04-05  41164   7560  21040  12564       14              16
-## 78 8BADDF6A  2010-12-31 158203  25477  43902  88824       10              11
-## 79 9FB57E68  2017-09-01 216352  86665  77117  52570        3               4
-## 80 5C98E8F5  2014-11-25 103200  28990  24986  49224        6               7
-## 81 6BB53C2A  2016-12-03 146394  29561  29023  87810        4               5
-## 82 E23F2505  2017-10-15 121614  59013  39086  23515        3               4
-## 83 0C121914  2017-06-21 227729  86625  79950  61154        3               4
+## 78 8BADDF6A  2010-12-31 158203  25477  43902  88824       10              12
+## 79 9FB57E68  2017-09-01 216352  86665  77117  52570        3               5
+## 80 5C98E8F5  2014-11-25 103200  28990  24986  49224        6               8
+## 81 6BB53C2A  2016-12-03 146394  29561  29023  87810        4               6
+## 82 E23F2505  2017-10-15 121614  59013  39086  23515        3               5
+## 83 0C121914  2017-06-21 227729  86625  79950  61154        3               5
 ## 84 3627E08A  2008-04-01 238104  60475  89011  88618       11              14
-## 85 A94493B3  2009-08-01  85975  48482   7054  30439       11              12
-## 86 0682E9DE  2002-10-01  72832  15809  15617  41406       18              19
+## 85 A94493B3  2009-08-01  85975  48482   7054  30439       11              13
+## 86 0682E9DE  2002-10-01  72832  15809  15617  41406       18              20
 ## 87 49931170  2011-03-25 139614  83035  22239  34340        9              11
-## 88 A154F63B  2000-07-11 133800  42648  16464  74688       20              21
-## 89 3690CCED  2014-10-19 226595  70260  84337  71998        6               7
-## 90 48F5E6D8  2020-02-16 135435  29123  23204  83108        0               2
-## 91 515FAD84  2013-06-20  98190   6452  60014  31724        7               8
-## 92 59794264  2008-01-16 157964  68869  32999  56096       13              14
-## 93 2038185B  2016-06-24 194662  20591  89990  84081        4               5
-## 94 65EAC615  2004-02-20 140191  20108  46764  73319       16              18
-## 95 6C7509C9  2000-09-16 212089  58861  76975  76253       20              21
+## 88 A154F63B  2000-07-11 133800  42648  16464  74688       20              22
+## 89 3690CCED  2014-10-19 226595  70260  84337  71998        6               8
+## 90 48F5E6D8  2020-02-16 135435  29123  23204  83108        0               3
+## 91 515FAD84  2013-06-20  98190   6452  60014  31724        7               9
+## 92 59794264  2008-01-16 157964  68869  32999  56096       13              15
+## 93 2038185B  2016-06-24 194662  20591  89990  84081        4               6
+## 94 65EAC615  2004-02-20 140191  20108  46764  73319       16              19
+## 95 6C7509C9  2000-09-16 212089  58861  76975  76253       20              22
 ## 96 BD969A9D  2007-04-29 167238  10234  83183  73821       13              15
 ## 97 B0CDCE3D  2014-05-28 145240  62549  48606  34085        6               8
-## 98 33A7F03E  2007-10-14 191839  80542  87909  23388       13              14</code></pre>
+## 98 33A7F03E  2007-10-14 191839  80542  87909  23388       13              15</code></pre>
 <p><strong>Visualizing missing data</strong></p>
 <p>Dealing with missing data is one of the most common tasks in data science. There are a variety of types of missingness, as well as a variety of types of solutions to missing data.</p>
 <p>A new version of the accounts data frame containing data on the <code>amount held</code> and <code>amount invested</code> for new and existing customers. However, there are rows with missing <code>inv_amount</code> values.</p>
 <p>Visualize the missing values in <code>accounts</code> by column using <code>vis_miss()</code> from the <code>visdat</code> package.</p>
 <div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="cleaning-data-in-r.html#cb512-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the missing values by column</span></span>
 <span id="cb512-2"><a href="cleaning-data-in-r.html#cb512-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vis_miss</span>(accounts_inv)</span></code></pre></div>
+<pre><code>## Warning: `gather_()` was deprecated in tidyr 1.2.0.
+## Please use `gather()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.</code></pre>
 <p><img src="09-Cleaning_Data_in_R_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 <p>Most customers below 25 do not have investment accounts yet, and suspect it could be driving the missingness.</p>
-<div class="sourceCode" id="cb513"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb513-1"><a href="cleaning-data-in-r.html#cb513-1" aria-hidden="true" tabindex="-1"></a>accounts_inv <span class="sc">%&gt;%</span></span>
-<span id="cb513-2"><a href="cleaning-data-in-r.html#cb513-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># missing_inv: Is inv_amount missing?</span></span>
-<span id="cb513-3"><a href="cleaning-data-in-r.html#cb513-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">missing_inv =</span> <span class="fu">is.na</span>(inv_amount)) <span class="sc">%&gt;%</span></span>
-<span id="cb513-4"><a href="cleaning-data-in-r.html#cb513-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Group by missing_inv</span></span>
-<span id="cb513-5"><a href="cleaning-data-in-r.html#cb513-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(missing_inv) <span class="sc">%&gt;%</span></span>
-<span id="cb513-6"><a href="cleaning-data-in-r.html#cb513-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate mean age for each missing_inv group</span></span>
-<span id="cb513-7"><a href="cleaning-data-in-r.html#cb513-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_age =</span> <span class="fu">mean</span>(age))</span></code></pre></div>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="cleaning-data-in-r.html#cb514-1" aria-hidden="true" tabindex="-1"></a>accounts_inv <span class="sc">%&gt;%</span></span>
+<span id="cb514-2"><a href="cleaning-data-in-r.html#cb514-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># missing_inv: Is inv_amount missing?</span></span>
+<span id="cb514-3"><a href="cleaning-data-in-r.html#cb514-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">missing_inv =</span> <span class="fu">is.na</span>(inv_amount)) <span class="sc">%&gt;%</span></span>
+<span id="cb514-4"><a href="cleaning-data-in-r.html#cb514-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Group by missing_inv</span></span>
+<span id="cb514-5"><a href="cleaning-data-in-r.html#cb514-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(missing_inv) <span class="sc">%&gt;%</span></span>
+<span id="cb514-6"><a href="cleaning-data-in-r.html#cb514-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate mean age for each missing_inv group</span></span>
+<span id="cb514-7"><a href="cleaning-data-in-r.html#cb514-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_age =</span> <span class="fu">mean</span>(age))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   missing_inv avg_age
 ##   &lt;lgl&gt;         &lt;dbl&gt;
 ## 1 FALSE          43.6
 ## 2 TRUE           21.8</code></pre>
 <p>Since the average age for <code>TRUE</code> <code>missing_inv</code> is <code>22</code> and the average age for <code>FALSE</code> <code>missing_inv</code> is <code>44</code>, it is likely that the <code>inv_amount</code> variable is missing mostly in young customers.</p>
-<div class="sourceCode" id="cb515"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb515-1"><a href="cleaning-data-in-r.html#cb515-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by age and visualize missing vals</span></span>
-<span id="cb515-2"><a href="cleaning-data-in-r.html#cb515-2" aria-hidden="true" tabindex="-1"></a>accounts_inv <span class="sc">%&gt;%</span></span>
-<span id="cb515-3"><a href="cleaning-data-in-r.html#cb515-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(age) <span class="sc">%&gt;%</span></span>
-<span id="cb515-4"><a href="cleaning-data-in-r.html#cb515-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vis_miss</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="cleaning-data-in-r.html#cb516-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort by age and visualize missing vals</span></span>
+<span id="cb516-2"><a href="cleaning-data-in-r.html#cb516-2" aria-hidden="true" tabindex="-1"></a>accounts_inv <span class="sc">%&gt;%</span></span>
+<span id="cb516-3"><a href="cleaning-data-in-r.html#cb516-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(age) <span class="sc">%&gt;%</span></span>
+<span id="cb516-4"><a href="cleaning-data-in-r.html#cb516-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">vis_miss</span>()</span></code></pre></div>
 <p><img src="09-Cleaning_Data_in_R_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
 </div>
-<div id="record-linkage" class="section level2" number="9.4">
-<h2><span class="header-section-number">9.4</span> Record Linkage</h2>
+<div id="record-linkage" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Record Linkage<a href="cleaning-data-in-r.html#record-linkage" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><code>Damerau-Levenshtein</code> <code>distance</code> is used to identify how similar two strings are. As a reminder, <code>Damerau-Levenshtein</code> <code>distance</code> is the minimum number of steps needed to get from String A to String B, using these operations:</p>
 <p><em>Insertion</em> of a new character.</p>
 <p><em>Deletion</em> of an existing character.</p>
 <p><em>Substitution</em> of an existing character.</p>
 <p><em>Transposition</em> of two existing consecutive characters.</p>
 <p>Use the <code>stringdist</code> package to compute string distances using various methods.</p>
-<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="cleaning-data-in-r.html#cb516-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Damerau-Levenshtein distance</span></span>
-<span id="cb516-2"><a href="cleaning-data-in-r.html#cb516-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stringdist</span>(<span class="st">&quot;las angelos&quot;</span>, <span class="st">&quot;los angeles&quot;</span>, <span class="at">method =</span> <span class="st">&quot;dl&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb517"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb517-1"><a href="cleaning-data-in-r.html#cb517-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Damerau-Levenshtein distance</span></span>
+<span id="cb517-2"><a href="cleaning-data-in-r.html#cb517-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stringdist</span>(<span class="st">&quot;las angelos&quot;</span>, <span class="st">&quot;los angeles&quot;</span>, <span class="at">method =</span> <span class="st">&quot;dl&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <p>LCS (Longest Common Subsequence) only considers <em>Insertion</em> and <em>Deletion</em>.</p>
-<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="cleaning-data-in-r.html#cb518-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate LCS distance</span></span>
-<span id="cb518-2"><a href="cleaning-data-in-r.html#cb518-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stringdist</span>(<span class="st">&quot;las angelos&quot;</span>, <span class="st">&quot;los angeles&quot;</span>, <span class="at">method =</span> <span class="st">&quot;lcs&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb519"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb519-1"><a href="cleaning-data-in-r.html#cb519-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate LCS distance</span></span>
+<span id="cb519-2"><a href="cleaning-data-in-r.html#cb519-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stringdist</span>(<span class="st">&quot;las angelos&quot;</span>, <span class="st">&quot;los angeles&quot;</span>, <span class="at">method =</span> <span class="st">&quot;lcs&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="cleaning-data-in-r.html#cb520-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Jaccard distance</span></span>
-<span id="cb520-2"><a href="cleaning-data-in-r.html#cb520-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stringdist</span>(<span class="st">&quot;las angelos&quot;</span>, <span class="st">&quot;los angeles&quot;</span>, <span class="at">method =</span> <span class="st">&quot;jaccard&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb521"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb521-1"><a href="cleaning-data-in-r.html#cb521-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate Jaccard distance</span></span>
+<span id="cb521-2"><a href="cleaning-data-in-r.html#cb521-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stringdist</span>(<span class="st">&quot;las angelos&quot;</span>, <span class="st">&quot;los angeles&quot;</span>, <span class="at">method =</span> <span class="st">&quot;jaccard&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p><strong>Fixing typos with string distance</strong></p>
 <p><code>zagat</code>, is a set of restaurants in New York, Los Angeles, Atlanta, San Francisco, and Las Vegas. The data is from Zagat, a company that collects restaurant reviews, and includes the restaurant names, addresses, phone numbers, as well as other restaurant information.</p>
 <p>The <code>city</code> column contains the name of the city that the restaurant is located in. However, there are a number of typos throughout the column. Map each <code>city</code> to one of the five correctly-spelled cities contained in the <code>cities</code> data frame.</p>
 <p>Left join <code>zagat</code> and <code>cities</code> based on string distance using the <code>city</code> and <code>city_actual</code> columns.</p>
 <p><code>stringdist_left_join</code> function from the <code>fuzzyjoin</code> package that allows you to do a <code>stringdist</code> left join.</p>
-<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="cleaning-data-in-r.html#cb522-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of each city variation</span></span>
-<span id="cb522-2"><a href="cleaning-data-in-r.html#cb522-2" aria-hidden="true" tabindex="-1"></a>zagat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span></span>
-<span id="cb522-3"><a href="cleaning-data-in-r.html#cb522-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(city)</span></code></pre></div>
+<div class="sourceCode" id="cb523"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb523-1"><a href="cleaning-data-in-r.html#cb523-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Count the number of each city variation</span></span>
+<span id="cb523-2"><a href="cleaning-data-in-r.html#cb523-2" aria-hidden="true" tabindex="-1"></a>zagat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb523-3"><a href="cleaning-data-in-r.html#cb523-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(city)</span></code></pre></div>
 <pre><code>##           city n
 ## 1 llos angeles 1
 ## 2   lo angeles 2
 ## 3 los anegeles 1
 ## 4  los angeles 6</code></pre>
-<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="cleaning-data-in-r.html#cb524-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join and look at results</span></span>
-<span id="cb524-2"><a href="cleaning-data-in-r.html#cb524-2" aria-hidden="true" tabindex="-1"></a>zagat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span></span>
-<span id="cb524-3"><a href="cleaning-data-in-r.html#cb524-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Left join based on stringdist using city and city_actual cols</span></span>
-<span id="cb524-4"><a href="cleaning-data-in-r.html#cb524-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stringdist_left_join</span>(cities, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;city&quot;</span> <span class="ot">=</span> <span class="st">&quot;city_actual&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb524-5"><a href="cleaning-data-in-r.html#cb524-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select the name, city, and city_actual cols</span></span>
-<span id="cb524-6"><a href="cleaning-data-in-r.html#cb524-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, city, city_actual)</span></code></pre></div>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="cleaning-data-in-r.html#cb525-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Join and look at results</span></span>
+<span id="cb525-2"><a href="cleaning-data-in-r.html#cb525-2" aria-hidden="true" tabindex="-1"></a>zagat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,] <span class="sc">%&gt;%</span></span>
+<span id="cb525-3"><a href="cleaning-data-in-r.html#cb525-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Left join based on stringdist using city and city_actual cols</span></span>
+<span id="cb525-4"><a href="cleaning-data-in-r.html#cb525-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stringdist_left_join</span>(cities, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;city&quot;</span> <span class="ot">=</span> <span class="st">&quot;city_actual&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb525-5"><a href="cleaning-data-in-r.html#cb525-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Select the name, city, and city_actual cols</span></span>
+<span id="cb525-6"><a href="cleaning-data-in-r.html#cb525-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(name, city, city_actual)</span></code></pre></div>
 <pre><code>##                         name         city city_actual
 ## 1              apple pan the llos angeles los angeles
 ## 2                asahi ramen  los angeles los angeles
@@ -1012,8 +1015,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>record linkage is the act of linking data from different sources regarding the same entity. But unlike joins, record linkage does not require exact matches between different pairs of data, and instead can find close matches using string similarity. This is why record linkage is effective when there are no common unique keys between the data sources you can rely upon when linking data sources such as a unique identifier.</p>
 <p><strong>Pair blocking</strong></p>
 <p>Generate all possible pairs, and then use newly-cleaned <code>city</code> column as a blocking variable. A blocking variable is helpful when the dataset is too big and you don’t want to compare/match all the possible pairs with each every one of the observations.</p>
-<div class="sourceCode" id="cb526"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb526-1"><a href="cleaning-data-in-r.html#cb526-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate pairs with same city</span></span>
-<span id="cb526-2"><a href="cleaning-data-in-r.html#cb526-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pair_blocking</span>(zagat, fodors, <span class="at">blocking_var =</span> <span class="st">&quot;city&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="cleaning-data-in-r.html#cb527-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate pairs with same city</span></span>
+<span id="cb527-2"><a href="cleaning-data-in-r.html#cb527-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pair_blocking</span>(zagat, fodors, <span class="at">blocking_var =</span> <span class="st">&quot;city&quot;</span>)</span></code></pre></div>
 <pre><code>## Simple blocking
 ##   Blocking variable(s): city
 ##   First data set:  310 records
@@ -1046,11 +1049,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Comparing pairs</strong></p>
 <p>Compare pairs by <code>name</code>, <code>phone</code>, and <code>addr</code> using <code>jaro_winkler()</code>.</p>
 <p><code>compare_pairs()</code> can take in a <code>character</code> vector of column names as the <code>by</code> argument.</p>
-<div class="sourceCode" id="cb528"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb528-1"><a href="cleaning-data-in-r.html#cb528-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate pairs</span></span>
-<span id="cb528-2"><a href="cleaning-data-in-r.html#cb528-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pair_blocking</span>(zagat, fodors, <span class="at">blocking_var =</span> <span class="st">&quot;city&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb528-3"><a href="cleaning-data-in-r.html#cb528-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compare pairs by name, phone, addr</span></span>
-<span id="cb528-4"><a href="cleaning-data-in-r.html#cb528-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compare_pairs</span>(<span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;phone&quot;</span>, <span class="st">&quot;addr&quot;</span>),</span>
-<span id="cb528-5"><a href="cleaning-data-in-r.html#cb528-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">default_comparator =</span> <span class="fu">jaro_winkler</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="cleaning-data-in-r.html#cb529-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate pairs</span></span>
+<span id="cb529-2"><a href="cleaning-data-in-r.html#cb529-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pair_blocking</span>(zagat, fodors, <span class="at">blocking_var =</span> <span class="st">&quot;city&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb529-3"><a href="cleaning-data-in-r.html#cb529-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Compare pairs by name, phone, addr</span></span>
+<span id="cb529-4"><a href="cleaning-data-in-r.html#cb529-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">compare_pairs</span>(<span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;name&quot;</span>, <span class="st">&quot;phone&quot;</span>, <span class="st">&quot;addr&quot;</span>),</span>
+<span id="cb529-5"><a href="cleaning-data-in-r.html#cb529-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">default_comparator =</span> <span class="fu">jaro_winkler</span>())</span></code></pre></div>
 <pre><code>## Compare
 ##   By: name, phone, addr
 ## 

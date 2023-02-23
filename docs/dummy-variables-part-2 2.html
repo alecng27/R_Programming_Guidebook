@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>16 Dummy Variables Part 2 | R Programming Guidebook Project</title>
+  <meta name="description" content="16 Dummy Variables Part 2 | R Programming Guidebook Project" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="16 Dummy Variables Part 2 | R Programming Guidebook Project" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="16 Dummy Variables Part 2 | R Programming Guidebook Project" />
+  
+  
+  
+
+<meta name="author" content="Alec Nguyen" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="dummy-variables-part-1.html"/>
+<link rel="next" href="fixed-effects.html"/>
+<script src="libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>About</a></li>
+<li class="part"><span><b>I DataCamp</b></span></li>
+<li class="chapter" data-level="1" data-path="introduction-to-r.html"><a href="introduction-to-r.html"><i class="fa fa-check"></i><b>1</b> Introduction to R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-r.html"><a href="introduction-to-r.html#intro-to-basics"><i class="fa fa-check"></i><b>1.1</b> Intro to basics</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-r.html"><a href="introduction-to-r.html#vectors"><i class="fa fa-check"></i><b>1.2</b> Vectors</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-r.html"><a href="introduction-to-r.html#matrices"><i class="fa fa-check"></i><b>1.3</b> Matrices</a></li>
+<li class="chapter" data-level="1.4" data-path="introduction-to-r.html"><a href="introduction-to-r.html#factors"><i class="fa fa-check"></i><b>1.4</b> Factors</a></li>
+<li class="chapter" data-level="1.5" data-path="introduction-to-r.html"><a href="introduction-to-r.html#data-frames"><i class="fa fa-check"></i><b>1.5</b> Data frames</a></li>
+<li class="chapter" data-level="1.6" data-path="introduction-to-r.html"><a href="introduction-to-r.html#lists"><i class="fa fa-check"></i><b>1.6</b> Lists</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intermediate-r.html"><a href="intermediate-r.html"><i class="fa fa-check"></i><b>2</b> Intermediate R</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="intermediate-r.html"><a href="intermediate-r.html#conditionals-and-control-flow"><i class="fa fa-check"></i><b>2.1</b> Conditionals And Control Flow</a></li>
+<li class="chapter" data-level="2.2" data-path="intermediate-r.html"><a href="intermediate-r.html#loops"><i class="fa fa-check"></i><b>2.2</b> Loops</a></li>
+<li class="chapter" data-level="2.3" data-path="intermediate-r.html"><a href="intermediate-r.html#functions"><i class="fa fa-check"></i><b>2.3</b> Functions</a></li>
+<li class="chapter" data-level="2.4" data-path="intermediate-r.html"><a href="intermediate-r.html#the-apply-family"><i class="fa fa-check"></i><b>2.4</b> The apply family</a></li>
+<li class="chapter" data-level="2.5" data-path="intermediate-r.html"><a href="intermediate-r.html#utilities"><i class="fa fa-check"></i><b>2.5</b> Utilities</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html"><i class="fa fa-check"></i><b>3</b> Intro to the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-wrangling"><i class="fa fa-check"></i><b>3.1</b> Data wrangling</a></li>
+<li class="chapter" data-level="3.2" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#data-visualization"><i class="fa fa-check"></i><b>3.2</b> Data visualization</a></li>
+<li class="chapter" data-level="3.3" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#grouping-and-summarizing"><i class="fa fa-check"></i><b>3.3</b> Grouping and summarizing</a></li>
+<li class="chapter" data-level="3.4" data-path="intro-to-the-tidyverse.html"><a href="intro-to-the-tidyverse.html#types-of-visualizations"><i class="fa fa-check"></i><b>3.4</b> Types of visualizations</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html"><i class="fa fa-check"></i><b>4</b> Intro to Data Visualization with ggplot2</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#introduction"><i class="fa fa-check"></i><b>4.1</b> Introduction</a></li>
+<li class="chapter" data-level="4.2" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#aesthetics"><i class="fa fa-check"></i><b>4.2</b> Aesthetics</a></li>
+<li class="chapter" data-level="4.3" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#geometries"><i class="fa fa-check"></i><b>4.3</b> Geometries</a></li>
+<li class="chapter" data-level="4.4" data-path="intro-to-data-visualization-with-ggplot2.html"><a href="intro-to-data-visualization-with-ggplot2.html#themes"><i class="fa fa-check"></i><b>4.4</b> Themes</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>5</b> Working with Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#explore-your-data"><i class="fa fa-check"></i><b>5.1</b> Explore your data</a></li>
+<li class="chapter" data-level="5.2" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tame-your-data"><i class="fa fa-check"></i><b>5.2</b> Tame your data</a></li>
+<li class="chapter" data-level="5.3" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#tidy-your-data"><i class="fa fa-check"></i><b>5.3</b> Tidy your data</a></li>
+<li class="chapter" data-level="5.4" data-path="working-with-data-in-the-tidyverse.html"><a href="working-with-data-in-the-tidyverse.html#transform-your-data"><i class="fa fa-check"></i><b>5.4</b> Transform your data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html"><i class="fa fa-check"></i><b>6</b> Categorical Data in the Tidyverse</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#introduction-to-factor-variables"><i class="fa fa-check"></i><b>6.1</b> Introduction to Factor Variables</a></li>
+<li class="chapter" data-level="6.2" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#manipulating-factor-variables"><i class="fa fa-check"></i><b>6.2</b> Manipulating Factor Variables</a></li>
+<li class="chapter" data-level="6.3" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#creating-factor-variables"><i class="fa fa-check"></i><b>6.3</b> Creating Factor Variables</a></li>
+<li class="chapter" data-level="6.4" data-path="categorical-data-in-the-tidyverse.html"><a href="categorical-data-in-the-tidyverse.html#case-study-on-flight-etiquette"><i class="fa fa-check"></i><b>6.4</b> Case Study on Flight Etiquette</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html"><i class="fa fa-check"></i><b>7</b> Data Manipulation with dplyr</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#transforming-data-with-dplyr"><i class="fa fa-check"></i><b>7.1</b> Transforming Data with dplyr</a></li>
+<li class="chapter" data-level="7.2" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#aggregating-data"><i class="fa fa-check"></i><b>7.2</b> Aggregating Data</a></li>
+<li class="chapter" data-level="7.3" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#selecting-and-transforming-data"><i class="fa fa-check"></i><b>7.3</b> Selecting and Transforming Data</a></li>
+<li class="chapter" data-level="7.4" data-path="data-manipulation-with-dplyr.html"><a href="data-manipulation-with-dplyr.html#case-study-the-babynames-dataset"><i class="fa fa-check"></i><b>7.4</b> Case Study: The babynames Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html"><i class="fa fa-check"></i><b>8</b> Joining Data with dplyr</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#joining-tables"><i class="fa fa-check"></i><b>8.1</b> Joining Tables</a></li>
+<li class="chapter" data-level="8.2" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#left-and-right-joins"><i class="fa fa-check"></i><b>8.2</b> Left and Right Joins</a></li>
+<li class="chapter" data-level="8.3" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#full-semi-and-anti-joins"><i class="fa fa-check"></i><b>8.3</b> Full, Semi, and Anti Joins</a></li>
+<li class="chapter" data-level="8.4" data-path="joining-data-with-dplyr.html"><a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data"><i class="fa fa-check"></i><b>8.4</b> Case Study: Joins on Stack Overflow Data</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html"><i class="fa fa-check"></i><b>9</b> Cleaning Data in R</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#common-data-problems"><i class="fa fa-check"></i><b>9.1</b> Common Data Problems</a></li>
+<li class="chapter" data-level="9.2" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#categorical-and-text-data"><i class="fa fa-check"></i><b>9.2</b> Categorical and Text Data</a></li>
+<li class="chapter" data-level="9.3" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#advanced-data-problems"><i class="fa fa-check"></i><b>9.3</b> Advanced Data Problems</a></li>
+<li class="chapter" data-level="9.4" data-path="cleaning-data-in-r.html"><a href="cleaning-data-in-r.html#record-linkage"><i class="fa fa-check"></i><b>9.4</b> Record Linkage</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html"><i class="fa fa-check"></i><b>10</b> Introduction to SQL</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#selecting-columns"><i class="fa fa-check"></i><b>10.1</b> Selecting columns</a></li>
+<li class="chapter" data-level="10.2" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#filtering-rows"><i class="fa fa-check"></i><b>10.2</b> Filtering rows</a></li>
+<li class="chapter" data-level="10.3" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#aggregate-functions"><i class="fa fa-check"></i><b>10.3</b> Aggregate Functions</a></li>
+<li class="chapter" data-level="10.4" data-path="introduction-to-sql.html"><a href="introduction-to-sql.html#sorting-and-grouping"><i class="fa fa-check"></i><b>10.4</b> Sorting and grouping</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html"><i class="fa fa-check"></i><b>11</b> Joining Data in SQL</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#introduction-to-joins"><i class="fa fa-check"></i><b>11.1</b> Introduction to joins</a></li>
+<li class="chapter" data-level="11.2" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#outer-joins-and-cross-joins"><i class="fa fa-check"></i><b>11.2</b> Outer joins and cross joins</a></li>
+<li class="chapter" data-level="11.3" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#set-theory-clauses"><i class="fa fa-check"></i><b>11.3</b> Set theory clauses</a></li>
+<li class="chapter" data-level="11.4" data-path="joining-data-in-sql.html"><a href="joining-data-in-sql.html#subqueries"><i class="fa fa-check"></i><b>11.4</b> Subqueries</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html"><i class="fa fa-check"></i><b>12</b> Web Scraping in R</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#introduction-to-html-and-web-scraping"><i class="fa fa-check"></i><b>12.1</b> Introduction to HTML and Web Scraping</a></li>
+<li class="chapter" data-level="12.2" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#navigation-and-selection-with-css"><i class="fa fa-check"></i><b>12.2</b> Navigation and Selection with CSS</a></li>
+<li class="chapter" data-level="12.3" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#advanced-selection-with-xpath"><i class="fa fa-check"></i><b>12.3</b> Advanced Selection with XPATH</a></li>
+<li class="chapter" data-level="12.4" data-path="web-scraping-in-r.html"><a href="web-scraping-in-r.html#scraping-best-practices"><i class="fa fa-check"></i><b>12.4</b> Scraping Best Practices</a></li>
+</ul></li>
+<li class="part"><span><b>II Econometrics</b></span></li>
+<li class="chapter" data-level="13" data-path="ch-2---slr.html"><a href="ch-2---slr.html"><i class="fa fa-check"></i><b>13</b> Ch 2 - SLR</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="ch-2---slr.html"><a href="ch-2---slr.html#notes"><i class="fa fa-check"></i><b>13.1</b> Notes</a></li>
+<li class="chapter" data-level="13.2" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity"><i class="fa fa-check"></i><b>13.2</b> Example 2.3: CEO Salary and Return on Equity</a></li>
+<li class="chapter" data-level="13.3" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.4-wage-and-education"><i class="fa fa-check"></i><b>13.3</b> Example 2.4: Wage and Education</a></li>
+<li class="chapter" data-level="13.4" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures"><i class="fa fa-check"></i><b>13.4</b> Example 2.5: Voting Outcomes and Campaign Expenditures</a></li>
+<li class="chapter" data-level="13.5" data-path="ch-2---slr.html"><a href="ch-2---slr.html#example-of-fitted-values-haty"><i class="fa fa-check"></i><b>13.5</b> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html"><i class="fa fa-check"></i><b>14</b> Ch 3 - MLR</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#data"><i class="fa fa-check"></i><b>14.1</b> Data</a>
+<ul>
+<li class="chapter" data-level="14.1.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#summary-statistics"><i class="fa fa-check"></i><b>14.1.1</b> Summary Statistics</a></li>
+</ul></li>
+<li class="chapter" data-level="14.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-model-comparisons"><i class="fa fa-check"></i><b>14.2</b> Regression model comparisons</a></li>
+<li class="chapter" data-level="14.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#adjusted-r-squared"><i class="fa fa-check"></i><b>14.3</b> Adjusted R-Squared</a></li>
+<li class="chapter" data-level="14.4" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#multicollinearity"><i class="fa fa-check"></i><b>14.4</b> Multicollinearity</a>
+<ul>
+<li class="chapter" data-level="14.4.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#variance-inflation-factor-vif"><i class="fa fa-check"></i><b>14.4.1</b> Variance Inflation Factor (VIF)</a></li>
+<li class="chapter" data-level="14.4.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#joint-hypotheses-test"><i class="fa fa-check"></i><b>14.4.2</b> Joint hypotheses test</a></li>
+</ul></li>
+<li class="chapter" data-level="14.5" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#testing-linear-combinations-of-parameters"><i class="fa fa-check"></i><b>14.5</b> Testing linear combinations of parameters</a></li>
+<li class="chapter" data-level="14.6" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#a-note-on-presentation"><i class="fa fa-check"></i><b>14.6</b> A note on presentation</a></li>
+<li class="chapter" data-level="14.7" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#log-transformations"><i class="fa fa-check"></i><b>14.7</b> Log transformations</a>
+<ul>
+<li class="chapter" data-level="14.7.1" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#histograms"><i class="fa fa-check"></i><b>14.7.1</b> Histograms</a></li>
+<li class="chapter" data-level="14.7.2" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#scatter-plots"><i class="fa fa-check"></i><b>14.7.2</b> Scatter plots</a></li>
+<li class="chapter" data-level="14.7.3" data-path="ch-3---mlr.html"><a href="ch-3---mlr.html#regression-models-with-levels-and-logs"><i class="fa fa-check"></i><b>14.7.3</b> Regression models with levels and logs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html"><i class="fa fa-check"></i><b>15</b> Dummy Variables Part 1</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#obtain-and-prepare-data"><i class="fa fa-check"></i><b>15.1</b> Obtain and prepare data</a></li>
+<li class="chapter" data-level="15.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#define-dummy-variables"><i class="fa fa-check"></i><b>15.2</b> Define dummy variables</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#alpha-model"><i class="fa fa-check"></i><b>15.2.1</b> Alpha Model</a></li>
+<li class="chapter" data-level="15.2.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#beta-model"><i class="fa fa-check"></i><b>15.2.2</b> Beta Model</a></li>
+</ul></li>
+<li class="chapter" data-level="15.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-regressions-side-by-side"><i class="fa fa-check"></i><b>15.3</b> Compare the regressions side-by-side</a></li>
+<li class="chapter" data-level="15.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#compare-the-predictions-of-each-model"><i class="fa fa-check"></i><b>15.4</b> Compare the predictions of each model</a>
+<ul>
+<li class="chapter" data-level="15.4.1" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#group-averages"><i class="fa fa-check"></i><b>15.4.1</b> Group averages</a></li>
+<li class="chapter" data-level="15.4.2" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#causal-estimates"><i class="fa fa-check"></i><b>15.4.2</b> Causal estimates?</a></li>
+<li class="chapter" data-level="15.4.3" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-age"><i class="fa fa-check"></i><b>15.4.3</b> What about age?</a></li>
+<li class="chapter" data-level="15.4.4" data-path="dummy-variables-part-1.html"><a href="dummy-variables-part-1.html#what-about-sex"><i class="fa fa-check"></i><b>15.4.4</b> What about sex?</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html"><i class="fa fa-check"></i><b>16</b> Dummy Variables Part 2</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#size-only"><i class="fa fa-check"></i><b>16.1</b> Size only</a></li>
+<li class="chapter" data-level="16.2" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#number-of-bathrooms-and-size"><i class="fa fa-check"></i><b>16.2</b> Number of bathrooms and size</a></li>
+<li class="chapter" data-level="16.3" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#slope-dummy"><i class="fa fa-check"></i><b>16.3</b> Slope dummy</a></li>
+<li class="chapter" data-level="16.4" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#intercept-and-slope-dummies"><i class="fa fa-check"></i><b>16.4</b> Intercept and slope dummies</a></li>
+<li class="chapter" data-level="16.5" data-path="dummy-variables-part-2.html"><a href="dummy-variables-part-2.html#models-with-the-number-of-bedrooms"><i class="fa fa-check"></i><b>16.5</b> Models with the number of bedrooms</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="fixed-effects.html"><a href="fixed-effects.html"><i class="fa fa-check"></i><b>17</b> Fixed Effects</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="fixed-effects.html"><a href="fixed-effects.html#variables"><i class="fa fa-check"></i><b>17.1</b> Variables</a></li>
+<li class="chapter" data-level="17.2" data-path="fixed-effects.html"><a href="fixed-effects.html#ols"><i class="fa fa-check"></i><b>17.2</b> OLS</a></li>
+<li class="chapter" data-level="17.3" data-path="fixed-effects.html"><a href="fixed-effects.html#country-fixed-effects"><i class="fa fa-check"></i><b>17.3</b> Country Fixed Effects</a></li>
+<li class="chapter" data-level="17.4" data-path="fixed-effects.html"><a href="fixed-effects.html#year-fixed-effects"><i class="fa fa-check"></i><b>17.4</b> Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.5" data-path="fixed-effects.html"><a href="fixed-effects.html#country-and-year-fixed-effects"><i class="fa fa-check"></i><b>17.5</b> Country and Year Fixed Effects</a></li>
+<li class="chapter" data-level="17.6" data-path="fixed-effects.html"><a href="fixed-effects.html#comparison-of-all-models"><i class="fa fa-check"></i><b>17.6</b> Comparison of all models</a>
+<ul>
+<li class="chapter" data-level="17.6.1" data-path="fixed-effects.html"><a href="fixed-effects.html#within-transformation"><i class="fa fa-check"></i><b>17.6.1</b> Within Transformation</a></li>
+<li class="chapter" data-level="17.6.2" data-path="fixed-effects.html"><a href="fixed-effects.html#plm-package"><i class="fa fa-check"></i><b>17.6.2</b> PLM Package</a></li>
+<li class="chapter" data-level="17.6.3" data-path="fixed-effects.html"><a href="fixed-effects.html#dummy-variables"><i class="fa fa-check"></i><b>17.6.3</b> Dummy Variables</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="fixed-effects.html"><a href="fixed-effects.html#data-summary-by-country"><i class="fa fa-check"></i><b>17.7</b> Data Summary by Country</a>
+<ul>
+<li class="chapter" data-level="17.7.1" data-path="fixed-effects.html"><a href="fixed-effects.html#average-values-for-each-country"><i class="fa fa-check"></i><b>17.7.1</b> Average Values for Each Country</a></li>
+<li class="chapter" data-level="17.7.2" data-path="fixed-effects.html"><a href="fixed-effects.html#variable-specific-values-and-within-transformation-for-each-country"><i class="fa fa-check"></i><b>17.7.2</b> Variable-Specific Values and Within Transformation for Each Country</a></li>
+<li class="chapter" data-level="17.7.3" data-path="fixed-effects.html"><a href="fixed-effects.html#life-expectancy"><i class="fa fa-check"></i><b>17.7.3</b> Life expectancy</a></li>
+<li class="chapter" data-level="17.7.4" data-path="fixed-effects.html"><a href="fixed-effects.html#gdp-per-capita"><i class="fa fa-check"></i><b>17.7.4</b> GDP per capita</a></li>
+<li class="chapter" data-level="17.7.5" data-path="fixed-effects.html"><a href="fixed-effects.html#population"><i class="fa fa-check"></i><b>17.7.5</b> Population</a></li>
+<li class="chapter" data-level="17.7.6" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-female"><i class="fa fa-check"></i><b>17.7.6</b> Percent female</a></li>
+<li class="chapter" data-level="17.7.7" data-path="fixed-effects.html"><a href="fixed-effects.html#percent-rural"><i class="fa fa-check"></i><b>17.7.7</b> Percent rural</a></li>
+</ul></li>
+<li class="chapter" data-level="17.8" data-path="fixed-effects.html"><a href="fixed-effects.html#bookdown-style-note"><i class="fa fa-check"></i><b>17.8</b> Bookdown Style Note</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="difference-in-differences.html"><a href="difference-in-differences.html"><i class="fa fa-check"></i><b>18</b> Difference-in-Differences</a>
+<ul>
+<li class="chapter" data-level="18.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#data-1"><i class="fa fa-check"></i><b>18.1</b> Data</a></li>
+<li class="chapter" data-level="18.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-1"><i class="fa fa-check"></i><b>18.2</b> Model 1</a>
+<ul>
+<li class="chapter" data-level="18.2.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#equivalent-model-1"><i class="fa fa-check"></i><b>18.2.1</b> Equivalent model 1</a></li>
+</ul></li>
+<li class="chapter" data-level="18.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#model-2"><i class="fa fa-check"></i><b>18.3</b> Model 2</a></li>
+<li class="chapter" data-level="18.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#comparison-of-models"><i class="fa fa-check"></i><b>18.4</b> Comparison of models</a></li>
+<li class="chapter" data-level="18.5" data-path="difference-in-differences.html"><a href="difference-in-differences.html#additional-questions"><i class="fa fa-check"></i><b>18.5</b> Additional questions</a>
+<ul>
+<li class="chapter" data-level="18.5.1" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-1"><i class="fa fa-check"></i><b>18.5.1</b> Question 1</a></li>
+<li class="chapter" data-level="18.5.2" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-2"><i class="fa fa-check"></i><b>18.5.2</b> Question 2</a></li>
+<li class="chapter" data-level="18.5.3" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-3"><i class="fa fa-check"></i><b>18.5.3</b> Question 3</a></li>
+<li class="chapter" data-level="18.5.4" data-path="difference-in-differences.html"><a href="difference-in-differences.html#question-4"><i class="fa fa-check"></i><b>18.5.4</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="18.6" data-path="difference-in-differences.html"><a href="difference-in-differences.html#polynomials"><i class="fa fa-check"></i><b>18.6</b> Polynomials</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">R Programming Guidebook Project</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="dummy-variables-part-2" class="section level1" number="16">
+<h1><span class="header-section-number">16</span> Dummy Variables Part 2</h1>
+<p><a href="https://moodle.lawrence.edu/pluginfile.php/690617/mod_resource/content/4/16-DummyVariables2-SOLN.html">Solutions</a></p>
+<style>
+.textSoln {
+  color: red;
+}
+</style>
+<!-- This defines a LaTeX command "betahat" so that we can type `\betahat{1}` instead of `\hat{\beta}_1`. -->
+<p><span class="math display">\[
+\newcommand{\betahat}[1]{\hat{\beta}_{#1}}
+\]</span></p>
+<p>This chapter uses the data in <code>HousePriceDummies.csv</code> with price of the house in dollars (<code>price</code>), size of the hose in square feet (<code>size</code>), number of bathrooms (<code>baths</code>), and number of bedrooms (<code>beds</code>).</p>
+<p>This is the second chapter covering dummy variables. From this chapter you should learn about intercept dummies that allow the average <span class="math inline">\(y\)</span> value to differ by group by the same amount for all values of the other explanatory variables. Intercept dummies are the most common use of dummy variables. You’ll create an intercept dummy from a numerical variable (<code>baths</code>) that only has two possible values, so while you’re working with a dummy variable, you’re actually just working with regression models you should already understand. THis hopefully helps you better understand how to work with all dummy variables, include those based on qualitative information.You should also learn about slope dummies that allow the slope to vary by group.</p>
+<p>Wherever you see <code>qCnt()</code> in the RMD file you’ll see a number in the HTML output. <code>qCnt()</code> is a counter (defined in the code chunk above) that is putting what are essentially question numbers in the HTML output. This makes it easier to discuss with others because we can refer to the different questions by number.</p>
+<div id="size-only" class="section level2" number="16.1">
+<h2><span class="header-section-number">16.1</span> Size only</h2>
+<p><strong>1)</strong> In this first code chunk, first estimate the simple linear regression model of price on size and store it in <code>modelS</code> (that’s “model” and a capital letter “S” for “Size”). Then display <code>modelS</code> using pander. Next, add a variable <code>yHatS</code> to the <code>mydata</code>data frame with the predicted price from <code>modelS</code>. Yes, R has a <code>fitted()</code> function to do this for you, but I want you to calculate it manually using:</p>
+<p><span class="math display">\[
+\hat{y} =  \betahat{0} + \betahat{1}size
+\]</span></p>
+<p>Finally, create a scatter plot of the data using the number of bathrooms (<code>baths</code>) as a factor for the color (we need <code>factor()</code> so it treats <code>baths</code> as distinct integers, 1 and 2, instead of a continuous variable that could have values like 1.234). We also include <code>yHatS</code> as a scatterplot and as a line (also using <code>yHatS</code>). Make sure you understand why all of the <code>yHatS</code> points are on the <code>yHatS</code> line. Throughout this chapter we’ll use an “x” symbol (ggplot’s <code>shape=4</code>) to display the data and dots (i.e., filled-in circles, ggplot’s <code>shape=19</code>, which is also it’s default) to display predicted prices (i.e., <code>yHatS</code>).</p>
+<p>I filled this first one in for you.</p>
+<div class="sourceCode" id="cb732"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb732-1"><a href="dummy-variables-part-2.html#cb732-1" aria-hidden="true" tabindex="-1"></a>modelS <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>size,<span class="at">data=</span>mydata)</span>
+<span id="cb732-2"><a href="dummy-variables-part-2.html#cb732-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelS))</span></code></pre></div>
+<table style="width:89%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">49174</td>
+<td align="center">15291</td>
+<td align="center">3.216</td>
+<td align="center">0.001502</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">154.4</td>
+<td align="center">7.645</td>
+<td align="center">20.19</td>
+<td align="center">1.826e-51</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">55363</td>
+<td align="center">0.6558</td>
+<td align="center">0.6542</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb733"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb733-1"><a href="dummy-variables-part-2.html#cb733-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatS <span class="ot">&lt;-</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;size&quot;</span>] <span class="sc">*</span> mydata<span class="sc">$</span>size</span>
+<span id="cb733-2"><a href="dummy-variables-part-2.html#cb733-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span> </span>
+<span id="cb733-3"><a href="dummy-variables-part-2.html#cb733-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb733-4"><a href="dummy-variables-part-2.html#cb733-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatS,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths))) <span class="sc">+</span></span>
+<span id="cb733-5"><a href="dummy-variables-part-2.html#cb733-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatS,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><strong>2)</strong> A big part of our focus in this chapter is the regression lines, so let’s be more explicit about plotting the line. The line we plotted above used <code>geom_line(aes(y=yHatS,x=size))</code>. We could plot this same line using <code>geom_smooth</code>, but later we’re going to plot lines that don’t work easily with <code>geom_smooth</code>. Instead, we’re going to use use <a href="https://ggplot2.tidyverse.org/reference/geom_abline.html"><code>geom_abline()</code> to plot a line using its intercept and slope</a>. Recall that <code>yHatS</code> is:
+<span class="math display">\[
+\hat{y} =  \betahat{0} + \betahat{1}size
+\]</span>
+so we need to use <span class="math inline">\(\betahat{0}=\)</span> 49173.68 for <code>geom_abline</code>’s <code>intercept</code> argument and <span class="math inline">\(\betahat{1}=\)</span> 154.37 for <code>geom_abline</code>’s <code>slope</code> argument. We’ll also expand the axes limits so we can see the y intercepts; to do this, we’ll include:</p>
+<p><code>scale_x_continuous(expand = c(0, 0),limits = c(0, max(mydata$size)*1.02),breaks = seq(0,max(mydata$size)*1.02,500))</code></p>
+<p>and</p>
+<p><code>scale_y_continuous(expand = c(0, 0),limits = c(0, max(mydata$price)*1.02), breaks = seq(0,max(mydata$price)*1.02,50000))</code></p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb734"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb734-1"><a href="dummy-variables-part-2.html#cb734-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb734-2"><a href="dummy-variables-part-2.html#cb734-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb734-3"><a href="dummy-variables-part-2.html#cb734-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb734-4"><a href="dummy-variables-part-2.html#cb734-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb734-5"><a href="dummy-variables-part-2.html#cb734-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">50000</span>)) <span class="sc">+</span>  </span>
+<span id="cb734-6"><a href="dummy-variables-part-2.html#cb734-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb734-7"><a href="dummy-variables-part-2.html#cb734-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatS,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths))) <span class="sc">+</span></span>
+<span id="cb734-8"><a href="dummy-variables-part-2.html#cb734-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb734-9"><a href="dummy-variables-part-2.html#cb734-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;black&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<hr />
+<p><strong>3)</strong> The slope of <code>yHatS</code> is the effect of size (of an additional <span class="math inline">\(ft^2\)</span>) on the predicted price from the model that only controls for size. What do you think will happen to the effect of size on the predicted price when we also control for baths?</p>
+<div class="textSoln">
+<hr />
+<p>Controlling for the number of bathrooms (baths) should reduce the effect of size on the predicted price. Assuming that more bathrooms are associated with a higher price and that higher size is predicted when there are more bathrooms (i.e., houses with more bathrooms tend to be larger), leaving the number of bathrooms out of the model causes omitted variable bias (a violation of the ZCM assumption, MLR.4) that makes it look like size has a larger effect on price than it really does when baths is not controlled for.</p>
+<p>Note that omitted variable bias doesn’t always cause the coefficient to be larger (i.e., it could cause it to be smaller). In this case it’s larger because baths, size, and price are all positively correlated.</p>
+</div>
+<hr />
+</div>
+<div id="number-of-bathrooms-and-size" class="section level2" number="16.2">
+<h2><span class="header-section-number">16.2</span> Number of bathrooms and size</h2>
+<p><strong>4)</strong> Now add the number of bathrooms (<code>baths</code>) as a variable to the regression (in addition to size) and store the model as <code>modelSB</code> (“model” with “S” for size and “B” for baths). Display the output using pander. Add a variable <code>yHatSB</code> to <code>mydata</code> with the predicted prices from this model. Remember that for this model (the “SB” model that includes both <code>size</code> and <code>baths</code>), predicted prices are given by:
+<span class="math display">\[
+\hat{y} =  \betahat{0} + \betahat{1}size + \betahat{2}baths
+\]</span></p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb735"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb735-1"><a href="dummy-variables-part-2.html#cb735-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate regression</span></span>
+<span id="cb735-2"><a href="dummy-variables-part-2.html#cb735-2" aria-hidden="true" tabindex="-1"></a>modelSB <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>size<span class="sc">+</span>baths,<span class="at">data=</span>mydata)</span>
+<span id="cb735-3"><a href="dummy-variables-part-2.html#cb735-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelSB))</span></code></pre></div>
+<table style="width:93%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">20004</td>
+<td align="center">15384</td>
+<td align="center">1.3</td>
+<td align="center">0.1949</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">136.3</td>
+<td align="center">7.944</td>
+<td align="center">17.16</td>
+<td align="center">5.014e-42</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>baths</strong></td>
+<td align="center">42005</td>
+<td align="center">7841</td>
+<td align="center">5.357</td>
+<td align="center">0.0000002187</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size + baths</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">52094</td>
+<td align="center">0.6967</td>
+<td align="center">0.6938</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb736"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb736-1"><a href="dummy-variables-part-2.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Store yHat for this model with size and baths</span></span>
+<span id="cb736-2"><a href="dummy-variables-part-2.html#cb736-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSB <span class="ot">&lt;-</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> </span>
+<span id="cb736-3"><a href="dummy-variables-part-2.html#cb736-3" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">coef</span>(modelSB)[<span class="st">&quot;size&quot;</span>] <span class="sc">*</span> mydata<span class="sc">$</span>size <span class="sc">+</span> </span>
+<span id="cb736-4"><a href="dummy-variables-part-2.html#cb736-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>] <span class="sc">*</span> mydata<span class="sc">$</span>baths</span></code></pre></div>
+</div>
+<hr />
+<p><strong>5)</strong> Now let’s add <code>yHatSB</code> to the graph as a scatterplot. Copy the last graph you made above, remove the <code>geom_point()</code> of <code>yHatS</code>, and add a <code>geom_point()</code> of <code>yHatSB</code>. Make the color “orange” for all the <code>yHatSB</code> points (i.e., the new <code>geom_point()</code> should be this: <code>geom_point(data=mydata,aes(y=yHatSB,x=size),col="orange")</code>).</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb737"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb737-1"><a href="dummy-variables-part-2.html#cb737-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb737-2"><a href="dummy-variables-part-2.html#cb737-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb737-3"><a href="dummy-variables-part-2.html#cb737-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb737-4"><a href="dummy-variables-part-2.html#cb737-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb737-5"><a href="dummy-variables-part-2.html#cb737-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">50000</span>)) <span class="sc">+</span>  </span>
+<span id="cb737-6"><a href="dummy-variables-part-2.html#cb737-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb737-7"><a href="dummy-variables-part-2.html#cb737-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatS,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths))) <span class="sc">+</span></span>
+<span id="cb737-8"><a href="dummy-variables-part-2.html#cb737-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb737-9"><a href="dummy-variables-part-2.html#cb737-9" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;black&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb737-10"><a href="dummy-variables-part-2.html#cb737-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSB,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<hr />
+<p><strong>6)</strong> It looks like there are two upward-sloping parallel rows of <code>yHatSB</code> predicted prices. What accounts for the general upward slope of the <code>yHatSB</code> predicted prices? Why are there two rows (try looking at a <code>count()</code> of <code>baths</code> to help you answer this part of the question)?</p>
+<div class="textSoln">
+<hr />
+<p>The general upward slope of the yHatSB predicted prices is from the relationship of price with size. Because yHatSB is the predicted price controlling for both size and baths but we are graphing price (and predicted price) against size only, the predicted points are not a straight line. Houses with more baths have a higher predicted price. The yHatSB predicted prices are in two rows because there are only two different values of baths, 1 and 2.</p>
+<div class="sourceCode" id="cb738"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb738-1"><a href="dummy-variables-part-2.html#cb738-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">%&gt;%</span> <span class="fu">count</span>(baths)</span></code></pre></div>
+<pre><code>##   baths   n
+## 1     1 102
+## 2     2 114</code></pre>
+</div>
+<hr />
+<p><strong>7)</strong> Look at the graph you just made. Notice that the <code>yHatS</code> line doesn’t go straight through the middle of the two rows of <code>yHatSB</code> predicted prices. What is the slope of the yHatS line (the answer is one of the coefficients estimated above)? What is the slope of the two rows of yHatSB predicted prices (the answer is a coefficient estimated above)? Which slope is steeper? What accounts for the difference between these different slopes?</p>
+<div class="textSoln">
+<hr />
+<p>The <code>yHatS</code> line has a slope of about 154.37 ft2 (the coefficient on size from the regression of price on size, i.e., modelS). The rows of <code>yHatSB</code> predicted prices have a slope of about 136.32 ft2 (the coefficient on size from the regression of price on size and baths, i.e., modelSB).</p>
+<p>The <code>yHatS</code> line has a steeper slope than the rows of <code>yHatSB</code> predicted prices because the estimated effect of size on price is larger from the <code>modelS</code> that only controls for size than from the <code>modelSB</code> that also controls for baths.</p>
+<p>That slope is also less steep because size and the number of bathrooms positively affect price, and size and the number of bathrooms are themselves positively correlated (i.e., larger houses tend to have more bathrooms).</p>
+</div>
+<hr />
+<p><strong>8)</strong> How far apart vertically in the y direction (the price direction) are the two rows of <code>yHatSB</code> predicted prices? Why?</p>
+<div class="textSoln">
+<hr />
+<p>The higher row of <code>yHatSB</code> predicted prices are about $136.32 higher. This is the estimated effect of an additional bathroom on price (from the regression of price on size and baths). The lower and upper rows are for 1 and 2 bathroom houses consecutively.</p>
+</div>
+<hr />
+<p><strong>9)</strong> Copy the code from the previous graph and then do the following:
+Using only the coefficients from <code>modelSB</code> and the size variable (and simple arithmetic), generate a variable name <code>yHatSB1</code> that when you plot it, replaces the <strong>lower row</strong> of <code>yHatSB</code> predicted price points. Make sure that these points are only created for observations with 1 bathroom and are <code>NA</code> for other observation (I’d use <code>ifelse()</code> for <code>baths==1</code>). Add these to the graph as <code>geom_point()</code> and make these dots red. Also add a <code>geom_abline()</code> that goes through this row of dots and make this line red.</p>
+<p>Also using only the coefficients from <code>modelSB</code> and the size variable (and simple arithmetic), generate a variable name <code>yHatSB2</code> that when you plot it, replaces the <strong>upper row</strong> of <code>yHatSB</code> predicted price points. Make sure that these points are only created for observations with 2 bathrooms and are <code>NA</code> for other observation (I’d use <code>ifelse()</code> for <code>baths==2</code>). Add these to the graph as <code>geom_point()</code> and make these dots blue. Also add a <code>geom_abline()</code> that goes through this row of dots and make this line blue.</p>
+<p>In addition, remove the orange <code>yHatSB</code> points you added before (because you’ve replaced them with red points and blue points).</p>
+<p>In mine, I also labeled the y-intercepts of the three lines (the black line that connects the <code>yHatS</code> points, the red line that connects the <code>yHatSB1</code> points, and the blue line that connects the <code>yHatSB2</code> points). Don’t waste much time trying to figure this out, but you should understand how the intercepts correspond with coefficients from the models.</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb740"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb740-1"><a href="dummy-variables-part-2.html#cb740-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSB1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths <span class="sc">==</span> <span class="dv">1</span>, <span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> </span>
+<span id="cb740-2"><a href="dummy-variables-part-2.html#cb740-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span> <span class="sc">+</span> </span>
+<span id="cb740-3"><a href="dummy-variables-part-2.html#cb740-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(modelSB)[<span class="st">&quot;size&quot;</span>]<span class="sc">*</span>mydata<span class="sc">$</span>size, </span>
+<span id="cb740-4"><a href="dummy-variables-part-2.html#cb740-4" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NA</span>)</span>
+<span id="cb740-5"><a href="dummy-variables-part-2.html#cb740-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb740-6"><a href="dummy-variables-part-2.html#cb740-6" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSB2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths <span class="sc">==</span> <span class="dv">2</span>, <span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> </span>
+<span id="cb740-7"><a href="dummy-variables-part-2.html#cb740-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span> <span class="sc">+</span> </span>
+<span id="cb740-8"><a href="dummy-variables-part-2.html#cb740-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coef</span>(modelSB)[<span class="st">&quot;size&quot;</span>]<span class="sc">*</span>mydata<span class="sc">$</span>size,</span>
+<span id="cb740-9"><a href="dummy-variables-part-2.html#cb740-9" aria-hidden="true" tabindex="-1"></a>  <span class="cn">NA</span>)</span>
+<span id="cb740-10"><a href="dummy-variables-part-2.html#cb740-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb740-11"><a href="dummy-variables-part-2.html#cb740-11" aria-hidden="true" tabindex="-1"></a><span class="do">## These labels the yAxis with the 3 y-intercept values, plus 0 and values from 200k to 600k in steps of 100k</span></span>
+<span id="cb740-12"><a href="dummy-variables-part-2.html#cb740-12" aria-hidden="true" tabindex="-1"></a>yLabels <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">unname</span>(<span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">coef</span>(modelS)[<span class="dv">1</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,<span class="dv">0</span>))),<span class="fu">seq</span>(<span class="dv">200000</span>,<span class="dv">600000</span>,<span class="dv">100000</span>))</span>
+<span id="cb740-13"><a href="dummy-variables-part-2.html#cb740-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb740-14"><a href="dummy-variables-part-2.html#cb740-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb740-15"><a href="dummy-variables-part-2.html#cb740-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb740-16"><a href="dummy-variables-part-2.html#cb740-16" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb740-17"><a href="dummy-variables-part-2.html#cb740-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb740-18"><a href="dummy-variables-part-2.html#cb740-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb740-19"><a href="dummy-variables-part-2.html#cb740-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb740-20"><a href="dummy-variables-part-2.html#cb740-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> yLabels) <span class="sc">+</span>  </span>
+<span id="cb740-21"><a href="dummy-variables-part-2.html#cb740-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb740-22"><a href="dummy-variables-part-2.html#cb740-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb740-23"><a href="dummy-variables-part-2.html#cb740-23" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;black&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb740-24"><a href="dummy-variables-part-2.html#cb740-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatS,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths))) <span class="sc">+</span></span>
+<span id="cb740-25"><a href="dummy-variables-part-2.html#cb740-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSB1,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb740-26"><a href="dummy-variables-part-2.html#cb740-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSB2,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb740-27"><a href="dummy-variables-part-2.html#cb740-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb740-28"><a href="dummy-variables-part-2.html#cb740-28" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>, </span>
+<span id="cb740-29"><a href="dummy-variables-part-2.html#cb740-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb740-30"><a href="dummy-variables-part-2.html#cb740-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb740-31"><a href="dummy-variables-part-2.html#cb740-31" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>, </span>
+<span id="cb740-32"><a href="dummy-variables-part-2.html#cb740-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<hr />
+<p><strong>10)</strong> Using <code>ifelse()</code>, create two dummy variables, <code>baths1</code> and <code>baths2</code>, and add them to <code>mydata</code>. The variable <code>baths1</code> equals 1 for houses with 1 bathroom and equals 0 otherwise. The variable <code>baths2</code> equals 1 for houses with 2 bathroom and equals 0 otherwise. <strong>Make sure to look at the data after creating the variables to make sure you did it correctly (e.g., use <code>head()</code>)!</strong> Calculate the mean of <code>baths1</code> and <code>baths2</code>. What does the mean of <code>baths1</code> tell us? What about the mean of <code>baths2</code>?</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb741"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb741-1"><a href="dummy-variables-part-2.html#cb741-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>baths1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths <span class="sc">==</span> <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb741-2"><a href="dummy-variables-part-2.html#cb741-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>baths2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths <span class="sc">==</span> <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb741-3"><a href="dummy-variables-part-2.html#cb741-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mydata,<span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##     price size beds baths    yHatS   yHatSB  yHatSB1  yHatSB2 baths1 baths2
+## 1  427923 2211    3     2 390491.9 405408.3       NA 405408.3      0      1
+## 2  270778 1296    2     2 249240.8 280679.1       NA 280679.1      0      1
+## 3  329174 1525    2     2 284592.2 311895.4       NA 311895.4      0      1
+## 4  537281 2913    4     2 498861.6 501102.2       NA 501102.2      0      1
+## 5  275112  903    1     1 188572.3 185102.1 185102.1       NA      1      0
+## 6  390832 2302    4     2 404539.8 417813.1       NA 417813.1      0      1
+## 7  405488 2132    3     2 378296.5 394639.3       NA 394639.3      0      1
+## 8  402451 2052    2     1 365946.6 341729.3 341729.3       NA      1      0
+## 9  279597 1471    2     2 276256.1 304534.4       NA 304534.4      0      1
+## 10 337245 2252    3     1 396821.2 368992.5 368992.5       NA      1      0</code></pre>
+<div class="sourceCode" id="cb743"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb743-1"><a href="dummy-variables-part-2.html#cb743-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mydata<span class="sc">$</span>baths1)</span></code></pre></div>
+<pre><code>## [1] 0.4722222</code></pre>
+<div class="sourceCode" id="cb745"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb745-1"><a href="dummy-variables-part-2.html#cb745-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(mydata<span class="sc">$</span>baths2)</span></code></pre></div>
+<pre><code>## [1] 0.5277778</code></pre>
+<p>47.2% of the houses from the data have 1 bathroom and 52.8% of the houses are 2 bathrooms.</p>
+</div>
+<hr />
+<p><strong>11)</strong> Try estimating a regression (with <code>price</code> as the y variable) that includes <code>size</code>, <code>baths1</code>, and <code>baths2</code>. Call it <code>model12</code>. Display the output using pander, but also display <code>coef(model12)</code>. What happens? Why? Hint: which of the 4 MLR assumptions is violated?</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb747"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb747-1"><a href="dummy-variables-part-2.html#cb747-1" aria-hidden="true" tabindex="-1"></a>model12 <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>size<span class="sc">+</span>baths1<span class="sc">+</span>baths2, <span class="at">data =</span> mydata)</span>
+<span id="cb747-2"><a href="dummy-variables-part-2.html#cb747-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model12))</span></code></pre></div>
+<table style="width:94%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">104013</td>
+<td align="center">17658</td>
+<td align="center">5.89</td>
+<td align="center">0.00000001487</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">136.3</td>
+<td align="center">7.944</td>
+<td align="center">17.16</td>
+<td align="center">5.014e-42</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>baths1</strong></td>
+<td align="center">-42005</td>
+<td align="center">7841</td>
+<td align="center">-5.357</td>
+<td align="center">0.0000002187</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size + baths1 + baths2</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">52094</td>
+<td align="center">0.6967</td>
+<td align="center">0.6938</td>
+</tr>
+</tbody>
+</table>
+<p>The coefficient on <code>baths2</code> is <code>NA</code> because it cannot include <code>baths2</code> in the regression along with <code>baths1.</code> It cannot do OLS using both these variables because they are perfectly collinear, violating MLR.3. They are perfectly collinear because <code>baths1 + baths2 = 1</code>.</p>
+</div>
+<hr />
+<p><strong>12)</strong> Since we cannot include both <code>baths1</code> and <code>baths2</code> in the regression, lets try again without <code>baths1</code>. Estimate a model (name it <code>modeldummy</code>) that includes <code>size</code> and <code>baths2</code>, but leave out <code>baths1</code>. What is the interpretation of <span class="math inline">\(\betahat{0}\)</span>, <span class="math inline">\(\betahat{1}\)</span>, and <span class="math inline">\(\betahat{2}\)</span>?</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb748"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb748-1"><a href="dummy-variables-part-2.html#cb748-1" aria-hidden="true" tabindex="-1"></a>modeldummy <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>size<span class="sc">+</span>baths2, <span class="at">data =</span> mydata)</span>
+<span id="cb748-2"><a href="dummy-variables-part-2.html#cb748-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modeldummy))</span></code></pre></div>
+<table style="width:93%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">62009</td>
+<td align="center">14586</td>
+<td align="center">4.251</td>
+<td align="center">0.00003181</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">136.3</td>
+<td align="center">7.944</td>
+<td align="center">17.16</td>
+<td align="center">5.014e-42</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>baths2</strong></td>
+<td align="center">42005</td>
+<td align="center">7841</td>
+<td align="center">5.357</td>
+<td align="center">0.0000002187</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size + baths2</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">52094</td>
+<td align="center">0.6967</td>
+<td align="center">0.6938</td>
+</tr>
+</tbody>
+</table>
+<p>The intercept (62008.64) is the average house price for a house that is zero square feet in size and that is NOT a 2 bathroom house.</p>
+<p>The coefficient on size 136.32 is the expected increase in price for an additional square foot of size, holding constant whether or not the house has two bathrooms.</p>
+<p>Holding constant the size of the house, the average price of two bathroom houses is expected to be $42004.73 higher than houses that are not two bathroom houses.</p>
+</div>
+<hr />
+<p><strong>13)</strong> Create the same graph you created above with the red and blue lines, except modify the <code>geom_abline()</code> layers that use coefficients from <code>modelSB</code> so that they use <code>modeldummy</code> instead. Leave everything else as it is in the previous graph (e.g., leave the black line <code>geom_abline()</code> that uses <code>modelS</code>, leave the <code>geom_point()</code> using <code>yHatSB1</code> and <code>yHatSB2</code>). The graph itself should look identical (the two models are identical because the only possible values of <code>baths</code> are 1 and 2). Make sure that your red line (using <code>geom_abline()</code> based on <code>modeldummy</code> coefficients) actually goes through the red points (the <code>geom_point()</code> based on <code>yHatSB1</code>) and make sure that your blue line (using <code>geom_abline()</code> based on <code>modeldummy</code> coefficients) actually goes through the blue points (the <code>geom_point()</code> based on <code>yHatSB2</code>).</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb749"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb749-1"><a href="dummy-variables-part-2.html#cb749-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb749-2"><a href="dummy-variables-part-2.html#cb749-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb749-3"><a href="dummy-variables-part-2.html#cb749-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb749-4"><a href="dummy-variables-part-2.html#cb749-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb749-5"><a href="dummy-variables-part-2.html#cb749-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb749-6"><a href="dummy-variables-part-2.html#cb749-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb749-7"><a href="dummy-variables-part-2.html#cb749-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> yLabels) <span class="sc">+</span>  </span>
+<span id="cb749-8"><a href="dummy-variables-part-2.html#cb749-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb749-9"><a href="dummy-variables-part-2.html#cb749-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb749-10"><a href="dummy-variables-part-2.html#cb749-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;black&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb749-11"><a href="dummy-variables-part-2.html#cb749-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatS,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths))) <span class="sc">+</span></span>
+<span id="cb749-12"><a href="dummy-variables-part-2.html#cb749-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSB1,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb749-13"><a href="dummy-variables-part-2.html#cb749-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSB2,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb749-14"><a href="dummy-variables-part-2.html#cb749-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb749-15"><a href="dummy-variables-part-2.html#cb749-15" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">0</span>, </span>
+<span id="cb749-16"><a href="dummy-variables-part-2.html#cb749-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb749-17"><a href="dummy-variables-part-2.html#cb749-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb749-18"><a href="dummy-variables-part-2.html#cb749-18" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">1</span>, </span>
+<span id="cb749-19"><a href="dummy-variables-part-2.html#cb749-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<hr />
+</div>
+<div id="slope-dummy" class="section level2" number="16.3">
+<h2><span class="header-section-number">16.3</span> Slope dummy</h2>
+<p><strong>14)</strong> Estimate a model that allows for the slope (with respect to size) to be different for 1 and 2 bathroom houses. Call it <code>modelSlopeDummy</code>. Display the results using pander. Create a graph similar to what you did above, except using this new model. Start with the previous graph and make the following changes:</p>
+<ol style="list-style-type: decimal">
+<li><p>Remove the black line based on <code>modelS</code>.</p></li>
+<li><p>Remove the <code>geom_point()</code> based on <code>modelS</code>.</p></li>
+<li><p>Remove the red <code>geom_point()</code> based on <code>yHatSB1</code> and replace it with red <code>geom_point()</code> based on <code>modelSlopeDummy</code> (I suggest creating a <code>yHatlopeDummy1</code> similar to how you created <code>yHatSB1</code>).</p></li>
+<li><p>Remove the blue <code>geom_point()</code> based on <code>yHatSB2</code> and replace it with blue <code>geom_point()</code> based on <code>modelSlopeDummy</code> (I suggest creating a <code>yHatlopeDummy2</code> similar to how you created <code>yHatSB2</code>).</p></li>
+<li><p>Remove the red <code>geom_abline()</code> based on <code>modeldummy</code> and replace it with a red <code>geom_abline()</code> based on <code>modelSlopeDummy</code>.</p></li>
+<li><p>Remove the blue <code>geom_abline()</code> based on <code>modeldummy</code> and replace it with a red <code>geom_abline()</code> based on <code>modelSlopeDummy</code>.</p></li>
+</ol>
+<p><strong>NOTE: you rarely want to estimate a model with a slope dummy unless you also have the corresponding intercept dummy…see the next question for that model</strong></p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb750"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb750-1"><a href="dummy-variables-part-2.html#cb750-1" aria-hidden="true" tabindex="-1"></a><span class="co"># First, create a variable that multiplies size by baths2</span></span>
+<span id="cb750-2"><a href="dummy-variables-part-2.html#cb750-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>sizeBaths2 <span class="ot">&lt;-</span>  mydata<span class="sc">$</span>size <span class="sc">*</span> mydata<span class="sc">$</span>baths2</span>
+<span id="cb750-3"><a href="dummy-variables-part-2.html#cb750-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate the model using this new variable</span></span>
+<span id="cb750-4"><a href="dummy-variables-part-2.html#cb750-4" aria-hidden="true" tabindex="-1"></a>modelSlopeDummy <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>size<span class="sc">+</span>sizeBaths2, <span class="at">data =</span> mydata)</span>
+<span id="cb750-5"><a href="dummy-variables-part-2.html#cb750-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelSlopeDummy))</span></code></pre></div>
+<table style="width:93%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">82311</td>
+<td align="center">15618</td>
+<td align="center">5.27</td>
+<td align="center">0.0000003332</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">124.7</td>
+<td align="center">9.032</td>
+<td align="center">13.81</td>
+<td align="center">2.094e-31</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>sizeBaths2</strong></td>
+<td align="center">21.57</td>
+<td align="center">3.984</td>
+<td align="center">5.415</td>
+<td align="center">0.0000001647</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size + sizeBaths2</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">52027</td>
+<td align="center">0.6975</td>
+<td align="center">0.6946</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb751"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb751-1"><a href="dummy-variables-part-2.html#cb751-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted yHat points for not two bathroom houses</span></span>
+<span id="cb751-2"><a href="dummy-variables-part-2.html#cb751-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSlope1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths2 <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb751-3"><a href="dummy-variables-part-2.html#cb751-3" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb751-4"><a href="dummy-variables-part-2.html#cb751-4" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;size&quot;</span>]<span class="sc">*</span>mydata<span class="sc">$</span>size</span>
+<span id="cb751-5"><a href="dummy-variables-part-2.html#cb751-5" aria-hidden="true" tabindex="-1"></a>                            ,<span class="cn">NA</span>)</span>
+<span id="cb751-6"><a href="dummy-variables-part-2.html#cb751-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-7"><a href="dummy-variables-part-2.html#cb751-7" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted yHat points for two bathroom houses</span></span>
+<span id="cb751-8"><a href="dummy-variables-part-2.html#cb751-8" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSlope2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths2 <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb751-9"><a href="dummy-variables-part-2.html#cb751-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb751-10"><a href="dummy-variables-part-2.html#cb751-10" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">+</span> (<span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;size&quot;</span>] </span>
+<span id="cb751-11"><a href="dummy-variables-part-2.html#cb751-11" aria-hidden="true" tabindex="-1"></a>                                <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;sizeBaths2&quot;</span>]) <span class="sc">*</span>mydata<span class="sc">$</span>size</span>
+<span id="cb751-12"><a href="dummy-variables-part-2.html#cb751-12" aria-hidden="true" tabindex="-1"></a>                            ,<span class="cn">NA</span>)</span>
+<span id="cb751-13"><a href="dummy-variables-part-2.html#cb751-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-14"><a href="dummy-variables-part-2.html#cb751-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Add new intercepts to yLabels</span></span>
+<span id="cb751-15"><a href="dummy-variables-part-2.html#cb751-15" aria-hidden="true" tabindex="-1"></a>yLabelsSlope <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unname</span>(<span class="fu">c</span>(yLabels, <span class="fu">round</span>(<span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSB)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelSB)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,<span class="dv">0</span>))))</span>
+<span id="cb751-16"><a href="dummy-variables-part-2.html#cb751-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb751-17"><a href="dummy-variables-part-2.html#cb751-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb751-18"><a href="dummy-variables-part-2.html#cb751-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb751-19"><a href="dummy-variables-part-2.html#cb751-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb751-20"><a href="dummy-variables-part-2.html#cb751-20" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb751-21"><a href="dummy-variables-part-2.html#cb751-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb751-22"><a href="dummy-variables-part-2.html#cb751-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb751-23"><a href="dummy-variables-part-2.html#cb751-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> yLabelsSlope) <span class="sc">+</span>  </span>
+<span id="cb751-24"><a href="dummy-variables-part-2.html#cb751-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb751-25"><a href="dummy-variables-part-2.html#cb751-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSlope1,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb751-26"><a href="dummy-variables-part-2.html#cb751-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSlope2,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb751-27"><a href="dummy-variables-part-2.html#cb751-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb751-28"><a href="dummy-variables-part-2.html#cb751-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb751-29"><a href="dummy-variables-part-2.html#cb751-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>],</span>
+<span id="cb751-30"><a href="dummy-variables-part-2.html#cb751-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;size&quot;</span>] </span>
+<span id="cb751-31"><a href="dummy-variables-part-2.html#cb751-31" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;sizeBaths2&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+<hr />
+</div>
+<div id="intercept-and-slope-dummies" class="section level2" number="16.4">
+<h2><span class="header-section-number">16.4</span> Intercept and slope dummies</h2>
+<p><strong>15)</strong> Estimate a model that allows for both the intercept and the slope (with respect to size) to be different for 1 and 2 bathroom houses. Call it <code>modelSlopeAndInterceptDummies</code>. Create a graph of this model by following the same steps you followed above to create the graph of the slope dummy model.</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb752"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb752-1"><a href="dummy-variables-part-2.html#cb752-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate the model</span></span>
+<span id="cb752-2"><a href="dummy-variables-part-2.html#cb752-2" aria-hidden="true" tabindex="-1"></a>modelSlopeAndInterceptDummies <span class="ot">&lt;-</span> <span class="fu">lm</span>(price<span class="sc">~</span>baths2<span class="sc">+</span>size<span class="sc">+</span>sizeBaths2, <span class="at">data =</span> mydata)</span>
+<span id="cb752-3"><a href="dummy-variables-part-2.html#cb752-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelSlopeAndInterceptDummies))</span></code></pre></div>
+<table style="width:89%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">75489</td>
+<td align="center">21120</td>
+<td align="center">3.574</td>
+<td align="center">0.0004349</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>baths2</strong></td>
+<td align="center">15120</td>
+<td align="center">31443</td>
+<td align="center">0.4809</td>
+<td align="center">0.6311</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>size</strong></td>
+<td align="center">128.5</td>
+<td align="center">11.92</td>
+<td align="center">10.77</td>
+<td align="center">7.231e-22</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>sizeBaths2</strong></td>
+<td align="center">14.12</td>
+<td align="center">16</td>
+<td align="center">0.8829</td>
+<td align="center">0.3783</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ baths2 + size + sizeBaths2</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">52121</td>
+<td align="center">0.6978</td>
+<td align="center">0.6935</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb753"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb753-1"><a href="dummy-variables-part-2.html#cb753-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted yHat points for not two bathroom houses</span></span>
+<span id="cb753-2"><a href="dummy-variables-part-2.html#cb753-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSlopeAndIntercept1 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths2 <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb753-3"><a href="dummy-variables-part-2.html#cb753-3" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb753-4"><a href="dummy-variables-part-2.html#cb753-4" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;size&quot;</span>]<span class="sc">*</span>mydata<span class="sc">$</span>size</span>
+<span id="cb753-5"><a href="dummy-variables-part-2.html#cb753-5" aria-hidden="true" tabindex="-1"></a>                            ,<span class="cn">NA</span>)</span>
+<span id="cb753-6"><a href="dummy-variables-part-2.html#cb753-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb753-7"><a href="dummy-variables-part-2.html#cb753-7" aria-hidden="true" tabindex="-1"></a><span class="co"># predicted yHat points for two bathroom houses</span></span>
+<span id="cb753-8"><a href="dummy-variables-part-2.html#cb753-8" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatSlopeAndIntercept2 <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>baths2 <span class="sc">==</span> <span class="dv">1</span>,</span>
+<span id="cb753-9"><a href="dummy-variables-part-2.html#cb753-9" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb753-10"><a href="dummy-variables-part-2.html#cb753-10" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;baths2&quot;</span>] </span>
+<span id="cb753-11"><a href="dummy-variables-part-2.html#cb753-11" aria-hidden="true" tabindex="-1"></a>                            <span class="sc">+</span> (<span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;size&quot;</span>] </span>
+<span id="cb753-12"><a href="dummy-variables-part-2.html#cb753-12" aria-hidden="true" tabindex="-1"></a>                                <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;sizeBaths2&quot;</span>]) </span>
+<span id="cb753-13"><a href="dummy-variables-part-2.html#cb753-13" aria-hidden="true" tabindex="-1"></a>                              <span class="sc">*</span>mydata<span class="sc">$</span>size</span>
+<span id="cb753-14"><a href="dummy-variables-part-2.html#cb753-14" aria-hidden="true" tabindex="-1"></a>                            ,<span class="cn">NA</span>)</span>
+<span id="cb753-15"><a href="dummy-variables-part-2.html#cb753-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb753-16"><a href="dummy-variables-part-2.html#cb753-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Add new y intercepts to y axis labels</span></span>
+<span id="cb753-17"><a href="dummy-variables-part-2.html#cb753-17" aria-hidden="true" tabindex="-1"></a>yLabelsSlopeIntercept <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unname</span>(<span class="fu">c</span>(yLabelsSlope,<span class="fu">round</span>(<span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;baths2&quot;</span>],<span class="dv">0</span>))))</span>
+<span id="cb753-18"><a href="dummy-variables-part-2.html#cb753-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb753-19"><a href="dummy-variables-part-2.html#cb753-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb753-20"><a href="dummy-variables-part-2.html#cb753-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb753-21"><a href="dummy-variables-part-2.html#cb753-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb753-22"><a href="dummy-variables-part-2.html#cb753-22" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb753-23"><a href="dummy-variables-part-2.html#cb753-23" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb753-24"><a href="dummy-variables-part-2.html#cb753-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb753-25"><a href="dummy-variables-part-2.html#cb753-25" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb753-26"><a href="dummy-variables-part-2.html#cb753-26" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> yLabelsSlopeIntercept) <span class="sc">+</span>  </span>
+<span id="cb753-27"><a href="dummy-variables-part-2.html#cb753-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb753-28"><a href="dummy-variables-part-2.html#cb753-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_abline(intercept = coef(modelS)[&quot;(Intercept)&quot;], </span></span>
+<span id="cb753-29"><a href="dummy-variables-part-2.html#cb753-29" aria-hidden="true" tabindex="-1"></a>              <span class="co"># slope = coef(modelS)[&quot;size&quot;],col=&quot;black&quot;)  + </span></span>
+<span id="cb753-30"><a href="dummy-variables-part-2.html#cb753-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># geom_point(data=mydata,aes(y=yHatS,x=size,col=factor(baths))) +</span></span>
+<span id="cb753-31"><a href="dummy-variables-part-2.html#cb753-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSlopeAndIntercept1,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb753-32"><a href="dummy-variables-part-2.html#cb753-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>yHatSlopeAndIntercept2,<span class="at">x=</span>size),<span class="at">col=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb753-33"><a href="dummy-variables-part-2.html#cb753-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb753-34"><a href="dummy-variables-part-2.html#cb753-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb753-35"><a href="dummy-variables-part-2.html#cb753-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>]</span>
+<span id="cb753-36"><a href="dummy-variables-part-2.html#cb753-36" aria-hidden="true" tabindex="-1"></a>                        <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;baths2&quot;</span>],</span>
+<span id="cb753-37"><a href="dummy-variables-part-2.html#cb753-37" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;size&quot;</span>] </span>
+<span id="cb753-38"><a href="dummy-variables-part-2.html#cb753-38" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;sizeBaths2&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+<hr />
+<p><strong>16)</strong> Compare the four models (<code>modelS</code>, <code>modeldummy</code>, <code>modelSlopeDummy</code>, and <code>modelSlopeAndInterceptDummies</code>). Display them all side-by-side using stargazer. Then write out the conditional expectations for all four models for one bathroom houses and two bathroom houses.</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb754"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb754-1"><a href="dummy-variables-part-2.html#cb754-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(modelS,modeldummy,modelSlopeDummy,modelSlopeAndInterceptDummies, </span>
+<span id="cb754-2"><a href="dummy-variables-part-2.html#cb754-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, </span>
+<span id="cb754-3"><a href="dummy-variables-part-2.html#cb754-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb754-4"><a href="dummy-variables-part-2.html#cb754-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>), </span>
+<span id="cb754-5"><a href="dummy-variables-part-2.html#cb754-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;&lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>, </span>
+<span id="cb754-6"><a href="dummy-variables-part-2.html#cb754-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="4">
+price
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+<td>
+(4)
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+size
+</td>
+<td>
+154.373<sup>***</sup>
+</td>
+<td>
+136.316<sup>***</sup>
+</td>
+<td>
+124.733<sup>***</sup>
+</td>
+<td>
+128.467<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+<td>
+p = 0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+baths2
+</td>
+<td>
+</td>
+<td>
+42,004.730<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+15,120.010
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+p = 0.00000
+</td>
+<td>
+</td>
+<td>
+p = 0.632
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+sizeBaths2
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+21.572<sup>***</sup>
+</td>
+<td>
+14.123
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+p = 0.00000
+</td>
+<td>
+p = 0.379
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+49,173.680<sup>***</sup>
+</td>
+<td>
+62,008.640<sup>***</sup>
+</td>
+<td>
+82,310.930<sup>***</sup>
+</td>
+<td>
+75,489.050<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+p = 0.002
+</td>
+<td>
+p = 0.00004
+</td>
+<td>
+p = 0.00000
+</td>
+<td>
+p = 0.0005
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+216
+</td>
+<td>
+216
+</td>
+<td>
+216
+</td>
+<td>
+216
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.656
+</td>
+<td>
+0.697
+</td>
+<td>
+0.697
+</td>
+<td>
+0.698
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.654
+</td>
+<td>
+0.694
+</td>
+<td>
+0.695
+</td>
+<td>
+0.694
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="4" style="text-align:right">
+<em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.01</em>
+</td>
+</tr>
+</table>
+<p>Here are the expected prices for 1 bathroom (not-two bathroom) houses
+<span class="math display">\[
+\begin{aligned}
+E(price|size,baths2=0) &amp;= 49174 + 154⋅size
+\\ E(price|size,baths2=0) &amp;= 62009+136⋅size
+\\ E(price|size,baths2=0) &amp;= 82311+125⋅size
+\\ E(price|size,baths2=0) &amp;= 75489+128⋅size
+\end{aligned}
+\]</span></p>
+<p>Here are the expected prices for two bathroom houses
+<span class="math display">\[
+\begin{aligned}
+E(price|size,baths2=1) &amp;= 49174+154⋅size
+\\ E(price|size,baths2=1) &amp;= 104013+136⋅size
+\\ E(price|size,baths2=1) &amp;= 82311+146⋅size
+\\ E(price|size,baths2=1) &amp;= 90609+143⋅size
+\end{aligned}
+\]</span></p>
+</div>
+<hr />
+<p><strong>17)</strong> What do you notice about the intercepts and the slopes? Think about what variation each model allows and what restrictions it imposes. Why are the intercepts furthest out for the model with the intercept dummy (<code>modeldummy</code>), at one point in the middle for the model with the slope dummy, and in between for the model with both the intercept and slope dummies? How does that relate to the estimated slopes? How does that relate to the model that only includes size? I’d start by comparing the graphs of the models.</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb755"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb755-1"><a href="dummy-variables-part-2.html#cb755-1" aria-hidden="true" tabindex="-1"></a>yLabelsCombined <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">unname</span>(<span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">coef</span>(modelS)[<span class="dv">1</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modeldummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb755-2"><a href="dummy-variables-part-2.html#cb755-2" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">0</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modeldummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb755-3"><a href="dummy-variables-part-2.html#cb755-3" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb755-4"><a href="dummy-variables-part-2.html#cb755-4" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">0</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb755-5"><a href="dummy-variables-part-2.html#cb755-5" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,<span class="dv">0</span>))),<span class="fu">seq</span>(<span class="dv">200000</span>,<span class="dv">600000</span>,<span class="dv">100000</span>)))</span>
+<span id="cb755-6"><a href="dummy-variables-part-2.html#cb755-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb755-7"><a href="dummy-variables-part-2.html#cb755-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb755-8"><a href="dummy-variables-part-2.html#cb755-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb755-9"><a href="dummy-variables-part-2.html#cb755-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb755-10"><a href="dummy-variables-part-2.html#cb755-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb755-11"><a href="dummy-variables-part-2.html#cb755-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb755-12"><a href="dummy-variables-part-2.html#cb755-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), </span>
+<span id="cb755-13"><a href="dummy-variables-part-2.html#cb755-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> yLabelsCombined) <span class="sc">+</span>  </span>
+<span id="cb755-14"><a href="dummy-variables-part-2.html#cb755-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(baths)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb755-15"><a href="dummy-variables-part-2.html#cb755-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;(Intercept)&quot;</span>],</span>
+<span id="cb755-16"><a href="dummy-variables-part-2.html#cb755-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelS)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;black&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb755-17"><a href="dummy-variables-part-2.html#cb755-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb755-18"><a href="dummy-variables-part-2.html#cb755-18" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">0</span>, </span>
+<span id="cb755-19"><a href="dummy-variables-part-2.html#cb755-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb755-20"><a href="dummy-variables-part-2.html#cb755-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb755-21"><a href="dummy-variables-part-2.html#cb755-21" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;baths2&quot;</span>]<span class="sc">*</span><span class="dv">1</span>, </span>
+<span id="cb755-22"><a href="dummy-variables-part-2.html#cb755-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modeldummy)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb755-23"><a href="dummy-variables-part-2.html#cb755-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb755-24"><a href="dummy-variables-part-2.html#cb755-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb755-25"><a href="dummy-variables-part-2.html#cb755-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;(Intercept)&quot;</span>],</span>
+<span id="cb755-26"><a href="dummy-variables-part-2.html#cb755-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;size&quot;</span>] </span>
+<span id="cb755-27"><a href="dummy-variables-part-2.html#cb755-27" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeDummy)[<span class="st">&quot;sizeBaths2&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>,<span class="at">show.legend =</span> <span class="cn">TRUE</span>)  <span class="sc">+</span> </span>
+<span id="cb755-28"><a href="dummy-variables-part-2.html#cb755-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>], </span>
+<span id="cb755-29"><a href="dummy-variables-part-2.html#cb755-29" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;purple&quot;</span>)  <span class="sc">+</span> </span>
+<span id="cb755-30"><a href="dummy-variables-part-2.html#cb755-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;(Intercept)&quot;</span>]</span>
+<span id="cb755-31"><a href="dummy-variables-part-2.html#cb755-31" aria-hidden="true" tabindex="-1"></a>                        <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;baths2&quot;</span>],</span>
+<span id="cb755-32"><a href="dummy-variables-part-2.html#cb755-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;size&quot;</span>] </span>
+<span id="cb755-33"><a href="dummy-variables-part-2.html#cb755-33" aria-hidden="true" tabindex="-1"></a>                      <span class="sc">+</span> <span class="fu">coef</span>(modelSlopeAndInterceptDummies)[<span class="st">&quot;sizeBaths2&quot;</span>],<span class="at">col=</span><span class="st">&quot;purple&quot;</span>,<span class="at">show.legend =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb755-34"><a href="dummy-variables-part-2.html#cb755-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">&quot;Lines from All 4 Models&quot;</span>, <span class="at">color =</span> <span class="st">&quot;baths&quot;</span>)</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>The black line is from the first model that only includes size.</p>
+<p>The red lines are the model that includes <code>baths2</code> as an intercept dummy only. These red lines are the most spread out because bathrooms is only accounted for by different intercepts.</p>
+<p>The blue lines are from the model that only allows the slope to differ. Forcing the intercept to be the same exaggerates the two slopes (think of taking the red lines and pulling the intercepts together…to still fit thought the data, the one bathroom line gets flatter and the two bathroom line gets steeper).</p>
+<p>Finally, the purple lines are for the model that allows both the intercept and slope to depend on if the house has 2 bathrooms. These intercepts lie between the other extremes, the model that only reflects bathrooms in the intercepts and the model that only reflects bathrooms in the slopes.</p>
+</div>
+<hr />
+</div>
+<div id="models-with-the-number-of-bedrooms" class="section level2" number="16.5">
+<h2><span class="header-section-number">16.5</span> Models with the number of bedrooms</h2>
+<p><strong>18)</strong> To help you gain additional intuition for what’s going on in linear regressions, try estimating a model that includes size and the number of bedrooms (<code>beds</code>). Try making a plot that includes <code>yHat</code> predicted values. Try coloring the <code>yHat</code> points based on the number of bedrooms. Why are the <code>yHat</code> points arranged in rows? How many rows are there? Why? Can you add <code>geom_abline()</code>s that connect the rows of dots?</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb756"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb756-1"><a href="dummy-variables-part-2.html#cb756-1" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">%&gt;%</span> <span class="fu">count</span>(beds)</span></code></pre></div>
+<pre><code>##   beds  n
+## 1    1 32
+## 2    2 66
+## 3    3 68
+## 4    4 50</code></pre>
+<div class="sourceCode" id="cb758"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb758-1"><a href="dummy-variables-part-2.html#cb758-1" aria-hidden="true" tabindex="-1"></a>modelBeds <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>mydata,price<span class="sc">~</span>size<span class="sc">+</span>beds)</span>
+<span id="cb758-2"><a href="dummy-variables-part-2.html#cb758-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelBeds))</span></code></pre></div>
+<table style="width:96%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">69942</td>
+<td align="center">17390</td>
+<td align="center">4.022</td>
+<td align="center">0.00008013</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">113.8</td>
+<td align="center">18.4</td>
+<td align="center">6.184</td>
+<td align="center">0.000000003146</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>beds</strong></td>
+<td align="center">22009</td>
+<td align="center">9103</td>
+<td align="center">2.418</td>
+<td align="center">0.01645</td>
+</tr>
+</tbody>
+</table>
+<table style="width:86%;">
+<caption>Fitting linear model: price ~ size + beds</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="11%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">54747</td>
+<td align="center">0.665</td>
+<td align="center">0.6619</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb759"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb759-1"><a href="dummy-variables-part-2.html#cb759-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate &quot;yHat&quot; predicted points using fitted() function</span></span>
+<span id="cb759-2"><a href="dummy-variables-part-2.html#cb759-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatBeds <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelBeds)</span>
+<span id="cb759-3"><a href="dummy-variables-part-2.html#cb759-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb759-4"><a href="dummy-variables-part-2.html#cb759-4" aria-hidden="true" tabindex="-1"></a>yLabelsBeds <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">unname</span>(<span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">3</span>,<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">4</span>,<span class="dv">0</span>))),<span class="fu">seq</span>(<span class="dv">200000</span>,<span class="dv">600000</span>,<span class="dv">100000</span>))</span>
+<span id="cb759-5"><a href="dummy-variables-part-2.html#cb759-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb759-6"><a href="dummy-variables-part-2.html#cb759-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb759-7"><a href="dummy-variables-part-2.html#cb759-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb759-8"><a href="dummy-variables-part-2.html#cb759-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb759-9"><a href="dummy-variables-part-2.html#cb759-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb759-10"><a href="dummy-variables-part-2.html#cb759-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb759-11"><a href="dummy-variables-part-2.html#cb759-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb759-12"><a href="dummy-variables-part-2.html#cb759-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), <span class="at">breaks=</span>yLabelsBeds) <span class="sc">+</span>  </span>
+<span id="cb759-13"><a href="dummy-variables-part-2.html#cb759-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb759-14"><a href="dummy-variables-part-2.html#cb759-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb759-15"><a href="dummy-variables-part-2.html#cb759-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb759-16"><a href="dummy-variables-part-2.html#cb759-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb759-17"><a href="dummy-variables-part-2.html#cb759-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb759-18"><a href="dummy-variables-part-2.html#cb759-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">3</span>,</span>
+<span id="cb759-19"><a href="dummy-variables-part-2.html#cb759-19" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;green&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb759-20"><a href="dummy-variables-part-2.html#cb759-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">4</span>,</span>
+<span id="cb759-21"><a href="dummy-variables-part-2.html#cb759-21" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBeds)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb759-22"><a href="dummy-variables-part-2.html#cb759-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatBeds,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds))) <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>,<span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The houses have either 1, 2, 3, or 4 bedrooms so the <code>yHat</code> points should be arranged in 4 rows.</p>
+</div>
+<hr />
+<p><strong>19)</strong> Now try changing the previous model to include <code>factor(beds)</code> instead of <code>beds</code> (alternatively, create a dummy variable for 2 bedroom houses, 3 bedroom houses, and 4 bedroom houses, and include these three dummy variables in the model). Try making a plot that includes <code>yHat</code> predicted values. Try coloring the <code>yHat</code> points based on the number of bedrooms. Why are the <code>yHat</code> points arranged in rows? How many rows are there? Why? Can you add <code>geom_abline()</code>s that connect the rows of dots? How doe the rows of dots (and the <code>geom_abline()</code>s that connect them) compare with the previous model?</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb760"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb760-1"><a href="dummy-variables-part-2.html#cb760-1" aria-hidden="true" tabindex="-1"></a>modelBedsDummies <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>mydata,price<span class="sc">~</span>size<span class="sc">+</span><span class="fu">factor</span>(beds))</span>
+<span id="cb760-2"><a href="dummy-variables-part-2.html#cb760-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelBedsDummies))</span></code></pre></div>
+<table style="width:97%;">
+<colgroup>
+<col width="27%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">98518</td>
+<td align="center">25537</td>
+<td align="center">3.858</td>
+<td align="center">0.000152</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">111.7</td>
+<td align="center">18.75</td>
+<td align="center">5.956</td>
+<td align="center">0.00000001066</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>factor(beds)2</strong></td>
+<td align="center">17174</td>
+<td align="center">13691</td>
+<td align="center">1.254</td>
+<td align="center">0.2111</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>factor(beds)3</strong></td>
+<td align="center">39851</td>
+<td align="center">19369</td>
+<td align="center">2.057</td>
+<td align="center">0.04087</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>factor(beds)4</strong></td>
+<td align="center">67649</td>
+<td align="center">27898</td>
+<td align="center">2.425</td>
+<td align="center">0.01616</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size + factor(beds)</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">54947</td>
+<td align="center">0.6657</td>
+<td align="center">0.6594</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb761"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb761-1"><a href="dummy-variables-part-2.html#cb761-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate &quot;yHat&quot; predicted points using fitted() function</span></span>
+<span id="cb761-2"><a href="dummy-variables-part-2.html#cb761-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatBedsDummies <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelBedsDummies)</span>
+<span id="cb761-3"><a href="dummy-variables-part-2.html#cb761-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb761-4"><a href="dummy-variables-part-2.html#cb761-4" aria-hidden="true" tabindex="-1"></a>yLabelsBedsDummies <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fu">unname</span>(<span class="fu">c</span>(<span class="fu">round</span>(<span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;factor(beds)2&quot;</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;factor(beds)3&quot;</span>],<span class="dv">0</span>),<span class="fu">round</span>(<span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;factor(beds)4&quot;</span>],<span class="dv">0</span>))),<span class="fu">seq</span>(<span class="dv">200000</span>,<span class="dv">600000</span>,<span class="dv">100000</span>))</span>
+<span id="cb761-5"><a href="dummy-variables-part-2.html#cb761-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb761-6"><a href="dummy-variables-part-2.html#cb761-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb761-7"><a href="dummy-variables-part-2.html#cb761-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb761-8"><a href="dummy-variables-part-2.html#cb761-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb761-9"><a href="dummy-variables-part-2.html#cb761-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb761-10"><a href="dummy-variables-part-2.html#cb761-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb761-11"><a href="dummy-variables-part-2.html#cb761-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>), <span class="at">breaks =</span> yLabelsBedsDummies) <span class="sc">+</span>  </span>
+<span id="cb761-12"><a href="dummy-variables-part-2.html#cb761-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb761-13"><a href="dummy-variables-part-2.html#cb761-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>],</span>
+<span id="cb761-14"><a href="dummy-variables-part-2.html#cb761-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb761-15"><a href="dummy-variables-part-2.html#cb761-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;factor(beds)2&quot;</span>],</span>
+<span id="cb761-16"><a href="dummy-variables-part-2.html#cb761-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb761-17"><a href="dummy-variables-part-2.html#cb761-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;factor(beds)3&quot;</span>],</span>
+<span id="cb761-18"><a href="dummy-variables-part-2.html#cb761-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;green&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb761-19"><a href="dummy-variables-part-2.html#cb761-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;factor(beds)4&quot;</span>],</span>
+<span id="cb761-20"><a href="dummy-variables-part-2.html#cb761-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummies)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb761-21"><a href="dummy-variables-part-2.html#cb761-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatBedsDummies,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds))) <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>,<span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>The difference in predicted price for the different number of bedrooms in the last model is the same, meaning the gap between each colored line is the same. In the first model that includes beds, the coefficient on beds is 22009.1, so that is the vertical gap between each of the 4 lines.</p>
+<p>In this model, the gap can be different. Looking at the graph, it looks like the jump from 1 to 2 is smaller than for 2 to 3, and smaller still than for 3 to 4.</p>
+<p>In the model that includes 2-bedroom, 3-bedroom, and 4-bedroom as dummy variables, the gaps are different. Going from 1 to 2 bedrooms is an increase of 17174.45.</p>
+<p>Going from 2 to 3 bedrooms is an increase of 22676.43 (the coefficient on the 3 bedroom dummy variable minus the coefficient on the 2 bedroom dummy variable).</p>
+<p>Going from 3 to 4 bedrooms is an increase of 27798.32 (the coefficient on the 4-bedroom dummy variable minus the coefficient on the 3-bedroom dummy variable).</p>
+</div>
+<hr />
+<p><strong>20)</strong> Now let’s look at models with the number of bathrooms in addition to size and the number of bedrooms. For this model, include bedrooms as <code>beds</code>. Try to answer the same questions as the first model with bedrooms. Try making a plot that includes <code>yHat</code> predicted values. Try coloring the <code>yHat</code> points based on the number of bedrooms. Why are the <code>yHat</code> points arranged in rows? How many rows are there? Why? Can you add <code>geom_abline()</code>s that connect the rows of dots?</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb762"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb762-1"><a href="dummy-variables-part-2.html#cb762-1" aria-hidden="true" tabindex="-1"></a>modelBedsAndBaths <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>mydata,price<span class="sc">~</span>size<span class="sc">+</span>beds<span class="sc">+</span>baths)</span>
+<span id="cb762-2"><a href="dummy-variables-part-2.html#cb762-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelBedsAndBaths))</span></code></pre></div>
+<table style="width:94%;">
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">38729</td>
+<td align="center">17445</td>
+<td align="center">2.22</td>
+<td align="center">0.02747</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">101.8</td>
+<td align="center">17.5</td>
+<td align="center">5.815</td>
+<td align="center">0.00000002211</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>beds</strong></td>
+<td align="center">19000</td>
+<td align="center">8603</td>
+<td align="center">2.209</td>
+<td align="center">0.02828</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>baths</strong></td>
+<td align="center">40858</td>
+<td align="center">7788</td>
+<td align="center">5.246</td>
+<td align="center">0.0000003751</td>
+</tr>
+</tbody>
+</table>
+<table style="width:88%;">
+<caption>Fitting linear model: price ~ size + beds + baths</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="12%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">51626</td>
+<td align="center">0.7035</td>
+<td align="center">0.6993</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb763"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb763-1"><a href="dummy-variables-part-2.html#cb763-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate &quot;yHat&quot; predicted points using fitted() function</span></span>
+<span id="cb763-2"><a href="dummy-variables-part-2.html#cb763-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatBedsAndBaths <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelBedsAndBaths)</span>
+<span id="cb763-3"><a href="dummy-variables-part-2.html#cb763-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb763-4"><a href="dummy-variables-part-2.html#cb763-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb763-5"><a href="dummy-variables-part-2.html#cb763-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb763-6"><a href="dummy-variables-part-2.html#cb763-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb763-7"><a href="dummy-variables-part-2.html#cb763-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb763-8"><a href="dummy-variables-part-2.html#cb763-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb763-9"><a href="dummy-variables-part-2.html#cb763-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>)) <span class="sc">+</span>  </span>
+<span id="cb763-10"><a href="dummy-variables-part-2.html#cb763-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb763-11"><a href="dummy-variables-part-2.html#cb763-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-12"><a href="dummy-variables-part-2.html#cb763-12" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">1</span> </span>
+<span id="cb763-13"><a href="dummy-variables-part-2.html#cb763-13" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb763-14"><a href="dummy-variables-part-2.html#cb763-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-15"><a href="dummy-variables-part-2.html#cb763-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-16"><a href="dummy-variables-part-2.html#cb763-16" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">1</span> </span>
+<span id="cb763-17"><a href="dummy-variables-part-2.html#cb763-17" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb763-18"><a href="dummy-variables-part-2.html#cb763-18" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-19"><a href="dummy-variables-part-2.html#cb763-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-20"><a href="dummy-variables-part-2.html#cb763-20" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb763-21"><a href="dummy-variables-part-2.html#cb763-21" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb763-22"><a href="dummy-variables-part-2.html#cb763-22" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-23"><a href="dummy-variables-part-2.html#cb763-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-24"><a href="dummy-variables-part-2.html#cb763-24" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb763-25"><a href="dummy-variables-part-2.html#cb763-25" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb763-26"><a href="dummy-variables-part-2.html#cb763-26" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-27"><a href="dummy-variables-part-2.html#cb763-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-28"><a href="dummy-variables-part-2.html#cb763-28" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb763-29"><a href="dummy-variables-part-2.html#cb763-29" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb763-30"><a href="dummy-variables-part-2.html#cb763-30" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;green&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-31"><a href="dummy-variables-part-2.html#cb763-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-32"><a href="dummy-variables-part-2.html#cb763-32" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb763-33"><a href="dummy-variables-part-2.html#cb763-33" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb763-34"><a href="dummy-variables-part-2.html#cb763-34" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;green&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-35"><a href="dummy-variables-part-2.html#cb763-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-36"><a href="dummy-variables-part-2.html#cb763-36" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">4</span></span>
+<span id="cb763-37"><a href="dummy-variables-part-2.html#cb763-37" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb763-38"><a href="dummy-variables-part-2.html#cb763-38" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-39"><a href="dummy-variables-part-2.html#cb763-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb763-40"><a href="dummy-variables-part-2.html#cb763-40" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;beds&quot;</span>]<span class="sc">*</span><span class="dv">4</span></span>
+<span id="cb763-41"><a href="dummy-variables-part-2.html#cb763-41" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb763-42"><a href="dummy-variables-part-2.html#cb763-42" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb763-43"><a href="dummy-variables-part-2.html#cb763-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatBedsAndBaths,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds))) <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>,<span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>There would be 8 combinations corresponding to 4 types of bedrooms with either 1 or 2 bathrooms which resulting in 8 rows of <code>yHat</code> points.</p>
+<p>For each value of the number of bedrooms, the gap between the lower and upper <code>yHat</code> rows is the coefficient on baths (i.e., the vertical gap is the value of having 2 bathrooms instead of 1).</p>
+</div>
+<hr />
+<p><strong>21)</strong> Finally, try adding <code>baths</code> to the model with <code>factor(beds)</code>. If you understood the previous two questions, you should have no problem understanding this question too. If you didn’t, make sure you understand those models first before trying to wrap your head around this one.</p>
+<div class="textSoln">
+<hr />
+<div class="sourceCode" id="cb764"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb764-1"><a href="dummy-variables-part-2.html#cb764-1" aria-hidden="true" tabindex="-1"></a>modelBedsDummiesAndBaths <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="at">data=</span>mydata,price<span class="sc">~</span>size<span class="sc">+</span><span class="fu">factor</span>(beds)<span class="sc">+</span>baths)</span>
+<span id="cb764-2"><a href="dummy-variables-part-2.html#cb764-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(modelBedsDummiesAndBaths))</span></code></pre></div>
+<table style="width:96%;">
+<colgroup>
+<col width="27%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">67253</td>
+<td align="center">24763</td>
+<td align="center">2.716</td>
+<td align="center">0.00716</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>size</strong></td>
+<td align="center">98.51</td>
+<td align="center">17.83</td>
+<td align="center">5.526</td>
+<td align="center">0.0000000964</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>factor(beds)2</strong></td>
+<td align="center">10914</td>
+<td align="center">12946</td>
+<td align="center">0.8431</td>
+<td align="center">0.4001</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>factor(beds)3</strong></td>
+<td align="center">32158</td>
+<td align="center">18296</td>
+<td align="center">1.758</td>
+<td align="center">0.08026</td>
+</tr>
+<tr class="odd">
+<td align="center"><strong>factor(beds)4</strong></td>
+<td align="center">58536</td>
+<td align="center">26326</td>
+<td align="center">2.224</td>
+<td align="center">0.02725</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>baths</strong></td>
+<td align="center">41370</td>
+<td align="center">7822</td>
+<td align="center">5.289</td>
+<td align="center">0.0000003082</td>
+</tr>
+</tbody>
+</table>
+<table style="width:86%;">
+<caption>Fitting linear model: price ~ size + factor(beds) + baths</caption>
+<colgroup>
+<col width="20%" />
+<col width="30%" />
+<col width="11%" />
+<col width="23%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Observations</th>
+<th align="center">Residual Std. Error</th>
+<th align="center"><span class="math inline">\(R^2\)</span></th>
+<th align="center">Adjusted <span class="math inline">\(R^2\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">216</td>
+<td align="center">51740</td>
+<td align="center">0.705</td>
+<td align="center">0.698</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb765"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb765-1"><a href="dummy-variables-part-2.html#cb765-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Calculate &quot;yHat&quot; predicted points using fitted() function</span></span>
+<span id="cb765-2"><a href="dummy-variables-part-2.html#cb765-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatBedsDummiesAndBaths <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelBedsDummiesAndBaths)</span>
+<span id="cb765-3"><a href="dummy-variables-part-2.html#cb765-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb765-4"><a href="dummy-variables-part-2.html#cb765-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mydata) <span class="sc">+</span></span>
+<span id="cb765-5"><a href="dummy-variables-part-2.html#cb765-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb765-6"><a href="dummy-variables-part-2.html#cb765-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>),</span>
+<span id="cb765-7"><a href="dummy-variables-part-2.html#cb765-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="fu">max</span>(mydata<span class="sc">$</span>size)<span class="sc">*</span><span class="fl">1.02</span>,<span class="dv">500</span>)) <span class="sc">+</span> </span>
+<span id="cb765-8"><a href="dummy-variables-part-2.html#cb765-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb765-9"><a href="dummy-variables-part-2.html#cb765-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(mydata<span class="sc">$</span>price)<span class="sc">*</span><span class="fl">1.02</span>)) <span class="sc">+</span>  </span>
+<span id="cb765-10"><a href="dummy-variables-part-2.html#cb765-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>price,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds)),<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb765-11"><a href="dummy-variables-part-2.html#cb765-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-12"><a href="dummy-variables-part-2.html#cb765-12" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb765-13"><a href="dummy-variables-part-2.html#cb765-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-14"><a href="dummy-variables-part-2.html#cb765-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-15"><a href="dummy-variables-part-2.html#cb765-15" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb765-16"><a href="dummy-variables-part-2.html#cb765-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;red&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-17"><a href="dummy-variables-part-2.html#cb765-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-18"><a href="dummy-variables-part-2.html#cb765-18" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;factor(beds)2&quot;</span>]</span>
+<span id="cb765-19"><a href="dummy-variables-part-2.html#cb765-19" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb765-20"><a href="dummy-variables-part-2.html#cb765-20" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-21"><a href="dummy-variables-part-2.html#cb765-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-22"><a href="dummy-variables-part-2.html#cb765-22" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;factor(beds)2&quot;</span>]</span>
+<span id="cb765-23"><a href="dummy-variables-part-2.html#cb765-23" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb765-24"><a href="dummy-variables-part-2.html#cb765-24" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;orange&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-25"><a href="dummy-variables-part-2.html#cb765-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-26"><a href="dummy-variables-part-2.html#cb765-26" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;factor(beds)3&quot;</span>]</span>
+<span id="cb765-27"><a href="dummy-variables-part-2.html#cb765-27" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb765-28"><a href="dummy-variables-part-2.html#cb765-28" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;green&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-29"><a href="dummy-variables-part-2.html#cb765-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-30"><a href="dummy-variables-part-2.html#cb765-30" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;factor(beds)3&quot;</span>]</span>
+<span id="cb765-31"><a href="dummy-variables-part-2.html#cb765-31" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb765-32"><a href="dummy-variables-part-2.html#cb765-32" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;green&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-33"><a href="dummy-variables-part-2.html#cb765-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-34"><a href="dummy-variables-part-2.html#cb765-34" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;factor(beds)4&quot;</span>]</span>
+<span id="cb765-35"><a href="dummy-variables-part-2.html#cb765-35" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">1</span>,</span>
+<span id="cb765-36"><a href="dummy-variables-part-2.html#cb765-36" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-37"><a href="dummy-variables-part-2.html#cb765-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;(Intercept)&quot;</span>] </span>
+<span id="cb765-38"><a href="dummy-variables-part-2.html#cb765-38" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;factor(beds)4&quot;</span>]</span>
+<span id="cb765-39"><a href="dummy-variables-part-2.html#cb765-39" aria-hidden="true" tabindex="-1"></a>              <span class="sc">+</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;baths&quot;</span>]<span class="sc">*</span><span class="dv">2</span>,</span>
+<span id="cb765-40"><a href="dummy-variables-part-2.html#cb765-40" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="fu">coef</span>(modelBedsDummiesAndBaths)[<span class="st">&quot;size&quot;</span>],<span class="at">col=</span><span class="st">&quot;blue&quot;</span>)  <span class="sc">+</span></span>
+<span id="cb765-41"><a href="dummy-variables-part-2.html#cb765-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatBedsDummiesAndBaths,<span class="at">x=</span>size,<span class="at">col=</span><span class="fu">factor</span>(beds))) <span class="sc">+</span> <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;green&quot;</span>,<span class="st">&quot;blue&quot;</span>))</span></code></pre></div>
+<p><img src="16-DummyVariables2_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>This model is just like the previous one, except the increase for each consecutive number of bedrooms isn’t the same because 2-bedroom, 3-bedroom, and 4-bedroom are included as dummy variables.</p>
+</div>
+<hr />
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="dummy-variables-part-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fixed-effects.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/edit/master/16-DummyVariables2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/commits/master/16-DummyVariables2.Rmd",
+"text": null
+},
+"view": {
+"link": "https://github.com/alecng27/R_Programming_Guidebook/blob/master/16-DummyVariables2.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

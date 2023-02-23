@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>11 Joining Data in SQL | R Programming Guidebook Project</title>
   <meta name="description" content="11 Joining Data in SQL | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="11 Joining Data in SQL | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="introduction-to-sql.html"/>
 <link rel="next" href="web-scraping-in-r.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,226 +337,226 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="joining-data-in-sql" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Joining Data in SQL</h1>
+<div id="joining-data-in-sql" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">11</span> Joining Data in SQL<a href="joining-data-in-sql.html#joining-data-in-sql" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/joining-data-in-postgresql" class="uri">https://learn.datacamp.com/courses/joining-data-in-postgresql</a></p>
-<div id="introduction-to-joins" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Introduction to joins</h2>
+<div id="introduction-to-joins" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> Introduction to joins<a href="joining-data-in-sql.html#introduction-to-joins" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Inner join</strong></p>
-<div class="sourceCode" id="cb572"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb572-1"><a href="joining-data-in-sql.html#cb572-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
-<span id="cb572-2"><a href="joining-data-in-sql.html#cb572-2" aria-hidden="true" tabindex="-1"></a>FROM left_table</span>
-<span id="cb572-3"><a href="joining-data-in-sql.html#cb572-3" aria-hidden="true" tabindex="-1"></a>INNER JOIN right_table</span>
-<span id="cb572-4"><a href="joining-data-in-sql.html#cb572-4" aria-hidden="true" tabindex="-1"></a>ON left_table.id <span class="ot">=</span> right_table.id;</span></code></pre></div>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="joining-data-in-sql.html#cb573-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
+<span id="cb573-2"><a href="joining-data-in-sql.html#cb573-2" aria-hidden="true" tabindex="-1"></a>FROM left_table</span>
+<span id="cb573-3"><a href="joining-data-in-sql.html#cb573-3" aria-hidden="true" tabindex="-1"></a>INNER JOIN right_table</span>
+<span id="cb573-4"><a href="joining-data-in-sql.html#cb573-4" aria-hidden="true" tabindex="-1"></a>ON left_table.id <span class="ot">=</span> right_table.id;</span></code></pre></div>
 <p>Instead of writing the full table name, you can use table aliasing as a shortcut. For tables you also use <code>AS</code> to add the alias immediately after the table name with a space.</p>
-<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="joining-data-in-sql.html#cb573-1" aria-hidden="true" tabindex="-1"></a>SELECT c1.name AS city, c2.name AS country</span>
-<span id="cb573-2"><a href="joining-data-in-sql.html#cb573-2" aria-hidden="true" tabindex="-1"></a>FROM cities AS c1</span>
-<span id="cb573-3"><a href="joining-data-in-sql.html#cb573-3" aria-hidden="true" tabindex="-1"></a>INNER JOIN countries AS c2</span>
-<span id="cb573-4"><a href="joining-data-in-sql.html#cb573-4" aria-hidden="true" tabindex="-1"></a>ON c1.country_code <span class="ot">=</span> c2.code;</span></code></pre></div>
+<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="joining-data-in-sql.html#cb574-1" aria-hidden="true" tabindex="-1"></a>SELECT c1.name AS city, c2.name AS country</span>
+<span id="cb574-2"><a href="joining-data-in-sql.html#cb574-2" aria-hidden="true" tabindex="-1"></a>FROM cities AS c1</span>
+<span id="cb574-3"><a href="joining-data-in-sql.html#cb574-3" aria-hidden="true" tabindex="-1"></a>INNER JOIN countries AS c2</span>
+<span id="cb574-4"><a href="joining-data-in-sql.html#cb574-4" aria-hidden="true" tabindex="-1"></a>ON c1.country_code <span class="ot">=</span> c2.code;</span></code></pre></div>
 <p>Notice that to select a field in your query that appears in multiple tables, you’ll need to identify which table/table alias you’re referring to by using a <code>.</code> in your <code>SELECT</code> statement.</p>
 <p>The ability to combine multiple joins in a single query is a powerful feature of SQL:</p>
-<div class="sourceCode" id="cb574"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb574-1"><a href="joining-data-in-sql.html#cb574-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
-<span id="cb574-2"><a href="joining-data-in-sql.html#cb574-2" aria-hidden="true" tabindex="-1"></a>SELECT c.code, name, region, e.year, fertility_rate, unemployment_rate</span>
-<span id="cb574-3"><a href="joining-data-in-sql.html#cb574-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries (alias as c)</span></span>
-<span id="cb574-4"><a href="joining-data-in-sql.html#cb574-4" aria-hidden="true" tabindex="-1"></a>  FROM countries AS c</span>
-<span id="cb574-5"><a href="joining-data-in-sql.html#cb574-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join to populations (as p)</span></span>
-<span id="cb574-6"><a href="joining-data-in-sql.html#cb574-6" aria-hidden="true" tabindex="-1"></a>  INNER JOIN populations AS p</span>
-<span id="cb574-7"><a href="joining-data-in-sql.html#cb574-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on country code</span></span>
-<span id="cb574-8"><a href="joining-data-in-sql.html#cb574-8" aria-hidden="true" tabindex="-1"></a>    ON c.code <span class="ot">=</span> p.country_code</span>
-<span id="cb574-9"><a href="joining-data-in-sql.html#cb574-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Join to economies (as e)</span></span>
-<span id="cb574-10"><a href="joining-data-in-sql.html#cb574-10" aria-hidden="true" tabindex="-1"></a>  INNER JOIN economies AS e</span>
-<span id="cb574-11"><a href="joining-data-in-sql.html#cb574-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on country code</span></span>
-<span id="cb574-12"><a href="joining-data-in-sql.html#cb574-12" aria-hidden="true" tabindex="-1"></a>    ON c.code <span class="ot">=</span> e.code;</span></code></pre></div>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="joining-data-in-sql.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
+<span id="cb575-2"><a href="joining-data-in-sql.html#cb575-2" aria-hidden="true" tabindex="-1"></a>SELECT c.code, name, region, e.year, fertility_rate, unemployment_rate</span>
+<span id="cb575-3"><a href="joining-data-in-sql.html#cb575-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries (alias as c)</span></span>
+<span id="cb575-4"><a href="joining-data-in-sql.html#cb575-4" aria-hidden="true" tabindex="-1"></a>  FROM countries AS c</span>
+<span id="cb575-5"><a href="joining-data-in-sql.html#cb575-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Join to populations (as p)</span></span>
+<span id="cb575-6"><a href="joining-data-in-sql.html#cb575-6" aria-hidden="true" tabindex="-1"></a>  INNER JOIN populations AS p</span>
+<span id="cb575-7"><a href="joining-data-in-sql.html#cb575-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on country code</span></span>
+<span id="cb575-8"><a href="joining-data-in-sql.html#cb575-8" aria-hidden="true" tabindex="-1"></a>    ON c.code <span class="ot">=</span> p.country_code</span>
+<span id="cb575-9"><a href="joining-data-in-sql.html#cb575-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Join to economies (as e)</span></span>
+<span id="cb575-10"><a href="joining-data-in-sql.html#cb575-10" aria-hidden="true" tabindex="-1"></a>  INNER JOIN economies AS e</span>
+<span id="cb575-11"><a href="joining-data-in-sql.html#cb575-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on country code</span></span>
+<span id="cb575-12"><a href="joining-data-in-sql.html#cb575-12" aria-hidden="true" tabindex="-1"></a>    ON c.code <span class="ot">=</span> e.code;</span></code></pre></div>
 <p><strong>Inner join with USING</strong></p>
 <p>When joining tables with a common field name, e.g.</p>
-<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="joining-data-in-sql.html#cb575-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
-<span id="cb575-2"><a href="joining-data-in-sql.html#cb575-2" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
-<span id="cb575-3"><a href="joining-data-in-sql.html#cb575-3" aria-hidden="true" tabindex="-1"></a>  INNER JOIN economies</span>
-<span id="cb575-4"><a href="joining-data-in-sql.html#cb575-4" aria-hidden="true" tabindex="-1"></a>    ON countries.code <span class="ot">=</span> economies.code</span></code></pre></div>
-<p>You can use <code>USING</code> as a shortcut:</p>
 <div class="sourceCode" id="cb576"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb576-1"><a href="joining-data-in-sql.html#cb576-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
 <span id="cb576-2"><a href="joining-data-in-sql.html#cb576-2" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
 <span id="cb576-3"><a href="joining-data-in-sql.html#cb576-3" aria-hidden="true" tabindex="-1"></a>  INNER JOIN economies</span>
-<span id="cb576-4"><a href="joining-data-in-sql.html#cb576-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">USING</span>(code)</span></code></pre></div>
+<span id="cb576-4"><a href="joining-data-in-sql.html#cb576-4" aria-hidden="true" tabindex="-1"></a>    ON countries.code <span class="ot">=</span> economies.code</span></code></pre></div>
+<p>You can use <code>USING</code> as a shortcut:</p>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="joining-data-in-sql.html#cb577-1" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
+<span id="cb577-2"><a href="joining-data-in-sql.html#cb577-2" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
+<span id="cb577-3"><a href="joining-data-in-sql.html#cb577-3" aria-hidden="true" tabindex="-1"></a>  INNER JOIN economies</span>
+<span id="cb577-4"><a href="joining-data-in-sql.html#cb577-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">USING</span>(code)</span></code></pre></div>
 <p><strong>CASE WHEN and THEN</strong></p>
 <p>Often it’s useful to look at a numerical field not as raw data, but instead as being in different categories or groups.</p>
 <p>You can use <code>CASE</code> with <code>WHEN</code>, <code>THEN</code>, <code>ELSE</code>, and <code>END</code> to define a new grouping field.</p>
-<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="joining-data-in-sql.html#cb577-1" aria-hidden="true" tabindex="-1"></a>SELECT name, continent, code, surface_area,</span>
-<span id="cb577-2"><a href="joining-data-in-sql.html#cb577-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First case</span></span>
-<span id="cb577-3"><a href="joining-data-in-sql.html#cb577-3" aria-hidden="true" tabindex="-1"></a>    CASE WHEN surface_area <span class="sc">&gt;</span> <span class="dv">2000000</span> THEN <span class="st">&#39;large&#39;</span></span>
-<span id="cb577-4"><a href="joining-data-in-sql.html#cb577-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Second case</span></span>
-<span id="cb577-5"><a href="joining-data-in-sql.html#cb577-5" aria-hidden="true" tabindex="-1"></a>        WHEN surface_area <span class="sc">&gt;</span> <span class="dv">350000</span> THEN <span class="st">&#39;medium&#39;</span></span>
-<span id="cb577-6"><a href="joining-data-in-sql.html#cb577-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Else clause + end</span></span>
-<span id="cb577-7"><a href="joining-data-in-sql.html#cb577-7" aria-hidden="true" tabindex="-1"></a>        ELSE <span class="st">&#39;small&#39;</span> END</span>
-<span id="cb577-8"><a href="joining-data-in-sql.html#cb577-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Alias name</span></span>
-<span id="cb577-9"><a href="joining-data-in-sql.html#cb577-9" aria-hidden="true" tabindex="-1"></a>        AS geosize_group</span>
-<span id="cb577-10"><a href="joining-data-in-sql.html#cb577-10" aria-hidden="true" tabindex="-1"></a><span class="co"># From table</span></span>
-<span id="cb577-11"><a href="joining-data-in-sql.html#cb577-11" aria-hidden="true" tabindex="-1"></a>FROM countries;</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="joining-data-in-sql.html#cb578-1" aria-hidden="true" tabindex="-1"></a>SELECT name, continent, code, surface_area,</span>
+<span id="cb578-2"><a href="joining-data-in-sql.html#cb578-2" aria-hidden="true" tabindex="-1"></a><span class="co"># First case</span></span>
+<span id="cb578-3"><a href="joining-data-in-sql.html#cb578-3" aria-hidden="true" tabindex="-1"></a>    CASE WHEN surface_area <span class="sc">&gt;</span> <span class="dv">2000000</span> THEN <span class="st">&#39;large&#39;</span></span>
+<span id="cb578-4"><a href="joining-data-in-sql.html#cb578-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Second case</span></span>
+<span id="cb578-5"><a href="joining-data-in-sql.html#cb578-5" aria-hidden="true" tabindex="-1"></a>        WHEN surface_area <span class="sc">&gt;</span> <span class="dv">350000</span> THEN <span class="st">&#39;medium&#39;</span></span>
+<span id="cb578-6"><a href="joining-data-in-sql.html#cb578-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Else clause + end</span></span>
+<span id="cb578-7"><a href="joining-data-in-sql.html#cb578-7" aria-hidden="true" tabindex="-1"></a>        ELSE <span class="st">&#39;small&#39;</span> END</span>
+<span id="cb578-8"><a href="joining-data-in-sql.html#cb578-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Alias name</span></span>
+<span id="cb578-9"><a href="joining-data-in-sql.html#cb578-9" aria-hidden="true" tabindex="-1"></a>        AS geosize_group</span>
+<span id="cb578-10"><a href="joining-data-in-sql.html#cb578-10" aria-hidden="true" tabindex="-1"></a><span class="co"># From table</span></span>
+<span id="cb578-11"><a href="joining-data-in-sql.html#cb578-11" aria-hidden="true" tabindex="-1"></a>FROM countries;</span></code></pre></div>
 </div>
-<div id="outer-joins-and-cross-joins" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Outer joins and cross joins</h2>
+<div id="outer-joins-and-cross-joins" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Outer joins and cross joins<a href="joining-data-in-sql.html#outer-joins-and-cross-joins" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Left join</strong></p>
-<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="joining-data-in-sql.html#cb578-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select name, region, and gdp_percapita</span></span>
-<span id="cb578-2"><a href="joining-data-in-sql.html#cb578-2" aria-hidden="true" tabindex="-1"></a>SELECT name, region, gdp_percapita</span>
-<span id="cb578-3"><a href="joining-data-in-sql.html#cb578-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries (alias as c)</span></span>
-<span id="cb578-4"><a href="joining-data-in-sql.html#cb578-4" aria-hidden="true" tabindex="-1"></a>FROM countries AS c</span>
-<span id="cb578-5"><a href="joining-data-in-sql.html#cb578-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Left join with economies (alias as e)</span></span>
-<span id="cb578-6"><a href="joining-data-in-sql.html#cb578-6" aria-hidden="true" tabindex="-1"></a>  LEFT JOIN economies AS e</span>
-<span id="cb578-7"><a href="joining-data-in-sql.html#cb578-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on code fields</span></span>
-<span id="cb578-8"><a href="joining-data-in-sql.html#cb578-8" aria-hidden="true" tabindex="-1"></a>    ON c.code <span class="ot">=</span> e.code</span>
-<span id="cb578-9"><a href="joining-data-in-sql.html#cb578-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on 2010</span></span>
-<span id="cb578-10"><a href="joining-data-in-sql.html#cb578-10" aria-hidden="true" tabindex="-1"></a>WHERE year <span class="ot">=</span> <span class="dv">2010</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="joining-data-in-sql.html#cb579-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select name, region, and gdp_percapita</span></span>
+<span id="cb579-2"><a href="joining-data-in-sql.html#cb579-2" aria-hidden="true" tabindex="-1"></a>SELECT name, region, gdp_percapita</span>
+<span id="cb579-3"><a href="joining-data-in-sql.html#cb579-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries (alias as c)</span></span>
+<span id="cb579-4"><a href="joining-data-in-sql.html#cb579-4" aria-hidden="true" tabindex="-1"></a>FROM countries AS c</span>
+<span id="cb579-5"><a href="joining-data-in-sql.html#cb579-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Left join with economies (alias as e)</span></span>
+<span id="cb579-6"><a href="joining-data-in-sql.html#cb579-6" aria-hidden="true" tabindex="-1"></a>  LEFT JOIN economies AS e</span>
+<span id="cb579-7"><a href="joining-data-in-sql.html#cb579-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on code fields</span></span>
+<span id="cb579-8"><a href="joining-data-in-sql.html#cb579-8" aria-hidden="true" tabindex="-1"></a>    ON c.code <span class="ot">=</span> e.code</span>
+<span id="cb579-9"><a href="joining-data-in-sql.html#cb579-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on 2010</span></span>
+<span id="cb579-10"><a href="joining-data-in-sql.html#cb579-10" aria-hidden="true" tabindex="-1"></a>WHERE year <span class="ot">=</span> <span class="dv">2010</span>;</span></code></pre></div>
 <p><strong>Right join</strong></p>
 <p>Right joins aren’t as common as left joins. One reason why is that you can always write a right join as a left join.</p>
-<div class="sourceCode" id="cb579"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb579-1"><a href="joining-data-in-sql.html#cb579-1" aria-hidden="true" tabindex="-1"></a>SELECT cities.name AS city, urbanarea_pop, countries.name AS country,</span>
-<span id="cb579-2"><a href="joining-data-in-sql.html#cb579-2" aria-hidden="true" tabindex="-1"></a>       indep_year, languages.name AS language, percent</span>
-<span id="cb579-3"><a href="joining-data-in-sql.html#cb579-3" aria-hidden="true" tabindex="-1"></a>FROM languages</span>
-<span id="cb579-4"><a href="joining-data-in-sql.html#cb579-4" aria-hidden="true" tabindex="-1"></a>  RIGHT JOIN countries</span>
-<span id="cb579-5"><a href="joining-data-in-sql.html#cb579-5" aria-hidden="true" tabindex="-1"></a>    ON languages.code <span class="ot">=</span> countries.code</span>
-<span id="cb579-6"><a href="joining-data-in-sql.html#cb579-6" aria-hidden="true" tabindex="-1"></a>  RIGHT JOIN cities</span>
-<span id="cb579-7"><a href="joining-data-in-sql.html#cb579-7" aria-hidden="true" tabindex="-1"></a>    ON countries.code <span class="ot">=</span> cities.country_code</span>
-<span id="cb579-8"><a href="joining-data-in-sql.html#cb579-8" aria-hidden="true" tabindex="-1"></a>ORDER BY city, language;</span></code></pre></div>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="joining-data-in-sql.html#cb580-1" aria-hidden="true" tabindex="-1"></a>SELECT cities.name AS city, urbanarea_pop, countries.name AS country,</span>
+<span id="cb580-2"><a href="joining-data-in-sql.html#cb580-2" aria-hidden="true" tabindex="-1"></a>       indep_year, languages.name AS language, percent</span>
+<span id="cb580-3"><a href="joining-data-in-sql.html#cb580-3" aria-hidden="true" tabindex="-1"></a>FROM languages</span>
+<span id="cb580-4"><a href="joining-data-in-sql.html#cb580-4" aria-hidden="true" tabindex="-1"></a>  RIGHT JOIN countries</span>
+<span id="cb580-5"><a href="joining-data-in-sql.html#cb580-5" aria-hidden="true" tabindex="-1"></a>    ON languages.code <span class="ot">=</span> countries.code</span>
+<span id="cb580-6"><a href="joining-data-in-sql.html#cb580-6" aria-hidden="true" tabindex="-1"></a>  RIGHT JOIN cities</span>
+<span id="cb580-7"><a href="joining-data-in-sql.html#cb580-7" aria-hidden="true" tabindex="-1"></a>    ON countries.code <span class="ot">=</span> cities.country_code</span>
+<span id="cb580-8"><a href="joining-data-in-sql.html#cb580-8" aria-hidden="true" tabindex="-1"></a>ORDER BY city, language;</span></code></pre></div>
 <p><strong>Full join</strong></p>
-<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="joining-data-in-sql.html#cb580-1" aria-hidden="true" tabindex="-1"></a>SELECT name AS country, code, region, basic_unit</span>
-<span id="cb580-2"><a href="joining-data-in-sql.html#cb580-2" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries</span></span>
-<span id="cb580-3"><a href="joining-data-in-sql.html#cb580-3" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
-<span id="cb580-4"><a href="joining-data-in-sql.html#cb580-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Join to currencies</span></span>
-<span id="cb580-5"><a href="joining-data-in-sql.html#cb580-5" aria-hidden="true" tabindex="-1"></a>  FULL JOIN currencies</span>
-<span id="cb580-6"><a href="joining-data-in-sql.html#cb580-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on code</span></span>
-<span id="cb580-7"><a href="joining-data-in-sql.html#cb580-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">USING</span> (code)</span>
-<span id="cb580-8"><a href="joining-data-in-sql.html#cb580-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Where region is North America or null</span></span>
-<span id="cb580-9"><a href="joining-data-in-sql.html#cb580-9" aria-hidden="true" tabindex="-1"></a>WHERE region <span class="ot">=</span> <span class="st">&#39;North America&#39;</span> OR region IS <span class="cn">NULL</span></span>
-<span id="cb580-10"><a href="joining-data-in-sql.html#cb580-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by region</span></span>
-<span id="cb580-11"><a href="joining-data-in-sql.html#cb580-11" aria-hidden="true" tabindex="-1"></a>ORDER BY region;</span></code></pre></div>
+<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="joining-data-in-sql.html#cb581-1" aria-hidden="true" tabindex="-1"></a>SELECT name AS country, code, region, basic_unit</span>
+<span id="cb581-2"><a href="joining-data-in-sql.html#cb581-2" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries</span></span>
+<span id="cb581-3"><a href="joining-data-in-sql.html#cb581-3" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
+<span id="cb581-4"><a href="joining-data-in-sql.html#cb581-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Join to currencies</span></span>
+<span id="cb581-5"><a href="joining-data-in-sql.html#cb581-5" aria-hidden="true" tabindex="-1"></a>  FULL JOIN currencies</span>
+<span id="cb581-6"><a href="joining-data-in-sql.html#cb581-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Match on code</span></span>
+<span id="cb581-7"><a href="joining-data-in-sql.html#cb581-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">USING</span> (code)</span>
+<span id="cb581-8"><a href="joining-data-in-sql.html#cb581-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Where region is North America or null</span></span>
+<span id="cb581-9"><a href="joining-data-in-sql.html#cb581-9" aria-hidden="true" tabindex="-1"></a>WHERE region <span class="ot">=</span> <span class="st">&#39;North America&#39;</span> OR region IS <span class="cn">NULL</span></span>
+<span id="cb581-10"><a href="joining-data-in-sql.html#cb581-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by region</span></span>
+<span id="cb581-11"><a href="joining-data-in-sql.html#cb581-11" aria-hidden="true" tabindex="-1"></a>ORDER BY region;</span></code></pre></div>
 </div>
-<div id="set-theory-clauses" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Set theory clauses</h2>
+<div id="set-theory-clauses" class="section level2 hasAnchor" number="11.3">
+<h2><span class="header-section-number">11.3</span> Set theory clauses<a href="joining-data-in-sql.html#set-theory-clauses" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>UNION</strong></p>
 <p><code>UNION</code> includes every record in both tables but doesn’t double count the matched/overlapped ones.</p>
-<div class="sourceCode" id="cb581"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb581-1"><a href="joining-data-in-sql.html#cb581-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields from 2010 table</span></span>
-<span id="cb581-2"><a href="joining-data-in-sql.html#cb581-2" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
-<span id="cb581-3"><a href="joining-data-in-sql.html#cb581-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From 2010 table</span></span>
-<span id="cb581-4"><a href="joining-data-in-sql.html#cb581-4" aria-hidden="true" tabindex="-1"></a>  FROM economies2010</span>
-<span id="cb581-5"><a href="joining-data-in-sql.html#cb581-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theory clause</span></span>
-<span id="cb581-6"><a href="joining-data-in-sql.html#cb581-6" aria-hidden="true" tabindex="-1"></a>    UNION</span>
-<span id="cb581-7"><a href="joining-data-in-sql.html#cb581-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields from 2015 table</span></span>
-<span id="cb581-8"><a href="joining-data-in-sql.html#cb581-8" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
-<span id="cb581-9"><a href="joining-data-in-sql.html#cb581-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From 2015 table</span></span>
-<span id="cb581-10"><a href="joining-data-in-sql.html#cb581-10" aria-hidden="true" tabindex="-1"></a>  FROM economies2015</span>
-<span id="cb581-11"><a href="joining-data-in-sql.html#cb581-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by code and year</span></span>
-<span id="cb581-12"><a href="joining-data-in-sql.html#cb581-12" aria-hidden="true" tabindex="-1"></a>ORDER BY code, year;</span></code></pre></div>
+<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="joining-data-in-sql.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields from 2010 table</span></span>
+<span id="cb582-2"><a href="joining-data-in-sql.html#cb582-2" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
+<span id="cb582-3"><a href="joining-data-in-sql.html#cb582-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From 2010 table</span></span>
+<span id="cb582-4"><a href="joining-data-in-sql.html#cb582-4" aria-hidden="true" tabindex="-1"></a>  FROM economies2010</span>
+<span id="cb582-5"><a href="joining-data-in-sql.html#cb582-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theory clause</span></span>
+<span id="cb582-6"><a href="joining-data-in-sql.html#cb582-6" aria-hidden="true" tabindex="-1"></a>    UNION</span>
+<span id="cb582-7"><a href="joining-data-in-sql.html#cb582-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields from 2015 table</span></span>
+<span id="cb582-8"><a href="joining-data-in-sql.html#cb582-8" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
+<span id="cb582-9"><a href="joining-data-in-sql.html#cb582-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From 2015 table</span></span>
+<span id="cb582-10"><a href="joining-data-in-sql.html#cb582-10" aria-hidden="true" tabindex="-1"></a>  FROM economies2015</span>
+<span id="cb582-11"><a href="joining-data-in-sql.html#cb582-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by code and year</span></span>
+<span id="cb582-12"><a href="joining-data-in-sql.html#cb582-12" aria-hidden="true" tabindex="-1"></a>ORDER BY code, year;</span></code></pre></div>
 <p><strong>UNION ALL</strong></p>
 <p><code>UNION ALL</code> includes every record in both tables and does replicate the matched/overlapped ones.</p>
-<div class="sourceCode" id="cb582"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb582-1"><a href="joining-data-in-sql.html#cb582-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
-<span id="cb582-2"><a href="joining-data-in-sql.html#cb582-2" aria-hidden="true" tabindex="-1"></a>SELECT code, year</span>
-<span id="cb582-3"><a href="joining-data-in-sql.html#cb582-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From economies</span></span>
-<span id="cb582-4"><a href="joining-data-in-sql.html#cb582-4" aria-hidden="true" tabindex="-1"></a>  FROM economies</span>
-<span id="cb582-5"><a href="joining-data-in-sql.html#cb582-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theory clause</span></span>
-<span id="cb582-6"><a href="joining-data-in-sql.html#cb582-6" aria-hidden="true" tabindex="-1"></a>    UNION ALL</span>
-<span id="cb582-7"><a href="joining-data-in-sql.html#cb582-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
-<span id="cb582-8"><a href="joining-data-in-sql.html#cb582-8" aria-hidden="true" tabindex="-1"></a>SELECT country_code, year</span>
-<span id="cb582-9"><a href="joining-data-in-sql.html#cb582-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From populations</span></span>
-<span id="cb582-10"><a href="joining-data-in-sql.html#cb582-10" aria-hidden="true" tabindex="-1"></a>  FROM populations</span>
-<span id="cb582-11"><a href="joining-data-in-sql.html#cb582-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by code, year</span></span>
-<span id="cb582-12"><a href="joining-data-in-sql.html#cb582-12" aria-hidden="true" tabindex="-1"></a>ORDER BY code, year;</span></code></pre></div>
-<p><strong>INTERSECT</strong></p>
-<p><code>INTERSECT</code> results in only those matched/overlapped.</p>
 <div class="sourceCode" id="cb583"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb583-1"><a href="joining-data-in-sql.html#cb583-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
 <span id="cb583-2"><a href="joining-data-in-sql.html#cb583-2" aria-hidden="true" tabindex="-1"></a>SELECT code, year</span>
 <span id="cb583-3"><a href="joining-data-in-sql.html#cb583-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From economies</span></span>
 <span id="cb583-4"><a href="joining-data-in-sql.html#cb583-4" aria-hidden="true" tabindex="-1"></a>  FROM economies</span>
 <span id="cb583-5"><a href="joining-data-in-sql.html#cb583-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theory clause</span></span>
-<span id="cb583-6"><a href="joining-data-in-sql.html#cb583-6" aria-hidden="true" tabindex="-1"></a>    INTERSECT</span>
+<span id="cb583-6"><a href="joining-data-in-sql.html#cb583-6" aria-hidden="true" tabindex="-1"></a>    UNION ALL</span>
 <span id="cb583-7"><a href="joining-data-in-sql.html#cb583-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
 <span id="cb583-8"><a href="joining-data-in-sql.html#cb583-8" aria-hidden="true" tabindex="-1"></a>SELECT country_code, year</span>
 <span id="cb583-9"><a href="joining-data-in-sql.html#cb583-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From populations</span></span>
 <span id="cb583-10"><a href="joining-data-in-sql.html#cb583-10" aria-hidden="true" tabindex="-1"></a>  FROM populations</span>
-<span id="cb583-11"><a href="joining-data-in-sql.html#cb583-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by code and year</span></span>
+<span id="cb583-11"><a href="joining-data-in-sql.html#cb583-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by code, year</span></span>
 <span id="cb583-12"><a href="joining-data-in-sql.html#cb583-12" aria-hidden="true" tabindex="-1"></a>ORDER BY code, year;</span></code></pre></div>
+<p><strong>INTERSECT</strong></p>
+<p><code>INTERSECT</code> results in only those matched/overlapped.</p>
+<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="joining-data-in-sql.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
+<span id="cb584-2"><a href="joining-data-in-sql.html#cb584-2" aria-hidden="true" tabindex="-1"></a>SELECT code, year</span>
+<span id="cb584-3"><a href="joining-data-in-sql.html#cb584-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From economies</span></span>
+<span id="cb584-4"><a href="joining-data-in-sql.html#cb584-4" aria-hidden="true" tabindex="-1"></a>  FROM economies</span>
+<span id="cb584-5"><a href="joining-data-in-sql.html#cb584-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set theory clause</span></span>
+<span id="cb584-6"><a href="joining-data-in-sql.html#cb584-6" aria-hidden="true" tabindex="-1"></a>    INTERSECT</span>
+<span id="cb584-7"><a href="joining-data-in-sql.html#cb584-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
+<span id="cb584-8"><a href="joining-data-in-sql.html#cb584-8" aria-hidden="true" tabindex="-1"></a>SELECT country_code, year</span>
+<span id="cb584-9"><a href="joining-data-in-sql.html#cb584-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From populations</span></span>
+<span id="cb584-10"><a href="joining-data-in-sql.html#cb584-10" aria-hidden="true" tabindex="-1"></a>  FROM populations</span>
+<span id="cb584-11"><a href="joining-data-in-sql.html#cb584-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by code and year</span></span>
+<span id="cb584-12"><a href="joining-data-in-sql.html#cb584-12" aria-hidden="true" tabindex="-1"></a>ORDER BY code, year;</span></code></pre></div>
 <p><strong>EXCEPT</strong></p>
 <p><code>EXCEPT</code> results in only those doesn’t matched/overlapped.</p>
-<div class="sourceCode" id="cb584"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb584-1"><a href="joining-data-in-sql.html#cb584-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select field</span></span>
-<span id="cb584-2"><a href="joining-data-in-sql.html#cb584-2" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
-<span id="cb584-3"><a href="joining-data-in-sql.html#cb584-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From cities</span></span>
-<span id="cb584-4"><a href="joining-data-in-sql.html#cb584-4" aria-hidden="true" tabindex="-1"></a>  FROM cities</span>
-<span id="cb584-5"><a href="joining-data-in-sql.html#cb584-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Set theory clause</span></span>
-<span id="cb584-6"><a href="joining-data-in-sql.html#cb584-6" aria-hidden="true" tabindex="-1"></a>    EXCEPT</span>
-<span id="cb584-7"><a href="joining-data-in-sql.html#cb584-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select field</span></span>
-<span id="cb584-8"><a href="joining-data-in-sql.html#cb584-8" aria-hidden="true" tabindex="-1"></a>SELECT capital</span>
-<span id="cb584-9"><a href="joining-data-in-sql.html#cb584-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries</span></span>
-<span id="cb584-10"><a href="joining-data-in-sql.html#cb584-10" aria-hidden="true" tabindex="-1"></a>  FROM countries</span>
-<span id="cb584-11"><a href="joining-data-in-sql.html#cb584-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by result</span></span>
-<span id="cb584-12"><a href="joining-data-in-sql.html#cb584-12" aria-hidden="true" tabindex="-1"></a>ORDER BY name;</span></code></pre></div>
+<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="joining-data-in-sql.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select field</span></span>
+<span id="cb585-2"><a href="joining-data-in-sql.html#cb585-2" aria-hidden="true" tabindex="-1"></a>SELECT name</span>
+<span id="cb585-3"><a href="joining-data-in-sql.html#cb585-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From cities</span></span>
+<span id="cb585-4"><a href="joining-data-in-sql.html#cb585-4" aria-hidden="true" tabindex="-1"></a>  FROM cities</span>
+<span id="cb585-5"><a href="joining-data-in-sql.html#cb585-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Set theory clause</span></span>
+<span id="cb585-6"><a href="joining-data-in-sql.html#cb585-6" aria-hidden="true" tabindex="-1"></a>    EXCEPT</span>
+<span id="cb585-7"><a href="joining-data-in-sql.html#cb585-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select field</span></span>
+<span id="cb585-8"><a href="joining-data-in-sql.html#cb585-8" aria-hidden="true" tabindex="-1"></a>SELECT capital</span>
+<span id="cb585-9"><a href="joining-data-in-sql.html#cb585-9" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries</span></span>
+<span id="cb585-10"><a href="joining-data-in-sql.html#cb585-10" aria-hidden="true" tabindex="-1"></a>  FROM countries</span>
+<span id="cb585-11"><a href="joining-data-in-sql.html#cb585-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by result</span></span>
+<span id="cb585-12"><a href="joining-data-in-sql.html#cb585-12" aria-hidden="true" tabindex="-1"></a>ORDER BY name;</span></code></pre></div>
 <p><strong>Diagnosing problems using anti-join</strong></p>
 <p>Another powerful join in SQL is the anti-join. It is particularly useful in identifying which records are causing an incorrect number of records to appear in join queries.</p>
-<div class="sourceCode" id="cb585"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb585-1"><a href="joining-data-in-sql.html#cb585-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Select fields</span></span>
-<span id="cb585-2"><a href="joining-data-in-sql.html#cb585-2" aria-hidden="true" tabindex="-1"></a>SELECT code, name</span>
-<span id="cb585-3"><a href="joining-data-in-sql.html#cb585-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. From Countries</span></span>
-<span id="cb585-4"><a href="joining-data-in-sql.html#cb585-4" aria-hidden="true" tabindex="-1"></a>  FROM countries</span>
-<span id="cb585-5"><a href="joining-data-in-sql.html#cb585-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Where continent is Oceania</span></span>
-<span id="cb585-6"><a href="joining-data-in-sql.html#cb585-6" aria-hidden="true" tabindex="-1"></a>  WHERE continent <span class="ot">=</span> <span class="st">&#39;Oceania&#39;</span></span>
-<span id="cb585-7"><a href="joining-data-in-sql.html#cb585-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. And code not in</span></span>
-<span id="cb585-8"><a href="joining-data-in-sql.html#cb585-8" aria-hidden="true" tabindex="-1"></a>    AND code NOT IN</span>
-<span id="cb585-9"><a href="joining-data-in-sql.html#cb585-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Subquery</span></span>
-<span id="cb585-10"><a href="joining-data-in-sql.html#cb585-10" aria-hidden="true" tabindex="-1"></a>    (SELECT code</span>
-<span id="cb585-11"><a href="joining-data-in-sql.html#cb585-11" aria-hidden="true" tabindex="-1"></a>     FROM currencies);</span></code></pre></div>
+<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="joining-data-in-sql.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Select fields</span></span>
+<span id="cb586-2"><a href="joining-data-in-sql.html#cb586-2" aria-hidden="true" tabindex="-1"></a>SELECT code, name</span>
+<span id="cb586-3"><a href="joining-data-in-sql.html#cb586-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. From Countries</span></span>
+<span id="cb586-4"><a href="joining-data-in-sql.html#cb586-4" aria-hidden="true" tabindex="-1"></a>  FROM countries</span>
+<span id="cb586-5"><a href="joining-data-in-sql.html#cb586-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Where continent is Oceania</span></span>
+<span id="cb586-6"><a href="joining-data-in-sql.html#cb586-6" aria-hidden="true" tabindex="-1"></a>  WHERE continent <span class="ot">=</span> <span class="st">&#39;Oceania&#39;</span></span>
+<span id="cb586-7"><a href="joining-data-in-sql.html#cb586-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. And code not in</span></span>
+<span id="cb586-8"><a href="joining-data-in-sql.html#cb586-8" aria-hidden="true" tabindex="-1"></a>    AND code NOT IN</span>
+<span id="cb586-9"><a href="joining-data-in-sql.html#cb586-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Subquery</span></span>
+<span id="cb586-10"><a href="joining-data-in-sql.html#cb586-10" aria-hidden="true" tabindex="-1"></a>    (SELECT code</span>
+<span id="cb586-11"><a href="joining-data-in-sql.html#cb586-11" aria-hidden="true" tabindex="-1"></a>     FROM currencies);</span></code></pre></div>
 </div>
-<div id="subqueries" class="section level2" number="11.4">
-<h2><span class="header-section-number">11.4</span> Subqueries</h2>
+<div id="subqueries" class="section level2 hasAnchor" number="11.4">
+<h2><span class="header-section-number">11.4</span> Subqueries<a href="joining-data-in-sql.html#subqueries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Subquery inside WHERE</strong></p>
-<div class="sourceCode" id="cb586"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb586-1"><a href="joining-data-in-sql.html#cb586-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
-<span id="cb586-2"><a href="joining-data-in-sql.html#cb586-2" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
-<span id="cb586-3"><a href="joining-data-in-sql.html#cb586-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From populations</span></span>
-<span id="cb586-4"><a href="joining-data-in-sql.html#cb586-4" aria-hidden="true" tabindex="-1"></a>  FROM populations</span>
-<span id="cb586-5"><a href="joining-data-in-sql.html#cb586-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Where life_expectancy is greater than</span></span>
-<span id="cb586-6"><a href="joining-data-in-sql.html#cb586-6" aria-hidden="true" tabindex="-1"></a>WHERE life_expectancy <span class="sc">&gt;</span></span>
-<span id="cb586-7"><a href="joining-data-in-sql.html#cb586-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.15 * subquery</span></span>
-<span id="cb586-8"><a href="joining-data-in-sql.html#cb586-8" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.15</span> <span class="sc">*</span> (SELECT <span class="fu">AVG</span>(life_expectancy)</span>
-<span id="cb586-9"><a href="joining-data-in-sql.html#cb586-9" aria-hidden="true" tabindex="-1"></a>   FROM populations</span>
-<span id="cb586-10"><a href="joining-data-in-sql.html#cb586-10" aria-hidden="true" tabindex="-1"></a>   WHERE <span class="at">year =</span> <span class="dv">2015</span>) AND</span>
-<span id="cb586-11"><a href="joining-data-in-sql.html#cb586-11" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">=</span> <span class="dv">2015</span>;</span></code></pre></div>
+<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="joining-data-in-sql.html#cb587-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
+<span id="cb587-2"><a href="joining-data-in-sql.html#cb587-2" aria-hidden="true" tabindex="-1"></a>SELECT <span class="sc">*</span></span>
+<span id="cb587-3"><a href="joining-data-in-sql.html#cb587-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From populations</span></span>
+<span id="cb587-4"><a href="joining-data-in-sql.html#cb587-4" aria-hidden="true" tabindex="-1"></a>  FROM populations</span>
+<span id="cb587-5"><a href="joining-data-in-sql.html#cb587-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Where life_expectancy is greater than</span></span>
+<span id="cb587-6"><a href="joining-data-in-sql.html#cb587-6" aria-hidden="true" tabindex="-1"></a>WHERE life_expectancy <span class="sc">&gt;</span></span>
+<span id="cb587-7"><a href="joining-data-in-sql.html#cb587-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.15 * subquery</span></span>
+<span id="cb587-8"><a href="joining-data-in-sql.html#cb587-8" aria-hidden="true" tabindex="-1"></a>  <span class="fl">1.15</span> <span class="sc">*</span> (SELECT <span class="fu">AVG</span>(life_expectancy)</span>
+<span id="cb587-9"><a href="joining-data-in-sql.html#cb587-9" aria-hidden="true" tabindex="-1"></a>   FROM populations</span>
+<span id="cb587-10"><a href="joining-data-in-sql.html#cb587-10" aria-hidden="true" tabindex="-1"></a>   WHERE <span class="at">year =</span> <span class="dv">2015</span>) AND</span>
+<span id="cb587-11"><a href="joining-data-in-sql.html#cb587-11" aria-hidden="true" tabindex="-1"></a>  year <span class="ot">=</span> <span class="dv">2015</span>;</span></code></pre></div>
 <p><strong>Subquery inside SELECT</strong></p>
 <p>The code given in <code>query.sql</code> selects the top nine countries in terms of number of <code>cities</code> appearing in the cities table. Recall that this corresponds to the most populous cities in the world.</p>
-<div class="sourceCode" id="cb587"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb587-1"><a href="joining-data-in-sql.html#cb587-1" aria-hidden="true" tabindex="-1"></a>SELECT countries.name AS country, <span class="fu">COUNT</span>(<span class="sc">*</span>) AS cities_num</span>
-<span id="cb587-2"><a href="joining-data-in-sql.html#cb587-2" aria-hidden="true" tabindex="-1"></a>FROM cities</span>
-<span id="cb587-3"><a href="joining-data-in-sql.html#cb587-3" aria-hidden="true" tabindex="-1"></a>INNER JOIN countries</span>
-<span id="cb587-4"><a href="joining-data-in-sql.html#cb587-4" aria-hidden="true" tabindex="-1"></a>ON countries.code <span class="ot">=</span> cities.country_code</span>
-<span id="cb587-5"><a href="joining-data-in-sql.html#cb587-5" aria-hidden="true" tabindex="-1"></a>GROUP BY country</span>
-<span id="cb587-6"><a href="joining-data-in-sql.html#cb587-6" aria-hidden="true" tabindex="-1"></a>ORDER BY cities_num DESC, country</span>
-<span id="cb587-7"><a href="joining-data-in-sql.html#cb587-7" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">9</span>;</span></code></pre></div>
-<p>convert the code to get the same result as the code shown:</p>
-<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="joining-data-in-sql.html#cb588-1" aria-hidden="true" tabindex="-1"></a>SELECT countries.name AS country,</span>
-<span id="cb588-2"><a href="joining-data-in-sql.html#cb588-2" aria-hidden="true" tabindex="-1"></a>(SELECT <span class="fu">COUNT</span>(<span class="sc">*</span>)</span>
-<span id="cb588-3"><a href="joining-data-in-sql.html#cb588-3" aria-hidden="true" tabindex="-1"></a>FROM cities</span>
-<span id="cb588-4"><a href="joining-data-in-sql.html#cb588-4" aria-hidden="true" tabindex="-1"></a>WHERE <span class="at">countries.code =</span> cities.country_code) AS cities_num</span>
-<span id="cb588-5"><a href="joining-data-in-sql.html#cb588-5" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
+<div class="sourceCode" id="cb588"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb588-1"><a href="joining-data-in-sql.html#cb588-1" aria-hidden="true" tabindex="-1"></a>SELECT countries.name AS country, <span class="fu">COUNT</span>(<span class="sc">*</span>) AS cities_num</span>
+<span id="cb588-2"><a href="joining-data-in-sql.html#cb588-2" aria-hidden="true" tabindex="-1"></a>FROM cities</span>
+<span id="cb588-3"><a href="joining-data-in-sql.html#cb588-3" aria-hidden="true" tabindex="-1"></a>INNER JOIN countries</span>
+<span id="cb588-4"><a href="joining-data-in-sql.html#cb588-4" aria-hidden="true" tabindex="-1"></a>ON countries.code <span class="ot">=</span> cities.country_code</span>
+<span id="cb588-5"><a href="joining-data-in-sql.html#cb588-5" aria-hidden="true" tabindex="-1"></a>GROUP BY country</span>
 <span id="cb588-6"><a href="joining-data-in-sql.html#cb588-6" aria-hidden="true" tabindex="-1"></a>ORDER BY cities_num DESC, country</span>
 <span id="cb588-7"><a href="joining-data-in-sql.html#cb588-7" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">9</span>;</span></code></pre></div>
+<p>convert the code to get the same result as the code shown:</p>
+<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="joining-data-in-sql.html#cb589-1" aria-hidden="true" tabindex="-1"></a>SELECT countries.name AS country,</span>
+<span id="cb589-2"><a href="joining-data-in-sql.html#cb589-2" aria-hidden="true" tabindex="-1"></a>(SELECT <span class="fu">COUNT</span>(<span class="sc">*</span>)</span>
+<span id="cb589-3"><a href="joining-data-in-sql.html#cb589-3" aria-hidden="true" tabindex="-1"></a>FROM cities</span>
+<span id="cb589-4"><a href="joining-data-in-sql.html#cb589-4" aria-hidden="true" tabindex="-1"></a>WHERE <span class="at">countries.code =</span> cities.country_code) AS cities_num</span>
+<span id="cb589-5"><a href="joining-data-in-sql.html#cb589-5" aria-hidden="true" tabindex="-1"></a>FROM countries</span>
+<span id="cb589-6"><a href="joining-data-in-sql.html#cb589-6" aria-hidden="true" tabindex="-1"></a>ORDER BY cities_num DESC, country</span>
+<span id="cb589-7"><a href="joining-data-in-sql.html#cb589-7" aria-hidden="true" tabindex="-1"></a>LIMIT <span class="dv">9</span>;</span></code></pre></div>
 <p><strong>Subquery inside FROM</strong></p>
 <p>Begin by determining for each country code how many <code>languages</code> are listed in the languages table using <code>SELECT</code>, <code>FROM</code>, and <code>GROUP BY</code>.</p>
 <p>Alias the aggregated field as <code>lang_num</code>.</p>
-<div class="sourceCode" id="cb589"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb589-1"><a href="joining-data-in-sql.html#cb589-1" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> Select <span class="fu">fields</span> (with aliases)</span>
-<span id="cb589-2"><a href="joining-data-in-sql.html#cb589-2" aria-hidden="true" tabindex="-1"></a>SELECT code, <span class="fu">COUNT</span>(name) AS lang_num</span>
-<span id="cb589-3"><a href="joining-data-in-sql.html#cb589-3" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> From languages</span>
-<span id="cb589-4"><a href="joining-data-in-sql.html#cb589-4" aria-hidden="true" tabindex="-1"></a>FROM languages</span>
-<span id="cb589-5"><a href="joining-data-in-sql.html#cb589-5" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> Group by code</span>
-<span id="cb589-6"><a href="joining-data-in-sql.html#cb589-6" aria-hidden="true" tabindex="-1"></a>GROUP BY code;</span></code></pre></div>
+<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="joining-data-in-sql.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> Select <span class="fu">fields</span> (with aliases)</span>
+<span id="cb590-2"><a href="joining-data-in-sql.html#cb590-2" aria-hidden="true" tabindex="-1"></a>SELECT code, <span class="fu">COUNT</span>(name) AS lang_num</span>
+<span id="cb590-3"><a href="joining-data-in-sql.html#cb590-3" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> From languages</span>
+<span id="cb590-4"><a href="joining-data-in-sql.html#cb590-4" aria-hidden="true" tabindex="-1"></a>FROM languages</span>
+<span id="cb590-5"><a href="joining-data-in-sql.html#cb590-5" aria-hidden="true" tabindex="-1"></a><span class="sc">--</span> Group by code</span>
+<span id="cb590-6"><a href="joining-data-in-sql.html#cb590-6" aria-hidden="true" tabindex="-1"></a>GROUP BY code;</span></code></pre></div>
 <p>Include the previous query (aliased as <code>subquery</code>) as a subquery in the <code>FROM</code> clause of a new query.</p>
 <p>Select the local name of the country from <code>countries.</code></p>
 <p>Also, select <code>lang_num</code> from subquery.</p>
 <p>Make sure to use <code>WHERE</code> appropriately to match <code>code</code> in <code>countries</code> and in <code>subquery</code>.</p>
 <p>Sort by <code>lang_num</code> in descending order.</p>
-<div class="sourceCode" id="cb590"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb590-1"><a href="joining-data-in-sql.html#cb590-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
-<span id="cb590-2"><a href="joining-data-in-sql.html#cb590-2" aria-hidden="true" tabindex="-1"></a>SELECT local_name, subquery.lang_num</span>
-<span id="cb590-3"><a href="joining-data-in-sql.html#cb590-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries</span></span>
-<span id="cb590-4"><a href="joining-data-in-sql.html#cb590-4" aria-hidden="true" tabindex="-1"></a>FROM countries,</span>
-<span id="cb590-5"><a href="joining-data-in-sql.html#cb590-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Subquery (alias as subquery)</span></span>
-<span id="cb590-6"><a href="joining-data-in-sql.html#cb590-6" aria-hidden="true" tabindex="-1"></a>(SELECT code, <span class="fu">COUNT</span>(name) AS lang_num</span>
-<span id="cb590-7"><a href="joining-data-in-sql.html#cb590-7" aria-hidden="true" tabindex="-1"></a>FROM languages</span>
-<span id="cb590-8"><a href="joining-data-in-sql.html#cb590-8" aria-hidden="true" tabindex="-1"></a>GROUP BY code) AS subquery</span>
-<span id="cb590-9"><a href="joining-data-in-sql.html#cb590-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Where codes match</span></span>
-<span id="cb590-10"><a href="joining-data-in-sql.html#cb590-10" aria-hidden="true" tabindex="-1"></a>WHERE countries.code <span class="ot">=</span> subquery.code</span>
-<span id="cb590-11"><a href="joining-data-in-sql.html#cb590-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by descending number of languages</span></span>
-<span id="cb590-12"><a href="joining-data-in-sql.html#cb590-12" aria-hidden="true" tabindex="-1"></a>ORDER BY lang_num DESC;</span></code></pre></div>
+<div class="sourceCode" id="cb591"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb591-1"><a href="joining-data-in-sql.html#cb591-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select fields</span></span>
+<span id="cb591-2"><a href="joining-data-in-sql.html#cb591-2" aria-hidden="true" tabindex="-1"></a>SELECT local_name, subquery.lang_num</span>
+<span id="cb591-3"><a href="joining-data-in-sql.html#cb591-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From countries</span></span>
+<span id="cb591-4"><a href="joining-data-in-sql.html#cb591-4" aria-hidden="true" tabindex="-1"></a>FROM countries,</span>
+<span id="cb591-5"><a href="joining-data-in-sql.html#cb591-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Subquery (alias as subquery)</span></span>
+<span id="cb591-6"><a href="joining-data-in-sql.html#cb591-6" aria-hidden="true" tabindex="-1"></a>(SELECT code, <span class="fu">COUNT</span>(name) AS lang_num</span>
+<span id="cb591-7"><a href="joining-data-in-sql.html#cb591-7" aria-hidden="true" tabindex="-1"></a>FROM languages</span>
+<span id="cb591-8"><a href="joining-data-in-sql.html#cb591-8" aria-hidden="true" tabindex="-1"></a>GROUP BY code) AS subquery</span>
+<span id="cb591-9"><a href="joining-data-in-sql.html#cb591-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Where codes match</span></span>
+<span id="cb591-10"><a href="joining-data-in-sql.html#cb591-10" aria-hidden="true" tabindex="-1"></a>WHERE countries.code <span class="ot">=</span> subquery.code</span>
+<span id="cb591-11"><a href="joining-data-in-sql.html#cb591-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Order by descending number of languages</span></span>
+<span id="cb591-12"><a href="joining-data-in-sql.html#cb591-12" aria-hidden="true" tabindex="-1"></a>ORDER BY lang_num DESC;</span></code></pre></div>
 
 </div>
 </div>

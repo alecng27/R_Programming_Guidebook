@@ -1,0 +1,503 @@
+# Introduction to SQL
+
+<https://learn.datacamp.com/courses/introduction-to-sql>
+
+## Selecting columns
+
+**SELECTing single columns**
+
+ A `query` is a request for data from a database table (or combination of tables). Querying is an essential skill for a data scientist, since the data you need for your analyses will often live in databases.
+
+In SQL, you can select data from a table using a `SELECT` statement. For example, the following query selects the name column from the people table:
+
+
+```r
+SELECT name
+FROM people;
+```
+
+In this query, `SELECT` and `FROM` are called keywords. In SQL, keywords are not case-sensitive, which means you can write the same query as:
+
+
+```r
+select name
+from people;
+```
+
+**SELECTing multiple columns**
+
+To select multiple columns from a table, simply separate the column names with commas!
+
+For example, this query selects two columns, `name` and `birthdate`, from the `people` table:
+
+
+```r
+SELECT name, birthdate
+FROM people;
+```
+
+Sometimes, you may want to select all columns from a table. Typing out every column name would be a pain, so there's a handy shortcut:
+
+
+```r
+SELECT (*)
+FROM people;
+```
+
+If you only want to return a certain number of results, you can use the LIMIT keyword to limit the number of rows returned:
+
+
+```r
+SELECT (*)
+FROM people
+LIMIT 10;
+```
+
+**SELECT DISTINCT**
+
+Often your results will include many duplicate values. If you want to select all the unique values from a column, you can use the `DISTINCT` keyword.
+
+This might be useful if, for example, you're interested in knowing which languages are represented in the `films` table:
+
+
+```r
+SELECT DISTINCT language
+FROM films;
+```
+
+**Learning to COUNT**
+
+The `COUNT` statement allow counting the number of observations in one or more columns.
+
+For example, this code gives the number of rows in the `people` table:
+
+
+```r
+SELECT COUNT(*)
+FROM people;
+```
+
+## Filtering rows
+
+**Filtering results**
+
+In SQL, the `WHERE` keyword allows you to filter based on both text and numeric values in a table. There are a few different comparison operators you can use:
+
+`=` equal
+
+`<>` not equal
+
+`<` less than
+
+`>` greater than
+
+`<=` less than or equal to
+
+`>=` greater than or equal to
+
+For example, you can filter text records such as `title`. The following code returns all films with the title `'Metropolis'`:
+
+
+```r
+SELECT title
+FROM films
+WHERE title = 'Metropolis';
+
+# Notice that the `WHERE` clause always comes after the `FROM` statement!
+
+## Note that in this course we will use `<>` and not `!=` for the not equal operator, as per the SQL standard.
+```
+
+**Simple filtering of numeric values**
+
+The `WHERE` clause can also be used to filter numeric records, such as years or ages.
+
+For example, the following query selects all details for `films` with a `budget` over ten thousand dollars:
+
+
+```r
+SELECT *
+FROM films
+WHERE budget > 10000;
+```
+
+**Simple filtering of text**
+
+The `WHERE` clause can also be used to filter text results, such as names or countries.
+
+For example, this query gets the titles of all `films` which were filmed in `China`:
+
+
+```r
+SELECT title
+FROM films
+WHERE country = 'China';
+```
+
+**WHERE AND**
+
+Often, you'll want to select data based on multiple conditions. You can build up your `WHERE` queries by combining multiple conditions with the `AND` keyword:
+
+
+```r
+SELECT title
+FROM films
+WHERE release_year > 1994
+AND release_year < 2000;
+gives you the titles of films released between 1994 and 2000.
+```
+
+Note that you need to specify the column name separately for every `AND` condition, so the following would be invalid:
+
+
+```r
+SELECT title
+FROM films
+WHERE release_year > 1994 AND < 2000;
+```
+
+**WHERE AND OR**
+
+To select rows based on multiple conditions where some but not all of the conditions need to be met, SQL has the `OR` operator.
+
+For example, the following returns all films released in either 1994 or 2000:
+
+
+```r
+SELECT title
+FROM films
+WHERE release_year = 1994
+OR release_year = 2000;
+```
+
+Note that you need to specify the column for every `OR` condition, so the following is invalid:
+
+
+```r
+SELECT title
+FROM films
+WHERE release_year = 1994 OR 2000;
+```
+
+When combining `AND` and `OR`, be sure to enclose the individual clauses in parentheses, like so:
+
+
+```r
+SELECT title
+FROM films
+WHERE (release_year = 1994 OR release_year = 1995)
+AND (certification = 'PG' OR certification = 'R');
+```
+
+**BETWEEN**
+
+Use the following query to get titles of all films released in and between 1994 and 2000:
+
+
+```r
+SELECT title
+FROM films
+WHERE release_year >= 1994
+AND release_year <= 2000;
+```
+
+Checking for ranges like this is very common, so in SQL the `BETWEEN` keyword provides a useful shorthand for filtering values within a specified range. This query is equivalent to the one above:
+
+
+```r
+SELECT title
+FROM films
+WHERE release_year
+BETWEEN 1994 AND 2000;
+
+## It's important to remember that `BETWEEN` is inclusive, meaning the beginning and end values are included in the results!
+```
+
+**WHERE IN**
+
+As you've seen, `WHERE` is very useful for filtering results. However, if you want to filter based on many conditions, `WHERE` can get unwieldy. For example:
+
+
+```r
+SELECT name
+FROM kids
+WHERE age = 2
+OR age = 4
+OR age = 6
+OR age = 8
+OR age = 10;
+```
+
+Enter the `IN` operator! The `IN` operator allows you to specify multiple values in a `WHERE` clause, making it easier and quicker to specify multiple `OR` conditions!
+
+So, the above example would become simply:
+
+
+```r
+SELECT name
+FROM kids
+WHERE age IN (2, 4, 6, 8, 10);
+```
+
+**NULL and IS NULL**
+
+In SQL, `NULL` represents a missing or unknown value. You can check for `NULL` values using the expression `IS NULL`. For example, to count the number of missing birth dates in the people table:
+
+
+```r
+SELECT COUNT(*)
+FROM people
+WHERE birthdate IS NULL;
+```
+
+`IS NULL` is useful when combined with WHERE to figure out what data you're missing.
+
+Sometimes, you'll want to filter out missing values so you only get results which are not `NULL`. To do this, you can use the `IS NOT NULL` operator.
+
+For example, this query gives the names of all people whose birth dates are not missing in the people table.
+
+
+```r
+SELECT name
+FROM people
+WHERE birthdate IS NOT NULL;
+```
+
+**LIKE and NOT LIKE**
+
+The `WHERE` clause can be used to filter text data. However, so far you've only been able to filter by specifying the exact text you're interested in. Often you'll want to search for a pattern rather than a specific text string.
+
+In SQL, the `LIKE` operator can be used in a `WHERE` clause to search for a pattern in a column. To accomplish this, you use something called a *wildcard* as a placeholder for some other values. There are two wildcards you can use with `LIKE`:
+
+The `%` wildcard will match zero, one, or many characters in text. For example, the following query matches companies like `'Data'`, `'DataC'` `'DataCamp'`, `'DataMind'`, and so on:
+
+
+```r
+SELECT name
+FROM companies
+WHERE name LIKE 'Data%';
+```
+
+The `_` wildcard will match a single character. For example, the following query matches companies like `'DataCamp'`, `'DataComp'`, and so on:
+
+
+```r
+SELECT name
+FROM companies
+WHERE name LIKE 'DataC_mp';
+```
+
+You can also use the `NOT LIKE` operator to find records that don't match the pattern you specify.
+
+## Aggregate Functions
+
+SQL provides a few functions, called aggregate functions: AVG(), MAX(), MIN(), SUM().
+
+
+```r
+SELECT AVG(budget)
+FROM films;
+```
+
+Gives the average value from the `budget` column of the `films` table. Similarly, the `MAX` function returns the highest `budget`:
+
+
+```r
+SELECT MAX(budget)
+FROM films;
+```
+
+The `SUM` function returns the result of adding up the numeric values in a column:
+
+
+```r
+SELECT SUM(budget)
+FROM films;
+```
+
+**Combining aggregate functions with WHERE**
+
+Aggregate functions can be combined with the `WHERE` clause to gain further insights from the data.
+
+For example, to get the total `budget` of movies made in the year `2010` or later:
+
+
+```r
+SELECT SUM(budget)
+FROM films
+WHERE release_year >= 2010;
+```
+
+Get the amount grossed by the worst performing film in 1994:
+
+
+```r
+SELECT MIN(gross)
+FROM films
+WHERE release_year = 1994;
+```
+
+**A note on arithmetic**
+
+In addition to using aggregate functions, you can perform basic arithmetic with symbols like `+`, `-`, `*`, and `/`.
+
+So, for example, this gives a result of 12:
+
+
+```r
+SELECT (4 * 3);
+```
+
+However, the following gives a result of 1:
+
+
+```r
+SELECT (4 / 3);
+```
+
+SQL assumes that if you divide an integer by an integer, you want to get an integer back. 
+
+Add decimal places to your numbers. For example,
+
+
+```r
+SELECT (4.0 / 3.0) AS result;
+```
+
+gives the result expected: 1.333.
+
+**It's AS simple AS aliasing**
+
+SQL allows aliasing. Aliasing simply means you assign a temporary name to something. To alias, use the `AS` keyword.
+
+For example, in the above example we could use aliases to make the result clearer:
+
+
+```r
+SELECT MAX(budget) AS max_budget,
+       MAX(duration) AS max_duration
+FROM films;
+```
+
+## Sorting and grouping
+
+**ORDER BY**
+
+In SQL, the `ORDER BY` keyword is used to sort results in ascending or descending order according to the values of one or more columns.
+
+By default `ORDER BY` will sort in ascending order. If you want to sort the results in descending order, you can use the `DESC` keyword. For example:
+
+
+```r
+SELECT title
+FROM films
+ORDER BY release_year DESC;
+```
+
+Get the title and gross earnings for movies which begin with the letter 'M' and order the results alphabetically:
+
+
+```r
+SELECT title, gross
+FROM films
+WHERE title LIKE 'M%'
+ORDER BY title;
+```
+
+To order results in descending order, you can put the keyword `DESC` after `ORDER BY`. For example, to get all the `names` in the `people` table, in reverse alphabetical order:
+
+
+```r
+SELECT name
+FROM people
+ORDER BY name DESC;
+```
+
+**Sorting multiple columns**
+
+`ORDER BY` can also be used to sort on multiple columns. It will sort by the first column specified, then sort by the next, then the next, and so on. For example:
+
+
+```r
+SELECT birthdate, name
+FROM people
+ORDER BY birthdate, name;
+```
+
+Sorts on birth dates first (oldest to newest) and then sorts on the names in alphabetical order. **The order of columns is important!**
+
+**GROUP BY**
+
+In SQL, `GROUP BY` allows you to group a result by one or more columns, like so:
+
+
+```r
+SELECT sex, count(*)
+FROM employees
+GROUP BY sex;
+```
+
+Note that you can combine `GROUP BY` with `ORDER BY` to group your results, calculate something about them, and then order your results. For example:
+
+
+```r
+SELECT sex, count(*)
+FROM employees
+GROUP BY sex
+ORDER BY count DESC;
+```
+
+Get the release year, country, and highest budget spent making a film for each year, for each country. Sort your results by release year and country:
+
+
+```r
+SELECT release_year, country, MAX(budget)
+FROM films
+GROUP BY release_year, country
+ORDER BY release_year, country;
+```
+
+**HAVING a great time**
+
+In SQL, aggregate functions can't be used in `WHERE` clauses. For example, the following query is invalid:
+
+
+```r
+SELECT release_year
+FROM films
+GROUP BY release_year
+WHERE COUNT(title) > 10;
+```
+
+This means that if you want to filter based on the result of an aggregate function, you need another way! That's where the `HAVING` clause comes in. For example:
+
+
+```r
+SELECT release_year
+FROM films
+GROUP BY release_year
+HAVING COUNT(title) > 10;
+```
+
+shows only those years in which more than 10 films were released.
+
+Get the country, average budget, and average gross take of countries that have made more than 10 films. Order the result by country name, and limit the number of results displayed to 5. You should alias the averages as `avg_budget` and `avg_gross` respectively:
+
+
+```r
+# select country, average budget, and average gross
+SELECT country, AVG(budget) AS avg_budget, AVG(gross) as avg_gross
+# from the films table
+FROM films
+# group by country 
+GROUP BY country
+# where the country has more than 10 titles
+HAVING COUNT(title) > 10
+# order by country
+ORDER BY country
+# limit to only show 5 results
+LIMIT 5;
+```
+
+
+

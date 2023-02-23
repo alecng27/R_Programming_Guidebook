@@ -124,11 +124,11 @@ mydata %>% select(lifeExp, gdpPerCapita, pop, pctFemale, pctRural) %>% as.data.f
 
 
 <table style="text-align:center"><tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Pctl(25)</td><td>Median</td><td>Pctl(75)</td><td>Max</td></tr>
-<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">lifeExp</td><td>128</td><td>74.921</td><td>3.455</td><td>62.485</td><td>73.244</td><td>74.910</td><td>77.174</td><td>80.095</td></tr>
-<tr><td style="text-align:left">gdpPerCapita</td><td>128</td><td>10.659</td><td>8.200</td><td>1.387</td><td>5.321</td><td>8.248</td><td>13.817</td><td>35.074</td></tr>
-<tr><td style="text-align:left">pop</td><td>128</td><td>18.791</td><td>41.175</td><td>0.094</td><td>0.516</td><td>5.611</td><td>12.407</td><td>209.469</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>128</td><td>50.656</td><td>0.931</td><td>49.071</td><td>49.965</td><td>50.614</td><td>51.131</td><td>53.114</td></tr>
-<tr><td style="text-align:left">pctRural</td><td>128</td><td>35.487</td><td>21.253</td><td>4.279</td><td>19.814</td><td>33.622</td><td>47.630</td><td>81.485</td></tr>
+<tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">lifeExp</td><td>136</td><td>74.654</td><td>3.503</td><td>63.237</td><td>72.986</td><td>74.472</td><td>77.016</td><td>80.350</td></tr>
+<tr><td style="text-align:left">gdpPerCapita</td><td>136</td><td>11.695</td><td>8.803</td><td>1.404</td><td>5.974</td><td>8.449</td><td>15.592</td><td>35.183</td></tr>
+<tr><td style="text-align:left">pop</td><td>136</td><td>17.640</td><td>40.122</td><td>0.037</td><td>0.373</td><td>4.530</td><td>11.365</td><td>210.167</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>136</td><td>50.647</td><td>1.022</td><td>48.782</td><td>49.877</td><td>50.410</td><td>51.056</td><td>52.814</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>136</td><td>35.285</td><td>21.488</td><td>4.279</td><td>19.471</td><td>33.622</td><td>48.319</td><td>81.485</td></tr>
 <tr><td colspan="9" style="border-bottom: 1px solid black"></td></tr></table>
 
 
@@ -191,7 +191,7 @@ y_{it}-\bar{y}_{i} = \beta_1 (x_{1it}-\bar{x}_{1i}) + \beta_2 (x_{2it}-\bar{x}_{
 $$
 because $\beta_0-\beta_0=0$ and $c_i-\bar{c}_i=0$, where $\bar{c}_i=c_i$ because $c_i$ is the same in all years for country $i$. Mathematically, this is why the fixed effects model allows us to control for unobservable factors that do not change of time (or whatever is measured by $t=1,,,,.T$). If $c_i$ is not constant for all time periods, then $\bar{c}_i=c_i$ isn't correct and it doesn't drop out of the final equation. That means it remains in the equations we estimate, and our coefficients are biased. 
 
-At the end of this file there are tables that demonstrate the within transformation for our dataset. There is a table for each variable. Look at the table for [Life expectancy]. Find the row for Argentina (iso3c code ARG). It's average value of life expectancy is 76.3.  In 2015, their value was 76.07, which is 0.23 below Argentina's four-year average value of 76.3. In 2016, Argentina's life expectancy was 76.22, which is 0.08 above Argentina's four-year average. Below this table for life expectancy is a similar table for each explanatory variable. When economists say a model has country "fixed effects", they mean estimating an OLS regression using data transformed by this "within" transformation.
+At the end of this file there are tables that demonstrate the within transformation for our dataset. There is a table for each variable. Look at the table for [Life expectancy]. Find the row for Argentina (iso3c code ARG). It's average value of life expectancy is 76.72.  In 2015, their value was 76.76, which is 0.04 below Argentina's four-year average value of 76.72. In 2016, Argentina's life expectancy was 76.31, which is 0.41 above Argentina's four-year average. Below this table for life expectancy is a similar table for each explanatory variable. When economists say a model has country "fixed effects", they mean estimating an OLS regression using data transformed by this "within" transformation.
 
 
 Alternatively, a model with country "fixed effects" can be estimated using the original OLS equation with the addition of a dummy variable for each country (omitting one).
@@ -262,45 +262,47 @@ stargazer(countryDummies,countryWithin,countryPlm,
 <tr><td style="text-align:left"></td><td colspan="2"><em>OLS</em></td><td><em>panel</em></td></tr>
 <tr><td style="text-align:left"></td><td colspan="2"><em></em></td><td><em>linear</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.0651 (0.0533)</td><td>0.0651 (0.0461)</td><td>0.0651 (0.0533)</td></tr>
-<tr><td style="text-align:left">pop</td><td>0.0746 (0.0292)<sup>**</sup></td><td>0.0746 (0.0253)<sup>***</sup></td><td>0.0746 (0.0292)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>-0.0821 (0.4343)</td><td>-0.0821 (0.3756)</td><td>-0.0821 (0.4343)</td></tr>
-<tr><td style="text-align:left">pctRural</td><td>-0.3415 (0.0389)<sup>***</sup></td><td>-0.3415 (0.0336)<sup>***</sup></td><td>-0.3415 (0.0389)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Argentina</td><td>-26.4352 (2.5323)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Bahamas, The</td><td>-24.2300 (2.1318)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Barbados</td><td>-0.0618 (0.2654)</td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Belize</td><td>-8.9778 (1.5499)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Bolivia</td><td>-21.1922 (2.4176)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Brazil</td><td>-37.4007 (5.6170)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Chile</td><td>-19.5972 (2.5142)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Colombia</td><td>-21.9154 (2.4081)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Costa Rica</td><td>-15.3878 (2.4876)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Cuba</td><td>-16.3491 (2.4175)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Dominican Republic</td><td>-22.3355 (2.6281)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Ecuador</td><td>-14.2608 (2.0636)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)El Salvador</td><td>-19.2981 (1.9355)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Grenada</td><td>-7.9733 (1.3193)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Guatemala</td><td>-12.3493 (1.4744)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Guyana</td><td>-7.3506 (1.0755)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Haiti</td><td>-23.5398 (1.7323)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Honduras</td><td>-12.5973 (1.9355)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Jamaica</td><td>-12.5303 (1.7901)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Mexico</td><td>-29.4623 (3.5027)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Nicaragua</td><td>-13.8416 (1.8645)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Panama</td><td>-13.5153 (2.0809)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Paraguay</td><td>-15.3079 (2.2995)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Peru</td><td>-20.4454 (2.4008)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Puerto Rico</td><td>-21.7780 (2.3829)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)St. Lucia</td><td>1.4653 (0.5105)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)St. Vincent and the Grenadines</td><td>-13.2790 (2.0031)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Suriname</td><td>-19.1671 (2.2540)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Trinidad and Tobago</td><td>-13.5590 (1.3500)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Uruguay</td><td>-23.4638 (2.7021)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Virgin Islands (U.S.)</td><td>-22.7951 (2.4659)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>105.6350 (23.8548)<sup>***</sup></td><td>0.0000 (0.0114)</td><td></td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>128</td><td>128</td><td>128</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.9987</td><td>0.6324</td><td>0.6324</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.9981</td><td>0.6205</td><td>0.4926</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.1131 (0.0600)<sup>*</sup></td><td>0.1131 (0.0519)<sup>**</sup></td><td>0.1131 (0.0600)<sup>*</sup></td></tr>
+<tr><td style="text-align:left">pop</td><td>0.0598 (0.0503)</td><td>0.0598 (0.0435)</td><td>0.0598 (0.0503)</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>0.6970 (0.5382)</td><td>0.6970 (0.4655)</td><td>0.6970 (0.5382)</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>-0.1476 (0.0600)<sup>**</sup></td><td>-0.1476 (0.0519)<sup>***</sup></td><td>-0.1476 (0.0600)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Argentina</td><td>-12.4450 (4.1437)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Aruba</td><td>-6.9573 (1.2192)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Bahamas, The</td><td>-14.6820 (3.5130)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Barbados</td><td>-2.3363 (0.4518)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Belize</td><td>-4.8728 (2.1054)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Bolivia</td><td>-14.5484 (3.2176)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Brazil</td><td>-23.1193 (9.7968)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Chile</td><td>-6.8776 (3.9218)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Colombia</td><td>-10.4753 (3.6862)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Costa Rica</td><td>-4.8909 (3.6734)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Cuba</td><td>-6.5904 (3.4765)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Dominican Republic</td><td>-11.0797 (3.8017)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Ecuador</td><td>-5.2878 (2.7981)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)El Salvador</td><td>-11.8277 (2.8804)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Grenada</td><td>-2.4931 (1.6301)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Guatemala</td><td>-7.9023 (2.0302)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Guyana</td><td>-7.8718 (0.8472)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Haiti</td><td>-16.5223 (2.2762)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Honduras</td><td>-7.2340 (2.6626)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Jamaica</td><td>-8.2572 (2.3559)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Mexico</td><td>-17.7523 (5.9223)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Nicaragua</td><td>-7.4429 (2.4331)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Panama</td><td>-5.1770 (3.0542)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Paraguay</td><td>-7.5663 (2.8103)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Peru</td><td>-9.6800 (3.4234)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Puerto Rico</td><td>-10.4554 (4.0113)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)St. Lucia</td><td>-2.1323 (1.0039)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)St. Vincent and the Grenadines</td><td>-4.5311 (2.7316)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Suriname</td><td>-10.0725 (3.0393)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Trinidad and Tobago</td><td>-7.2752 (2.0746)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Turks and Caicos Islands</td><td>-10.5865 (4.6999)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Uruguay</td><td>-10.7839 (4.2651)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Virgin Islands (U.S.)</td><td>-11.7226 (4.1648)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>51.0531 (29.2668)<sup>*</sup></td><td>-0.0000 (0.0186)</td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>136</td><td>136</td><td>136</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.9963</td><td>0.2153</td><td>0.2153</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.9949</td><td>0.1913</td><td>-0.0810</td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right">Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
 </table>
 
@@ -377,17 +379,17 @@ stargazer(yearDummies,yearWithin,yearPlm,
 <tr><td style="text-align:left"></td><td colspan="2"><em>OLS</em></td><td><em>panel</em></td></tr>
 <tr><td style="text-align:left"></td><td colspan="2"><em></em></td><td><em>linear</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.1628 (0.0416)<sup>***</sup></td><td>0.1628 (0.0411)<sup>***</sup></td><td>0.1628 (0.0416)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">pop</td><td>0.0026 (0.0072)</td><td>0.0026 (0.0071)</td><td>0.0026 (0.0072)</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>0.2108 (0.3435)</td><td>0.2108 (0.3393)</td><td>0.2108 (0.3435)</td></tr>
-<tr><td style="text-align:left">pctRural</td><td>-0.0325 (0.0147)<sup>**</sup></td><td>-0.0325 (0.0146)<sup>**</sup></td><td>-0.0325 (0.0147)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">factor(year)2016</td><td>0.1532 (0.7523)</td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(year)2017</td><td>0.2970 (0.7524)</td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(year)2018</td><td>0.4251 (0.7524)</td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>63.3957 (17.2241)<sup>***</sup></td><td>0.0000 (0.2627)</td><td></td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>128</td><td>128</td><td>128</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.2831</td><td>0.2809</td><td>0.2809</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.2413</td><td>0.2576</td><td>0.2390</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.2125 (0.0398)<sup>***</sup></td><td>0.2125 (0.0394)<sup>***</sup></td><td>0.2125 (0.0398)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">pop</td><td>0.0033 (0.0069)</td><td>0.0033 (0.0069)</td><td>0.0033 (0.0069)</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>-0.2282 (0.3154)</td><td>-0.2282 (0.3118)</td><td>-0.2282 (0.3154)</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>-0.0343 (0.0135)<sup>**</sup></td><td>-0.0343 (0.0133)<sup>**</sup></td><td>-0.0343 (0.0135)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(year)2016</td><td>0.0918 (0.6993)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(year)2017</td><td>0.1802 (0.6994)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(year)2018</td><td>0.2203 (0.6994)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>84.7549 (15.5578)<sup>***</sup></td><td>-0.0000 (0.2444)</td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>136</td><td>136</td><td>136</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.3578</td><td>0.3570</td><td>0.3570</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.3226</td><td>0.3374</td><td>0.3219</td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right">Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
 </table>
 
@@ -442,48 +444,50 @@ stargazer(countryyearDummies,countryYearWithin, countryYearPlm,
 <tr><td style="text-align:left"></td><td colspan="2"><em>OLS</em></td><td><em>panel</em></td></tr>
 <tr><td style="text-align:left"></td><td colspan="2"><em></em></td><td><em>linear</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>-0.0770 (0.0332)<sup>**</sup></td><td>-0.0770 (0.0282)<sup>***</sup></td><td>-0.0770 (0.0332)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">pop</td><td>-0.0122 (0.0184)</td><td>-0.0122 (0.0156)</td><td>-0.0122 (0.0184)</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>-0.4519 (0.2566)<sup>*</sup></td><td>-0.4519 (0.2183)<sup>**</sup></td><td>-0.4519 (0.2566)<sup>*</sup></td></tr>
-<tr><td style="text-align:left">pctRural</td><td>-0.1670 (0.0263)<sup>***</sup></td><td>-0.1670 (0.0224)<sup>***</sup></td><td>-0.1670 (0.0263)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(year)2016</td><td>0.1409 (0.0231)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(year)2017</td><td>0.2808 (0.0265)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(year)2018</td><td>0.4187 (0.0322)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Argentina</td><td>-11.4184 (1.8649)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Bahamas, The</td><td>-11.8448 (1.5588)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Barbados</td><td>1.2703 (0.1851)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Belize</td><td>-7.4386 (0.9190)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Bolivia</td><td>-15.0054 (1.4948)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Brazil</td><td>-10.0431 (3.8838)<sup>**</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Chile</td><td>-7.6845 (1.7254)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Colombia</td><td>-9.6159 (1.6882)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Costa Rica</td><td>-6.7688 (1.5976)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Cuba</td><td>-7.8679 (1.5560)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Dominican Republic</td><td>-13.6116 (1.6768)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Ecuador</td><td>-8.0428 (1.2992)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)El Salvador</td><td>-11.8715 (1.2660)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Grenada</td><td>-7.6154 (0.7762)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Guatemala</td><td>-8.4458 (0.9150)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Guyana</td><td>-9.0234 (0.6456)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Haiti</td><td>-19.9197 (1.0544)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Honduras</td><td>-8.7937 (1.1733)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Jamaica</td><td>-8.9748 (1.0857)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Mexico</td><td>-10.1515 (2.5150)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Nicaragua</td><td>-9.7345 (1.1388)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Panama</td><td>-6.6135 (1.3272)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Paraguay</td><td>-10.7231 (1.3946)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Peru</td><td>-10.3166 (1.6017)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Puerto Rico</td><td>-7.2295 (1.7743)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)St. Lucia</td><td>-0.6604 (0.3402)<sup>*</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)St. Vincent and the Grenadines</td><td>-10.7481 (1.1927)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Suriname</td><td>-13.6043 (1.3885)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Trinidad and Tobago</td><td>-8.6764 (0.8731)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Uruguay</td><td>-10.8173 (1.8483)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">factor(country)Virgin Islands (U.S.)</td><td>-7.4864 (1.8481)<sup>***</sup></td><td></td><td></td></tr>
-<tr><td style="text-align:left">Constant</td><td>113.6250 (14.0285)<sup>***</sup></td><td>-104.7890 (11.3948)<sup>***</sup></td><td></td></tr>
-<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>128</td><td>128</td><td>128</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.9996</td><td>0.3214</td><td>0.3214</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.9994</td><td>0.2994</td><td>0.0317</td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.0926 (0.0597)</td><td>0.0926 (0.0509)<sup>*</sup></td><td>0.0926 (0.0597)</td></tr>
+<tr><td style="text-align:left">pop</td><td>0.0140 (0.0524)</td><td>0.0140 (0.0446)</td><td>0.0140 (0.0524)</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>0.2558 (0.5550)</td><td>0.2558 (0.4726)</td><td>0.2558 (0.5550)</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>-0.0450 (0.0708)</td><td>-0.0450 (0.0603)</td><td>-0.0450 (0.0708)</td></tr>
+<tr><td style="text-align:left">factor(year)2016</td><td>0.0877 (0.0636)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(year)2017</td><td>0.1715 (0.0749)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(year)2018</td><td>0.2247 (0.0889)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Argentina</td><td>-4.4289 (5.1083)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Aruba</td><td>-4.6134 (1.5027)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Bahamas, The</td><td>-8.5611 (4.1804)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Barbados</td><td>-1.7206 (0.5040)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Belize</td><td>-4.0949 (2.0919)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Bolivia</td><td>-10.9124 (3.4576)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Brazil</td><td>-8.1467 (11.1984)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Chile</td><td>-0.5159 (4.5668)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Colombia</td><td>-3.5323 (4.4966)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Costa Rica</td><td>-0.3523 (4.0134)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Cuba</td><td>-1.8233 (3.8771)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Dominican Republic</td><td>-6.3070 (4.1647)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Ecuador</td><td>-1.7799 (3.0648)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)El Salvador</td><td>-7.0790 (3.3555)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Grenada</td><td>-2.5864 (1.6033)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Guatemala</td><td>-5.5944 (2.1831)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Guyana</td><td>-8.4840 (0.8622)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Haiti</td><td>-14.2080 (2.4052)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Honduras</td><td>-5.1260 (2.7409)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Jamaica</td><td>-6.0970 (2.4589)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Mexico</td><td>-7.2146 (7.0815)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Nicaragua</td><td>-4.7104 (2.6076)<sup>*</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Panama</td><td>-1.7303 (3.2873)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Paraguay</td><td>-4.8894 (2.9497)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Peru</td><td>-3.8475 (4.0416)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Puerto Rico</td><td>-2.9235 (4.8889)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)St. Lucia</td><td>-3.7614 (1.1615)<sup>***</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)St. Vincent and the Grenadines</td><td>-3.4942 (2.7188)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Suriname</td><td>-6.9784 (3.2165)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Trinidad and Tobago</td><td>-4.9854 (2.2263)<sup>**</sup></td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Turks and Caicos Islands</td><td>-4.6965 (5.1569)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Uruguay</td><td>-3.6969 (4.9925)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">factor(country)Virgin Islands (U.S.)</td><td>-3.9435 (5.0677)</td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>66.6238 (29.3962)<sup>**</sup></td><td>-61.9555 (24.0430)<sup>**</sup></td><td></td></tr>
+<tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>136</td><td>136</td><td>136</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.9966</td><td>0.0389</td><td>0.0389</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.9951</td><td>0.0095</td><td>-0.3658</td></tr>
 <tr><td colspan="4" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="3" style="text-align:right">Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
 </table>
 
@@ -515,14 +519,14 @@ stargazer(ols,countryWithin,yearWithin,countryYearWithin,
 <tr><td></td><td colspan="4" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td colspan="4">lifeExp</td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td></tr>
-<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.163 (0.041)<sup>***</sup></td><td>0.065 (0.046)</td><td>0.163 (0.041)<sup>***</sup></td><td>-0.077 (0.028)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">pop</td><td>0.003 (0.007)</td><td>0.075 (0.025)<sup>***</sup></td><td>0.003 (0.007)</td><td>-0.012 (0.016)</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>0.210 (0.340)</td><td>-0.082 (0.376)</td><td>0.211 (0.339)</td><td>-0.452 (0.218)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">pctRural</td><td>-0.033 (0.015)<sup>**</sup></td><td>-0.342 (0.034)<sup>***</sup></td><td>-0.033 (0.015)<sup>**</sup></td><td>-0.167 (0.022)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">Constant</td><td>63.633 (17.031)<sup>***</sup></td><td>0.000 (0.011)</td><td>0.000 (0.263)</td><td>-104.789 (11.395)<sup>***</sup></td></tr>
-<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>128</td><td>128</td><td>128</td><td>128</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.281</td><td>0.632</td><td>0.281</td><td>0.321</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.258</td><td>0.620</td><td>0.258</td><td>0.299</td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.212 (0.039)<sup>***</sup></td><td>0.113 (0.052)<sup>**</sup></td><td>0.212 (0.039)<sup>***</sup></td><td>0.093 (0.051)<sup>*</sup></td></tr>
+<tr><td style="text-align:left">pop</td><td>0.003 (0.007)</td><td>0.060 (0.044)</td><td>0.003 (0.007)</td><td>0.014 (0.045)</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>-0.227 (0.312)</td><td>0.697 (0.466)</td><td>-0.228 (0.312)</td><td>0.256 (0.473)</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>-0.034 (0.013)<sup>**</sup></td><td>-0.148 (0.052)<sup>***</sup></td><td>-0.034 (0.013)<sup>**</sup></td><td>-0.045 (0.060)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>84.800 (15.384)<sup>***</sup></td><td>-0.000 (0.019)</td><td>-0.000 (0.244)</td><td>-61.955 (24.043)<sup>**</sup></td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>136</td><td>136</td><td>136</td><td>136</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.357</td><td>0.215</td><td>0.357</td><td>0.039</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.338</td><td>0.191</td><td>0.337</td><td>0.010</td></tr>
 <tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="4" style="text-align:right">Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
 </table>
 
@@ -547,14 +551,14 @@ stargazer(ols,countryPlm,yearPlm,countryYearPlm,
 <tr><td style="text-align:left"></td><td><em>OLS</em></td><td colspan="3"><em>panel</em></td></tr>
 <tr><td style="text-align:left"></td><td><em></em></td><td colspan="3"><em>linear</em></td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td></tr>
-<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.163 (0.041)<sup>***</sup></td><td>0.065 (0.053)</td><td>0.163 (0.042)<sup>***</sup></td><td>-0.077 (0.033)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">pop</td><td>0.003 (0.007)</td><td>0.075 (0.029)<sup>**</sup></td><td>0.003 (0.007)</td><td>-0.012 (0.018)</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>0.210 (0.340)</td><td>-0.082 (0.434)</td><td>0.211 (0.344)</td><td>-0.452 (0.257)<sup>*</sup></td></tr>
-<tr><td style="text-align:left">pctRural</td><td>-0.033 (0.015)<sup>**</sup></td><td>-0.342 (0.039)<sup>***</sup></td><td>-0.033 (0.015)<sup>**</sup></td><td>-0.167 (0.026)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">Constant</td><td>63.633 (17.031)<sup>***</sup></td><td></td><td></td><td></td></tr>
-<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>128</td><td>128</td><td>128</td><td>128</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.281</td><td>0.632</td><td>0.281</td><td>0.321</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.258</td><td>0.493</td><td>0.239</td><td>0.032</td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.212 (0.039)<sup>***</sup></td><td>0.113 (0.060)<sup>*</sup></td><td>0.212 (0.040)<sup>***</sup></td><td>0.093 (0.060)</td></tr>
+<tr><td style="text-align:left">pop</td><td>0.003 (0.007)</td><td>0.060 (0.050)</td><td>0.003 (0.007)</td><td>0.014 (0.052)</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>-0.227 (0.312)</td><td>0.697 (0.538)</td><td>-0.228 (0.315)</td><td>0.256 (0.555)</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>-0.034 (0.013)<sup>**</sup></td><td>-0.148 (0.060)<sup>**</sup></td><td>-0.034 (0.013)<sup>**</sup></td><td>-0.045 (0.071)</td></tr>
+<tr><td style="text-align:left">Constant</td><td>84.800 (15.384)<sup>***</sup></td><td></td><td></td><td></td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>136</td><td>136</td><td>136</td><td>136</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.357</td><td>0.215</td><td>0.357</td><td>0.039</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.338</td><td>-0.081</td><td>0.322</td><td>-0.366</td></tr>
 <tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="4" style="text-align:right">Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
 </table>
 
@@ -578,48 +582,50 @@ stargazer(ols,countryDummies,yearDummies,countryyearDummies,
 <tr><td></td><td colspan="4" style="border-bottom: 1px solid black"></td></tr>
 <tr><td style="text-align:left"></td><td colspan="4">lifeExp</td></tr>
 <tr><td style="text-align:left"></td><td>(1)</td><td>(2)</td><td>(3)</td><td>(4)</td></tr>
-<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.163 (0.041)<sup>***</sup></td><td>0.065 (0.053)</td><td>0.163 (0.042)<sup>***</sup></td><td>-0.077 (0.033)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">pop</td><td>0.003 (0.007)</td><td>0.075 (0.029)<sup>**</sup></td><td>0.003 (0.007)</td><td>-0.012 (0.018)</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>0.210 (0.340)</td><td>-0.082 (0.434)</td><td>0.211 (0.344)</td><td>-0.452 (0.257)<sup>*</sup></td></tr>
-<tr><td style="text-align:left">pctRural</td><td>-0.033 (0.015)<sup>**</sup></td><td>-0.342 (0.039)<sup>***</sup></td><td>-0.033 (0.015)<sup>**</sup></td><td>-0.167 (0.026)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Argentina</td><td></td><td>-26.435 (2.532)<sup>***</sup></td><td></td><td>-11.418 (1.865)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Bahamas, The</td><td></td><td>-24.230 (2.132)<sup>***</sup></td><td></td><td>-11.845 (1.559)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Barbados</td><td></td><td>-0.062 (0.265)</td><td></td><td>1.270 (0.185)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Belize</td><td></td><td>-8.978 (1.550)<sup>***</sup></td><td></td><td>-7.439 (0.919)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Bolivia</td><td></td><td>-21.192 (2.418)<sup>***</sup></td><td></td><td>-15.005 (1.495)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Brazil</td><td></td><td>-37.401 (5.617)<sup>***</sup></td><td></td><td>-10.043 (3.884)<sup>**</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Chile</td><td></td><td>-19.597 (2.514)<sup>***</sup></td><td></td><td>-7.684 (1.725)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Colombia</td><td></td><td>-21.915 (2.408)<sup>***</sup></td><td></td><td>-9.616 (1.688)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Costa Rica</td><td></td><td>-15.388 (2.488)<sup>***</sup></td><td></td><td>-6.769 (1.598)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Cuba</td><td></td><td>-16.349 (2.417)<sup>***</sup></td><td></td><td>-7.868 (1.556)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Dominican Republic</td><td></td><td>-22.336 (2.628)<sup>***</sup></td><td></td><td>-13.612 (1.677)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Ecuador</td><td></td><td>-14.261 (2.064)<sup>***</sup></td><td></td><td>-8.043 (1.299)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)El Salvador</td><td></td><td>-19.298 (1.936)<sup>***</sup></td><td></td><td>-11.871 (1.266)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Grenada</td><td></td><td>-7.973 (1.319)<sup>***</sup></td><td></td><td>-7.615 (0.776)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Guatemala</td><td></td><td>-12.349 (1.474)<sup>***</sup></td><td></td><td>-8.446 (0.915)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Guyana</td><td></td><td>-7.351 (1.076)<sup>***</sup></td><td></td><td>-9.023 (0.646)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Haiti</td><td></td><td>-23.540 (1.732)<sup>***</sup></td><td></td><td>-19.920 (1.054)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Honduras</td><td></td><td>-12.597 (1.936)<sup>***</sup></td><td></td><td>-8.794 (1.173)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Jamaica</td><td></td><td>-12.530 (1.790)<sup>***</sup></td><td></td><td>-8.975 (1.086)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Mexico</td><td></td><td>-29.462 (3.503)<sup>***</sup></td><td></td><td>-10.152 (2.515)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Nicaragua</td><td></td><td>-13.842 (1.864)<sup>***</sup></td><td></td><td>-9.735 (1.139)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Panama</td><td></td><td>-13.515 (2.081)<sup>***</sup></td><td></td><td>-6.613 (1.327)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Paraguay</td><td></td><td>-15.308 (2.300)<sup>***</sup></td><td></td><td>-10.723 (1.395)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Peru</td><td></td><td>-20.445 (2.401)<sup>***</sup></td><td></td><td>-10.317 (1.602)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Puerto Rico</td><td></td><td>-21.778 (2.383)<sup>***</sup></td><td></td><td>-7.229 (1.774)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)St. Lucia</td><td></td><td>1.465 (0.511)<sup>***</sup></td><td></td><td>-0.660 (0.340)<sup>*</sup></td></tr>
-<tr><td style="text-align:left">factor(country)St. Vincent and the Grenadines</td><td></td><td>-13.279 (2.003)<sup>***</sup></td><td></td><td>-10.748 (1.193)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Suriname</td><td></td><td>-19.167 (2.254)<sup>***</sup></td><td></td><td>-13.604 (1.389)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Trinidad and Tobago</td><td></td><td>-13.559 (1.350)<sup>***</sup></td><td></td><td>-8.676 (0.873)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Uruguay</td><td></td><td>-23.464 (2.702)<sup>***</sup></td><td></td><td>-10.817 (1.848)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(country)Virgin Islands (U.S.)</td><td></td><td>-22.795 (2.466)<sup>***</sup></td><td></td><td>-7.486 (1.848)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(year)2016</td><td></td><td></td><td>0.153 (0.752)</td><td>0.141 (0.023)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(year)2017</td><td></td><td></td><td>0.297 (0.752)</td><td>0.281 (0.027)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">factor(year)2018</td><td></td><td></td><td>0.425 (0.752)</td><td>0.419 (0.032)<sup>***</sup></td></tr>
-<tr><td style="text-align:left">Constant</td><td>63.633 (17.031)<sup>***</sup></td><td>105.635 (23.855)<sup>***</sup></td><td>63.396 (17.224)<sup>***</sup></td><td>113.625 (14.028)<sup>***</sup></td></tr>
-<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>128</td><td>128</td><td>128</td><td>128</td></tr>
-<tr><td style="text-align:left">R<sup>2</sup></td><td>0.281</td><td>0.999</td><td>0.283</td><td>1.000</td></tr>
-<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.258</td><td>0.998</td><td>0.241</td><td>0.999</td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">gdpPerCapita</td><td>0.212 (0.039)<sup>***</sup></td><td>0.113 (0.060)<sup>*</sup></td><td>0.212 (0.040)<sup>***</sup></td><td>0.093 (0.060)</td></tr>
+<tr><td style="text-align:left">pop</td><td>0.003 (0.007)</td><td>0.060 (0.050)</td><td>0.003 (0.007)</td><td>0.014 (0.052)</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>-0.227 (0.312)</td><td>0.697 (0.538)</td><td>-0.228 (0.315)</td><td>0.256 (0.555)</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>-0.034 (0.013)<sup>**</sup></td><td>-0.148 (0.060)<sup>**</sup></td><td>-0.034 (0.013)<sup>**</sup></td><td>-0.045 (0.071)</td></tr>
+<tr><td style="text-align:left">factor(country)Argentina</td><td></td><td>-12.445 (4.144)<sup>***</sup></td><td></td><td>-4.429 (5.108)</td></tr>
+<tr><td style="text-align:left">factor(country)Aruba</td><td></td><td>-6.957 (1.219)<sup>***</sup></td><td></td><td>-4.613 (1.503)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Bahamas, The</td><td></td><td>-14.682 (3.513)<sup>***</sup></td><td></td><td>-8.561 (4.180)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Barbados</td><td></td><td>-2.336 (0.452)<sup>***</sup></td><td></td><td>-1.721 (0.504)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Belize</td><td></td><td>-4.873 (2.105)<sup>**</sup></td><td></td><td>-4.095 (2.092)<sup>*</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Bolivia</td><td></td><td>-14.548 (3.218)<sup>***</sup></td><td></td><td>-10.912 (3.458)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Brazil</td><td></td><td>-23.119 (9.797)<sup>**</sup></td><td></td><td>-8.147 (11.198)</td></tr>
+<tr><td style="text-align:left">factor(country)Chile</td><td></td><td>-6.878 (3.922)<sup>*</sup></td><td></td><td>-0.516 (4.567)</td></tr>
+<tr><td style="text-align:left">factor(country)Colombia</td><td></td><td>-10.475 (3.686)<sup>***</sup></td><td></td><td>-3.532 (4.497)</td></tr>
+<tr><td style="text-align:left">factor(country)Costa Rica</td><td></td><td>-4.891 (3.673)</td><td></td><td>-0.352 (4.013)</td></tr>
+<tr><td style="text-align:left">factor(country)Cuba</td><td></td><td>-6.590 (3.476)<sup>*</sup></td><td></td><td>-1.823 (3.877)</td></tr>
+<tr><td style="text-align:left">factor(country)Dominican Republic</td><td></td><td>-11.080 (3.802)<sup>***</sup></td><td></td><td>-6.307 (4.165)</td></tr>
+<tr><td style="text-align:left">factor(country)Ecuador</td><td></td><td>-5.288 (2.798)<sup>*</sup></td><td></td><td>-1.780 (3.065)</td></tr>
+<tr><td style="text-align:left">factor(country)El Salvador</td><td></td><td>-11.828 (2.880)<sup>***</sup></td><td></td><td>-7.079 (3.356)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Grenada</td><td></td><td>-2.493 (1.630)</td><td></td><td>-2.586 (1.603)</td></tr>
+<tr><td style="text-align:left">factor(country)Guatemala</td><td></td><td>-7.902 (2.030)<sup>***</sup></td><td></td><td>-5.594 (2.183)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Guyana</td><td></td><td>-7.872 (0.847)<sup>***</sup></td><td></td><td>-8.484 (0.862)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Haiti</td><td></td><td>-16.522 (2.276)<sup>***</sup></td><td></td><td>-14.208 (2.405)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Honduras</td><td></td><td>-7.234 (2.663)<sup>***</sup></td><td></td><td>-5.126 (2.741)<sup>*</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Jamaica</td><td></td><td>-8.257 (2.356)<sup>***</sup></td><td></td><td>-6.097 (2.459)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Mexico</td><td></td><td>-17.752 (5.922)<sup>***</sup></td><td></td><td>-7.215 (7.082)</td></tr>
+<tr><td style="text-align:left">factor(country)Nicaragua</td><td></td><td>-7.443 (2.433)<sup>***</sup></td><td></td><td>-4.710 (2.608)<sup>*</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Panama</td><td></td><td>-5.177 (3.054)<sup>*</sup></td><td></td><td>-1.730 (3.287)</td></tr>
+<tr><td style="text-align:left">factor(country)Paraguay</td><td></td><td>-7.566 (2.810)<sup>***</sup></td><td></td><td>-4.889 (2.950)</td></tr>
+<tr><td style="text-align:left">factor(country)Peru</td><td></td><td>-9.680 (3.423)<sup>***</sup></td><td></td><td>-3.848 (4.042)</td></tr>
+<tr><td style="text-align:left">factor(country)Puerto Rico</td><td></td><td>-10.455 (4.011)<sup>**</sup></td><td></td><td>-2.924 (4.889)</td></tr>
+<tr><td style="text-align:left">factor(country)St. Lucia</td><td></td><td>-2.132 (1.004)<sup>**</sup></td><td></td><td>-3.761 (1.161)<sup>***</sup></td></tr>
+<tr><td style="text-align:left">factor(country)St. Vincent and the Grenadines</td><td></td><td>-4.531 (2.732)</td><td></td><td>-3.494 (2.719)</td></tr>
+<tr><td style="text-align:left">factor(country)Suriname</td><td></td><td>-10.072 (3.039)<sup>***</sup></td><td></td><td>-6.978 (3.216)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Trinidad and Tobago</td><td></td><td>-7.275 (2.075)<sup>***</sup></td><td></td><td>-4.985 (2.226)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(country)Turks and Caicos Islands</td><td></td><td>-10.586 (4.700)<sup>**</sup></td><td></td><td>-4.697 (5.157)</td></tr>
+<tr><td style="text-align:left">factor(country)Uruguay</td><td></td><td>-10.784 (4.265)<sup>**</sup></td><td></td><td>-3.697 (4.993)</td></tr>
+<tr><td style="text-align:left">factor(country)Virgin Islands (U.S.)</td><td></td><td>-11.723 (4.165)<sup>***</sup></td><td></td><td>-3.944 (5.068)</td></tr>
+<tr><td style="text-align:left">factor(year)2016</td><td></td><td></td><td>0.092 (0.699)</td><td>0.088 (0.064)</td></tr>
+<tr><td style="text-align:left">factor(year)2017</td><td></td><td></td><td>0.180 (0.699)</td><td>0.171 (0.075)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">factor(year)2018</td><td></td><td></td><td>0.220 (0.699)</td><td>0.225 (0.089)<sup>**</sup></td></tr>
+<tr><td style="text-align:left">Constant</td><td>84.800 (15.384)<sup>***</sup></td><td>51.053 (29.267)<sup>*</sup></td><td>84.755 (15.558)<sup>***</sup></td><td>66.624 (29.396)<sup>**</sup></td></tr>
+<tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>136</td><td>136</td><td>136</td><td>136</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.357</td><td>0.996</td><td>0.358</td><td>0.997</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.338</td><td>0.995</td><td>0.323</td><td>0.995</td></tr>
 <tr><td colspan="5" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="4" style="text-align:right">Standard Errors reported in parentheses, <em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
 </table>
 
@@ -635,22 +641,22 @@ stargazer(as.data.frame(mydata) , type = "html",digits = 2 ,summary.stat = c("n"
 
 
 <table style="text-align:center"><tr><td colspan="7" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Statistic</td><td>N</td><td>Mean</td><td>St. Dev.</td><td>Min</td><td>Median</td><td>Max</td></tr>
-<tr><td colspan="7" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">year</td><td>128</td><td>2,016.50</td><td>1.12</td><td>2,015</td><td>2,016.5</td><td>2,018</td></tr>
-<tr><td style="text-align:left">gdpPerCapita</td><td>128</td><td>10.66</td><td>8.20</td><td>1.39</td><td>8.25</td><td>35.07</td></tr>
-<tr><td style="text-align:left">lifeExp</td><td>128</td><td>74.92</td><td>3.45</td><td>62.48</td><td>74.91</td><td>80.10</td></tr>
-<tr><td style="text-align:left">pop</td><td>128</td><td>18.79</td><td>41.17</td><td>0.09</td><td>5.61</td><td>209.47</td></tr>
-<tr><td style="text-align:left">pctFemale</td><td>128</td><td>50.66</td><td>0.93</td><td>49.07</td><td>50.61</td><td>53.11</td></tr>
-<tr><td style="text-align:left">pctRural</td><td>128</td><td>35.49</td><td>21.25</td><td>4.28</td><td>33.62</td><td>81.48</td></tr>
-<tr><td style="text-align:left">cAvg_lifeExp</td><td>128</td><td>74.92</td><td>3.45</td><td>63.08</td><td>74.87</td><td>79.84</td></tr>
-<tr><td style="text-align:left">cAvg_gdpPerCapita</td><td>128</td><td>10.66</td><td>8.20</td><td>1.40</td><td>8.21</td><td>34.53</td></tr>
-<tr><td style="text-align:left">cAvg_pop</td><td>128</td><td>18.79</td><td>41.17</td><td>0.09</td><td>5.63</td><td>206.98</td></tr>
-<tr><td style="text-align:left">cAvg_pctFemale</td><td>128</td><td>50.66</td><td>0.93</td><td>49.13</td><td>50.61</td><td>53.05</td></tr>
-<tr><td style="text-align:left">cAvg_pctRural</td><td>128</td><td>35.49</td><td>21.25</td><td>4.46</td><td>33.38</td><td>81.41</td></tr>
-<tr><td style="text-align:left">yrAvg_lifeExp</td><td>128</td><td>74.92</td><td>0.19</td><td>74.67</td><td>74.92</td><td>75.17</td></tr>
-<tr><td style="text-align:left">yrAvg_gdpPerCapita</td><td>128</td><td>10.66</td><td>0.12</td><td>10.53</td><td>10.64</td><td>10.84</td></tr>
-<tr><td style="text-align:left">yrAvg_pop</td><td>128</td><td>18.79</td><td>0.23</td><td>18.49</td><td>18.79</td><td>19.09</td></tr>
-<tr><td style="text-align:left">yrAvg_pctFemale</td><td>128</td><td>50.66</td><td>0.01</td><td>50.65</td><td>50.66</td><td>50.67</td></tr>
-<tr><td style="text-align:left">yrAvg_pctRural</td><td>128</td><td>35.49</td><td>0.28</td><td>35.11</td><td>35.49</td><td>35.87</td></tr>
+<tr><td colspan="7" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">year</td><td>136</td><td>2,016.50</td><td>1.12</td><td>2,015</td><td>2,016.5</td><td>2,018</td></tr>
+<tr><td style="text-align:left">gdpPerCapita</td><td>136</td><td>11.70</td><td>8.80</td><td>1.40</td><td>8.45</td><td>35.18</td></tr>
+<tr><td style="text-align:left">lifeExp</td><td>136</td><td>74.65</td><td>3.50</td><td>63.24</td><td>74.47</td><td>80.35</td></tr>
+<tr><td style="text-align:left">pop</td><td>136</td><td>17.64</td><td>40.12</td><td>0.04</td><td>4.53</td><td>210.17</td></tr>
+<tr><td style="text-align:left">pctFemale</td><td>136</td><td>50.65</td><td>1.02</td><td>48.78</td><td>50.41</td><td>52.81</td></tr>
+<tr><td style="text-align:left">pctRural</td><td>136</td><td>35.28</td><td>21.49</td><td>4.28</td><td>33.62</td><td>81.48</td></tr>
+<tr><td style="text-align:left">cAvg_lifeExp</td><td>136</td><td>74.65</td><td>3.49</td><td>63.63</td><td>74.49</td><td>80.08</td></tr>
+<tr><td style="text-align:left">cAvg_gdpPerCapita</td><td>136</td><td>11.70</td><td>8.79</td><td>1.42</td><td>8.59</td><td>34.56</td></tr>
+<tr><td style="text-align:left">cAvg_pop</td><td>136</td><td>17.64</td><td>40.12</td><td>0.04</td><td>4.51</td><td>207.68</td></tr>
+<tr><td style="text-align:left">cAvg_pctFemale</td><td>136</td><td>50.65</td><td>1.02</td><td>48.81</td><td>50.41</td><td>52.69</td></tr>
+<tr><td style="text-align:left">cAvg_pctRural</td><td>136</td><td>35.28</td><td>21.48</td><td>4.46</td><td>33.38</td><td>81.41</td></tr>
+<tr><td style="text-align:left">yrAvg_lifeExp</td><td>136</td><td>74.65</td><td>0.12</td><td>74.49</td><td>74.66</td><td>74.80</td></tr>
+<tr><td style="text-align:left">yrAvg_gdpPerCapita</td><td>136</td><td>11.70</td><td>0.13</td><td>11.54</td><td>11.67</td><td>11.89</td></tr>
+<tr><td style="text-align:left">yrAvg_pop</td><td>136</td><td>17.64</td><td>0.21</td><td>17.37</td><td>17.64</td><td>17.92</td></tr>
+<tr><td style="text-align:left">yrAvg_pctFemale</td><td>136</td><td>50.65</td><td>0.02</td><td>50.62</td><td>50.65</td><td>50.67</td></tr>
+<tr><td style="text-align:left">yrAvg_pctRural</td><td>136</td><td>35.28</td><td>0.28</td><td>34.91</td><td>35.29</td><td>35.66</td></tr>
 <tr><td colspan="7" style="border-bottom: 1px solid black"></td></tr></table>
 
 
@@ -671,258 +677,274 @@ stargazer(as.data.frame(mydata) , type = "html",digits = 2 ,summary.stat = c("n"
 <tbody>
   <tr>
    <td style="text-align:right;"> Antigua and Barbuda </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a4f1a4">76.68</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dceef4">15.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6e4ed">51.83</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9cef9c">78.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbeef4">15.84</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dbe8">52.32</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #98ef98">75.21</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Argentina </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a7f1a7">76.30</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6f1a6">76.72</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1f0f5">13.46</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7fbe7">43.82</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2e9f1">51.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbedf4">50.51</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">8.31</span> </td>
   </tr>
   <tr>
+   <td style="text-align:right;"> Aruba </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #acf2ac">75.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8dde9">29.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #add8e6">52.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3f3b3">56.75</span> </td>
+  </tr>
+  <tr>
    <td style="text-align:right;"> Bahamas, The </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #baf4ba">73.43</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dbe8">31.80</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cee7f0">51.45</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcf4bc">73.52</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7dde9">30.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.40</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcdfea">51.98</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecfcec">17.12</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Barbados </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #95ee95">78.94</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8ecf3">16.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8e5ee">51.73</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a5f1a5">76.87</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7ecf3">17.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8dde9">52.14</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a2f0a2">68.81</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Belize </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4f3b4">74.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6fbfc">4.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcf4bc">73.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">5.93</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9f4f8">50.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecf6f9">49.68</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6f3b6">54.44</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Bolivia </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ccf7cc">70.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fafcfd">3.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">11.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1f8fa">49.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4fae4">67.60</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fafdfd">3.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8fef8">11.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ebf5f9">49.72</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8f9d8">31.09</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Brazil </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #adf2ad">75.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">8.59</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">206.98</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dceef4">50.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4f3b4">74.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">8.56</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">207.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4eaf2">50.80</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1fcf1">13.83</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Chile </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">79.84</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0f0f5">13.67</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f5fdf5">18.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddeef4">50.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">80.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0f0f5">13.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f5fdf5">18.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddeff4">50.38</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3fdf3">12.54</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Colombia </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a4f1a4">76.82</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">6.22</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4fbe4">48.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8ecf3">50.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a7f1a7">76.53</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2f9fb">6.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5fbe5">48.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8ecf3">50.62</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8fbe8">19.73</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Costa Rica </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">79.83</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4f2f6">12.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfefc">4.92</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">49.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #94ee94">79.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4f2f6">12.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfefc">4.97</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8f4f8">49.87</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5fbe5">21.88</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Cuba </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #97ef97">78.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a0f0a0">77.61</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eff7fa">7.83</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8fef8">11.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6f3f7">50.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8fef8">11.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1f1f6">50.20</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4fae4">23.04</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Dominican Republic </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9f4b9">73.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0f7fa">7.44</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">10.45</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">49.97</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bff5bf">73.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0f8fa">7.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">10.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">49.64</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8fbe8">20.16</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Ecuador </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6f1a6">76.47</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">6.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6fdf6">16.64</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">49.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a5f1a5">76.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">6.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6fdf6">16.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6f3f7">49.99</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d0f7d0">36.39</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> El Salvador </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bef5be">72.76</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fcfd">3.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbfefb">6.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #add8e6">53.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5f6c5">72.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8fcfd">3.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbfefb">6.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dce8">52.28</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbf9db">29.13</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Grenada </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1f5c1">72.41</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eaf5f8">9.58</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f5fafc">49.58</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3f3b3">74.84</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecf6f9">8.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eaf5f8">49.79</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a9f1a9">63.87</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Guatemala </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8f4b8">73.67</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8fbfc">4.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3f5c3">72.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8fbfd">4.07</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6fdf6">15.96</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dceef4">50.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbeef4">50.47</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bef5be">49.49</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Guyana </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4f8d4">69.53</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">5.87</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddf9dd">68.54</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">5.92</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eef7fa">49.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2e9f1">50.92</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9bef9b">73.48</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Haiti </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">63.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1.40</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">10.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfeff5">50.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">63.63</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">1.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">10.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #deeff5">50.36</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2f5c2">46.14</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Honduras </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1f3b1">74.80</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfdfe">2.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fafefa">9.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ebf5f9">50.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2f5c2">72.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfdfe">2.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9fef9">9.54</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1f8fa">49.45</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6f6c6">43.87</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Jamaica </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5f3b5">74.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6fafc">4.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefd">2.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6f3f7">50.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6f6c6">72.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f5fafc">5.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefd">2.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #deeff5">50.34</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4f6c4">44.75</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Mexico </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0f2b0">74.94</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eaf5f8">9.79</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcf4bc">124.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5ebf2">51.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6f3b6">74.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9f4f8">9.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdf5bd">122.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfe8f0">51.05</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8fbe8">20.28</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Nicaragua </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6f3b6">73.96</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefe">2.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbfefb">6.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddeff4">50.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdf4bd">73.41</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefe">2.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbfefb">6.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6ebf2">50.72</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9f6c9">41.80</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Panama </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9bef9b">78.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfeff5">14.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfefc">4.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eff7fa">49.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a0f0a0">77.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfeff5">14.33</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfefc">4.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7f3f7">49.93</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6f8d6">32.80</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Paraguay </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7f4b7">73.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4f9fb">5.65</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbfefb">6.82</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">49.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcf4bc">73.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">6.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbfefb">6.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ebf5f9">49.73</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdf7cd">38.83</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Peru </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a8f1a8">76.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2f9fb">6.40</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eefcee">31.21</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5f2f7">50.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #acf2ac">75.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2f9fb">6.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eefcee">31.41</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dceef4">50.44</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5fbe5">22.37</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Puerto Rico </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #91ee91">79.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8dde9">29.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #92ee92">79.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8dde9">29.81</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefd">3.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcdfea">52.30</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dae7">52.41</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fcfefc">6.40</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> St. Lucia </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aaf2aa">75.83</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8f4f8">10.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bef5be">73.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7f3f7">10.77</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.18</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddeef4">50.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dff0f5">50.29</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">81.41</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> St. Vincent and the Grenadines </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2f5c2">72.25</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0f8fa">7.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7f3b7">74.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eff7fa">7.79</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">49.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">48.81</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bff5bf">48.42</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Suriname </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7f6c7">71.41</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecf6f9">8.87</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3f9fb">49.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7f6c7">71.84</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edf6f9">8.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.58</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5f2f7">50.02</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4f8d4">33.95</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Trinidad and Tobago </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcf4bc">73.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8ecf3">17.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">1.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0f0f5">50.57</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7f4b7">74.20</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8ecf3">16.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">1.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7ecf2">50.70</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1f5c1">46.76</span> </td>
   </tr>
   <tr>
+   <td style="text-align:right;"> Turks and Caicos Islands </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6f1a6">76.73</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3e2ec">25.50</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1f8fa">49.45</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fafefa">7.34</span> </td>
+  </tr>
+  <tr>
    <td style="text-align:right;"> Uruguay </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9ff09f">77.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbedf4">15.87</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefd">3.43</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8e4ee">51.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a0f0a0">77.57</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbedf4">15.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fdfefd">3.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2e2ec">51.66</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">4.81</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> Virgin Islands (U.S.) </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #93ee93">79.27</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #add8e6">34.53</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #95ee95">79.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #add8e6">34.56</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fefefe">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #badeea">52.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aed8e6">52.63</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffffff">4.46</span> </td>
   </tr>
 </tbody>
@@ -963,407 +985,433 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> ARG </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">76.22</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">76.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.52</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">76.30</span> </td>
+   <td style="text-align:right;"> ABW </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">75.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">75.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">75.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">75.82</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> ATG </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.48</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">76.62</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">76.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.89</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a9">76.68</span> </td>
-   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">-0.14</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.20</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.20</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> BHS </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">73.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">73.55</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">73.43</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.32</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> BLZ </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">74.22</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">74.36</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.50</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d3a6">74.28</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3cbad">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #afde9d">0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> BOL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">70.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">70.63</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">70.94</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">71.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">70.77</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.49</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">-0.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.47</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> BRA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">75.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">75.46</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">75.67</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">75.34</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.33</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> BRB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">78.80</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">78.89</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">78.98</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">79.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">78.94</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.14</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> CHL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">79.65</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">79.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">79.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">80.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a9">79.84</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.20</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.20</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> COL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.53</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">76.73</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">76.92</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">76.82</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">-0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.28</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> CRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">79.56</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">79.74</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">79.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">80.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">79.83</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.26</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc7b1">-0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.27</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> CUB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">78.56</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">78.61</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd6a4">78.66</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">78.73</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">78.64</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd6a4">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.09</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> DOM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">73.47</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">73.69</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.89</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">73.57</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.32</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> ECU </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">76.36</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">76.58</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.80</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">76.47</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.33</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> GRD </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.44</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">72.41</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecbfb8">72.39</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">72.41</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> GTM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.25</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">73.54</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">73.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">73.67</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.42</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">-0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.40</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> GUY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">69.26</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">69.45</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">69.62</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">69.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">69.53</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.27</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">0.08</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.25</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> HND </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.50</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">74.70</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">74.90</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">75.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">74.80</span> </td>
+   <td style="text-align:right;"> ARG </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">76.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">76.83</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a3">76.72</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.30</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">-0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.29</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> HTI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">62.48</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">62.90</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">63.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">63.66</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">63.08</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.60</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">-0.19</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.21</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.58</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> JAM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e2c4b4">74.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">74.27</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d0a9">74.23</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.13</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.14</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> LCA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">75.60</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">75.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">75.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">75.83</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.23</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> MEX </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.90</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">74.92</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">74.95</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">74.94</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> NIC </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.65</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">73.86</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">74.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">73.96</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.31</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.31</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> PAN </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">77.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">77.96</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">78.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">78.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">78.05</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a9e19b">0.11</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.27</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> PER </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">75.79</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">76.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">76.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.52</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">76.16</span> </td>
+   <td style="text-align:right;"> ATG </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">77.91</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">78.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">78.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">78.51</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">78.21</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.13</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.30</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.30</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> PRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">79.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">79.49</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">79.63</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">79.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">79.57</span> </td>
+   <td style="text-align:right;"> BHS </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">73.54</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #acdf9c">73.63</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a4">73.52</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.21</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #acdf9c">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.29</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> PRY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.66</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">73.84</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">73.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.13</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d3a6">73.91</span> </td>
+   <td style="text-align:right;"> BLZ </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1cdac">73.40</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">73.56</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">73.46</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d0cdac">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #adde9d">0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.24</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> SLV </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.41</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">72.64</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">72.87</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">72.76</span> </td>
+   <td style="text-align:right;"> BOL </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">67.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">67.63</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9ce795">67.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">67.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">67.60</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">-0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9ce795">0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.15</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> SUR </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">71.25</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">71.36</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">71.46</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">71.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">71.41</span> </td>
+   <td style="text-align:right;"> BRA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.33</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #efbdba">74.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">74.83</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">75.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfab">74.68</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #efbdba">-0.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.43</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> TTO </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.94</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">73.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">73.25</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">73.17</span> </td>
+   <td style="text-align:right;"> BRB </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">76.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">76.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">76.87</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.21</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> URY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">77.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">77.50</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">77.63</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">77.57</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.20</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.07</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.20</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> VCT </td>
+   <td style="text-align:right;"> CHL </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">79.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a6">80.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">80.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">80.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a6">80.08</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.33</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a6">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">0.06</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> COL </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfcdac">76.47</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">76.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a6">76.53</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceac">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e29a">0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> CRI </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">79.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #95eb92">79.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #acdf9c">79.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">79.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">79.35</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #95eb92">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.13</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> CUB </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.77</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">77.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2bcbb">77.53</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">77.50</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1ccad">77.61</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2bcbb">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.11</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> DOM </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.95</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #efbdba">72.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3cbad">73.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3cbad">73.06</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #efbeba">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3ccad">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> ECU </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4bbbc">76.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">76.97</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfcdac">76.90</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8b9be">-0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.19</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> GRD </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">75.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">74.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc7b1">74.84</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fab8bf">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9c0b7">-0.03</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> GTM </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">72.19</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">72.30</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.42</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0aa">72.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1cdac">72.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #afdd9e">72.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.73</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">72.43</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.33</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.29</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> GUY </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">68.20</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e2c4b4">68.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">68.67</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">68.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">68.54</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">-0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.36</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> HND </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.49</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">72.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">72.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">72.65</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> HTI </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">63.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9c0b7">63.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a8e19a">63.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">64.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">63.63</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b6">-0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e29a">0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.39</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> JAM </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">72.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">71.91</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">71.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">72.03</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">-0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> LCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1bcbb">73.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6babd">73.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">73.18</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f5babc">-0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fab8be">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> MEX </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a4">74.41</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eac0b8">74.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">74.31</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.37</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9c0b7">-0.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.30</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> NIC </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">72.98</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">73.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">73.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">73.41</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">-0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.44</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> PAN </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">77.47</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cbcfaa">77.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a1e597">77.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.86</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c0d5a5">77.69</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a3e498">0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> PER </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">75.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">75.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">75.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">75.82</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.20</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d0cdac">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> PRI </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfcdac">79.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">80.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">79.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">79.77</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">79.75</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">-0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.52</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.49</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">0.02</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> PRY </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09b">73.53</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">73.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a1e597">73.57</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">73.48</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.29</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09b">0.05</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a3e498">0.08</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> SLV </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">71.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">72.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">72.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.56</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">72.18</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">-0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.38</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> SUR </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">70.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">71.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #98e993">72.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">72.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a3">71.84</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-1.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">-0.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #98e993">0.58</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.71</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">76.91</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9be895">76.86</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a5">76.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">76.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">76.73</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9be895">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a5">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.29</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TTO </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.50</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">74.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">74.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">73.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd6a4">74.20</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.30</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.40</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> URY </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">77.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">77.57</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">77.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #97e993">77.61</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">77.57</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #97ea93">0.04</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> VCT </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">74.41</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d4a6">74.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">74.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">74.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d4a6">74.28</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d4a6">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.15</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> VIR </td>
@@ -1402,6 +1450,19 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:right;"> ABW </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">28421.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">28852.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c0d5a5">30270.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">31705.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfcdac">29812.46</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-1.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">-0.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c0d5a5">0.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.89</span> </td>
+  </tr>
+  <tr>
    <td style="text-align:right;"> ARG </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">13789.06</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">13360.21</span> </td>
@@ -1416,180 +1477,180 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> ATG </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">14285.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">14919.21</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">15242.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">16146.59</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cbcfaa">15148.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">14861.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">15570.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">15962.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">16967.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cbd0aa">15840.64</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.86</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">-0.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.98</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">-0.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.13</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BHS </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">31776.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">31491.70</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e2c4b4">31682.70</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">32231.27</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1ccac">31795.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">30206.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">29699.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">30371.58</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">30705.60</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2d4a6">30245.65</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5cbae">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.30</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e2c4b4">-0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.46</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BLZ </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4770.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6babd">4671.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">4663.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1cdac">4707.40</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">4703.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6142.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dc9e">6024.84</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">5806.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5756.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">5932.56</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4bbbc">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">-0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.18</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BOL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3035.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">3118.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">3203.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">3291.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">3162.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2975.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">3054.89</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">3135.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">3219.20</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">3096.19</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.13</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.12</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BRA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8813.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">8455.31</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1bcbb">8498.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">8582.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caae">8587.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8783.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">8426.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1bcba">8470.95</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">8553.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">8558.73</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.13</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2bcbb">-0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">0.00</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BRB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">16524.90</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9de696">16906.59</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">16961.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #afde9d">16838.73</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">16807.89</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">16990.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9be895">17385.20</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">17430.87</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">17220.93</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bbd7a3">17256.81</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9ce795">0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9ae894">0.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">-0.04</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> CHL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">13574.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edbeb9">13624.68</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9b8be">13590.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">13901.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">13672.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">13569.95</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">13644.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #efbdba">13615.52</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">13906.77</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">13684.22</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #eebeb9">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8b9be">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7c1b6">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f1bcbb">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> COL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6175.88</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">6219.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">6208.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6271.88</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfab">6218.97</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6228.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">6290.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c0d5a5">6280.66</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6320.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c0d5a5">6280.18</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.04</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> CRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">11642.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3cbad">12004.67</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a7e29a">12375.92</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">12573.96</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2d4a6">12149.33</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">11529.95</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">11893.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a8e19a">12267.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">12470.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2d4a6">12040.35</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.51</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e29a">0.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">-0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a7e29a">0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.43</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> CUB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">7694.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4bbbc">7726.50</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a9">7863.39</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8040.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3ccad">7831.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">7683.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3bbbb">7721.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">7865.37</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8048.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">7829.73</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f2bcbb">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f3bcbb">-0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> DOM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6921.52</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">7300.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a4">7556.85</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">7997.76</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">7444.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6838.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">7209.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a4">7461.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">7894.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">7351.38</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.52</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.51</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd6a4">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a4">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.54</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> ECU </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6124.49</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5947.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e9c0b7">5981.13</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbb7bf">5952.22</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc7b2">6001.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6130.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5965.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b2">6012.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f7b9bd">5976.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">6021.32</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ebbfb8">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f8b9be">-0.05</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> GRD </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">9096.54</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">9380.23</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">9742.60</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">10109.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d0a9">9582.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">8379.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">8621.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">8933.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">9252.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d0a9">8796.79</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.49</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">-0.20</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">0.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.53</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">-0.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.46</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> GTM </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3994.64</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4c3b5">4034.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bed6a4">4091.27</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4160.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">4070.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5c3b5">4034.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd6a4">4091.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4163.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">4070.89</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4c3b5">-0.04</span> </td>
@@ -1598,37 +1659,37 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> GUY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5576.83</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc7b2">5759.69</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bbd8a3">5945.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6178.89</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d0a9">5865.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5668.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">5852.84</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a5e399">6038.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6127.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a5">5921.81</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">-0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3cbad">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a5e399">0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.21</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> HND </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2286.20</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">2334.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">2406.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2457.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">2371.42</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2257.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">2303.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">2373.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2423.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">2339.54</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.08</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> HTI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">1386.85</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b5">1393.18</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a5e399">1409.63</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1415.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">1401.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">1404.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7c2b6">1409.58</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a2e498">1425.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1429.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">1417.00</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
@@ -1637,63 +1698,63 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> JAM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">4907.93</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc7b2">4949.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">4973.72</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">5043.54</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfab">4968.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5077.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">5132.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">5172.92</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">5264.20</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">5161.72</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d4a6">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.10</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> LCA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10093.62</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">10409.54</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">10718.86</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">10975.83</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">10549.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10290.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">10628.77</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">10942.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11211.60</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">10768.25</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.46</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">-0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">-0.14</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">0.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.44</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> MEX </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">9616.65</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1ccac">9751.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">9842.40</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">9945.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">9789.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">9753.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3cbad">9897.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">9997.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">10120.36</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">9942.15</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3ccad">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NIC </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2049.85</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">2115.93</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2185.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1c4b3">2086.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">2109.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2025.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">2087.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2153.61</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7c1b6">2052.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfcdac">2079.69</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.05</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecbfb8">-0.03</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PAN </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">13630.30</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">14062.44</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a9e19b">14596.74</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">14880.66</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">14292.54</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">13669.56</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">14099.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a9e19b">14634.84</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">14922.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">14331.62</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.66</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.23</span> </td>
@@ -1702,120 +1763,133 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> PER </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6229.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">6380.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a4">6432.92</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6574.32</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">6404.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6180.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfaa">6337.66</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">6400.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6530.50</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">6362.12</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd6a4">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">0.04</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9b8be">29763.49</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">29763.49</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">29961.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1c5b3">29809.22</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">29753.36</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">29821.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">29809.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">29687.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceab">29805.42</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f9b8be">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceac">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.12</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PRY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5413.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">5570.61</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aae09b">5762.73</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">5871.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">5654.60</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">5861.40</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">6025.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aae09b">6226.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6338.51</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">6112.92</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aae09b">0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.23</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> SLV </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3705.58</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">3781.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">3846.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">3920.53</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">3813.61</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3761.51</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">3845.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">3921.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4009.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">3884.39</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc7b1">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.13</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> SUR </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">9168.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">8628.86</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f4bbbc">8677.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">9020.44</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">8873.83</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8907.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">8382.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f5babc">8425.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">8750.92</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">8616.78</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.29</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6babd">-0.20</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #addf9c">0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f6babd">-0.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.13</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">25783.29</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">26417.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">24726.95</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7c1b6">25080.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">25502.09</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">0.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.92</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e7c1b6">-0.42</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> TTO </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">18214.46</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caae">17103.87</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbb7bf">16515.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">16457.19</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">17072.64</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">18389.53</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">17038.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edbeb9">16134.89</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">15716.91</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1cdac">16820.03</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caae">0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #fbb7bf">-0.56</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.57</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">0.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #edbeb9">-0.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-1.10</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> URY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">15613.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a9">15821.36</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #94eb92">16020.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">16037.93</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bbd8a3">15873.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">15655.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">15869.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9ce795">16088.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">16142.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bed6a4">15938.86</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.26</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #92ec91">0.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ceceab">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9be895">0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.20</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> VCT </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6921.70</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">7031.73</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a5">7078.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">7206.50</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">7059.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">7386.74</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfaa">7730.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">7890.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8152.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">7790.22</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d4a5">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.40</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfab">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.36</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> VIR </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">34007.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">34614.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">34435.49</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">35073.63</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">34532.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">34614.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">34435.49</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">35183.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">34560.21</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.53</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.54</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.55</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caae">-0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.62</span> </td>
   </tr>
 </tbody>
 </table>
@@ -1841,12 +1915,25 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
  </thead>
 <tbody>
   <tr>
+   <td style="text-align:right;"> ABW </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">104257</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">104874</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">105439</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">105962</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">105133.00</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+  </tr>
+  <tr>
    <td style="text-align:right;"> ARG </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">43131966</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">43590368</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">44044811</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">44494502</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">43815411.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">43815411.75</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.68</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.23</span> </td>
@@ -1855,11 +1942,11 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> ATG </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">93571</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">94520</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">95425</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">96282</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">94949.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">89941</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">90564</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">91119</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">91626</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">90812.50</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -1868,24 +1955,24 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> BHS </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">374200</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">377923</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">381749</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">385635</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">379876.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">392697</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">395976</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">399020</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">401906</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">397399.75</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BLZ </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">360926</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">368399</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">375775</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">383071</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">372042.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">359871</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">367313</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">374693</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">382066</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">370985.75</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
@@ -1894,37 +1981,37 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> BOL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10869732</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">11031822</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">11192853</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11353140</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">11111886.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">11090085</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">11263015</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">11435533</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11606905</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">11348884.50</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.26</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BRA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">204471759</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">206163056</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">207833825</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">209469320</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">206984490.0</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">205188205</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">206859578</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">208504960</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">210166592</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">207679833.75</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-2.51</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-2.49</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">-0.82</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">0.85</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.83</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2.49</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BRB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">285327</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">285798</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">286229</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">286640</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">285998.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">278083</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">278649</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">279187</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">279688</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">278901.75</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -1933,89 +2020,89 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> CHL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">17969356</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc7b1">18209072</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">18470435</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">18729166</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">18344507.2</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">17870124</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e2c4b4">18083879</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">18368577</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">18701450</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cbcfaa">18256007.50</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.38</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc7b1">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">0.13</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1c4b4">-0.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.45</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> COL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">47520667</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc7b2">48175048</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">48909844</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49661056</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a9">48566653.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">47119728</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e4c3b5">47625955</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">48351671</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49276961</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">48093578.75</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-1.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">-0.39</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">0.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.97</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5c3b5">-0.47</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd6a4">0.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.18</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> CRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">4847805</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">4899336</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">4949955</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4999443</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">4924134.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">4895242</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">4945205</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">4993842</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">5040734</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">4968755.75</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5cbae">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #afde9e">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> CUB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">11324777</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #afdd9e">11335108</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11339255</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #98e993">11338146</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">11334321.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a1e597">11339894</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11342012</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bdd7a3">11336405</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">11328244</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bbd8a3">11336638.75</span> </td>
    <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.00</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> DOM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10281675</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">10397738</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">10513111</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">10627147</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">10454917.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10405832</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">10527592</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">10647244</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">10765531</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">10586549.75</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.17</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3db9f">0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> ECU </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">16212022</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc7b1">16491116</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">16785356</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">17084359</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a8">16643213.2</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">16195902</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">16439585</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bbd8a3">16696944</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">17015672</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">16587025.75</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.43</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">-0.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dec6b2">-0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bbd8a3">0.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.43</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> GRD </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">109603</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">110263</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">110874</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">111449</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">110547.2</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">118980</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">119966</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">120921</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">121838</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">120426.25</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -2028,7 +2115,7 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">15827690</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">16087418</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">16346950</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">15957369.2</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">15957369.25</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.39</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.13</span> </td>
@@ -2037,11 +2124,50 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> GUY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">767433</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">771363</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">775218</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">779007</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">773255.2</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">755031</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #f0bdba">759087</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1c5b3">763252</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">785514</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">765721.00</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> HND </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">9294505</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">9460798</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">9626842</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">9792850</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">9543748.75</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.25</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.25</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> HTI </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10563757</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">10713849</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">10863543</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11012421</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">10788392.50</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.22</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.22</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> JAM </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2794445</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">2802695</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">2808376</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2811835</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">2804337.75</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
@@ -2049,51 +2175,12 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> HND </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">9112904</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">9270794</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">9429016</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">9587523</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">9350059.2</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.08</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.24</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> HTI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">10695540</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">10839976</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">10982367</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">11123183</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">10910266.5</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.21</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.21</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> JAM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">2891024</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">2906242</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">2920848</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2934853</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">2913241.8</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-  </tr>
-  <tr>
    <td style="text-align:right;"> LCA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">179131</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">180028</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">180955</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">181890</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">180501.0</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">175623</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">176413</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">177163</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">177888</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a8">176771.75</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -2102,55 +2189,55 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> MEX </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">121858251</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">123333379</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">124777326</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">126190782</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">124039934.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">120149897</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">121519221</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dc9e">122839258</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">124013861</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c6d2a7">122130559.25</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-2.18</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">-0.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">0.74</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">2.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-1.98</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7c9af">-0.61</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">0.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1.88</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NIC </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6223234</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">6303970</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">6384843</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6465502</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">6344387.2</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6298598</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">6389235</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">6480532</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6572233</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">6435149.50</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.12</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dbc8b1">-0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b3dc9f">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.14</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PAN </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3968490</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">4037073</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">4106764</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4176868</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">4072298.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3957099</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">4026336</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">4096063</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">4165255</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">4061188.25</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">-0.03</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">0.03</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.10</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PER </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">30470739</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">30926036</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">31444299</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">31989265</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">31207584.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">30711863</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">31132779</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">31605486</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">32203944</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">31413518.00</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.74</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">-0.28</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">-0.28</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">0.19</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.79</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PRI </td>
@@ -2158,7 +2245,7 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aae09b">3406672</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">3325286</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3193354</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">3349636.0</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">3349636.00</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.12</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a7e29a">0.06</span> </td>
@@ -2167,11 +2254,11 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> PRY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6688746</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">6777878</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">6867058</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6956069</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">6822437.8</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6177950</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">6266615</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">6355404</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6443328</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">6310824.25</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.13</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">-0.04</span> </td>
@@ -2180,63 +2267,76 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> SLV </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6325121</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">6356137</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5daa0">6388124</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6420740</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">6372530.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6231066</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceab">6250510</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a7e29a">6266654</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">6276342</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">6256143.00</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> SUR </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">559136</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c9b0">564883</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4db9f">570501</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">575987</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">567626.8</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> TTO </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">1370332</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5caae">1377563</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b0dd9e">1384060</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1389841</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d3a7">1380449.0</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> URY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3412013</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b1">3424139</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">3436645</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">3449290</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">3430521.8</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
   </tr>
   <tr>
+   <td style="text-align:right;"> SUR </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">575475</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">581453</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">587559</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">593715</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">584550.50</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">36538</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9b0">38246</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">39844</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">41487</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">39028.75</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TTO </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">1460177</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b6">1469330</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d1cdac">1478607</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">1504709</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">1478205.75</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> URY </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">3402818</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">3413766</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">3422200</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">3427042</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c0d5a5">3416456.50</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+  </tr>
+  <tr>
    <td style="text-align:right;"> VCT </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">109135</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">109467</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">109826</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">110210</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c8d1a9">109659.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">106482</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">105963</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">105549</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">105281</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdcfab">105818.75</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -2249,7 +2349,7 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">107516</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d3ccad">107281</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">107001</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">107377.5</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c4d3a7">107377.50</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -2279,116 +2379,103 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
  </thead>
 <tbody>
   <tr>
-   <td style="text-align:right;"> ARG </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.27</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">51.26</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">51.25</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">51.26</span> </td>
+   <td style="text-align:right;"> ABW </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">52.66</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">52.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">52.69</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d8c9af">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.10</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> ARG </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.52</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">50.51</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">50.50</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.49</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">50.51</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> ATG </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.88</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">51.84</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">51.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.79</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">51.83</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">52.33</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ecbfb8">52.30</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.29</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">52.32</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd6a5">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BHS </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.47</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">51.45</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c3b4">51.44</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.43</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">51.45</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.91</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">51.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">52.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cbd0aa">51.98</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.08</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.08</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BLZ </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">50.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">50.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.19</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">49.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">49.67</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.68</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b1dd9e">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BOL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.74</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c3b4">49.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">49.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">49.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">49.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">49.73</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">49.72</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BRA </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">50.79</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">50.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.83</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">50.80</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">50.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">50.80</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> BRB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.79</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">51.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">51.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.67</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">51.73</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> CHL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">50.76</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.73</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.75</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> COL </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">50.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">50.95</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.93</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">52.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">52.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.11</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">52.14</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
@@ -2396,38 +2483,64 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> CRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c3b4">49.98</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.99</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.99</span> </td>
+   <td style="text-align:right;"> CHL </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.38</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.37</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.38</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> COL </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.61</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.62</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.62</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.00</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> CRI </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">49.86</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">49.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">49.87</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> CUB </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.31</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.31</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.32</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">50.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">50.21</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.20</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.04</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> DOM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.94</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b2">49.96</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">49.98</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceab">49.97</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.60</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5cbae">49.63</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">49.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.68</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.64</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5cbae">-0.01</span> </td>
@@ -2436,89 +2549,76 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> ECU </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.94</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">49.95</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">49.96</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.97</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">49.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.99</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> GRD </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.56</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">49.58</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">49.59</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.61</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">49.58</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">49.77</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #afde9d">49.82</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.86</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.79</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #a6e299">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> GTM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">50.79</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.78</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.76</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.47</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.47</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.47</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.47</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> GUY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bed6a4">49.92</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1c4b4">49.86</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.81</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cad0a9">49.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c5d2a7">50.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e2c4b4">50.86</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">50.92</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a2">0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e1c4b4">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.06</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> HND </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.05</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.45</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.45</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> HTI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.64</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.64</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.65</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.65</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.64</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> JAM </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.30</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.32</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abdf9c">50.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e8c1b7">50.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">50.37</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.36</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
@@ -2526,38 +2626,51 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> LCA </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.76</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.75</span> </td>
+   <td style="text-align:right;"> JAM </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.34</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> LCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.23</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">50.27</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">50.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.35</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.29</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.06</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> MEX </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.10</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.09</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">51.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">51.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">51.05</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> NIC </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.73</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.72</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">0.00</span> </td>
@@ -2566,115 +2679,76 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
   <tr>
    <td style="text-align:right;"> PAN </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.85</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">49.87</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">49.89</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.91</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.88</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.92</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.92</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.93</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.94</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.93</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PER </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.33</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">50.34</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">50.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dac8b0">50.44</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PRI </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">52.24</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">52.34</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.45</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">52.30</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.31</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ddc6b2">52.37</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa1">52.44</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.51</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">52.41</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e0c5b3">-0.06</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.15</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.10</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.11</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> PRY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c3b4">49.12</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">49.14</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.15</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.13</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">49.73</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">49.74</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.75</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d1a8">49.73</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> SLV </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.98</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d4cbae">53.03</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b2dc9f">53.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">53.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d4a6">53.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.24</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c3b4">52.26</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d8a2">52.29</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.32</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">52.28</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d7caaf">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">-0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c1d5a5">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> SUR </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.69</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">49.70</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b4dba0">49.71</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.72</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d9c8b0">49.70</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">0.00</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> TTO </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.54</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">50.56</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">50.57</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.59</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">50.57</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> URY </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.77</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">51.75</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">51.74</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.72</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bcd7a3">51.75</span> </td>
-   <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #abe09c">0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e3c4b4">-0.01</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.02</span> </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> VCT </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.07</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">49.11</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7d9a1">49.16</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.21</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c7d2a8">49.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.96</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5c2b5">49.99</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bad8a2">50.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.09</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cbcfaa">50.02</span> </td>
    <td style="text-align:right;">  </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e5c2b5">-0.03</span> </td>
@@ -2682,17 +2756,69 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.07</span> </td>
   </tr>
   <tr>
-   <td style="text-align:right;"> VIR </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.35</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">52.37</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">52.41</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.44</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cdceab">52.39</span> </td>
+   <td style="text-align:right;"> TCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">49.39</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d6caaf">49.43</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">49.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">49.50</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c2d4a6">49.45</span> </td>
    <td style="text-align:right;">  </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #e6c2b6">-0.02</span> </td>
-   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b5dba0">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cccfaa">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aede9d">0.02</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.05</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TTO </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aae09b">50.72</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9de795">50.74</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">50.76</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">50.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">50.70</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #aae09b">0.02</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #9de795">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.11</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> URY </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">51.70</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd5a5">51.67</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc5b3">51.65</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">51.63</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfcdac">51.66</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d5cbae">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.04</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> VCT </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">48.78</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #efbdba">48.79</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceab">48.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">48.85</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #cfceab">48.81</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.03</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #bfd6a5">0.01</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.04</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> VIR </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">52.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">52.57</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b6daa0">52.69</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">52.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">52.63</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.17</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dfc6b3">-0.07</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b9d9a2">0.05</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.18</span> </td>
   </tr>
 </tbody>
 </table>
@@ -2716,6 +2842,19 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
   </tr>
  </thead>
 <tbody>
+  <tr>
+   <td style="text-align:right;"> ABW </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">56.89</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #addf9d">56.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">56.71</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">56.59</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c3d3a6">56.75</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #addf9d">0.06</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #d2ccad">-0.04</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.16</span> </td>
+  </tr>
   <tr>
    <td style="text-align:right;"> ARG </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">8.50</span> </td>
@@ -3079,6 +3218,19 @@ For each variable, display each country's values in 2015, 2016, 2017, and 2018, 
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.01</span> </td>
    <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.01</span> </td>
+  </tr>
+  <tr>
+   <td style="text-align:right;"> TCA </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">7.81</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b8d9a1">7.48</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">7.18</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">6.90</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #c9d1a9">7.34</span> </td>
+   <td style="text-align:right;">  </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #90ee90">0.46</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #b7daa1">0.14</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #dcc7b1">-0.16</span> </td>
+   <td style="text-align:right;"> <span style="display: block; padding: 0 4px; border-radius: 4px; background-color: #ffb6c1">-0.44</span> </td>
   </tr>
   <tr>
    <td style="text-align:right;"> TTO </td>

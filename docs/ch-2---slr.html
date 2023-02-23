@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>13 Ch 2 - SLR | R Programming Guidebook Project</title>
   <meta name="description" content="13 Ch 2 - SLR | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="13 Ch 2 - SLR | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="web-scraping-in-r.html"/>
 <link rel="next" href="ch-3---mlr.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,31 +337,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="ch-2---slr" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> Ch 2 - SLR</h1>
+<div id="ch-2---slr" class="section level1 hasAnchor" number="13">
+<h1><span class="header-section-number">13</span> Ch 2 - SLR<a href="ch-2---slr.html#ch-2---slr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>For this chapter, you should do the simple linear regressions from the examples. For each, you should make sure you get the same results as in the example and understand the discussion of the example in the textbook. For this chapter, you should also use ggplot to create a scatter plot of the x and y variables used in the regression, and include a linear regression line. So I suggest doing this chapter after you complete the DataCamp course and your notes on <a href="intro-to-data-visualization-with-ggplot2.html#intro-to-data-visualization-with-ggplot2">Intro to Data Visualization with ggplot2</a>.</p>
 <p>These are the packages you will need:</p>
-<div class="sourceCode" id="cb662"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb662-1"><a href="ch-2---slr.html#cb662-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb662-2"><a href="ch-2---slr.html#cb662-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb662-3"><a href="ch-2---slr.html#cb662-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span></code></pre></div>
+<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="ch-2---slr.html#cb663-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb663-2"><a href="ch-2---slr.html#cb663-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb663-3"><a href="ch-2---slr.html#cb663-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span></code></pre></div>
 <p>For displaying the results of a single regression, you should use the <code>pander</code> package as shown in example 2.3 below. (Later in 380 you will be comparing several regression models side-by-side and will be using the <code>stargazer</code> package instead, but for a single regression model this works well).</p>
 <p>I completed the first example (<a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity">Example 2.3: CEO Salary and Return on Equity</a>) for you to demonstrate what you need to do. For the subsequent examples you should fill in the code yourself. I’ve provided the template for you and included the code to load the data. I then added a comment that says “YOUR CODE GOES HERE” wherever you are supposed to add code. You should use the example I did for you as a guide. What you do later in 380 will not be as simple as copy/pasting code I give you and changing a few variable names, for for this chapter as you’re first learning what to do, it’s exactly that easy. Don’t overthink what you’re being asked to do.</p>
 <p>That said, you are of course welcome to add more if it will help you. You can add more regressions. You can explore the changes of units I talk about in LN2.7. You can experiment with log transformations shown in the later parts of chapter 2 (we’ll talk about these later with chapter 3). But the only things you’re required to do for the BP are the 2 examples I left for you below.</p>
-<div id="notes" class="section level2" number="13.1">
-<h2><span class="header-section-number">13.1</span> Notes</h2>
+<div id="notes" class="section level2 hasAnchor" number="13.1">
+<h2><span class="header-section-number">13.1</span> Notes<a href="ch-2---slr.html#notes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Optionally, you can add notes here on chapter 2’s (and LN2’s) content.</p>
 </div>
-<div id="example-2.3-ceo-salary-and-return-on-equity" class="section level2" number="13.2">
-<h2><span class="header-section-number">13.2</span> Example 2.3: CEO Salary and Return on Equity</h2>
+<div id="example-2.3-ceo-salary-and-return-on-equity" class="section level2 hasAnchor" number="13.2">
+<h2><span class="header-section-number">13.2</span> Example 2.3: CEO Salary and Return on Equity<a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the data from <code>wooldridge</code> package, estimate the regression, and display the results</p>
-<div class="sourceCode" id="cb663"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb663-1"><a href="ch-2---slr.html#cb663-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb663-2"><a href="ch-2---slr.html#cb663-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ceosal1)</span>
-<span id="cb663-3"><a href="ch-2---slr.html#cb663-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb663-4"><a href="ch-2---slr.html#cb663-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate regression model</span></span>
-<span id="cb663-5"><a href="ch-2---slr.html#cb663-5" aria-hidden="true" tabindex="-1"></a>ex2<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary <span class="sc">~</span> roe, <span class="at">data=</span>ceosal1)</span>
-<span id="cb663-6"><a href="ch-2---slr.html#cb663-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb663-7"><a href="ch-2---slr.html#cb663-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display model results</span></span>
-<span id="cb663-8"><a href="ch-2---slr.html#cb663-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(ex2<span class="fl">.3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="ch-2---slr.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb664-2"><a href="ch-2---slr.html#cb664-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(ceosal1)</span>
+<span id="cb664-3"><a href="ch-2---slr.html#cb664-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb664-4"><a href="ch-2---slr.html#cb664-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate regression model</span></span>
+<span id="cb664-5"><a href="ch-2---slr.html#cb664-5" aria-hidden="true" tabindex="-1"></a>ex2<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(salary <span class="sc">~</span> roe, <span class="at">data=</span>ceosal1)</span>
+<span id="cb664-6"><a href="ch-2---slr.html#cb664-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb664-7"><a href="ch-2---slr.html#cb664-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display model results</span></span>
+<span id="cb664-8"><a href="ch-2---slr.html#cb664-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(ex2<span class="fl">.3</span>))</span></code></pre></div>
 <table style="width:89%;">
 <colgroup>
 <col width="25%" />
@@ -423,21 +422,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Display a scatter plot with regression line corresponding to this model</p>
-<div class="sourceCode" id="cb664"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb664-1"><a href="ch-2---slr.html#cb664-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ceosal1, <span class="fu">aes</span>(<span class="at">x=</span>roe, <span class="at">y=</span>salary)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb665"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb665-1"><a href="ch-2---slr.html#cb665-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ceosal1, <span class="fu">aes</span>(<span class="at">x=</span>roe, <span class="at">y=</span>salary)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="13-ch2-SLR_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
-<div id="example-2.4-wage-and-education" class="section level2" number="13.3">
-<h2><span class="header-section-number">13.3</span> Example 2.4: Wage and Education</h2>
+<div id="example-2.4-wage-and-education" class="section level2 hasAnchor" number="13.3">
+<h2><span class="header-section-number">13.3</span> Example 2.4: Wage and Education<a href="ch-2---slr.html#example-2.4-wage-and-education" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the data from <code>wooldridge</code> package, estimate the regression, and display the results</p>
-<div class="sourceCode" id="cb666"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb666-1"><a href="ch-2---slr.html#cb666-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb666-2"><a href="ch-2---slr.html#cb666-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(wage1)</span>
-<span id="cb666-3"><a href="ch-2---slr.html#cb666-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb666-4"><a href="ch-2---slr.html#cb666-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate regression model</span></span>
-<span id="cb666-5"><a href="ch-2---slr.html#cb666-5" aria-hidden="true" tabindex="-1"></a>ex2<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> educ, <span class="at">data=</span>wage1)</span>
-<span id="cb666-6"><a href="ch-2---slr.html#cb666-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb666-7"><a href="ch-2---slr.html#cb666-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display model results</span></span>
-<span id="cb666-8"><a href="ch-2---slr.html#cb666-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(ex2<span class="fl">.4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="ch-2---slr.html#cb667-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb667-2"><a href="ch-2---slr.html#cb667-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(wage1)</span>
+<span id="cb667-3"><a href="ch-2---slr.html#cb667-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb667-4"><a href="ch-2---slr.html#cb667-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate regression model</span></span>
+<span id="cb667-5"><a href="ch-2---slr.html#cb667-5" aria-hidden="true" tabindex="-1"></a>ex2<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(wage <span class="sc">~</span> educ, <span class="at">data=</span>wage1)</span>
+<span id="cb667-6"><a href="ch-2---slr.html#cb667-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb667-7"><a href="ch-2---slr.html#cb667-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display model results</span></span>
+<span id="cb667-8"><a href="ch-2---slr.html#cb667-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(ex2<span class="fl">.4</span>))</span></code></pre></div>
 <table style="width:89%;">
 <colgroup>
 <col width="25%" />
@@ -498,21 +497,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Display a scatter plot with regression line corresponding to this model</p>
-<div class="sourceCode" id="cb667"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb667-1"><a href="ch-2---slr.html#cb667-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>wage1, <span class="fu">aes</span>(<span class="at">x=</span>educ, <span class="at">y=</span>wage)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb668"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb668-1"><a href="ch-2---slr.html#cb668-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>wage1, <span class="fu">aes</span>(<span class="at">x=</span>educ, <span class="at">y=</span>wage)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="13-ch2-SLR_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
-<div id="example-2.5-voting-outcomes-and-campaign-expenditures" class="section level2" number="13.4">
-<h2><span class="header-section-number">13.4</span> Example 2.5: Voting Outcomes and Campaign Expenditures</h2>
+<div id="example-2.5-voting-outcomes-and-campaign-expenditures" class="section level2 hasAnchor" number="13.4">
+<h2><span class="header-section-number">13.4</span> Example 2.5: Voting Outcomes and Campaign Expenditures<a href="ch-2---slr.html#example-2.5-voting-outcomes-and-campaign-expenditures" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the data from <code>wooldridge</code> package, estimate the regression, and display the results</p>
-<div class="sourceCode" id="cb669"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb669-1"><a href="ch-2---slr.html#cb669-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb669-2"><a href="ch-2---slr.html#cb669-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(vote1)</span>
-<span id="cb669-3"><a href="ch-2---slr.html#cb669-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-4"><a href="ch-2---slr.html#cb669-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate regression model</span></span>
-<span id="cb669-5"><a href="ch-2---slr.html#cb669-5" aria-hidden="true" tabindex="-1"></a>ex2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(voteA <span class="sc">~</span> shareA, <span class="at">data=</span>vote1)</span>
-<span id="cb669-6"><a href="ch-2---slr.html#cb669-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb669-7"><a href="ch-2---slr.html#cb669-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display model results</span></span>
-<span id="cb669-8"><a href="ch-2---slr.html#cb669-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(ex2<span class="fl">.5</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="ch-2---slr.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb670-2"><a href="ch-2---slr.html#cb670-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(vote1)</span>
+<span id="cb670-3"><a href="ch-2---slr.html#cb670-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb670-4"><a href="ch-2---slr.html#cb670-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate regression model</span></span>
+<span id="cb670-5"><a href="ch-2---slr.html#cb670-5" aria-hidden="true" tabindex="-1"></a>ex2<span class="fl">.5</span> <span class="ot">&lt;-</span> <span class="fu">lm</span>(voteA <span class="sc">~</span> shareA, <span class="at">data=</span>vote1)</span>
+<span id="cb670-6"><a href="ch-2---slr.html#cb670-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb670-7"><a href="ch-2---slr.html#cb670-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Display model results</span></span>
+<span id="cb670-8"><a href="ch-2---slr.html#cb670-8" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(ex2<span class="fl">.5</span>))</span></code></pre></div>
 <table style="width:89%;">
 <colgroup>
 <col width="25%" />
@@ -573,12 +572,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>Display a scatter plot with regression line corresponding to this model</p>
-<div class="sourceCode" id="cb670"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb670-1"><a href="ch-2---slr.html#cb670-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>vote1, <span class="fu">aes</span>(<span class="at">x=</span>shareA, <span class="at">y=</span>voteA)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb671"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb671-1"><a href="ch-2---slr.html#cb671-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>vote1, <span class="fu">aes</span>(<span class="at">x=</span>shareA, <span class="at">y=</span>voteA)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="13-ch2-SLR_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-<div id="example-of-fitted-values-haty" class="section level2" number="13.5">
-<h2><span class="header-section-number">13.5</span> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)</h2>
+<div id="example-of-fitted-values-haty" class="section level2 hasAnchor" number="13.5">
+<h2><span class="header-section-number">13.5</span> Example of Fitted Values (<span class="math inline">\(\hat{y}\)</span>)<a href="ch-2---slr.html#example-of-fitted-values-haty" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This example builds off of <a href="ch-2---slr.html#example-2.3-ceo-salary-and-return-on-equity">Example 2.3: CEO Salary and Return on Equity</a> above. You don’t need to do anything for these, but you should look at them to make sure you understand them.</p>
 <p>First, you should understand how to calculate the OLS fitted values, the <span class="math inline">\(\hat{y}\)</span> values. Below you’ll see two ways to do so. The first is to manually use the OLS regression equation:</p>
 <p><span class="math display">\[
@@ -586,23 +585,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \]</span></p>
 <p>After estimating a model, you can use the <code>coef()</code> function to get the values of <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
 <p>We estimated the model above and stored it into the variable <code>ex2.3</code>. We can access <span class="math inline">\(\hat{\beta}_0\)</span> with <code>coef(ex2.3)["(Intercept)"]</code> or <code>coef(ex2.3)[1]</code>. We can access the first (and only) <span class="math inline">\(x\)</span> variable is named <code>roe</code>, and <span class="math inline">\(\hat{\beta}_1\)</span> is <code>coef(ex2.3)["roe"]</code> or <code>coef(ex2.3)[1]</code>.</p>
-<div class="sourceCode" id="cb672"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb672-1"><a href="ch-2---slr.html#cb672-1" aria-hidden="true" tabindex="-1"></a>ceosal1<span class="sc">$</span>salaryHat <span class="ot">&lt;-</span> <span class="fu">coef</span>(ex2<span class="fl">.3</span>)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(ex2<span class="fl">.3</span>)[<span class="st">&quot;roe&quot;</span>] <span class="sc">*</span> ceosal1<span class="sc">$</span>roe</span></code></pre></div>
+<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="ch-2---slr.html#cb673-1" aria-hidden="true" tabindex="-1"></a>ceosal1<span class="sc">$</span>salaryHat <span class="ot">&lt;-</span> <span class="fu">coef</span>(ex2<span class="fl">.3</span>)[<span class="st">&quot;(Intercept)&quot;</span>] <span class="sc">+</span> <span class="fu">coef</span>(ex2<span class="fl">.3</span>)[<span class="st">&quot;roe&quot;</span>] <span class="sc">*</span> ceosal1<span class="sc">$</span>roe</span></code></pre></div>
 <p>The second way is by using the <code>fitted()</code> function.</p>
-<div class="sourceCode" id="cb673"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb673-1"><a href="ch-2---slr.html#cb673-1" aria-hidden="true" tabindex="-1"></a>ceosal1<span class="sc">$</span>salaryHat_fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex2<span class="fl">.3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="ch-2---slr.html#cb674-1" aria-hidden="true" tabindex="-1"></a>ceosal1<span class="sc">$</span>salaryHat_fitted <span class="ot">&lt;-</span> <span class="fu">fitted</span>(ex2<span class="fl">.3</span>)</span></code></pre></div>
 <p>You can check that these two are the same by subtracting them and making sure they are all the same.</p>
-<div class="sourceCode" id="cb674"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb674-1"><a href="ch-2---slr.html#cb674-1" aria-hidden="true" tabindex="-1"></a>ceosal1<span class="sc">$</span>dif <span class="ot">&lt;-</span> ceosal1<span class="sc">$</span>salaryHat <span class="sc">-</span> ceosal1<span class="sc">$</span>salaryHat_fitted</span>
-<span id="cb674-2"><a href="ch-2---slr.html#cb674-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ceosal1<span class="sc">$</span>dif)</span></code></pre></div>
+<div class="sourceCode" id="cb675"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb675-1"><a href="ch-2---slr.html#cb675-1" aria-hidden="true" tabindex="-1"></a>ceosal1<span class="sc">$</span>dif <span class="ot">&lt;-</span> ceosal1<span class="sc">$</span>salaryHat <span class="sc">-</span> ceosal1<span class="sc">$</span>salaryHat_fitted</span>
+<span id="cb675-2"><a href="ch-2---slr.html#cb675-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ceosal1<span class="sc">$</span>dif)</span></code></pre></div>
 <pre><code>##       Min.    1st Qu.     Median       Mean    3rd Qu.       Max. 
 ## -2.046e-12  0.000e+00  0.000e+00  2.557e-14  2.274e-13  6.821e-13</code></pre>
 <p>Note that the min is -0.000000000002046363 and the max is 0.000000000000682121. Algebra with decimal numbers often results in small rounding errors, which is why these are 0 exactly, but they are effectively 0, demonstrating that the two methods of calculating the fitted <span class="math inline">\((\hat{y})\)</span> values are the same.</p>
 <p>The second reason I’m including this example is to demonstrate plotting the fitted <span class="math inline">\((\hat{y})\)</span> values. The black circles are the data. The red x’s are the predicted <span class="math inline">\((\hat{y})\)</span> values (in this setting, “predicted values” and “fitted” values and <span class="math inline">\((\hat{y})\)</span> all mean the same thing). The blue line is the OLS regression line. You should understand why all of the red x’s are on the blue line.</p>
-<div class="sourceCode" id="cb676"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb676-1"><a href="ch-2---slr.html#cb676-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ceosal1, <span class="fu">aes</span>(<span class="at">x=</span>roe, <span class="at">y=</span>salary)) <span class="sc">+</span> </span>
-<span id="cb676-2"><a href="ch-2---slr.html#cb676-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span><span class="st">&quot;data&quot;</span>,<span class="at">shape=</span><span class="st">&quot;data&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb676-3"><a href="ch-2---slr.html#cb676-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>roe, <span class="at">y=</span>salaryHat,<span class="at">color=</span><span class="st">&quot;predicted (yHat)&quot;</span>,<span class="at">shape=</span><span class="st">&quot;predicted (yHat)&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb676-4"><a href="ch-2---slr.html#cb676-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,<span class="at">color=</span><span class="st">&quot;blue&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>,<span class="fu">aes</span>(<span class="at">linetype=</span><span class="st">&quot;OLS&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb676-5"><a href="ch-2---slr.html#cb676-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>),<span class="at">name=</span><span class="st">&quot;Values&quot;</span>) <span class="sc">+</span></span>
-<span id="cb676-6"><a href="ch-2---slr.html#cb676-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">name=</span><span class="st">&quot;Values&quot;</span>) <span class="sc">+</span></span>
-<span id="cb676-7"><a href="ch-2---slr.html#cb676-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;solid&quot;</span>,<span class="st">&quot;solid&quot;</span>), <span class="at">name=</span><span class="st">&quot;Regression Line&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb677"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb677-1"><a href="ch-2---slr.html#cb677-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>ceosal1, <span class="fu">aes</span>(<span class="at">x=</span>roe, <span class="at">y=</span>salary)) <span class="sc">+</span> </span>
+<span id="cb677-2"><a href="ch-2---slr.html#cb677-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color=</span><span class="st">&quot;data&quot;</span>,<span class="at">shape=</span><span class="st">&quot;data&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb677-3"><a href="ch-2---slr.html#cb677-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>roe, <span class="at">y=</span>salaryHat,<span class="at">color=</span><span class="st">&quot;predicted (yHat)&quot;</span>,<span class="at">shape=</span><span class="st">&quot;predicted (yHat)&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb677-4"><a href="ch-2---slr.html#cb677-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>,<span class="at">color=</span><span class="st">&quot;blue&quot;</span>, <span class="at">se=</span><span class="cn">FALSE</span>,<span class="fu">aes</span>(<span class="at">linetype=</span><span class="st">&quot;OLS&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb677-5"><a href="ch-2---slr.html#cb677-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>),<span class="at">name=</span><span class="st">&quot;Values&quot;</span>) <span class="sc">+</span></span>
+<span id="cb677-6"><a href="ch-2---slr.html#cb677-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_shape_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>),<span class="at">name=</span><span class="st">&quot;Values&quot;</span>) <span class="sc">+</span></span>
+<span id="cb677-7"><a href="ch-2---slr.html#cb677-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;solid&quot;</span>,<span class="st">&quot;solid&quot;</span>), <span class="at">name=</span><span class="st">&quot;Regression Line&quot;</span>)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="13-ch2-SLR_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 

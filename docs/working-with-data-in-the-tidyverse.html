@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>5 Working with Data in the Tidyverse | R Programming Guidebook Project</title>
   <meta name="description" content="5 Working with Data in the Tidyverse | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="5 Working with Data in the Tidyverse | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="intro-to-data-visualization-with-ggplot2.html"/>
 <link rel="next" href="categorical-data-in-the-tidyverse.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,11 +337,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="working-with-data-in-the-tidyverse" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Working with Data in the Tidyverse</h1>
+<div id="working-with-data-in-the-tidyverse" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Working with Data in the Tidyverse<a href="working-with-data-in-the-tidyverse.html#working-with-data-in-the-tidyverse" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/working-with-data-in-the-tidyverse" class="uri">https://learn.datacamp.com/courses/working-with-data-in-the-tidyverse</a></p>
-<div id="explore-your-data" class="section level2" number="5.1">
-<h2><span class="header-section-number">5.1</span> Explore your data</h2>
+<div id="explore-your-data" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Explore your data<a href="working-with-data-in-the-tidyverse.html#explore-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Load the <code>readr</code> package for every session so things work properly:</p>
 <div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="working-with-data-in-the-tidyverse.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <pre><code>## 
@@ -479,6 +478,16 @@ election %&gt;% filter(is.na(variable you want to filter to find na))</code></pr
 </table>
 <p><strong>Variable type: character</strong></p>
 <table>
+<colgroup>
+<col width="19%" />
+<col width="13%" />
+<col width="19%" />
+<col width="5%" />
+<col width="5%" />
+<col width="8%" />
+<col width="12%" />
+<col width="15%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">skim_variable</th>
@@ -545,7 +554,20 @@ election %&gt;% filter(is.na(variable you want to filter to find na))</code></pr
 </tbody>
 </table>
 <p><strong>Variable type: numeric</strong></p>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="13%" />
+<col width="9%" />
+<col width="13%" />
+<col width="8%" />
+<col width="9%" />
+<col width="5%" />
+<col width="7%" />
+<col width="8%" />
+<col width="8%" />
+<col width="10%" />
+<col width="5%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">skim_variable</th>
@@ -776,8 +798,8 @@ Count()
 ## 1 FALSE                2449
 ## 2 TRUE                  704</code></pre>
 </div>
-<div id="tame-your-data" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Tame your data</h2>
+<div id="tame-your-data" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Tame your data<a href="working-with-data-in-the-tidyverse.html#tame-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Cast Column Types</strong>
 To assign or change the type of the columns in the dataset.</p>
 <center>
@@ -923,8 +945,8 @@ The function <code>clean_names()</code> takes an argument case that can be used 
 ## #   WINNER &lt;chr&gt;</code></pre>
 <p>This example, the <code>PCT_name</code> has been replaced into <code>Precint_&lt;N&gt;</code>. The <code>Precint_</code> is first in the <code>select()</code> function so it will be shown first, then next is <code>everything()</code> so everything else will be shown the way it is, then exclude the <code>group</code> variable.</p>
 </div>
-<div id="tidy-your-data" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Tidy your data</h2>
+<div id="tidy-your-data" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Tidy your data<a href="working-with-data-in-the-tidyverse.html#tidy-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>gather()</strong></p>
 <pre><code>?gather</code></pre>
 <p>The <code>gather()</code> function collapses multiple columns into two columns. It reshapes the dataset from wide to long, it reduces the number of columns and increases the number of rows.</p>
@@ -1026,8 +1048,8 @@ week_ratings
 ## 7      7 135.630  138.45
 ## 8      8  90.170   92.87</code></pre>
 </div>
-<div id="transform-your-data" class="section level2" number="5.4">
-<h2><span class="header-section-number">5.4</span> Transform your data</h2>
+<div id="transform-your-data" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> Transform your data<a href="working-with-data-in-the-tidyverse.html#transform-your-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>How To Create A Range-filtered Column</strong></p>
 <p>Use case_when() to create a new column that represents a given range:</p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="working-with-data-in-the-tidyverse.html#cb304-1" aria-hidden="true" tabindex="-1"></a>bakers_sample <span class="ot">&lt;-</span> bakers[<span class="dv">10</span><span class="sc">:</span><span class="dv">17</span>,] <span class="sc">%&gt;%</span></span>

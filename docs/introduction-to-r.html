@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Introduction to R | R Programming Guidebook Project</title>
   <meta name="description" content="1 Introduction to R | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Introduction to R | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="intermediate-r.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,11 +337,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction-to-r" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Introduction to R</h1>
+<div id="introduction-to-r" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Introduction to R<a href="introduction-to-r.html#introduction-to-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/free-introduction-to-r" class="uri">https://learn.datacamp.com/courses/free-introduction-to-r</a></p>
-<div id="intro-to-basics" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Intro to basics</h2>
+<div id="intro-to-basics" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Intro to basics<a href="introduction-to-r.html#intro-to-basics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Arithmetic</strong></p>
 Basic codes to perform calculation:
 <center>
@@ -370,8 +369,8 @@ Basic codes to perform calculation:
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="introduction-to-r.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(my_logical)</span></code></pre></div>
 <pre><code>## [1] &quot;logical&quot;</code></pre>
 </div>
-<div id="vectors" class="section level2" number="1.2">
-<h2><span class="header-section-number">1.2</span> Vectors</h2>
+<div id="vectors" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Vectors<a href="introduction-to-r.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Create A Vector</strong></p>
 <p>Create a vector with the function <code>c()</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="introduction-to-r.html#cb10-1" aria-hidden="true" tabindex="-1"></a>poker_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">140</span>, <span class="sc">-</span><span class="dv">50</span>, <span class="dv">20</span>, <span class="sc">-</span><span class="dv">120</span>, <span class="dv">240</span>)</span>
@@ -434,8 +433,8 @@ Basic codes to perform calculation:
 <pre><code>##    Monday Wednesday    Friday 
 ##       140        20       240</code></pre>
 </div>
-<div id="matrices" class="section level2" number="1.3">
-<h2><span class="header-section-number">1.3</span> Matrices</h2>
+<div id="matrices" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Matrices<a href="introduction-to-r.html#matrices" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>A Matrix</strong></p>
 <p>To construct a matrix in R, use the matrix() function:</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="introduction-to-r.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>, <span class="at">nrow =</span> <span class="dv">3</span>)</span></code></pre></div>
@@ -498,8 +497,8 @@ my_matrix[1,] selects all elements of the first row.</code></pre>
 <pre><code>-Estimated number of visitors
 visitors &lt;- all_wars_matrix/ticket_prices_matrix</code></pre>
 </div>
-<div id="factors" class="section level2" number="1.4">
-<h2><span class="header-section-number">1.4</span> Factors</h2>
+<div id="factors" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Factors<a href="introduction-to-r.html#factors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>There are two types of categorical variables: <strong>nominal categorical</strong> variable and <strong>ordinal categorical</strong> variable.</p>
 <p>A <strong>nominal variable</strong> is a categorical variable <em>without</em> an implied order. For example, the categorical variable items_vector containing <code>"Car", "Key", "Phone" and "Shoe"</code>. It’s hard to compare these elements using a standard.</p>
 <p><strong>Ordinal variables</strong> have <em>natural ordering</em>. For example, the categorical variable <code>temperature_vector</code> with the categories: <code>"Low", "Medium" and "High"</code>. The temps are comparable using a standard.</p>
@@ -536,8 +535,8 @@ visitors &lt;- all_wars_matrix/ticket_prices_matrix</code></pre>
 <span id="cb53-4"><a href="introduction-to-r.html#cb53-4" aria-hidden="true" tabindex="-1"></a>data_analyst2 <span class="sc">&gt;</span> data_analyst5</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
-<div id="data-frames" class="section level2" number="1.5">
-<h2><span class="header-section-number">1.5</span> Data frames</h2>
+<div id="data-frames" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Data frames<a href="introduction-to-r.html#data-frames" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Use function <code>data.frame()</code> to create a data frame. Example from Datacamp below:</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="introduction-to-r.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Definition of vectors</span></span>
 <span id="cb55-2"><a href="introduction-to-r.html#cb55-2" aria-hidden="true" tabindex="-1"></a>name       <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Mercury&quot;</span>, <span class="st">&quot;Venus&quot;</span>, <span class="st">&quot;Earth&quot;</span>, <span class="st">&quot;Mars&quot;</span>, <span class="st">&quot;Jupiter&quot;</span>, <span class="st">&quot;Saturn&quot;</span>, <span class="st">&quot;Uranus&quot;</span>, <span class="st">&quot;Neptune&quot;</span>)</span>
@@ -618,8 +617,8 @@ visitors &lt;- all_wars_matrix/ticket_prices_matrix</code></pre>
 <p>The results indicate that planet #1 is the smallest, #4 is the second-smallest, and planet #5 is the largest. Now, to reorganize the data frame according to the ranking of diameter:</p>
 <div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="introduction-to-r.html#cb71-1" aria-hidden="true" tabindex="-1"></a>positions <span class="ot">&lt;-</span>  <span class="fu">order</span>(planets_df<span class="sc">$</span>diameter)</span></code></pre></div>
 </div>
-<div id="lists" class="section level2" number="1.6">
-<h2><span class="header-section-number">1.6</span> Lists</h2>
+<div id="lists" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Lists<a href="introduction-to-r.html#lists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A list could contain matrices, vectors, other lists, … To create a list, use the <code>function list()</code>:</p>
 <pre><code>my_list &lt;- list(comp1, comp2 ...)</code></pre>
 <p>To give names to components of a list, there are two ways:</p>

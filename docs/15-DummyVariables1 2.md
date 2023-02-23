@@ -1,0 +1,647 @@
+# Dummy Variables Part 1
+
+
+This chapter goes with LN4.1. In LN4.1 we examine two models of the relationship between education and wages. We examined two different ways we could define sets of dummy variables to represent people with a high school degree, a BA, a Master's, or a PhD as their highest level of education. We saw how both models could be used to answer questions such as "what is the average wage for someone with a Master's degree?" or "What is the expected difference in average wage for a person with a Master's degree compared to a BA?" In this BP chapter you will explore these models empirically using micro-level data (i.e., data on individual people). 
+
+Specifically, the data we'll use comes from the 2019 ACS 1-year Public Use [Microdata Sample (PUMS)](https://www.census.gov/programs-surveys/acs/microdata.html). This data has the responses of individuals that the Census Bureau uses to calculate the county- and state-level statistics they publish as part of the ACS (e.g., what you're using for the CP). Formally to analyze this data properly we need to use survey weights to make calculates done using the individual responses representative of the population as a whole. We're not going to worry about that. However, note that our calculations will be off somewhat from the true average wages for the groups we explore in this chapter. We'll obtain our data using the tidycensus package, [as described here](https://walker-data.com/tidycensus/articles/pums-data.html).  
+
+
+
+```r
+library(tidyverse)
+library(tidycensus)
+library(stargazer)
+library(pander)
+## This turns off scientific notation when there are fewer then 4 digits. Otherwise pander displays very small p values with way too many decimal places
+options(scipen = 4)
+```
+
+
+
+
+
+## Obtain and prepare data
+
+To work with the PUMS data via tidycensus, you can pull the table of variables to find what variables are included. I've set this code chunk to not be evaluated (eval = FALSE) when you build because while doing this is helpful while you're working with this data, it doesn't belong in your HTML output
+
+
+```r
+## To work with the PUMS data via tidycensus, you can pull the table of variables to find what variables are included
+## I've set this code chunk to not be evaluated (eval = FALSE) when you build. You might want to do this on your own, but it doesn't belong in your HTML output
+pums_vars_2018 <- pums_variables %>% 
+  filter(year == 2019, survey == "acs1")
+```
+
+
+<style>
+.variablesTable th {
+  text-align: left;
+}
+</style>
+
+Let's pull the following variables from the 2019 ACS-1 year Public Use Microdata (i.e., data on individual people) for the state of Wisconsin (we're limiting our sample to Wisconsin so that it doesn't take too long to load or work with). 
+
+<div class="variablesTable">
+  
+  Variable | Description 
+----------- | -----------
+`PUMA` | Public Use Microdata Areas
+`WAGP` | WAGe of Person
+`AGEP` | AGE of Person
+`SCHL` | educational attainment of person
+`sex` | SEX of person
+</div>
+
+The `results='hide'` code chunk option keeps it from displaying status updates while it downloads (which is sometimes about 100 lines of output, so you definitely don't want it in your HTML output).
+
+
+```r
+## Download 2018 acs1 for Wisconsin.
+wiPUMS <- get_pums(
+  variables = c("PUMA","WAGP", "AGEP", "SCHL", "SEX"),
+  state = "wi",
+  survey = "acs1",
+  year = 2018,
+  recode = TRUE
+)
+```
+
+
+Let's rename `WAGP` as `wage` so that we remember what it is.
+
+
+```r
+wiPUMS <- rename(wiPUMS, wage = WAGP)
+```
+
+
+Let's see what levels of education exist in our data, and how many observations we have for each
+
+
+```r
+wiPUMS %>% count(SCHL,SCHL_label) %>% pander()
+```
+
+
+----------------------------------------------
+ SCHL            SCHL_label               n   
+------ ------------------------------- -------
+  01       No schooling completed       1552  
+
+  02      Nursery school, preschool      766  
+
+  03            Kindergarten             718  
+
+  04               Grade 1               614  
+
+  05               Grade 2               650  
+
+  06               Grade 3               722  
+
+  07               Grade 4               724  
+
+  08               Grade 5               802  
+
+  09               Grade 6               793  
+
+  10               Grade 7               796  
+
+  11               Grade 8              1306  
+
+  12               Grade 9              1000  
+
+  13              Grade 10              1321  
+
+  14              Grade 11              1511  
+
+  15       12th grade - no diploma       851  
+
+  16     Regular high school diploma    14364 
+
+  17    GED or alternative credential   1619  
+
+  18    Some college, but less than 1   3724  
+                    year                      
+
+  19     1 or more years of college     6867  
+              credit, no degree               
+
+  20         Associate's degree         5169  
+
+  21          Bachelor's degree         8182  
+
+  22           Master's degree          2859  
+
+  23    Professional degree beyond a     714  
+              bachelor's degree               
+
+  24          Doctorate degree           455  
+
+  bb     N/A (less than 3 years old)    1754  
+----------------------------------------------
+
+
+
+We're interested in examining how wages differ by educational attainment. We'd like to limit our data to people who are old enough to have completed high school (or equivalent) and college, and then be working. So, let's limit our sample to people age 25 or older. Let's also only examine people who have a wage. 
+
+
+```r
+wiPUMS <- wiPUMS %>% 
+            filter(AGEP >= 25 & wage > 0)
+```
+
+We should look at what education levels (`SCHL`) remain after filtering
+
+
+```r
+wiPUMS %>% count(SCHL,SCHL_label) %>% pander()
+```
+
+
+---------------------------------------------
+ SCHL            SCHL_label              n   
+------ ------------------------------- ------
+  01       No schooling completed       133  
+
+  02      Nursery school, preschool      4   
+
+  03            Kindergarten             5   
+
+  04               Grade 1               1   
+
+  05               Grade 2               3   
+
+  06               Grade 3               5   
+
+  07               Grade 4               4   
+
+  08               Grade 5               8   
+
+  09               Grade 6               39  
+
+  10               Grade 7               14  
+
+  11               Grade 8               92  
+
+  12               Grade 9               95  
+
+  13              Grade 10              168  
+
+  14              Grade 11              282  
+
+  15       12th grade - no diploma      349  
+
+  16     Regular high school diploma    6826 
+
+  17    GED or alternative credential   824  
+
+  18    Some college, but less than 1   1948 
+                    year                     
+
+  19     1 or more years of college     3579 
+              credit, no degree              
+
+  20         Associate's degree         3664 
+
+  21          Bachelor's degree         5600 
+
+  22           Master's degree          2002 
+
+  23    Professional degree beyond a    515  
+              bachelor's degree              
+
+  24          Doctorate degree          320  
+---------------------------------------------
+
+After filtering, the value "bb" that indicates a person who is under 3 years old and thus can't have any schooling is now gone. Now all of the levels of `SCHL` are numeric, which allows us to convert them from a character to a numeric data type. This will then allow us to use inequalities to define dummy variables (e.g., `SCHL <16`).
+
+
+```r
+wiPUMS$SCHL <- as.numeric(wiPUMS$SCHL)
+```
+
+We're comparing wages of people who have a high school degree (or equivalent) or higher, so we also need to drop everyone who has less than a high school degree. Because `SCHL` is now numeric, we can do this using an inequality (rather than listing all of the options separately).
+
+
+```r
+wiPUMS <- wiPUMS %>% filter(SCHL >= 16)
+```
+
+
+In order to match with LN4.1, we also need to drop people with a professional degree. In practice we would probably want to examine them too, but for the sake of matching with what is in LN4.1 we're going to drop them.
+
+
+```r
+wiPUMS <- wiPUMS %>% filter(SCHL != 23)
+```
+
+Whenever you do something like filtering data, it's a very good idea to look at the data and make sure it worked. In previous years of 380, students have wasted many hours trying to get models to work, only to finally go back and look at the data to find that they actually messed up an earlier step that seems easy. So even if it's something easy you think you know how to do, look at the data. You can display summary measures as we'll do here, but it's also a good idea to click on it in the Environment tab and actually scroll through it quickly. Typically you don't display the results in a paper, but for the purposes of the BP, I want to demonstrate what you might do (e.g., get a count by education levels). Here, we could just re-run this: 
+
+```r
+wiPUMS %>% count(SCHL,SCHL_label) %>% pander()
+```
+
+
+---------------------------------------------
+ SCHL            SCHL_label              n   
+------ ------------------------------- ------
+  16     Regular high school diploma    6826 
+
+  17    GED or alternative credential   824  
+
+  18    Some college, but less than 1   1948 
+                    year                     
+
+  19     1 or more years of college     3579 
+              credit, no degree              
+
+  20         Associate's degree         3664 
+
+  21          Bachelor's degree         5600 
+
+  22           Master's degree          2002 
+
+  24          Doctorate degree          320  
+---------------------------------------------
+
+
+
+
+
+## Define dummy variables
+
+In LN4.1 we had an "alpha model" and "beta model" which defined education in different ways. 
+
+<div class="variablesTable">
+  
+  Variable | Alpha Model Definition | Beta Model Definition
+--- | --------- | -----------
+`HS` | N/A | =1 if highest degree is high school, <br>=0 otherwise
+`BA` | =1 if have B.A. degree, <br>=0 if don’t | =1 if highest degree is B.A. degree, <br>=0 otherwise
+`Masters` | =1 if have Master’s degree, <br>=0 if don’t | =1 if highest degree is Master’s, <br>=0 otherwise
+`PhD` | =1 if have PhD, <br>==0 if don’t | =1 if highest degree is PhD, <br>=0 otherwise
+</div>
+
+
+### Alpha Model
+
+In LN4.1, we defined the "Alpha Model" as
+
+$$
+wage = \alpha_0 + \alpha_1 BA + \alpha_2 Masters + \alpha_3 PhD + u
+$$
+
+We need to create the dummy variables used for the "Alpha Model". We'll prefix the variables with "a" for "Alpha". Later you'll define "Beta Model" variables and prefix them with "b".
+
+In our data, some people have some college or an Associates Degree. While we might be interested in differences between people with some college and a only a high school degree, for the purposes of what we're doing here (learning about dummy variables), let's classify anyone without a BA as having high school as their highest degree (even if they have some college or an Associates Degree).  
+
+
+
+```r
+# Create dummy variables for "alpha model" (starting with a)
+wiPUMS <- wiPUMS %>%
+            mutate(aBA = ifelse(SCHL >= 21, 1, 0),
+                   aMasters = ifelse(SCHL >= 22, 1, 0),
+                   aPhD = ifelse(SCHL == 24, 1, 0)
+            )
+```
+
+Now let's estimate the regression shown as "Alpha Model v1" in LN4
+
+
+```r
+alphaModel <- lm(wage ~ aBA + aMasters + aPhD, data = wiPUMS)
+pander(summary(alphaModel))
+```
+
+
+----------------------------------------------------------------
+     &nbsp;        Estimate   Std. Error   t value    Pr(>|t|)  
+----------------- ---------- ------------ --------- ------------
+ **(Intercept)**    40891       357.2       114.5        0      
+
+     **aBA**        21960       715.1       30.71    2.893e-203 
+
+  **aMasters**       9235        1207       7.65      2.08e-14  
+
+    **aPhD**        34351        2791       12.31    1.041e-34  
+----------------------------------------------------------------
+
+
+---------------------------------------------------------------
+ Observations   Residual Std. Error    $R^2$    Adjusted $R^2$ 
+-------------- --------------------- --------- ----------------
+    24763              46360          0.07482      0.07471     
+---------------------------------------------------------------
+
+Table: Fitting linear model: wage ~ aBA + aMasters + aPhD
+
+
+### Beta Model
+
+In LN4.1, we defined the "Beta Model" (version 1) as: 
+
+$$
+wage = \beta_0 + \beta_1 BA + \beta_2 Masters + \beta_3 PhD + u
+$$
+
+We need to create the dummy variables for the "Beta Model" from LN4.1. Use the same categories as you did for the Alpha Model (so we're considering anyone with some college or an associates degree as having high school as their highest education). Prefix these variables with a "b" for "Beta". 
+
+***
+
+**YOUR CODE GOES HERE: add variables bBA, bMasters, and bPhD to wiPUMS**
+
+
+```r
+# Create dummy variables for "Beta Model" (prefix with b)
+wiPUMS <- wiPUMS %>%
+            mutate(bBA = ifelse(SCHL == 21, 1, 0),
+                   bMasters = ifelse(SCHL == 22, 1, 0),
+                   bPhD = ifelse(SCHL == 24, 1, 0)
+            )
+```
+
+***
+
+
+
+Now let's estimate the regression shown as "Beta Model v1" in LN4.1
+
+***
+
+**UN-COMMENT-OUT the following code after you estimate the Beta Model v1**
+
+
+```r
+betaModel <- lm(wage ~ bBA + bMasters + bPhD, data = wiPUMS)
+pander(summary(betaModel))
+```
+
+
+----------------------------------------------------------------
+     &nbsp;        Estimate   Std. Error   t value    Pr(>|t|)  
+----------------- ---------- ------------ --------- ------------
+ **(Intercept)**    40891       357.2       114.5        0      
+
+     **bBA**        21960       715.1       30.71    2.893e-203 
+
+  **bMasters**      31195        1096       28.46    2.205e-175 
+
+    **bPhD**        65546        2616       25.06    7.787e-137 
+----------------------------------------------------------------
+
+
+---------------------------------------------------------------
+ Observations   Residual Std. Error    $R^2$    Adjusted $R^2$ 
+-------------- --------------------- --------- ----------------
+    24763              46360          0.07482      0.07471     
+---------------------------------------------------------------
+
+Table: Fitting linear model: wage ~ bBA + bMasters + bPhD
+
+***
+
+
+## Compare the regressions side-by-side
+
+In LN4.1 we talk about how different models can lead to equivalent results theoretically. Here we want to examine that theoretical equivalence numerically. Specifically, we want to write out various conditional expectations that should be equivalent theoretically and show that the estimated values are indeed equivalent.  
+
+
+Let's start by displaying the two models on the same table. You have to be very careful doing this (so you don't accidentally mis-label variables), but we can re-name the variable labels for each model so that they are the same (e.g., rename `aBA` and `bBA` to both be `BA`) and thus display on the same row of the stargazer table. We'll make a copy of the model results that we use specifically for this purpose. Then we'll rename the coefficients to have the same names. Then we'll display them using stargazer. 
+
+***
+
+**UN-COMMENT-OUT the following code after you estimate the Beta Model v1**
+
+
+```r
+alphaModelStargazer <- alphaModel
+betaModelStargazer <- betaModel
+names(alphaModelStargazer$coefficients) <- c("(Intercept)", "BA", "Masters", "PhD")
+names(betaModelStargazer$coefficients) <- c("(Intercept)", "BA", "Masters", "PhD")
+stargazer(alphaModelStargazer, betaModelStargazer, 
+          type = "html", 
+          report=('vc*p'),
+          notes = "<em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em>", 
+          notes.append = FALSE, 
+          model.numbers = FALSE, 
+          column.labels = c("Alpha","Beta"))
+```
+
+
+<table style="text-align:center"><tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"></td><td colspan="2"><em>Dependent variable:</em></td></tr>
+<tr><td></td><td colspan="2" style="border-bottom: 1px solid black"></td></tr>
+<tr><td style="text-align:left"></td><td colspan="2">wage</td></tr>
+<tr><td style="text-align:left"></td><td>Alpha</td><td>Beta</td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">BA</td><td>21,960.030<sup>***</sup></td><td>21,960.030<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Masters</td><td>9,235.282<sup>***</sup></td><td>31,195.310<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">PhD</td><td>34,351.040<sup>***</sup></td><td>65,546.350<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td style="text-align:left">Constant</td><td>40,890.680<sup>***</sup></td><td>40,890.680<sup>***</sup></td></tr>
+<tr><td style="text-align:left"></td><td>p = 0.000</td><td>p = 0.000</td></tr>
+<tr><td style="text-align:left"></td><td></td><td></td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left">Observations</td><td>24,763</td><td>24,763</td></tr>
+<tr><td style="text-align:left">R<sup>2</sup></td><td>0.075</td><td>0.075</td></tr>
+<tr><td style="text-align:left">Adjusted R<sup>2</sup></td><td>0.075</td><td>0.075</td></tr>
+<tr><td style="text-align:left">Residual Std. Error (df = 24759)</td><td>46,359.640</td><td>46,359.640</td></tr>
+<tr><td style="text-align:left">F Statistic (df = 3; 24759)</td><td>667.408<sup>***</sup></td><td>667.408<sup>***</sup></td></tr>
+<tr><td colspan="3" style="border-bottom: 1px solid black"></td></tr><tr><td style="text-align:left"><em>Note:</em></td><td colspan="2" style="text-align:right"><em>&#42;p&lt;0.1;&#42;&#42;p&lt;0.05;&#42;&#42;&#42;p&lt;0.01</em></td></tr>
+</table>
+
+***
+
+## Compare the predictions of each model
+
+In LN4.1 we claimed that the Alpha Model and Beta Model were theoretically equivalent. Here we are demonstrating that they are also empirically equivalent. The first thing you notice is that the $R^2$ and adjusted $R^2$ are identical. We haven't talked about the other statistics (Residual Std. Error and F STatistic), but they're identical too. That's what we would expect if the models are indeed equivalent. Recall the definition of $R^2$. You'd expect equivalent models to explain the same fraction of the variation in wages. 
+
+Now let's check if real-world situations that are supposed to be equivalent in theory are indeed equivalent numerically. 
+
+First, let's store our coefficients in variables so they're easier to work with: 
+
+
+```r
+## Alpha Model
+a0 <- coef(alphaModel)["(Intercept)"]
+a1 <- coef(alphaModel)["aBA"]
+a2 <- coef(alphaModel)["aMasters"]
+a3 <- coef(alphaModel)["aPhD"]
+
+## Beta Model
+## FILL THESE IN WITH COEFFICIENTS FROM YOUR BETA MODEL
+b0 <- coef(betaModel)["(Intercept)"]
+b1 <- coef(betaModel)["bBA"]
+b2 <- coef(betaModel)["bMasters"]
+b3 <- coef(betaModel)["bPhD"]
+
+## I'll use this to let you know where you need to fill in answers
+PLACEHOLDER <- "PLACEHOLDER"
+```
+
+
+We'll check a variety of situations explored by these models. For each situation, we'll write out the following 6 steps:
+
+1. First, we'll write out the situation in English (e.g., "Expected/average wage for a person whose highest degree is high school")
+
+2. Next,  we'll write out the conditional conditional expectation corresponding to that situation (e.g., $E(wage|HS)$)
+
+3. Then we'll write out the conditional expectation in terms of model parameters using parameters from the Alpha Model (e.g., $\alpha_0$)...
+
+4. ...and in terms of model parameters using parameters from the Beta Model (e.g., $\beta_0$).
+
+5. Last, we'll calculate the value estimated using the Alpha Model (e.g., 40890.68)...
+
+6. ...and the value estimated using the Beta Model (e.g., 40890.68).
+
+
+
+I've filled in a few parts for you below to show you what you're supposed to do. Anyplace you see "PLACEHOLDER" you need to fill in whatever should go there.  
+
+Use LaTex for parameters (e.g., $\alpha_0$, $\beta_0$). Each value should be displayed to 2 decimal places using `format(...,nsmall=2)`. Note that you can add together multiple coefficients inside the format function. This structure is already set up for you below. When you start filling it in, make sure to knit frequently so you don't mess it up and then are unable to figure out what isn't working. For the first few, I'd knit each time you make a change (remember once you've built your book once during your R session, you can simply knit the RMD file you're working with and just re-build the entire book before committing/pushing to GitHub).
+
+**Here are the scenarios:**
+
+Expected/average wage for a person whose highest degree is high school (HS)
+$$
+\begin{aligned}
+E(wage|HS) 
+&= \alpha_0 
+\\&= \beta_0 
+\\&= 40890.68 
+\\&= 40890.68
+\end{aligned}
+$$
+
+
+Expected/average wage for a person whose highest degree is BA
+$$
+  \begin{aligned}
+E(wage|BA) 
+&= \alpha_0 + \alpha_1
+\\&= \beta_0 + \beta_1
+\\&= 62850.71 
+\\&= 62850.71
+\end{aligned}
+$$
+  
+
+Expected/average wage for a person whose highest degree is Master's
+$$
+\begin{aligned}
+E(wage|Masters)  
+&= \alpha_0 + \alpha_1 + \alpha_2
+\\&= \beta_0 + \beta_2
+\\&= 72085.99 
+\\&= 72085.99
+\end{aligned}
+$$
+
+
+Expected/average wage for a person whose highest degree is PhD
+$$
+\begin{aligned}
+E(wage|PhD)  
+&= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3
+\\&= \beta_0 + \beta_3
+\\&= 106437.03 
+\\&= 106437.03
+\end{aligned}
+$$
+
+
+How much higher do you expect the average wage to be for someone whose highest degree is a BA compared to someone whose highest degree is high school (HS)
+$$
+\begin{aligned}
+E(wage|BA) - E(wage|HS)
+&= \alpha_0 + \alpha_1 - (\alpha_0) = \alpha_1
+\\&= \beta_0 + \beta_1 - (\beta_0) = \beta_1
+\\&= 21960.03 
+\\&= 21960.03
+\end{aligned}
+$$
+
+
+How much higher do you expect the average wage to be for someone whose highest degree is a Master's compared to someone whose highest degree is high school (HS)
+$$
+\begin{aligned}
+E(wage|Masters) - E(wage|HS) 
+&= \alpha_0 + \alpha_1 + \alpha_2 - (\alpha_0) = \alpha_1 + \alpha_2
+\\&= \beta_0 + \beta_2 - (\beta_0) = \beta_2
+\\&= 31195.31 
+\\&= 31195.31
+\end{aligned}
+$$
+
+
+How much higher do you expect the average wage to be for someone whose highest degree is a PhD compared to someone whose highest degree is high school (HS)
+$$
+\begin{aligned}
+E(wage|PhD) - E(wage|HS) 
+&= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3 - (\alpha_0) = \alpha_1 + \alpha_2 + \alpha_3
+\\&= \beta_0 + \beta_3 - (\beta_0) = \beta_3
+\\&= 65546.35 
+\\&= 65546.35
+\end{aligned}
+$$
+
+
+How much higher do you expect the average wage to be for someone whose highest degree is a Master's compared to someone whose highest degree is a BA
+$$
+\begin{aligned}
+E(wage|Masters) - E(wage|BA) 
+&= \alpha_0 + \alpha_1 + \alpha_2 - (\alpha_0 + \alpha_1) = \alpha_2
+\\&= \beta_0 + \beta_2 - (\beta_0 + \beta_1) = \beta_2 - \beta_1
+\\&= 9235.282 
+\\&= 9235.282
+\end{aligned}
+$$
+
+
+How much higher do you expect the average wage to be for someone whose highest degree is a PhD compared to someone whose highest degree is a BA
+$$
+\begin{aligned}
+E(wage|PhD) - E(wage|BA) 
+&= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3 - (\alpha_0 + \alpha_1) = \alpha_2 + \alpha_3
+\\&= \beta_0 + \beta_3 - (\beta_0 + \beta_1) = \beta_3 - \beta_1
+\\&= 43586.32 
+\\&= 43586.32
+\end{aligned}
+$$
+
+
+How much higher do you expect the average wage to be for someone whose highest degree is a PhD compared to someone whose highest degree is a Master's
+$$
+\begin{aligned}
+E(wage|PhD) - E(wage|Masters) 
+&= \alpha_0 + \alpha_1 + \alpha_2 + \alpha_3 - (\alpha_0 + \alpha_1 + \alpha_2) = \alpha_3
+\\&= \beta_0 + \beta_3 - (\beta_0 + \beta_2) = \beta_3 - \beta_2
+\\&= 34351.04 
+\\&= 34351.04
+\end{aligned}
+$$
+
+
+### Group averages
+
+Linear regression when all explanatory variables are dummy variables produces the same estimates of average values for different groups as if you simply took the average of the $y$ value for each group. You should be able to confirm this by going back in your BP to chapters where you calculated group averages. Create a single variable for education level (with levels HS, BA, Masters, PhD) and then calculate the average wage for each group. 
+
+Why then do we use regression? One reason is because we easily get standard errors, confidence intervals, and p-values for hypothesis tests of the group averages and differences between groups. Another reason is because we can also control for other variables (such as age...see below).
+
+
+### Causal estimates? 
+
+Make sure you can explain why we should not interpret our results as causal. For example, above we estimated that the average wage is 21960.03 higher for someone whose highest degree is a BA compared to someone whose highest degree is high school (HS). Why can we not claim that getting a BA causes this increase in wage? In other words, why is $\hat{\alpha}_1$ (or $\hat{\beta}_1$) not an unbiased estimate of the true effect of getting a BA on wages?  
+
+
+### What about age? 
+
+You may find it interesting to estimate the models above, but controlling for age (i.e., add age as a variable). What changes 
+
+
+### What about sex? 
+
+How might you add sex to the model? Suppose you create a `female` dummy variable and then include it in the model? What would that allow you to say about differences in wages by sex? What would you have to do to estimate how education affects wages differently for males versus females? 

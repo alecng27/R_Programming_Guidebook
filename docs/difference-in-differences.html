@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>18 Difference-in-Differences | R Programming Guidebook Project</title>
   <meta name="description" content="18 Difference-in-Differences | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="18 Difference-in-Differences | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="fixed-effects.html"/>
 
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,8 +337,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="difference-in-differences" class="section level1" number="18">
-<h1><span class="header-section-number">18</span> Difference-in-Differences</h1>
+<div id="difference-in-differences" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">18</span> Difference-in-Differences<a href="difference-in-differences.html#difference-in-differences" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://moodle.lawrence.edu/pluginfile.php/692806/mod_resource/content/5/18-Difference-in-Differences-SOLN.html">Solutions</a></p>
 <style>
 .textSoln {
@@ -348,16 +347,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </style>
 <p>In this chapter you will estimate the Garbage Incinerator Difference-In-Differences model discussed in LN6. You can also gain experience working with models that include polynomials.</p>
 <p>Solutions are posted in Moodle.</p>
-<div class="sourceCode" id="cb779"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb779-1"><a href="difference-in-differences.html#cb779-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb779-2"><a href="difference-in-differences.html#cb779-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
-<span id="cb779-3"><a href="difference-in-differences.html#cb779-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
-<span id="cb779-4"><a href="difference-in-differences.html#cb779-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb779-5"><a href="difference-in-differences.html#cb779-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Set how many decimals at which R starts to use scientific notation </span></span>
-<span id="cb779-6"><a href="difference-in-differences.html#cb779-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">4</span>)</span>
-<span id="cb779-7"><a href="difference-in-differences.html#cb779-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb779-8"><a href="difference-in-differences.html#cb779-8" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/econ380w21/380data/main/garbageIncineratorDD.csv&quot;</span>)</span></code></pre></div>
-<div id="data-1" class="section level2" number="18.1">
-<h2><span class="header-section-number">18.1</span> Data</h2>
+<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="difference-in-differences.html#cb780-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb780-2"><a href="difference-in-differences.html#cb780-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb780-3"><a href="difference-in-differences.html#cb780-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb780-4"><a href="difference-in-differences.html#cb780-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb780-5"><a href="difference-in-differences.html#cb780-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Set how many decimals at which R starts to use scientific notation </span></span>
+<span id="cb780-6"><a href="difference-in-differences.html#cb780-6" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">4</span>)</span>
+<span id="cb780-7"><a href="difference-in-differences.html#cb780-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb780-8"><a href="difference-in-differences.html#cb780-8" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/econ380w21/380data/main/garbageIncineratorDD.csv&quot;</span>)</span></code></pre></div>
+<div id="data-1" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">18.1</span> Data<a href="difference-in-differences.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The data has 321 observations on house prices in North Andover, MA. The variables include:</p>
 <table>
 <colgroup>
@@ -406,7 +405,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 <p>The relevant background is covered in LN6, but I’ll summarize it again. We have house prices in 1978 and 1981 in North Andover, MA. In 1978 no one knows about any garbage incinerator, so prices in 1978 cannot be affected by the garbage incinerator. In 1979 it was announced publicly that a new garbage incinerator would be built and operational by 1981. The variable “dist” has the distance in miles from the future location of the incinerator. We want to estimate if knowledge of the future incinerator lowered house prices for houses near the incinerator. We’ll define “near” as within 3 miles of the incinerator location.</p>
-<div class="sourceCode" id="cb780"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb780-1"><a href="difference-in-differences.html#cb780-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(<span class="fu">as.data.frame</span>(mydata), <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,<span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;sd&quot;</span>, <span class="st">&quot;min&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;max&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="difference-in-differences.html#cb781-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(<span class="fu">as.data.frame</span>(mydata), <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,<span class="at">summary.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;mean&quot;</span>,<span class="st">&quot;sd&quot;</span>, <span class="st">&quot;min&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;max&quot;</span>))</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="7" style="border-bottom: 1px solid black">
@@ -630,12 +629,16 @@ land
 </table>
 <p>Note that I put <code>mydata</code> inside <code>as.data.frame()</code>. Sometimes stargazer doesn’t work otherwise (as some of you found out in the CP).</p>
 </div>
-<div id="model-1" class="section level2" number="18.2">
-<h2><span class="header-section-number">18.2</span> Model 1</h2>
+<div id="model-1" class="section level2 hasAnchor" number="18.2">
+<h2><span class="header-section-number">18.2</span> Model 1<a href="difference-in-differences.html#model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Estimate the following model and store the results in <code>model1</code></p>
 <p><span class="math display">\[rprice=\beta_0+\beta_1near+\beta_2y81+\beta_3near\cdot y81+u\]</span>
 where</p>
 <table>
+<colgroup>
+<col width="72%" />
+<col width="27%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Variable</th>
@@ -659,15 +662,15 @@ where</p>
 <p>After you create the three variables, estimate the regression, store the regression results in <code>model1</code>, and display the results using pander.</p>
 <p>Then, use <code>group_by()</code> and <code>summarize</code> to calculate the mean price for the four groups (far 1978, far 1981, near 1978, near 1981)</p>
 <p>Finally, display the combinations of regression coefficients that equal the four group averages. These should match with the values shown and discussed in the LN6 slides.</p>
-<div class="sourceCode" id="cb781"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb781-1"><a href="difference-in-differences.html#cb781-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create Variables</span></span>
-<span id="cb781-2"><a href="difference-in-differences.html#cb781-2" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">near =</span> (dist <span class="sc">&lt;=</span><span class="dv">3</span>) <span class="sc">*</span> <span class="dv">1</span>,</span>
-<span id="cb781-3"><a href="difference-in-differences.html#cb781-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y81 =</span> (year <span class="sc">==</span> <span class="dv">1981</span>) <span class="sc">*</span> <span class="dv">1</span>,</span>
-<span id="cb781-4"><a href="difference-in-differences.html#cb781-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y81near =</span> y81 <span class="sc">*</span> near)</span>
-<span id="cb781-5"><a href="difference-in-differences.html#cb781-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb781-6"><a href="difference-in-differences.html#cb781-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate model</span></span>
-<span id="cb781-7"><a href="difference-in-differences.html#cb781-7" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near,<span class="at">data=</span>mydata)</span>
-<span id="cb781-8"><a href="difference-in-differences.html#cb781-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb781-9"><a href="difference-in-differences.html#cb781-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model1))</span></code></pre></div>
+<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="difference-in-differences.html#cb782-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Create Variables</span></span>
+<span id="cb782-2"><a href="difference-in-differences.html#cb782-2" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">near =</span> (dist <span class="sc">&lt;=</span><span class="dv">3</span>) <span class="sc">*</span> <span class="dv">1</span>,</span>
+<span id="cb782-3"><a href="difference-in-differences.html#cb782-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y81 =</span> (year <span class="sc">==</span> <span class="dv">1981</span>) <span class="sc">*</span> <span class="dv">1</span>,</span>
+<span id="cb782-4"><a href="difference-in-differences.html#cb782-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y81near =</span> y81 <span class="sc">*</span> near)</span>
+<span id="cb782-5"><a href="difference-in-differences.html#cb782-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-6"><a href="difference-in-differences.html#cb782-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate model</span></span>
+<span id="cb782-7"><a href="difference-in-differences.html#cb782-7" aria-hidden="true" tabindex="-1"></a>model1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near,<span class="at">data=</span>mydata)</span>
+<span id="cb782-8"><a href="difference-in-differences.html#cb782-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb782-9"><a href="difference-in-differences.html#cb782-9" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model1))</span></code></pre></div>
 <table style="width:92%;">
 <colgroup>
 <col width="25%" />
@@ -741,10 +744,10 @@ where</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb782"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb782-1"><a href="difference-in-differences.html#cb782-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 group averages using group_by() and summarize()</span></span>
-<span id="cb782-2"><a href="difference-in-differences.html#cb782-2" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">%&gt;%</span> </span>
-<span id="cb782-3"><a href="difference-in-differences.html#cb782-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(near,y81) <span class="sc">%&gt;%</span></span>
-<span id="cb782-4"><a href="difference-in-differences.html#cb782-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">priceAvg=</span><span class="fu">mean</span>(rprice))</span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb783-1"><a href="difference-in-differences.html#cb783-1" aria-hidden="true" tabindex="-1"></a><span class="do">## 4 group averages using group_by() and summarize()</span></span>
+<span id="cb783-2"><a href="difference-in-differences.html#cb783-2" aria-hidden="true" tabindex="-1"></a>mydata <span class="sc">%&gt;%</span> </span>
+<span id="cb783-3"><a href="difference-in-differences.html#cb783-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">group_by</span>(near,y81) <span class="sc">%&gt;%</span></span>
+<span id="cb783-4"><a href="difference-in-differences.html#cb783-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">summarize</span>(<span class="at">priceAvg=</span><span class="fu">mean</span>(rprice))</span></code></pre></div>
 <pre><code>## # A tibble: 4 × 3
 ## # Groups:   near [2]
 ##    near   y81 priceAvg
@@ -753,37 +756,37 @@ where</p>
 ## 2     0     1  101308.
 ## 3     1     0   63693.
 ## 4     1     1   70619.</code></pre>
-<div class="sourceCode" id="cb784"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb784-1"><a href="difference-in-differences.html#cb784-1" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1978</span></span>
-<span id="cb784-2"><a href="difference-in-differences.html#cb784-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb785"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb785-1"><a href="difference-in-differences.html#cb785-1" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1978</span></span>
+<span id="cb785-2"><a href="difference-in-differences.html#cb785-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    82517.23</code></pre>
-<div class="sourceCode" id="cb786"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb786-1"><a href="difference-in-differences.html#cb786-1" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1981</span></span>
-<span id="cb786-2"><a href="difference-in-differences.html#cb786-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb787"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb787-1"><a href="difference-in-differences.html#cb787-1" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1981</span></span>
+<span id="cb787-2"><a href="difference-in-differences.html#cb787-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    101307.5</code></pre>
-<div class="sourceCode" id="cb788"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb788-1"><a href="difference-in-differences.html#cb788-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1978</span></span>
-<span id="cb788-2"><a href="difference-in-differences.html#cb788-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb789"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb789-1"><a href="difference-in-differences.html#cb789-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1978</span></span>
+<span id="cb789-2"><a href="difference-in-differences.html#cb789-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    63692.86</code></pre>
-<div class="sourceCode" id="cb790"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb790-1"><a href="difference-in-differences.html#cb790-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1981</span></span>
-<span id="cb790-2"><a href="difference-in-differences.html#cb790-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81near&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb791"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb791-1"><a href="difference-in-differences.html#cb791-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1981</span></span>
+<span id="cb791-2"><a href="difference-in-differences.html#cb791-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81near&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    70619.24</code></pre>
-<div id="equivalent-model-1" class="section level3" number="18.2.1">
-<h3><span class="header-section-number">18.2.1</span> Equivalent model 1</h3>
+<div id="equivalent-model-1" class="section level3 hasAnchor" number="18.2.1">
+<h3><span class="header-section-number">18.2.1</span> Equivalent model 1<a href="difference-in-differences.html#equivalent-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>In LN6 we discuss an equivalent model that defines dummy variables for each group. Create the set of group dummy variables and estimate the model. Stote it in <code>model1equiv</code>. Calculate the conditional expectation for the four groups and show that each is the same as in the version of model 1 estimated above.</p>
-<div class="sourceCode" id="cb792"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb792-1"><a href="difference-in-differences.html#cb792-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Write your code here</span></span>
-<span id="cb792-2"><a href="difference-in-differences.html#cb792-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb792-3"><a href="difference-in-differences.html#cb792-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Create Variables</span></span>
-<span id="cb792-4"><a href="difference-in-differences.html#cb792-4" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y78near =</span> (<span class="dv">1</span><span class="sc">-</span>y81)<span class="sc">*</span>near,</span>
-<span id="cb792-5"><a href="difference-in-differences.html#cb792-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y81far =</span> y81 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>near))</span>
-<span id="cb792-6"><a href="difference-in-differences.html#cb792-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb792-7"><a href="difference-in-differences.html#cb792-7" aria-hidden="true" tabindex="-1"></a><span class="do">## we already created y81near above</span></span>
-<span id="cb792-8"><a href="difference-in-differences.html#cb792-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb792-9"><a href="difference-in-differences.html#cb792-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate model</span></span>
-<span id="cb792-10"><a href="difference-in-differences.html#cb792-10" aria-hidden="true" tabindex="-1"></a>model1equiv <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>y78near<span class="sc">+</span>y81near<span class="sc">+</span>y81far,<span class="at">data=</span>mydata)</span>
-<span id="cb792-11"><a href="difference-in-differences.html#cb792-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb792-12"><a href="difference-in-differences.html#cb792-12" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model1equiv))</span></code></pre></div>
+<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="difference-in-differences.html#cb793-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Write your code here</span></span>
+<span id="cb793-2"><a href="difference-in-differences.html#cb793-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb793-3"><a href="difference-in-differences.html#cb793-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Create Variables</span></span>
+<span id="cb793-4"><a href="difference-in-differences.html#cb793-4" aria-hidden="true" tabindex="-1"></a>mydata <span class="ot">&lt;-</span> mydata <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">y78near =</span> (<span class="dv">1</span><span class="sc">-</span>y81)<span class="sc">*</span>near,</span>
+<span id="cb793-5"><a href="difference-in-differences.html#cb793-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">y81far =</span> y81 <span class="sc">*</span> (<span class="dv">1</span><span class="sc">-</span>near))</span>
+<span id="cb793-6"><a href="difference-in-differences.html#cb793-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb793-7"><a href="difference-in-differences.html#cb793-7" aria-hidden="true" tabindex="-1"></a><span class="do">## we already created y81near above</span></span>
+<span id="cb793-8"><a href="difference-in-differences.html#cb793-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb793-9"><a href="difference-in-differences.html#cb793-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Estimate model</span></span>
+<span id="cb793-10"><a href="difference-in-differences.html#cb793-10" aria-hidden="true" tabindex="-1"></a>model1equiv <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>y78near<span class="sc">+</span>y81near<span class="sc">+</span>y81far,<span class="at">data=</span>mydata)</span>
+<span id="cb793-11"><a href="difference-in-differences.html#cb793-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb793-12"><a href="difference-in-differences.html#cb793-12" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model1equiv))</span></code></pre></div>
 <table style="width:92%;">
 <colgroup>
 <col width="25%" />
@@ -857,52 +860,52 @@ where</p>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb793"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb793-1"><a href="difference-in-differences.html#cb793-1" aria-hidden="true" tabindex="-1"></a><span class="do">## display conditional expectations for each model, and subtract model1equiv estimate from model 1 to show they are o (all are within 1e-10)</span></span>
-<span id="cb793-2"><a href="difference-in-differences.html#cb793-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb793-3"><a href="difference-in-differences.html#cb793-3" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1978</span></span>
-<span id="cb793-4"><a href="difference-in-differences.html#cb793-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb794"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb794-1"><a href="difference-in-differences.html#cb794-1" aria-hidden="true" tabindex="-1"></a><span class="do">## display conditional expectations for each model, and subtract model1equiv estimate from model 1 to show they are o (all are within 1e-10)</span></span>
+<span id="cb794-2"><a href="difference-in-differences.html#cb794-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb794-3"><a href="difference-in-differences.html#cb794-3" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1978</span></span>
+<span id="cb794-4"><a href="difference-in-differences.html#cb794-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    82517.23</code></pre>
-<div class="sourceCode" id="cb795"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb795-1"><a href="difference-in-differences.html#cb795-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb796"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb796-1"><a href="difference-in-differences.html#cb796-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    82517.23</code></pre>
-<div class="sourceCode" id="cb797"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb797-1"><a href="difference-in-differences.html#cb797-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">-</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb798"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb798-1"><a href="difference-in-differences.html#cb798-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">-</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]</span></code></pre></div>
 <pre><code>##   (Intercept) 
 ## -5.820766e-11</code></pre>
-<div class="sourceCode" id="cb799"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb799-1"><a href="difference-in-differences.html#cb799-1" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1981</span></span>
-<span id="cb799-2"><a href="difference-in-differences.html#cb799-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb800"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb800-1"><a href="difference-in-differences.html#cb800-1" aria-hidden="true" tabindex="-1"></a><span class="do">## far 1981</span></span>
+<span id="cb800-2"><a href="difference-in-differences.html#cb800-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    101307.5</code></pre>
-<div class="sourceCode" id="cb801"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb801-1"><a href="difference-in-differences.html#cb801-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81far&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb802"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb802-1"><a href="difference-in-differences.html#cb802-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81far&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    101307.5</code></pre>
-<div class="sourceCode" id="cb803"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb803-1"><a href="difference-in-differences.html#cb803-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">-</span>(<span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81far&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb804"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb804-1"><a href="difference-in-differences.html#cb804-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">-</span>(<span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81far&quot;</span>])</span></code></pre></div>
 <pre><code>##   (Intercept) 
 ## -5.820766e-11</code></pre>
-<div class="sourceCode" id="cb805"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb805-1"><a href="difference-in-differences.html#cb805-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1978</span></span>
-<span id="cb805-2"><a href="difference-in-differences.html#cb805-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb806"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb806-1"><a href="difference-in-differences.html#cb806-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1978</span></span>
+<span id="cb806-2"><a href="difference-in-differences.html#cb806-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    63692.86</code></pre>
-<div class="sourceCode" id="cb807"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb807-1"><a href="difference-in-differences.html#cb807-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y78near&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb808"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb808-1"><a href="difference-in-differences.html#cb808-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y78near&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    63692.86</code></pre>
-<div class="sourceCode" id="cb809"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb809-1"><a href="difference-in-differences.html#cb809-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">-</span>(<span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y78near&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb810"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb810-1"><a href="difference-in-differences.html#cb810-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">-</span>(<span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y78near&quot;</span>])</span></code></pre></div>
 <pre><code>##  (Intercept) 
 ## 2.546585e-10</code></pre>
-<div class="sourceCode" id="cb811"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb811-1"><a href="difference-in-differences.html#cb811-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1981</span></span>
-<span id="cb811-2"><a href="difference-in-differences.html#cb811-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81near&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb812"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb812-1"><a href="difference-in-differences.html#cb812-1" aria-hidden="true" tabindex="-1"></a><span class="do">## near 1981</span></span>
+<span id="cb812-2"><a href="difference-in-differences.html#cb812-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81near&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    70619.24</code></pre>
-<div class="sourceCode" id="cb813"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb813-1"><a href="difference-in-differences.html#cb813-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81near&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb814"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb814-1"><a href="difference-in-differences.html#cb814-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81near&quot;</span>]</span></code></pre></div>
 <pre><code>## (Intercept) 
 ##    70619.24</code></pre>
-<div class="sourceCode" id="cb815"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb815-1"><a href="difference-in-differences.html#cb815-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81near&quot;</span>]<span class="sc">-</span>(<span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81near&quot;</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb816"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb816-1"><a href="difference-in-differences.html#cb816-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(model1)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;near&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1)[<span class="st">&quot;y81near&quot;</span>]<span class="sc">-</span>(<span class="fu">coef</span>(model1equiv)[<span class="st">&quot;(Intercept)&quot;</span>]<span class="sc">+</span><span class="fu">coef</span>(model1equiv)[<span class="st">&quot;y81near&quot;</span>])</span></code></pre></div>
 <pre><code>##   (Intercept) 
 ## -5.820766e-11</code></pre>
 </div>
 </div>
-<div id="model-2" class="section level2" number="18.3">
-<h2><span class="header-section-number">18.3</span> Model 2</h2>
+<div id="model-2" class="section level2 hasAnchor" number="18.3">
+<h2><span class="header-section-number">18.3</span> Model 2<a href="difference-in-differences.html#model-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now estimate the following model</p>
 <p><span class="math display">\[
 \begin{align}
@@ -911,9 +914,9 @@ rprice=\beta_0+\beta_1near+\beta_2y81+\beta_3near\cdot y81 &amp;+\beta_4age+\bet
 \end{align}
 \]</span></p>
 <p>where <span class="math inline">\(age^2\)</span> is the variable age squared. Store your regression results in <code>model2</code>.</p>
-<div class="sourceCode" id="cb817"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb817-1"><a href="difference-in-differences.html#cb817-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>agesq <span class="ot">&lt;-</span> mydata<span class="sc">$</span>age<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb817-2"><a href="difference-in-differences.html#cb817-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near<span class="sc">+</span>age<span class="sc">+</span>agesq<span class="sc">+</span>rooms<span class="sc">+</span>baths<span class="sc">+</span>area<span class="sc">+</span>land,<span class="at">data=</span>mydata)</span>
-<span id="cb817-3"><a href="difference-in-differences.html#cb817-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model2))</span></code></pre></div>
+<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="difference-in-differences.html#cb818-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>agesq <span class="ot">&lt;-</span> mydata<span class="sc">$</span>age<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb818-2"><a href="difference-in-differences.html#cb818-2" aria-hidden="true" tabindex="-1"></a>model2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near<span class="sc">+</span>age<span class="sc">+</span>agesq<span class="sc">+</span>rooms<span class="sc">+</span>baths<span class="sc">+</span>area<span class="sc">+</span>land,<span class="at">data=</span>mydata)</span>
+<span id="cb818-3"><a href="difference-in-differences.html#cb818-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">summary</span>(model2))</span></code></pre></div>
 <table style="width:94%;">
 <colgroup>
 <col width="25%" />
@@ -1030,18 +1033,18 @@ rprice=\beta_0+\beta_1near+\beta_2y81+\beta_3near\cdot y81 &amp;+\beta_4age+\bet
 </tbody>
 </table>
 <p>Note that if you want to use <span class="math inline">\(age^2\)</span> inside <code>lm()</code> instead of creating the <code>agesq</code> variable first, you need to put the <code>age^2</code> inside <code>I()</code>. For example, you could do:</p>
-<div class="sourceCode" id="cb818"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb818-1"><a href="difference-in-differences.html#cb818-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model2 &lt;- lm (rprice~near+y81+near*y81+age+I(age^2)+rooms+baths+area+land, data= mydata)</span></span>
-<span id="cb818-2"><a href="difference-in-differences.html#cb818-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pander(summary (example))</span></span></code></pre></div>
+<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="difference-in-differences.html#cb819-1" aria-hidden="true" tabindex="-1"></a><span class="co"># model2 &lt;- lm (rprice~near+y81+near*y81+age+I(age^2)+rooms+baths+area+land, data= mydata)</span></span>
+<span id="cb819-2"><a href="difference-in-differences.html#cb819-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pander(summary (example))</span></span></code></pre></div>
 </div>
-<div id="comparison-of-models" class="section level2" number="18.4">
-<h2><span class="header-section-number">18.4</span> Comparison of models</h2>
+<div id="comparison-of-models" class="section level2 hasAnchor" number="18.4">
+<h2><span class="header-section-number">18.4</span> Comparison of models<a href="difference-in-differences.html#comparison-of-models" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Here we display the two models in a stargazer table. First we’ll display them with the p-values. Then we’ll display them with standard errors, next with the t-statistic, and finally with the 95% confidence interval. It’s common for results to be presenting with one of these four statistics, so it’s important for you to be comfortable with each choice. I’ve included the stargazer tables for you. Just un-comment-them out (i.e., remove the hash tags…which you can do by selecting all of them and using ctrl/cmd-shift-C).</p>
-<div class="sourceCode" id="cb819"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb819-1"><a href="difference-in-differences.html#cb819-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
-<span id="cb819-2"><a href="difference-in-differences.html#cb819-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
-<span id="cb819-3"><a href="difference-in-differences.html#cb819-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
-<span id="cb819-4"><a href="difference-in-differences.html#cb819-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
-<span id="cb819-5"><a href="difference-in-differences.html#cb819-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;p-value reported in parentheses,  &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
-<span id="cb819-6"><a href="difference-in-differences.html#cb819-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="difference-in-differences.html#cb820-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
+<span id="cb820-2"><a href="difference-in-differences.html#cb820-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
+<span id="cb820-3"><a href="difference-in-differences.html#cb820-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*p&#39;</span>),</span>
+<span id="cb820-4"><a href="difference-in-differences.html#cb820-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
+<span id="cb820-5"><a href="difference-in-differences.html#cb820-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;p-value reported in parentheses,  &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
+<span id="cb820-6"><a href="difference-in-differences.html#cb820-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -1409,12 +1412,12 @@ p-value reported in parentheses, <em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.01</em>
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb820"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb820-1"><a href="difference-in-differences.html#cb820-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
-<span id="cb820-2"><a href="difference-in-differences.html#cb820-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
-<span id="cb820-3"><a href="difference-in-differences.html#cb820-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*s&#39;</span>),</span>
-<span id="cb820-4"><a href="difference-in-differences.html#cb820-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
-<span id="cb820-5"><a href="difference-in-differences.html#cb820-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;standard error reported in parentheses, &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
-<span id="cb820-6"><a href="difference-in-differences.html#cb820-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="difference-in-differences.html#cb821-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
+<span id="cb821-2"><a href="difference-in-differences.html#cb821-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
+<span id="cb821-3"><a href="difference-in-differences.html#cb821-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*s&#39;</span>),</span>
+<span id="cb821-4"><a href="difference-in-differences.html#cb821-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
+<span id="cb821-5"><a href="difference-in-differences.html#cb821-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;standard error reported in parentheses, &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
+<span id="cb821-6"><a href="difference-in-differences.html#cb821-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -1782,12 +1785,12 @@ standard error reported in parentheses, <em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.01</
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb821"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb821-1"><a href="difference-in-differences.html#cb821-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
-<span id="cb821-2"><a href="difference-in-differences.html#cb821-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
-<span id="cb821-3"><a href="difference-in-differences.html#cb821-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*t&#39;</span>),</span>
-<span id="cb821-4"><a href="difference-in-differences.html#cb821-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
-<span id="cb821-5"><a href="difference-in-differences.html#cb821-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;t-statistic reported for each coefficient, &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
-<span id="cb821-6"><a href="difference-in-differences.html#cb821-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="difference-in-differences.html#cb822-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
+<span id="cb822-2"><a href="difference-in-differences.html#cb822-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
+<span id="cb822-3"><a href="difference-in-differences.html#cb822-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">report=</span>(<span class="st">&#39;vc*t&#39;</span>),</span>
+<span id="cb822-4"><a href="difference-in-differences.html#cb822-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
+<span id="cb822-5"><a href="difference-in-differences.html#cb822-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;t-statistic reported for each coefficient, &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
+<span id="cb822-6"><a href="difference-in-differences.html#cb822-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -2155,13 +2158,13 @@ t-statistic reported for each coefficient, <em>*p&lt;0.1;**p&lt;0.05;***p&lt;0.0
 </td>
 </tr>
 </table>
-<div class="sourceCode" id="cb822"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb822-1"><a href="difference-in-differences.html#cb822-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
-<span id="cb822-2"><a href="difference-in-differences.html#cb822-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
-<span id="cb822-3"><a href="difference-in-differences.html#cb822-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb822-4"><a href="difference-in-differences.html#cb822-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">ci.level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb822-5"><a href="difference-in-differences.html#cb822-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
-<span id="cb822-6"><a href="difference-in-differences.html#cb822-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;95% confidence interval reported in parentheses, &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
-<span id="cb822-7"><a href="difference-in-differences.html#cb822-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="difference-in-differences.html#cb823-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stargazer</span>(model1, model2,</span>
+<span id="cb823-2"><a href="difference-in-differences.html#cb823-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">type =</span> <span class="st">&quot;html&quot;</span>,</span>
+<span id="cb823-3"><a href="difference-in-differences.html#cb823-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">ci =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb823-4"><a href="difference-in-differences.html#cb823-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">ci.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb823-5"><a href="difference-in-differences.html#cb823-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">keep.stat =</span> <span class="fu">c</span>(<span class="st">&quot;n&quot;</span>,<span class="st">&quot;rsq&quot;</span>,<span class="st">&quot;adj.rsq&quot;</span>),</span>
+<span id="cb823-6"><a href="difference-in-differences.html#cb823-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes =</span> <span class="st">&quot;95% confidence interval reported in parentheses, &lt;em&gt;&amp;#42;p&amp;lt;0.1;&amp;#42;&amp;#42;p&amp;lt;0.05;&amp;#42;&amp;#42;&amp;#42;p&amp;lt;0.01&lt;/em&gt;&quot;</span>,</span>
+<span id="cb823-7"><a href="difference-in-differences.html#cb823-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">notes.append =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <table style="text-align:center">
 <tr>
 <td colspan="3" style="border-bottom: 1px solid black">
@@ -2530,10 +2533,10 @@ Adjusted R<sup>2</sup>
 </tr>
 </table>
 </div>
-<div id="additional-questions" class="section level2" number="18.5">
-<h2><span class="header-section-number">18.5</span> Additional questions</h2>
-<div id="question-1" class="section level3" number="18.5.1">
-<h3><span class="header-section-number">18.5.1</span> Question 1</h3>
+<div id="additional-questions" class="section level2 hasAnchor" number="18.5">
+<h2><span class="header-section-number">18.5</span> Additional questions<a href="difference-in-differences.html#additional-questions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="question-1" class="section level3 hasAnchor" number="18.5.1">
+<h3><span class="header-section-number">18.5.1</span> Question 1<a href="difference-in-differences.html#question-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Based on model 1, what effect did the garbage incinerator have on house prices for houses “near” (within 3 miles of) the incinerator? Is this effect statistically significant?</p>
 <div class="textSoln">
 <hr />
@@ -2542,10 +2545,10 @@ Adjusted R<sup>2</sup>
 <hr />
 </div>
 </div>
-<div id="question-2" class="section level3" number="18.5.2">
-<h3><span class="header-section-number">18.5.2</span> Question 2</h3>
+<div id="question-2" class="section level3 hasAnchor" number="18.5.2">
+<h3><span class="header-section-number">18.5.2</span> Question 2<a href="difference-in-differences.html#question-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Here is how you can easily report the confidence intervals for <code>model1</code> for the 3 standard (i.e., commonly used/reported) levels of significance:</p>
-<div class="sourceCode" id="cb823"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb823-1"><a href="difference-in-differences.html#cb823-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model1,<span class="at">level =</span> <span class="fl">0.99</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="difference-in-differences.html#cb824-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model1,<span class="at">level =</span> <span class="fl">0.99</span>))</span></code></pre></div>
 <table style="width:50%;">
 <colgroup>
 <col width="25%" />
@@ -2582,7 +2585,7 @@ Adjusted R<sup>2</sup>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb824"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb824-1"><a href="difference-in-differences.html#cb824-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model1,<span class="at">level =</span> <span class="fl">0.95</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="difference-in-differences.html#cb825-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model1,<span class="at">level =</span> <span class="fl">0.95</span>))</span></code></pre></div>
 <table style="width:50%;">
 <colgroup>
 <col width="25%" />
@@ -2619,7 +2622,7 @@ Adjusted R<sup>2</sup>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb825"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb825-1"><a href="difference-in-differences.html#cb825-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model1,<span class="at">level =</span> <span class="fl">0.90</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="difference-in-differences.html#cb826-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model1,<span class="at">level =</span> <span class="fl">0.90</span>))</span></code></pre></div>
 <table style="width:50%;">
 <colgroup>
 <col width="25%" />
@@ -2664,8 +2667,8 @@ Adjusted R<sup>2</sup>
 <hr />
 </div>
 </div>
-<div id="question-3" class="section level3" number="18.5.3">
-<h3><span class="header-section-number">18.5.3</span> Question 3</h3>
+<div id="question-3" class="section level3 hasAnchor" number="18.5.3">
+<h3><span class="header-section-number">18.5.3</span> Question 3<a href="difference-in-differences.html#question-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Now look at the second model. Based on <code>model2</code>, what effect did the garbage incinerator have on house prices for houses “near” (within 3 miles of) the incinerator? Is this effect statistically significant?</p>
 <div class="textSoln">
 <hr />
@@ -2674,14 +2677,14 @@ Adjusted R<sup>2</sup>
 <hr />
 </div>
 </div>
-<div id="question-4" class="section level3" number="18.5.4">
-<h3><span class="header-section-number">18.5.4</span> Question 4</h3>
+<div id="question-4" class="section level3 hasAnchor" number="18.5.4">
+<h3><span class="header-section-number">18.5.4</span> Question 4<a href="difference-in-differences.html#question-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Calculate the confidence interval needed to reach the same conclusion about statistical significance of the effect of the garbage incinerator as your answer to the previous question (for which you looked at the p-value)? Explain why this is the level you need to look at to reach that conclusion.</p>
 <div class="textSoln">
 <hr />
 <p><strong>Solution:</strong></p>
 <p>In the previous question, we concluded that the effect of the garbage incinerator (-15021) is statistically significant at the 1% level. We reached this conclusion because the p-value (0.003) is smaller than 0.01. If we calculate the 99% confidence interval, it will not contain zero. Thus, it’s less than 1% likely that the true coefficient is 0, so we can reject at the 1% level that the true coefficient is 0. The 95% and 90% confidence intervals will be narrower, and further away from 0, so they won’t contain 0 either. But to conclude that the coefficient is statistically significant at the 1% level, we need to look at the 99% confidence interval. As expected, it doesn’t include 0:</p>
-<div class="sourceCode" id="cb826"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb826-1"><a href="difference-in-differences.html#cb826-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model2), <span class="at">level=</span><span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="difference-in-differences.html#cb827-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model2), <span class="at">level=</span><span class="fl">0.99</span>)</span></code></pre></div>
 <table style="width:53%;">
 <colgroup>
 <col width="25%" />
@@ -2748,8 +2751,8 @@ Adjusted R<sup>2</sup>
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb827"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb827-1"><a href="difference-in-differences.html#cb827-1" aria-hidden="true" tabindex="-1"></a><span class="do">## if we only want the confidence interval for y81near, we can do this:  </span></span>
-<span id="cb827-2"><a href="difference-in-differences.html#cb827-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model2)[<span class="st">&quot;y81near&quot;</span>,], <span class="at">level=</span><span class="fl">0.99</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="difference-in-differences.html#cb828-1" aria-hidden="true" tabindex="-1"></a><span class="do">## if we only want the confidence interval for y81near, we can do this:  </span></span>
+<span id="cb828-2"><a href="difference-in-differences.html#cb828-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pander</span>(<span class="fu">confint</span>(model2)[<span class="st">&quot;y81near&quot;</span>,], <span class="at">level=</span><span class="fl">0.99</span>)</span></code></pre></div>
 <table style="width:25%;">
 <colgroup>
 <col width="12%" />
@@ -2772,49 +2775,49 @@ Adjusted R<sup>2</sup>
 </div>
 </div>
 </div>
-<div id="polynomials" class="section level2" number="18.6">
-<h2><span class="header-section-number">18.6</span> Polynomials</h2>
+<div id="polynomials" class="section level2 hasAnchor" number="18.6">
+<h2><span class="header-section-number">18.6</span> Polynomials<a href="difference-in-differences.html#polynomials" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>For this part I’ve left in all the code, so there’s nothing you have to do here other than comment out the code I give you. However, I suggest you go through the code and experiment a bit until you understand what’s going on with polynomial models.</p>
 <p>In model 2 you included a second order polynomial in age (i.e., you included age and age squared). What this allows for is the regression line to have a parabolic shape instead of being a straight line. To see an example of this, consider the following two models, the first that only includes age and the second that includes age and age squared.</p>
-<div class="sourceCode" id="cb828"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb828-1"><a href="difference-in-differences.html#cb828-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>agesq <span class="ot">&lt;-</span> mydata<span class="sc">$</span>age<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb828-2"><a href="difference-in-differences.html#cb828-2" aria-hidden="true" tabindex="-1"></a>modelAge <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age,<span class="at">data=</span>mydata)</span>
-<span id="cb828-3"><a href="difference-in-differences.html#cb828-3" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAge <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAge)</span>
-<span id="cb828-4"><a href="difference-in-differences.html#cb828-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb828-5"><a href="difference-in-differences.html#cb828-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb828-6"><a href="difference-in-differences.html#cb828-6" aria-hidden="true" tabindex="-1"></a>modelAge2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age<span class="sc">+</span>agesq,<span class="at">data=</span>mydata)</span>
-<span id="cb828-7"><a href="difference-in-differences.html#cb828-7" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAge2 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAge2)</span>
-<span id="cb828-8"><a href="difference-in-differences.html#cb828-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb828-9"><a href="difference-in-differences.html#cb828-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>rprice,<span class="at">x=</span>age)) <span class="sc">+</span></span>
-<span id="cb828-10"><a href="difference-in-differences.html#cb828-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb828-11"><a href="difference-in-differences.html#cb828-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;blue&quot;</span>,<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
-<span id="cb828-12"><a href="difference-in-differences.html#cb828-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
-<span id="cb828-13"><a href="difference-in-differences.html#cb828-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;green&quot;</span>,<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
-<span id="cb828-14"><a href="difference-in-differences.html#cb828-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;green&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="difference-in-differences.html#cb829-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>agesq <span class="ot">&lt;-</span> mydata<span class="sc">$</span>age<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb829-2"><a href="difference-in-differences.html#cb829-2" aria-hidden="true" tabindex="-1"></a>modelAge <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age,<span class="at">data=</span>mydata)</span>
+<span id="cb829-3"><a href="difference-in-differences.html#cb829-3" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAge <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAge)</span>
+<span id="cb829-4"><a href="difference-in-differences.html#cb829-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb829-5"><a href="difference-in-differences.html#cb829-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb829-6"><a href="difference-in-differences.html#cb829-6" aria-hidden="true" tabindex="-1"></a>modelAge2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age<span class="sc">+</span>agesq,<span class="at">data=</span>mydata)</span>
+<span id="cb829-7"><a href="difference-in-differences.html#cb829-7" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAge2 <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAge2)</span>
+<span id="cb829-8"><a href="difference-in-differences.html#cb829-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb829-9"><a href="difference-in-differences.html#cb829-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>rprice,<span class="at">x=</span>age)) <span class="sc">+</span></span>
+<span id="cb829-10"><a href="difference-in-differences.html#cb829-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb829-11"><a href="difference-in-differences.html#cb829-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;blue&quot;</span>,<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
+<span id="cb829-12"><a href="difference-in-differences.html#cb829-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb829-13"><a href="difference-in-differences.html#cb829-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;green&quot;</span>,<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
+<span id="cb829-14"><a href="difference-in-differences.html#cb829-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2,<span class="at">x=</span>age),<span class="at">color=</span><span class="st">&quot;green&quot;</span>)</span></code></pre></div>
 <p><img src="18-Difference-in-Differences_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>To see a slightly more complete model, also including <code>near</code>, <code>y81</code>, and <code>y81near</code>. Let’s define a factor variable that will indicate the four groups by color. We’ll first display the graph for the model that only includes <code>age</code> (plus <code>near</code>, <code>y81</code>, and <code>y81near</code>). Then we’ll display the graph for the model that also includes age squared.</p>
-<div class="sourceCode" id="cb829"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb829-1"><a href="difference-in-differences.html#cb829-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>near<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> mydata<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1978</span>,<span class="st">&quot;y78far&quot;</span>,</span>
-<span id="cb829-2"><a href="difference-in-differences.html#cb829-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">ifelse</span>(mydata<span class="sc">$</span>near<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> mydata<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1978</span>,<span class="st">&quot;y78near&quot;</span>,</span>
-<span id="cb829-3"><a href="difference-in-differences.html#cb829-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ifelse</span>(mydata<span class="sc">$</span>near<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> mydata<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1981</span>,<span class="st">&quot;y81far&quot;</span>,</span>
-<span id="cb829-4"><a href="difference-in-differences.html#cb829-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">&quot;y81near&quot;</span></span>
-<span id="cb829-5"><a href="difference-in-differences.html#cb829-5" aria-hidden="true" tabindex="-1"></a>                       )))</span>
-<span id="cb829-6"><a href="difference-in-differences.html#cb829-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb829-7"><a href="difference-in-differences.html#cb829-7" aria-hidden="true" tabindex="-1"></a>modelAgeWithGroups <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age<span class="sc">+</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near,<span class="at">data=</span>mydata)</span>
-<span id="cb829-8"><a href="difference-in-differences.html#cb829-8" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAgeWithGroups <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAgeWithGroups)</span>
-<span id="cb829-9"><a href="difference-in-differences.html#cb829-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb829-10"><a href="difference-in-differences.html#cb829-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>rprice,<span class="at">x=</span>age,<span class="at">color=</span>group)) <span class="sc">+</span></span>
-<span id="cb829-11"><a href="difference-in-differences.html#cb829-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb829-12"><a href="difference-in-differences.html#cb829-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAgeWithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group),<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
-<span id="cb829-13"><a href="difference-in-differences.html#cb829-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAgeWithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group))</span></code></pre></div>
+<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="difference-in-differences.html#cb830-1" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>group <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(mydata<span class="sc">$</span>near<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> mydata<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1978</span>,<span class="st">&quot;y78far&quot;</span>,</span>
+<span id="cb830-2"><a href="difference-in-differences.html#cb830-2" aria-hidden="true" tabindex="-1"></a>                       <span class="fu">ifelse</span>(mydata<span class="sc">$</span>near<span class="sc">==</span><span class="dv">1</span> <span class="sc">&amp;</span> mydata<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1978</span>,<span class="st">&quot;y78near&quot;</span>,</span>
+<span id="cb830-3"><a href="difference-in-differences.html#cb830-3" aria-hidden="true" tabindex="-1"></a>                              <span class="fu">ifelse</span>(mydata<span class="sc">$</span>near<span class="sc">==</span><span class="dv">0</span> <span class="sc">&amp;</span> mydata<span class="sc">$</span>year<span class="sc">==</span><span class="dv">1981</span>,<span class="st">&quot;y81far&quot;</span>,</span>
+<span id="cb830-4"><a href="difference-in-differences.html#cb830-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="st">&quot;y81near&quot;</span></span>
+<span id="cb830-5"><a href="difference-in-differences.html#cb830-5" aria-hidden="true" tabindex="-1"></a>                       )))</span>
+<span id="cb830-6"><a href="difference-in-differences.html#cb830-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-7"><a href="difference-in-differences.html#cb830-7" aria-hidden="true" tabindex="-1"></a>modelAgeWithGroups <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age<span class="sc">+</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near,<span class="at">data=</span>mydata)</span>
+<span id="cb830-8"><a href="difference-in-differences.html#cb830-8" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAgeWithGroups <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAgeWithGroups)</span>
+<span id="cb830-9"><a href="difference-in-differences.html#cb830-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb830-10"><a href="difference-in-differences.html#cb830-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>rprice,<span class="at">x=</span>age,<span class="at">color=</span>group)) <span class="sc">+</span></span>
+<span id="cb830-11"><a href="difference-in-differences.html#cb830-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb830-12"><a href="difference-in-differences.html#cb830-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAgeWithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group),<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
+<span id="cb830-13"><a href="difference-in-differences.html#cb830-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAgeWithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group))</span></code></pre></div>
 <p><img src="18-Difference-in-Differences_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb830"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb830-1"><a href="difference-in-differences.html#cb830-1" aria-hidden="true" tabindex="-1"></a>modelAge2WithGroups <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age<span class="sc">+</span>agesq<span class="sc">+</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near,<span class="at">data=</span>mydata)</span>
-<span id="cb830-2"><a href="difference-in-differences.html#cb830-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAge2WithGroups <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAge2WithGroups)</span>
-<span id="cb830-3"><a href="difference-in-differences.html#cb830-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb830-4"><a href="difference-in-differences.html#cb830-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>rprice,<span class="at">x=</span>age,<span class="at">color=</span>group)) <span class="sc">+</span></span>
-<span id="cb830-5"><a href="difference-in-differences.html#cb830-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
-<span id="cb830-6"><a href="difference-in-differences.html#cb830-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2WithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group),<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
-<span id="cb830-7"><a href="difference-in-differences.html#cb830-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2WithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group))</span></code></pre></div>
+<div class="sourceCode" id="cb831"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb831-1"><a href="difference-in-differences.html#cb831-1" aria-hidden="true" tabindex="-1"></a>modelAge2WithGroups <span class="ot">&lt;-</span> <span class="fu">lm</span>(rprice<span class="sc">~</span>age<span class="sc">+</span>agesq<span class="sc">+</span>near<span class="sc">+</span>y81<span class="sc">+</span>y81near,<span class="at">data=</span>mydata)</span>
+<span id="cb831-2"><a href="difference-in-differences.html#cb831-2" aria-hidden="true" tabindex="-1"></a>mydata<span class="sc">$</span>yHatAge2WithGroups <span class="ot">&lt;-</span> <span class="fu">fitted</span>(modelAge2WithGroups)</span>
+<span id="cb831-3"><a href="difference-in-differences.html#cb831-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb831-4"><a href="difference-in-differences.html#cb831-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>mydata,<span class="fu">aes</span>(<span class="at">y=</span>rprice,<span class="at">x=</span>age,<span class="at">color=</span>group)) <span class="sc">+</span></span>
+<span id="cb831-5"><a href="difference-in-differences.html#cb831-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb831-6"><a href="difference-in-differences.html#cb831-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2WithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group),<span class="at">size=</span><span class="dv">2</span>)  <span class="sc">+</span></span>
+<span id="cb831-7"><a href="difference-in-differences.html#cb831-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span>yHatAge2WithGroups,<span class="at">x=</span>age,<span class="at">color=</span>group))</span></code></pre></div>
 <p><img src="18-Difference-in-Differences_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
-<p>What you see in the polynomial graphs is that include age squared allows for a nonlinear relationship. Here, initially house price goes down as the house gets older. However, after about 100 years, older houses start to sell for more. This makes sense. Initially getting older is bad because older houses are more likely to have problems, require repairs, etc. But a hundred+ year old house is probably a pretty nice house if it’s survived that long, it might be considered “historic,” etc. We can’t possibly capture that relationship unless we specify our model in a way that allows for a nonlinear relationship. Sometimes you will also see a cubic term. That allows for three turns in the relationship (down, up, down, or up, down, up).</p>
+<p>What you see in the polynomial graphs is that include age squared allows for a nonlinear relationship. Here, initially house price goes down as the house gets older. However, after about 100 years, older houses start to sell for more. This makes sense. Initially getting older is bad because older houses are more likely to have problems, require repairs, etc. But a hundred+ year old house is probably a pretty nice house if it’s survived that long, it might be considered “historic”, etc. We can’t possibly capture that relationship unless we specify our model in a way that allows for a nonlinear relationship. Sometimes you will also see a cubic term. That allows for three turns in the relationship (down, up, down, or up, down, up).</p>
 <p>Note that in the final graph, the only reason the lines overlap is because ggplot simply connects the dots. If there were more points the bottom wouldn’t be flat and the lines wouldn’t cross.</p>
 
 </div>

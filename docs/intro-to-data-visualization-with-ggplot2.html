@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 Intro to Data Visualization with ggplot2 | R Programming Guidebook Project</title>
   <meta name="description" content="4 Intro to Data Visualization with ggplot2 | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 Intro to Data Visualization with ggplot2 | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="intro-to-the-tidyverse.html"/>
 <link rel="next" href="working-with-data-in-the-tidyverse.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,11 +337,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro-to-data-visualization-with-ggplot2" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Intro to Data Visualization with ggplot2</h1>
+<div id="intro-to-data-visualization-with-ggplot2" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Intro to Data Visualization with ggplot2<a href="intro-to-data-visualization-with-ggplot2.html#intro-to-data-visualization-with-ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/introduction-to-data-visualization-with-ggplot2" class="uri">https://learn.datacamp.com/courses/introduction-to-data-visualization-with-ggplot2</a></p>
-<div id="introduction" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Introduction</h2>
+<div id="introduction" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Introduction<a href="intro-to-data-visualization-with-ggplot2.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Changing One Geom Or Every Geom</strong></p>
 <p>If you have multiple geoms, then mapping an aesthetic to data variable inside the call to <code>ggplot()</code> will change all the geoms. It is also possible to make changes to individual geoms by passing arguments to the <code>geom_*()</code> functions.</p>
 <p><code>geom_point()</code> has an alpha argument that controls the opacity of the points. A value of <code>1</code> (the default) means that the points are totally opaque; a value of <code>0</code> means the points are totally transparent (and therefore invisible). Values in between specify transparency.</p>
@@ -364,8 +363,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb220-8"><a href="intro-to-data-visualization-with-ggplot2.html#cb220-8" aria-hidden="true" tabindex="-1"></a>plt_price_vs_carat_by_clarity</span></code></pre></div>
 <p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
-<div id="aesthetics" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Aesthetics</h2>
+<div id="aesthetics" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Aesthetics<a href="intro-to-data-visualization-with-ggplot2.html#aesthetics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>Typical Visible Aesthetics</strong></p>
 <pre><code>##   Aesthetic                                  Description
 ## 1         x                              X-axis position
@@ -479,8 +478,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="04-Intro_Data_Vis_ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 To spread out clustered variables use <code>geom_jitter()</code> or <code>geom_point(position = "jitter")</code>.</p>
 </div>
-<div id="geometries" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Geometries</h2>
+<div id="geometries" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Geometries<a href="intro-to-data-visualization-with-ggplot2.html#geometries" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Scatter plots (using geom_point()) are intuitive, easily understood, and very common, but we must always consider overplotting, particularly in the following four situations:</p>
 <pre><code>1. Large datasets
 2. Aligned values on a single axis
@@ -515,12 +514,12 @@ There’re various ways of applying positions to histograms. <code>geom_histogra
 <li><p><code>fill</code>: Bars for different groups are shown as proportions.</p>
 <p>geom_histogram(binwidth = 1, position = “fill”)</p></li>
 <li><p><code>identity</code>: Plot the values as they appear in the dataset.</p>
-<p>geom_histogram(binwidth = 1, position = “identity,” alpha = 0.4)</p></li>
+<p>geom_histogram(binwidth = 1, position = “identity”, alpha = 0.4)</p></li>
 </ol>
 <p><strong>Bar Plots</strong></p>
 <p><code>geom_bar()</code> counts the number of cases at each x position.</p>
 <p><code>geom_col()</code> plot actual values.</p>
-<p><strong>NOTE:</strong>the function geom_col() is just geom_bar() where both the position and stat arguments are set to “identity.” It is used when we want the heights of the bars to represent the exact values in the data.</p>
+<p><strong>NOTE:</strong>the function geom_col() is just geom_bar() where both the position and stat arguments are set to “identity”. It is used when we want the heights of the bars to represent the exact values in the data.</p>
 <p><code>geom_bar()</code> have three position options:</p>
 <ol style="list-style-type: decimal">
 <li><p>stack: The default</p></li>
@@ -533,8 +532,8 @@ There’re various ways of applying positions to histograms. <code>geom_histogra
 <p>Instead of using <code>position = "dodge"</code>, use <code>position_dodge()</code>, the same with <code>position_jitter()</code> to specify how much dodging (or jittering) wanted.</p>
 <pre><code>geom_bar(position = position_dodge(width = 0.2))</code></pre>
 </div>
-<div id="themes" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Themes</h2>
+<div id="themes" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Themes<a href="intro-to-data-visualization-with-ggplot2.html#themes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The themes layer is the visual elements that aren’t part of the data. There’re 3 types:</p>
 <pre><code>##       types modified_using
 ## 1      text element_text()

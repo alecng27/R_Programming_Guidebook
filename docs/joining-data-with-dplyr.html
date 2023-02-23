@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 Joining Data with dplyr | R Programming Guidebook Project</title>
   <meta name="description" content="8 Joining Data with dplyr | R Programming Guidebook Project" />
-  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 Joining Data with dplyr | R Programming Guidebook Project" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -32,7 +31,6 @@
   
 <link rel="prev" href="data-manipulation-with-dplyr.html"/>
 <link rel="next" href="cleaning-data-in-r.html"/>
-<script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +48,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
@@ -338,11 +337,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="joining-data-with-dplyr" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Joining Data with dplyr</h1>
+<div id="joining-data-with-dplyr" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Joining Data with dplyr<a href="joining-data-with-dplyr.html#joining-data-with-dplyr" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://learn.datacamp.com/courses/joining-data-with-dplyr" class="uri">https://learn.datacamp.com/courses/joining-data-with-dplyr</a></p>
-<div id="joining-tables" class="section level2" number="8.1">
-<h2><span class="header-section-number">8.1</span> Joining Tables</h2>
+<div id="joining-tables" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Joining Tables<a href="joining-data-with-dplyr.html#joining-tables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>inner_join()</strong></p>
 <p>The <code>inner_join()</code> is the key to bring tables together.This function will allow two tables to be joined from the commonly-shared value column(s) on which they should be joined.</p>
 <p>In this example, <code>parts</code> and <code>part_categories</code> are merged by using <code>part_cat_id</code> and <code>id</code> columns from each dataset, then the <code>suffix()</code> added the names to help differentiate the variables:</p>
@@ -436,8 +435,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>From the output, <code>Black</code> seems to be the most common LEGO piece.</p>
 <p><code>inner_join()</code> <em>ONLY</em> keeps the perfectly matched observations between two connected datasets.</p>
 </div>
-<div id="left-and-right-joins" class="section level2" number="8.2">
-<h2><span class="header-section-number">8.2</span> Left and Right Joins</h2>
+<div id="left-and-right-joins" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Left and Right Joins<a href="joining-data-with-dplyr.html#left-and-right-joins" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>left_join()</strong></p>
 <p><code>left_join()</code> keeps <em>ALL</em> the observations from the left dataset and keep <em>ONLY</em> the matched observations from the right-side dataset.</p>
 <p>Combine the <code>star_destroyer</code> and <code>millennium_falcon</code> tables with the suffixes <code>_falcon</code> and <code>_star_destroyer</code>:</p>
@@ -560,8 +559,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## # … with 576 more rows</code></pre>
 <p>The output above shows all the theme groups that doesn’t have any sub-branches.</p>
 </div>
-<div id="full-semi-and-anti-joins" class="section level2" number="8.3">
-<h2><span class="header-section-number">8.3</span> Full, Semi, and Anti Joins</h2>
+<div id="full-semi-and-anti-joins" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Full, Semi, and Anti Joins<a href="joining-data-with-dplyr.html#full-semi-and-anti-joins" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p><strong>full_join()</strong></p>
 <p>left_join and right_join keeps all the observations in one of the two sides. full_join() keeps all the observations on <em>BOTH</em> sides:</p>
 <div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="joining-data-with-dplyr.html#cb420-1" aria-hidden="true" tabindex="-1"></a>inventory_sets_themes <span class="ot">&lt;-</span> inventory_parts_joined <span class="sc">%&gt;%</span></span>
@@ -722,8 +721,8 @@ Add a <code>filter</code> to select observations where <code>total</code> is at 
 ## use `guide = &quot;none&quot;` instead.</code></pre>
 <p><img src="08-Joining_Data_with_dplyr_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
-<div id="case-study-joins-on-stack-overflow-data" class="section level2" number="8.4">
-<h2><span class="header-section-number">8.4</span> Case Study: Joins on Stack Overflow Data</h2>
+<div id="case-study-joins-on-stack-overflow-data" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Case Study: Joins on Stack Overflow Data<a href="joining-data-with-dplyr.html#case-study-joins-on-stack-overflow-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="joining-data-with-dplyr.html#cb434-1" aria-hidden="true" tabindex="-1"></a>questions <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/5284/datasets/89d5a716b4f41dbe4fcda1a7a1190f24f58f0e47/questions.rds&quot;</span>)))</span>
 <span id="cb434-2"><a href="joining-data-with-dplyr.html#cb434-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb434-3"><a href="joining-data-with-dplyr.html#cb434-3" aria-hidden="true" tabindex="-1"></a>tags <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">gzcon</span>(<span class="fu">url</span>(<span class="st">&quot;https://assets.datacamp.com/production/repositories/5284/datasets/207c31b235786e73496fd7e58e416779911a9d98/tags.rds&quot;</span>)))</span>
